@@ -263,7 +263,7 @@ module.exports = function(grunt) {
     		return '';
     	}
 
-        return grunt.file.read('_Tasks/helpers/htmlEmail/' + type + '.html');
+        return grunt.file.read('node_modules/config-grunt/_Tasks/helpers/htmlEmail/' + type + '.html');
     }
 
 	if (!String.format) {
