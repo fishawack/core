@@ -13,7 +13,7 @@ module.exports = function(grunt) {
         targets: {}
     };
 
-    //loadTargets(config);
+    loadTargets(config);
 
     grunt.util._.extend(config, loadConfig('./_Tasks/options/'));
 

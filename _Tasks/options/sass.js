@@ -5,9 +5,9 @@ module.exports = {
             sourceMap: false,
             sourceComments: true,
             includePaths: [
-                'bower_components/support-for/sass',
-                'bower_components/compass-breakpoint/stylesheets',
-                'bower_components/normalize-scss/sass',
+                'node_modules/support-for/sass',
+                'node_modules/normalize-scss/sass',
+                'node_modules/breakpoint-sass/stylesheets',
                 'node_modules',
                 'node_modules/lab-ui/_Build/sass'
             ]
@@ -26,9 +26,9 @@ module.exports = {
             outputStyle: 'compressed',
             sourceMap: false,
             includePaths: [
-                'bower_components/support-for/sass',
-                'bower_components/compass-breakpoint/stylesheets',
-                'bower_components/normalize-scss/sass',
+                'node_modules/support-for/sass',
+                'node_modules/normalize-scss/sass',
+                'node_modules/breakpoint-sass/stylesheets',
                 'node_modules',
                 'node_modules/lab-ui/_Build/sass'
             ]
