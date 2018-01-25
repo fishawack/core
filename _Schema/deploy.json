@@ -1,0 +1,63 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"definitions": {
+		"deploy": {
+			"type": ["object", "null"],
+			"properties": {
+				"url": {
+					"description": "In deployment context the final url that the site will sit (exclude subDir as it auto gets added). In content context its only used for endpoints",
+					"type": ["string", "null"]
+				},
+				"location": {
+					"description": "When ftp/scp content this is where the files are pulled from, in ftp/sftp this is where files are placed",
+					"type": ["string", "null"]
+				},
+				"ssh": {
+					"description": "The correct secret.json file to grab when deploying, should be stored in ~/targets",
+					"type": ["string", "null"],
+					"enum": ["internal", "vidaHost-meeting", "vidaHost-fishawack", null]
+				},
+				"ftp": {
+					"description": "The ftp IP, .ftppass with all ftp creds should be stored in ~/targets",
+					"type": ["string", "null"]
+				},
+				"cookie": {
+					"description": "Set to override the cookie value, if not set then it will use the title of the instance",
+					"type": "string"
+				},
+				"loginType": {
+					"type": ["string", "null"],
+					"enum": ["bootstrap", "style-1", null]
+				},
+				"logo": {
+					"description": "Set which logo to use on the login page (only works on style-1)",
+					"type": "string"
+				},
+				"subDir": {
+					"description": "If sub directory needed then specify name here e.g. 'test'",
+					"type": "string"
+				},
+				"users": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"username": {"type": "string"},
+							"password": {"type": ["string", "null"]},
+							"group": {
+								"type": "string",
+								"enum": ["admin", "read"]
+							},
+							"validTo": {
+								"description": "In format yyyy-mm-dd hh:mm",
+								"type": "string"
+							}
+						},
+						"required": ["username", "group", "validTo"]
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"additionalProperties": false,
+	"required": ["attributes"],
+	"properties": {
+		"attributes": {
+			"$ref": "_Build/schemas/attributes.json#/definitions/attributes"
+		},
+		"content": {
+			"patternProperties": {
+				".*": {
+					"type": ["string", "array", "object"]
+				}
+			}
+		}
+	}
+}

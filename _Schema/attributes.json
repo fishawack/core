@@ -1,0 +1,148 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"definitions": {
+		"attributes": {
+			"description": "Generally toggles and settings that effect the build rather than the content",
+			"type": "object",
+            "properties": {
+            	"title": {
+		        	"type": "string"
+	            },
+	            "googleTrackingID": {
+		        	"type": ["string", "null"]
+	            },
+	            "root": {
+		        	"type": "string"
+	            },
+	            "repo": {
+		        	"type": "string"
+	            },
+	            "electron": {
+	            	"type": "boolean"
+	            },
+	            "iOS": {
+                	"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"signingKey": {
+							"type": "string"
+						},
+						"appID": {
+							"type": "string"
+						},
+						"phonegapVersion": {
+							"type": "string"
+						},
+						"bundle": {
+							"type": "string"
+						}
+					},
+					"required": ["signingKey", "appID", "phonegapVersion", "bundle"]
+		    	},
+	            "autoEmail": {
+	            	"type": "array",
+		            "items": {
+		            	"type": "object",
+		            	"additionalProperties": false,
+						"properties": {
+							"recipients": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"email": {"type": "string"},
+										"name": {"type": "string"}
+									},
+									"required": ["email", "name"]
+								}
+							},
+							"format": {
+								"type": "array",
+								"items": {
+									"type": "string",
+									"enum": [
+										"{instance}",
+										"{version}",
+										"{date}",
+										"{pdf}",
+										"{internal}",
+										"{external}",
+										"{zip}",
+										"{googleTrackingID}",
+										"{users}",
+										"{git}",
+										"{status}",
+										"{coverage}"
+									]
+								},
+								"minItems": 1,
+            					"uniqueItems": true
+							},
+							"subject": {"type": "string"}
+						},
+						"required": ["recipients", "format"]
+		            }
+	        	},
+				"internal": {
+		        	"$ref": "deploy.json#/definitions/deploy"
+				},
+				"external": {
+		        	"$ref": "deploy.json#/definitions/deploy"
+				},
+				"content": {
+					"type": "array",
+					"items": {
+						"type": ["object", null],
+						"allOf": [
+							{
+								"$ref": "deploy.json#/definitions/deploy"
+							},
+							{
+								"type": "object",
+								"properties": {
+									"ext": {"type": ["string", "null"]},
+									"endpoints": {
+										"type": "array",
+							        	"items": {
+							        		"type": "string"
+							        	}
+							        }
+								}
+							}
+						]
+					}
+				},
+				"modernizr": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+		        },
+		        "uncss": {
+		        	"type": "array",
+		        	"items": {
+		        		"type": "string"
+		        	}
+		        },
+		        "template": {
+		        	"type": "object",
+	    			"patternProperties": {
+        				".*": {
+        					"type": "string"
+        				}
+        			}
+		        },
+		        "toggle": {
+		        	"type": "object",
+		        	"patternProperties": {
+        				".*": {
+        					"type": "string"
+        				}
+        			}
+		        }
+            },
+            "required": ["title", "repo", "root", "googleTrackingID", "internal", "autoEmail", "modernizr", "uncss", "template", "toggle"]
+		}
+	}
+}
