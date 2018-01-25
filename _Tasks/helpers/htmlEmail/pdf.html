@@ -1,0 +1,18 @@
+<li>
+	<strong>Pdf</strong>:
+	<ul>
+		<li>
+			<a href="<%= encodeURI('http://internal.fishawack.staging/Auto-Package/' + pkg.name + '/' + contentJson.attributes.title + '_' + pkg.version + '_' + grunt.template.today("dd-mm-yy") + '.pdf') %>">
+				http://internal.fishawack.staging/Auto-Package/<%= pkg.name %>/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("dd-mm-yy") %>.pdf
+			</a>
+		</li>
+		<li>
+			<strong>Expires</strong>: 
+			<%= new Date(new Date().setMonth(new Date().getMonth() + 2)).toDateString() %>
+		</li>
+		<li>
+			<strong>Size</strong>: 
+			<%= getFilesizeInBytes("_Pdfs/" + contentJson.attributes.title + "_" + pkg.version + "_" + grunt.template.today("dd-mm-yy") + ".pdf") %>
+		</li>
+	</ul>
+</li>

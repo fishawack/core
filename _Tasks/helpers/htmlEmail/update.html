@@ -1,0 +1,29 @@
+<li>
+	<strong>Update details</strong>:
+	<ul>
+		<li>
+			<strong>Version</strong>: 
+			<%= version %>
+		</li>
+		<li>
+			<strong>Description</strong>: 
+			<%= (function(){
+				var updatesJson = grunt.file.readJSON('./updates.json');
+
+				return updatesJson[updatesJson.length - 1].description;
+			}()) %>
+		</li>
+		<li>
+			<strong>Size</strong>: 
+			<%= (function(){
+				var updatesJson = grunt.file.readJSON('./updates.json');
+
+				var size = updatesJson[updatesJson.length - 1].files.reduce(function(a, b){
+					return a + b.size;
+				}, 0);
+
+				return formatBytes(size, 1);
+			}()) %>
+		</li>
+	</ul>
+</li>

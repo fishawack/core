@@ -1,0 +1,27 @@
+<li>
+	<strong>Accounts</strong>:
+	<ul>
+		<%= 
+			contentJson.attributes.external.users.reduce(function(prev, next){
+				var username = '<li><strong>Username</strong>: ' + next.username + '</li>';
+				var password = '<li><strong>Password</strong>: ' + next.password + '</li>';
+				var group = '<li><strong>Type</strong>: ' + next.group + '</li>';
+				var valid = '<li><strong>Valid Until</strong>: ' + ((next.validTo.length <= 0) ? '<span style="color:red;">permanently</span>' : next.validTo) + '</li>';
+
+				var ext = contentJson.attributes.external.url;
+				var subDir = contentJson.attributes.external.subDir;
+				ext += (subDir) ? '/' + subDir : '';
+
+				if(contentJson.attributes.external.deployType === 'poundhost'){
+					ext += '?uName=' + next.username + '&pwd=' + next.password;
+				} else {
+					ext += '/login?uName=' + next.username + '&pwd=' + next.password;
+				}
+
+				var url = '<li><strong>Auto-login url</strong>: <a href="' + encodeURI(ext) + '">' + encodeURI(ext) + '</a></li>';
+
+				return prev += '<li><strong>User</strong>:<ul>' + username + password + valid + url + '</ul></li>';
+			}, '')
+		%>
+	</ul>
+</li>
