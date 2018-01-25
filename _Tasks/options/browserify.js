@@ -1,7 +1,7 @@
 module.exports = {
 	options: {
 		transform: [
-			'envify'
+			require('envify')
 		],
 		alias: {
 		},

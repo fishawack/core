@@ -60,27 +60,27 @@
     "sinon": "1.17.2",
     "uncss": "0.15.0",
     "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v3.0.1",
+    "wdio-mocha-framework": "0.5.11",
+    "wdio-selenium-standalone-service": "0.0.9",
+    "webdriverio": "4.8.0",
+    "pdf-image-pack": "0.0.1",
+    "grunt-webdriver": "2.0.3",
     "xmlbuilder": "8.2.2"
   },
   "repository": {
     "type": "git",
     "url": "https://mmellor@bitbucket.org/"
   },
-  "vars": {
-    "gl": "echo git@diggit01.fw.local:$(jq .attributes.repo $(if [ ! -f _Build/content.json ] ; then echo '_Build/example/content.json' ; else echo '_Build/content.json' ; fi) -r)",
-    "bb": "echo git@bitbucket.org:fishawackdigital/$(basename `git rev-parse --show-toplevel`)"
-  },
   "scripts": {
-    "setup": "npm install && bower install && grunt content",
+    "start": "grunt",
+    "setup": "npm install && grunt content",
     "loginSetup": "cd node_modules/watertight && npm run setup",
     "deploy": "npm run deploy-s && grunt mail",
     "deployLive": "npm run deployLive-s && grunt mail --ext",
     "deploy-s": "npm run production && grunt deploy",
     "deployLive-s": "npm run production && grunt deploy && grunt deploy --ext && grunt package",
     "production": "grunt content && grunt dist && npm test",
-    "test": "grunt validate",
-    "origin": "git remote remove origin && git remote add origin $(eval $npm_package_vars_gl) && git remote set-url --add --push origin $(eval $npm_package_vars_bb) && git remote set-url --add --push origin $(eval $npm_package_vars_gl)",
-    "bitbucket": "curl -X POST -v -u $(git config --global user.email)$pass https://api.bitbucket.org/2.0/repositories/fishawackdigital/$(basename `git rev-parse --show-toplevel`) -H \"Content-Type: application/json\" -d '{\"is_private\": true, \"language\": \"html/css\", \"project\": {\"key\": \"BES\"}}'"
+    "test": "grunt validate"
   },
   "license": "MIT"
 }
