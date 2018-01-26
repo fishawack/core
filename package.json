@@ -59,7 +59,7 @@
     "postcss-uncss": "0.16.1",
     "sinon": "1.17.2",
     "uncss": "0.16.1",
-    "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v3.0.1",
+    "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v3.0.2",
     "wdio-mocha-framework": "0.5.11",
     "wdio-selenium-standalone-service": "0.0.9",
     "webdriverio": "4.8.0",
@@ -73,7 +73,7 @@
   },
   "scripts": {
     "start": "grunt",
-    "setup": "npm install && npm run content",
+    "setup": "npm install",
     "loginSetup": "cd node_modules/watertight && npm run setup",
     "deploy": "npm run deploy-s && grunt mail",
     "deployLive": "npm run deployLive-s && grunt mail --ext",
