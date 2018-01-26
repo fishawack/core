@@ -73,13 +73,14 @@
   },
   "scripts": {
     "start": "grunt",
-    "setup": "npm install && grunt content",
+    "setup": "npm install && npm run content",
     "loginSetup": "cd node_modules/watertight && npm run setup",
     "deploy": "npm run deploy-s && grunt mail",
     "deployLive": "npm run deployLive-s && grunt mail --ext",
     "deploy-s": "npm run production && grunt deploy",
     "deployLive-s": "npm run production && grunt deploy && grunt deploy --ext && grunt package",
-    "production": "grunt content && grunt dist && npm test",
+    "production": "npm run content && grunt dist && npm test",
+    "content": "grunt content",
     "test": "grunt validate"
   },
   "license": "MIT"

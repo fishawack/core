@@ -51,7 +51,7 @@ module.exports = function(grunt) {
 				}
 		    }
 
-		    config.targets[d.key || d.file] = safeLoad(grunt, file, (d.json === false) ? false : true);
+		    config.targets[d.key || d.file] = safeLoad(grunt, save, (d.json === false) ? false : true);
 	    });
 
 	    this.deployCred = (deployEnv.ssh) ? config.targets[deployEnv.ssh] : {};
