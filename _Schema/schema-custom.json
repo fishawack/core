@@ -5,14 +5,10 @@
 	"required": ["attributes"],
 	"properties": {
 		"attributes": {
-			"$ref": "_Build/schemas/attributes.json#/definitions/attributes"
+			"$ref": "node_modules/config-grunt/_Schema/attributes.json#/definitions/attributes"
 		},
 		"content": {
-			"patternProperties": {
-				".*": {
-					"type": ["string", "array", "object"]
-				}
-			}
+			"$ref": "_Schema/content.json#/definitions/content"
 		}
 	}
 }

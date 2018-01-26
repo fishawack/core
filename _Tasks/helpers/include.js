@@ -37,12 +37,13 @@ module.exports = function(grunt) {
 
 	    	var path = os.homedir() + (d.path || '/targets/');
 	    	var file =  d.file + ((d.json) ? '.json' : '');
+	    	var save = ((d.key) ? '' : 'ssh-') + file;
 
-			if(!fileExists(file, './', grunt)){
-				grunt.log.warn(file + ' not found in root, attempting to copy from ' + path);
+			if(!fileExists(save, './', grunt)){
+				grunt.log.warn(save + ' not found in root, attempting to copy ' + file + ' from ' + path);
 
 				try{
-					fs.copyFileSync(path + file, file);
+					fs.copyFileSync(path + file, save);
 					grunt.log.ok(file + ' copied');
 				} catch(e){
 					grunt.fail.warn(file + ' not found at ' + path);
