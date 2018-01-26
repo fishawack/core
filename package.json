@@ -74,7 +74,6 @@
   "scripts": {
     "start": "grunt",
     "setup": "npm install",
-    "loginSetup": "cd node_modules/watertight && npm run setup",
     "deploy": "npm run deploy-s && grunt mail",
     "deployLive": "npm run deployLive-s && grunt mail --ext",
     "deploy-s": "npm run production && grunt deploy",
