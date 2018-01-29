@@ -24,6 +24,7 @@ module.exports = {
 	},
     files: [
     	'_Build/js/**/*.js',
-    	'!_Build/js/generated/**/*.js'
+    	'!_Build/js/generated/**/*.js',
+    	'!_Build/js/libs/**/*.js'
 	]
 }

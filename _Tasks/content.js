@@ -1,6 +1,8 @@
 module.exports = function(grunt) {
     grunt.registerTask('content', function(){
 
+        var path = require('path');
+
         if(!contentJson.attributes.content || contentJson.attributes.content.length <= 0){
             grunt.log.warn('No content to pull');
             return;
@@ -15,9 +17,7 @@ module.exports = function(grunt) {
                 stdout: true
             },
             content: {
-                command: [
-                    ((process.platform === "win32") ? 'mkdir _Build\\content\\compile' : 'mkdir -p _Build/content/compile')
-                ]
+                command: []
             }
         };
 
@@ -26,7 +26,11 @@ module.exports = function(grunt) {
                 shell.content.command.push('wget -r --user=\"<%= targets.ftp["' + d.ftp + '"].username %>\" --password=\"<%= targets.ftp["' + d.ftp + '"].password %>\" -P _Build/content/ -nH --cut=' + (d.location.split('/').length - 1) + ' ftp://' + d.ftp + '/' + d.location);
             } else if(d.url){
                 d.endpoints.forEach(function(dd){
-                    shell.content.command.push('wget -O _Build/content/compile/' + dd + ((d.ext) ? '.' + d.ext : '') + ' ' + d.url + '/' + dd);
+                    var location = path.normalize(d.location || '_Build/content/compile/');
+                    
+                    shell.content.command.push(((process.platform === "win32") ? 'mkdir ' + location : 'mkdir -p ' + location));
+
+                    shell.content.command.push('wget -O ' + location + dd + ((d.ext) ? '.' + d.ext : '') + ' ' + d.url + '/' + dd);
                 });
             } else {
                 shell.content.command.push('scp -r <%= targets["' + d.ssh + '"].username %>@<%= targets["' + d.ssh + '"].host %>:' + d.location + ' _Build/content/');
