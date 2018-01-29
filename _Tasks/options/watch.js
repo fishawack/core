@@ -12,8 +12,7 @@ module.exports = {
     },
     content: {
         options: {
-            spawn: false,
-            reload: true
+            spawn: false
         },
         files: ['_Build/content.json', '_Build/example/content.json']
     },

@@ -18,7 +18,8 @@ module.exports = {
 		    require: true,
 		    module: true,
 		    process: true,
-		    define: true
+		    define: true,
+		    Modernizr: true
 		}
 	},
     files: [

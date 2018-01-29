@@ -8,11 +8,7 @@
 			"$ref": "node_modules/config-grunt/_Schema/attributes.json#/definitions/attributes"
 		},
 		"content": {
-			"patternProperties": {
-				".*": {
-					"type": ["string", "array", "object", "number", "boolean"]
-				}
-			}
+			"additionalProperties": true
 		}
 	}
 }
