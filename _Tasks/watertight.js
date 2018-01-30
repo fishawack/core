@@ -1,6 +1,5 @@
 module.exports = function(grunt) {
     grunt.registerTask('writePhp', function(){
-
         var watertightBridge = require('watertight');
 
         generateUserPasswords();
@@ -60,6 +59,9 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('watertight', function(){
+        var path = require('path');
+        var watertightPath = path.dirname(require.resolve('watertight'));
+
         var copy = grunt.config.get('copy');
 
         if(deployEnv.subDir){
@@ -67,13 +69,13 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'node_modules/watertight/www/watertight/',
+                        cwd: watertightPath + '/www/watertight/',
                         src: ['**/*', '!composer.*', '!**/public_html/**'],
                         dest: '_Login/'
                     },
                     {
                         expand: true,
-                        cwd: 'node_modules/watertight/www/watertight/public_html/',
+                        cwd: watertightPath + '/www/watertight/public_html/',
                         src: ['**/*', '**/.htaccess'],
                         dest: '_Login/'
                     },
@@ -96,7 +98,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'node_modules/watertight/www/watertight/',
+                        cwd: watertightPath + '/www/watertight/',
                         src: ['**/*', '**/.htaccess', '!composer.*'],
                         dest: '_Login/'
                     },
