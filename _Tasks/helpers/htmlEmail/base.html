@@ -19,6 +19,7 @@
           table {border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; } /* remove spacing around Outlook 07, 10 tables */
           .badge{text-decoration: none;}
           .badge img, .badge svg{vertical-align: middle;}
+          hr{margin: 1em 0;}
         </style>
     </head>
     <body style="width:100%; margin:0; padding:0; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">
@@ -47,8 +48,20 @@
           <tr>
             <td valign="top" style="vertical-align: top; padding: 10px;">
                 <h2><%= pkg.name %></h2>
+                <hr>
+                <h3>General info</h3>
                 <ul> 
                   {0}
+                </ul>
+                <hr>
+                <h3>Package info</h3>
+                <ul> 
+                  {1}
+                </ul>
+                <hr>
+                <h3>Digital info</h3>
+                <ul> 
+                  {2}
                 </ul>
             </td>
           </tr>

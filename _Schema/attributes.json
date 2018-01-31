@@ -40,54 +40,17 @@
 					},
 					"required": ["signingKey", "appID", "phonegapVersion", "bundle"]
 		    	},
-	            "autoEmail": {
+	            "email": {
 	            	"type": "array",
-		            "items": {
-		            	"type": "object",
-		            	"additionalProperties": false,
-						"properties": {
-							"recipients": {
-								"type": "array",
-								"items": {
-									"type": "object",
-									"properties": {
-										"email": {"type": "string"},
-										"name": {"type": "string"}
-									},
-									"required": ["email", "name"]
-								}
-							},
-							"format": {
-								"type": "array",
-								"items": {
-									"type": "string",
-									"enum": [
-										"{instance}",
-										"{version}",
-										"{date}",
-										"{pdf}",
-										"{internal}",
-										"{external}",
-										"{zip}",
-										"{googleTrackingID}",
-										"{users}",
-										"{git}",
-										"{status}",
-										"{coverage}"
-									]
-								},
-								"minItems": 1,
-            					"uniqueItems": true
-							},
-							"subject": {"type": "string"}
-						},
-						"required": ["recipients", "format"]
-		            }
+					"items": { "type": "string" }
 	        	},
-				"internal": {
+				"staging": {
 		        	"$ref": "deploy.json#/definitions/deploy"
 				},
-				"external": {
+				"qc": {
+		        	"$ref": "deploy.json#/definitions/deploy"
+				},
+				"production": {
 		        	"$ref": "deploy.json#/definitions/deploy"
 				},
 				"content": {

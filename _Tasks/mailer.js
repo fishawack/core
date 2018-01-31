@@ -10,38 +10,48 @@ module.exports = function(grunt) {
         coverageString = grunt.file.read('_Build/media/generated/__coverage.svg');
         versionString = grunt.file.read('_Build/media/generated/__version.svg');
 
-        contentJson.attributes.autoEmail.forEach(function(d, i){
-            nodemailer[deployTarget + '-' + i] = {
-                options: {
-                    recipients: contentJson.attributes.autoEmail[i].recipients,
-                    message: {
-                        from: "fishawack.auto.package@gmail.com",
-                        subject: (!d.subject) ? 'Auto-package: - <%= contentJson.attributes.title %>' : d.subject,
-                        html: String.format(buildHtmlEmail('base'), 
-                                String.formatKeys(d.format.join(''), 
-                                    {
-                                        "instance": buildHtmlEmail('instance'),
-                                        "version": buildHtmlEmail('version'),
-                                        "date": buildHtmlEmail('date'),
-                                        "internal": (contentJson.attributes.internal && contentJson.attributes.internal.url) ? buildHtmlEmail('internal') : '',
-                                        "external": (deployTarget === 'external' && contentJson.attributes.external && contentJson.attributes.external.url) ? buildHtmlEmail('external') : '',
-                                        "zip": (deployTarget === 'external' && (deployEnv.ssh || deployEnv.ftp)) ? buildHtmlEmail('zips') : '',
-                                        "pdf": (deployTarget === 'external' && (deployEnv.ssh || deployEnv.ftp)) ? buildHtmlEmail('pdf') : '',
-                                        "googleTrackingID": (contentJson.attributes.googleTrackingID && deployTarget === 'external') ? buildHtmlEmail('google') : '',
-                                        "users": (deployTarget === 'external' && contentJson.attributes.external && contentJson.attributes.external.users) ? buildHtmlEmail('users') : '',
-                                        "git": buildHtmlEmail('git'),
-                                        "coverage": buildHtmlEmail('coverage'),
-                                        "status": buildHtmlEmail('status')
-                                    }
-                                )
-                            )
-                    }
+        var recipients = contentJson.attributes.email;
+
+        if(deployBranch === 'qc'){
+            recipients.push('mikemellor11@hotmail.com'); // qc@fishawack.com
+        }
+
+        recipients.push('mike.mellor@f-grp.com'); // digital@f-grp.com
+
+        nodemailer['deploy'] = {
+            options: {
+                recipients: recipients,
+                message: {
+                    from: "fishawack.auto.package@gmail.com",
+                    subject: 'Auto-package: - <%= contentJson.attributes.title %>',
+                    html: String.format(buildHtmlEmail('base'), 
+                        [
+                            buildHtmlEmail('instance'),
+                            buildHtmlEmail('target'),
+                            buildHtmlEmail('date'),
+                            buildHtmlEmail('url'),
+                            (deployEnv.users) ? buildHtmlEmail('users') : '',
+                            buildHtmlEmail('issues')
+                        ].join(''),
+                        [
+                            (deployTarget === 'production') ? buildHtmlEmail('zips') : '',
+                            (contentJson.attributes.electron) ? buildHtmlEmail('electron') : '',
+                            (deployEnv.pdf) ? buildHtmlEmail('pdf') : ''
+                        ].join(''),
+                        [
+                            buildHtmlEmail('version'),
+                            buildHtmlEmail('coverage'),
+                            buildHtmlEmail('status'),
+                            (contentJson.attributes.googleTrackingID) ? buildHtmlEmail('google') : '',
+                            buildHtmlEmail('git')
+                        ].join('')
+                    )
                 }
-            };
-        });
+            }
+        };
 
         grunt.config.set('nodemailer', nodemailer);
 
-        grunt.task.run('gitLog', 'nodemailer');
+        grunt.task.run('gitLog', 'issues', 'nodemailer');
     });
 };

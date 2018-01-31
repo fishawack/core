@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 
         gitlog(options, function(error, commits) {
             for(var i = 0, len = commits.length; i < len; i++){
-                gitLogString += '<li style="color: ' + colors[i % colors.length] + ';"><b>Commit: </b>' + commits[i].hash + '<ul style="color: black;">';
+                gitLogString += '<li style="color: ' + colors[i % colors.length] + ';"><b>Commit: </b>' + commits[i].abbrevHash + '<ul style="color: black;">';
 
                 gitLogString += '<li><strong>Name</strong>: ' + commits[i].committerName + '</li>';
                 gitLogString += '<li><strong>Date</strong>: ' + commits[i].committerDateRel + '</li>';

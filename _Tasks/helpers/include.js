@@ -16,12 +16,16 @@ module.exports = function(grunt) {
 	    	}
 	    ];
 
-	    if(contentJson.attributes.internal && contentJson.attributes.internal.ssh){
-	    	targets.push({file: contentJson.attributes.internal.ssh, json: true});
+	    if(contentJson.attributes.staging && contentJson.attributes.staging.ssh){
+	    	targets.push({file: contentJson.attributes.staging.ssh, json: true});
 	    }
 
-	    if(contentJson.attributes.external && contentJson.attributes.external.ssh){
-	    	targets.push({file: contentJson.attributes.external.ssh, json: true});
+	    if(contentJson.attributes.qc && contentJson.attributes.qc.ssh){
+	    	targets.push({file: contentJson.attributes.qc.ssh, json: true});
+	    }
+
+	    if(contentJson.attributes.production && contentJson.attributes.production.ssh){
+	    	targets.push({file: contentJson.attributes.production.ssh, json: true});
 	    }
 
 	    contentJson.attributes.content && contentJson.attributes.content.forEach(function(d){
@@ -346,7 +350,18 @@ module.exports = function(grunt) {
 
     this.coverageString = "";
 
-    this.deployTarget = (!grunt.option("ext")) ? "internal" : "external";
+    this.deployBranch = (!grunt.option("branch")) ? require('git-branch').sync() : grunt.option("branch");
+
+    switch(this.deployBranch){
+    	case 'master':
+    		this.deployTarget = 'production';
+    		break;
+		case 'qc':
+    		this.deployTarget = 'qc';
+    		break;
+		default:
+    		this.deployTarget = 'staging';
+    }
 
     this.deployEnv = contentJson.attributes[deployTarget] || {};
 

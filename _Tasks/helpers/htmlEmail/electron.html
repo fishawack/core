@@ -1,5 +1,5 @@
 <li>
-	<strong>Zipped package</strong>:
+	<strong>Electron packages</strong>:
 
 	<ul>
 		<li>
@@ -9,8 +9,18 @@
 		<%= 
 			[
 				{
-					"name": "App",
-					"zip": "_App"
+					"name": "Mac app",
+					"zip": "_Mac",
+					"check": function(){
+						return contentJson.attributes.electron;
+					}
+				},
+				{
+					"name": "Windows app",
+					"zip": "_Win",
+					"check": function(){
+						return contentJson.attributes.electron;
+					}
 				}
 			].reduce(function(prev, next){
 				if(next.check && !next.check()){

@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 
         var deploy = [];
 
-        if(deployTarget === 'external'){
+        if(deployTarget === 'production'){
             deploy.push('env:dist', 'browserify:dist', 'uglify:dist');
         }
 

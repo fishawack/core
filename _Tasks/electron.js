@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-    grunt.registerTask('packageElectron', function(){
+    grunt.registerTask('electron', function(){
         if(!contentJson.attributes.electron){
             grunt.log.warn('Skipping electron package');
             return;
