@@ -105,7 +105,7 @@
         			}
 		        }
             },
-            "required": ["title", "repo", "root", "googleTrackingID", "internal", "autoEmail", "modernizr", "uncss", "template", "toggle"]
+            "required": ["title", "repo", "root", "googleTrackingID", "modernizr", "uncss", "template", "toggle"]
 		}
 	}
 }
