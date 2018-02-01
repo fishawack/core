@@ -52,6 +52,6 @@ module.exports = function(grunt) {
 
         grunt.config.set('nodemailer', nodemailer);
 
-        grunt.task.run('gitLog', 'issues', 'nodemailer');
+        grunt.task.run('gitLog', 'nodemailer');
     });
 };
