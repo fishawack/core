@@ -15,16 +15,16 @@ module.exports = function(grunt) {
                 color = 'yellow';
             }
 
-            badge({ text: ["coverage", pct.toFixed(0) + '%'], colorscheme: color, template: "flat" }, function(svg, err) {
+            badge({ text: [" coverage ", pct.toFixed(0) + '%'], colorscheme: color, template: "flat" }, function(svg, err) {
                 grunt.file.write('_Build/media/generated/__coverage.svg', svg);
 
-                badge({ text: ["version", grunt.config.get('pkg').version], colorscheme: 'blue', template: "flat" }, function(svg, err) {
+                badge({ text: [" version ", grunt.config.get('pkg').version], colorscheme: 'blue', template: "flat" }, function(svg, err) {
                     grunt.file.write('_Build/media/generated/__version.svg', svg);
                     
-                    badge({ text: ["open", open], colorscheme: (open) ? 'orange' : 'green', template: "flat" }, function(svg, err) {
+                    badge({ text: [" open ", "  " + open + "  "], colorscheme: (open) ? 'orange' : 'green', template: "flat" }, function(svg, err) {
                         grunt.file.write('_Build/media/generated/__issues-open.svg', svg);
                         
-                        badge({ text: ["under review", review], colorscheme: (open) ? 'blue' : 'green', template: "flat" }, function(svg, err) {
+                        badge({ text: [" under review ", "  " + review + "  "], colorscheme: (review) ? 'blue' : 'green', template: "flat" }, function(svg, err) {
                             grunt.file.write('_Build/media/generated/__issues-review.svg', svg);
                             
                             done();
