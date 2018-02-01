@@ -26,7 +26,6 @@ module.exports = function(grunt) {
                     subject: 'Auto-package: - <%= contentJson.attributes.title %>',
                     html: String.format(buildHtmlEmail('base'), 
                         [
-                            buildHtmlEmail('instance'),
                             buildHtmlEmail('target'),
                             buildHtmlEmail('date'),
                             buildHtmlEmail('url'),
@@ -39,6 +38,7 @@ module.exports = function(grunt) {
                             (deployEnv.pdf) ? buildHtmlEmail('pdf') : ''
                         ].join(''),
                         [
+                            buildHtmlEmail('instance'),
                             buildHtmlEmail('version'),
                             buildHtmlEmail('coverage'),
                             buildHtmlEmail('status'),
