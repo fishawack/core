@@ -12,11 +12,17 @@ module.exports = function(grunt) {
 
         var recipients = contentJson.attributes.email;
 
-        if(deployBranch === 'qc'){
-            recipients.push('mikemellor11@hotmail.com'); // qc@fishawack.com
+        switch(deployBranch){
+            case 'qc':
+                recipients.push('qc@fishawack.com');
+            case 'master':
+            case 'development':
+                recipients.push('digital@f-grp.com');
+                break;
+            default:
+                grunt.log.warn('Deployments from feature branches don\'t send emails');
+                return;
         }
-
-        recipients.push('mike.mellor@f-grp.com'); // digital@f-grp.com
 
         nodemailer['deploy'] = {
             options: {

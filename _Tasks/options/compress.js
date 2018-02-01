@@ -26,7 +26,7 @@ module.exports = {
         "options": {
             'archive': '_Zips/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("dd-mm-yy") %>_App.zip'
         },
-        'cwd': '_App/', 
+        'cwd': '_Output/', 
         'src': ['**'],
         'expand': true
     },
