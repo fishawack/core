@@ -38,10 +38,10 @@ module.exports = function(grunt) {
                             (deployEnv.pdf) ? buildHtmlEmail('pdf') : ''
                         ].join(''),
                         [
-                            buildHtmlEmail('instance'),
                             buildHtmlEmail('version'),
                             buildHtmlEmail('coverage'),
                             buildHtmlEmail('status'),
+                            buildHtmlEmail('instance'),
                             (contentJson.attributes.googleTrackingID) ? buildHtmlEmail('google') : '',
                             buildHtmlEmail('git')
                         ].join('')
