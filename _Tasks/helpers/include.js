@@ -92,6 +92,7 @@ module.exports = function(grunt) {
 	                }),
 	                require('postcss-uncss')({
 	                    html: html,
+	                    userAgent: 'jsdom',
 	                    ignore: grunt.file.readJSON('_Build/sass/ignore.json').map(function(d){
 	                        return new RegExp(d, "i");
 	                    })
