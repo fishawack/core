@@ -101,8 +101,6 @@ module.exports = function(grunt) {
 
 			handlebars.push(obj);
 		}
-
-		console.log(handlebars);
 	};
 
 	this.postcssCustom = function(){
