@@ -1,9 +1,9 @@
 module.exports = {
-	dev: {
+	default: {
         'files': [{
             expand: true,
             cwd: '_Build/',
-            src: ['*.html'],
+            src: ['*.html', '!_*.html'],
             dest: '.tmp/compiled/'
         }],
         'templateData': "<%= this.contentPath %>",
@@ -14,24 +14,10 @@ module.exports = {
         ],
         'globals': [
             {
-                dev: true,
+                dev: '<%= (deployTarget === "production") ? false : true %>',
+                target: '<%= deployTarget %>',
                 version: '<%= pkg.version %>'
             }
         ]
-    },
-    dist: {
-        'files': [{
-            expand: true,
-            cwd: '_Build/',
-            src: ['*.html'],
-            dest: '.tmp/compiled/'
-        }],
-        'templateData': "<%= this.contentPath %>",
-        'helpers': '_Build/handlebars/helpers/**/*.js',
-        'partials': [
-            '_Build/handlebars/partials/**/*.{hbs,svg,html}',
-            '_Build/handlebars/components/**/*.{hbs,svg,html}'
-        ],
-        'globals': []
     }
 }

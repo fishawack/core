@@ -41,6 +41,9 @@ module.exports = function(grunt) {
 
     watchSmokeTests();
 
+    // Setup custom template handlebar code
+    templateCustom();        
+
     // Setup custom postcss code / can't load from external files from plugin
     postcssCustom();
 
