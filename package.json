@@ -62,6 +62,7 @@
     "postcss-uncss": "0.16.1",
     "sinon": "1.17.2",
     "uncss": "0.16.1",
+    "vueify": "9.4.1",
     "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v3.0.2",
     "wdio-mocha-framework": "0.5.11",
     "wdio-selenium-standalone-service": "0.0.9",
