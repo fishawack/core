@@ -2,8 +2,12 @@ module.exports = {
     options: {
         spawn: false
     },
-	scripts: {
-        files: ['_Build/vue/**/*.{vue,js}', '_Build/js/**/*.js', '!_Build/js/generated/**/*'],
+    vue: {
+        files: ['_Build/vue/**/*.{vue,js}'],
+        tasks: ['jshint', 'browserify:dev', 'concat:dev', 'sass:dev', 'postcss:all']
+    },
+    scripts: {
+        files: ['_Build/js/**/*.js', '!_Build/js/generated/**/*'],
         tasks: ['jshint', 'browserify:dev', 'concat:dev', 'karma:unit:run']
     },
     styles: {
