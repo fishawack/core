@@ -75,6 +75,34 @@ module.exports = function(grunt) {
         return temp;
 	};
 
+	this.templateCustom = function(){
+		var handlebars = grunt.config.data['compile-handlebars'].default.files;
+
+		for(var key in contentJson.attributes.template){
+			var dynamic = contentJson.attributes.template[key];
+			var obj = {
+				src: '_Build/' + dynamic.partial + '.html',
+				dest: []
+			};
+
+			if(dynamic.jsonPath){
+				var tempJson = (dynamic.location) ? grunt.file.readJSON(dynamic.location) : contentJson;
+
+				var tempObj = getProperty(dynamic.jsonPath, tempJson);
+
+				for(var i = 0; i < tempObj.length; i++){
+					var name = tempObj[i].url || key + i;
+
+					obj.dest.push('.tmp/compiled/' + name + '.html');
+				}
+			} else {
+				obj.dest.push('.tmp/compiled/' + key + '.html');
+			}
+
+			handlebars.push(obj);
+		}
+	};
+
 	this.postcssCustom = function(){
 		var html = contentJson.attributes.uncss.map(function(d, i){
 	        return grunt.template.process(d, grunt.config.get());
@@ -251,6 +279,23 @@ module.exports = function(grunt) {
             return (+split[0] + 1) + '.' + split[1] + '.' + split[2];
         }
     }
+
+    this.getProperty = function(jsonPath, object) {
+		var parts = jsonPath.split("."),
+			length = parts.length,
+			i,
+			property = object || this;
+
+		for(i = 0; i < length; i++){
+			if(!property){
+				return null;
+			}
+			
+			property = property[parts[i]];
+		}
+
+		return property;
+	}
 
     this.objectInArray = function(array, value, key){
         for(var i = 0, len = array.length; i < len; i++){

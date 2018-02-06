@@ -1,8 +1,6 @@
 module.exports = {
 	options: {
-		transform: [
-			require('envify')
-		],
+		transform: contentJson.attributes.browserify || ['envify'],
 		alias: {
 		},
 		browserifyOptions: {

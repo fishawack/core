@@ -92,17 +92,35 @@
 		        	"type": "object",
 	    			"patternProperties": {
         				".*": {
-        					"type": "string"
+        					"type": "object",
+        					"properties": {
+        						"location": {
+        							"description": "Json file to load, defaults to content.json",
+        							"type": "string"
+        						},
+				                "jsonPath": {
+				                	"description": "Dot notation path to array of elements",
+				                	"type": "string"
+				                },
+				                "partial": {
+				                	"type": "string"
+				                }
+        					},
+        					"required": ["partial"]
         				}
         			}
 		        },
 		        "toggle": {
 		        	"type": "object",
 		        	"patternProperties": {
-        				".*": {
-        					"type": "string"
-        				}
+        				"additionalProperties": true
         			}
+		        },
+		        "browserify": {
+		        	"type": "array",
+		        	"items": {
+						"type": "string"
+					}
 		        }
             },
             "required": ["title", "repo", "root", "googleTrackingID", "modernizr", "uncss", "template", "toggle"]
