@@ -3,7 +3,7 @@ module.exports = {
         spawn: false
     },
 	scripts: {
-        files: ['_Build/js/**/*.js', '!_Build/js/generated/**/*'],
+        files: ['_Build/vue/**/*.{vue,js}', '_Build/js/**/*.js', '!_Build/js/generated/**/*'],
         tasks: ['jshint', 'browserify:dev', 'concat:dev', 'karma:unit:run']
     },
     styles: {
