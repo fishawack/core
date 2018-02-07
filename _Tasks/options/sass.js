@@ -9,7 +9,8 @@ module.exports = {
                 'node_modules/normalize-scss/sass',
                 'node_modules/breakpoint-sass/stylesheets',
                 'node_modules',
-                'node_modules/lab-ui/_Build/sass'
+                'node_modules/lab-ui/_Build/sass',
+                '_Build/vue'
             ]
         },
         files: [{
@@ -30,7 +31,8 @@ module.exports = {
                 'node_modules/normalize-scss/sass',
                 'node_modules/breakpoint-sass/stylesheets',
                 'node_modules',
-                'node_modules/lab-ui/_Build/sass'
+                'node_modules/lab-ui/_Build/sass',
+                '_Build/vue'
             ]
         },
         files: [

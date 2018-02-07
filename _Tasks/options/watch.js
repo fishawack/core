@@ -4,15 +4,15 @@ module.exports = {
     },
     vue: {
         files: ['_Build/vue/**/*.{vue,js}'],
-        tasks: ['jshint', 'browserify:dev', 'concat:dev', 'sass:dev', 'postcss:all']
+        tasks: ['jshint', 'browserify:dev', 'concat:dev', 'compile-vue', 'sass:dev', 'postcss:all', 'clean:build']
     },
     scripts: {
         files: ['_Build/js/**/*.js', '!_Build/js/generated/**/*'],
         tasks: ['jshint', 'browserify:dev', 'concat:dev', 'karma:unit:run']
     },
     styles: {
-        files: ['_Build/sass/**/*.scss', '_Build/sass/**/*.json'],
-        tasks: ['sass:dev', 'postcss:all']
+        files: ['_Build/vue/**/*.scss', '_Build/sass/**/*.scss', '_Build/sass/**/*.json'],
+        tasks: ['compile-vue', 'sass:dev', 'postcss:all', 'clean:build']
     },
     content: {
         options: {
@@ -22,7 +22,7 @@ module.exports = {
     },
     html: {
         files: ['_Build/*.html', '_Build/*.json', '_Build/example/content.json', '_Build/handlebars/**/*', '!_Build/handlebars/partials/generated/**/*'],
-        tasks: ['jsonlint', 'tv4', 'compile-handlebars', 'htmlmin', 'clean:build', 'sass:dev', 'postcss:all']
+        tasks: ['jsonlint', 'tv4', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass:dev', 'postcss:all', 'clean:build']
     },
     assets: {
         files: ['_Build/media/**/*'],
