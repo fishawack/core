@@ -34,6 +34,7 @@ module.exports = function(grunt) {
                         [
                             buildHtmlEmail('target'),
                             buildHtmlEmail('date'),
+                            (contentJson.attributes.cms) ? buildHtmlEmail('cms') : '',
                             buildHtmlEmail('url'),
                             (deployEnv.users) ? buildHtmlEmail('users') : '',
                             buildHtmlEmail('issues')

@@ -21,6 +21,9 @@
 	            "electron": {
 	            	"type": "boolean"
 	            },
+	            "cms": {
+	            	"type": "string"
+	            },
 	            "iOS": {
                 	"type": "object",
 					"additionalProperties": false,
