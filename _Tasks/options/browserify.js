@@ -1,6 +1,6 @@
 module.exports = {
 	options: {
-		transform: contentJson.attributes.browserify || ['envify'],
+		transform: (contentJson.attributes.browserify || []).concat([['envify', {global: true}]]),
 		alias: {
 		},
 		browserifyOptions: {
