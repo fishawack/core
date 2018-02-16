@@ -15,9 +15,6 @@ module.exports = {
         tasks: ['compile-vue', 'sass:dev', 'postcss:all', 'clean:build']
     },
     content: {
-        options: {
-            spawn: false
-        },
         files: ['_Build/content.json', '_Build/example/content.json']
     },
     html: {

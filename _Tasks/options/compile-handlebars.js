@@ -18,6 +18,7 @@ module.exports = {
                 target: '<%= deployTarget %>',
                 version: '<%= pkg.version %>'
             }
-        ]
+        ],
+        handlebars: "<%= (pkg.dependencies && pkg.dependencies.handlebars) && 'node_modules/handlebars' %>"
     }
 }
