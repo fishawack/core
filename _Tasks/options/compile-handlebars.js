@@ -19,6 +19,6 @@ module.exports = {
                 version: '<%= pkg.version %>'
             }
         ],
-        handlebars: "<%= (pkg.dependencies && pkg.dependencies.handlebars) && 'node_modules/handlebars' %>"
+        handlebars: "<%= (pkg.devDependencies && pkg.devDependencies.handlebars) && 'node_modules/handlebars' %>"
     }
 }
