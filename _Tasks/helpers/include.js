@@ -124,9 +124,9 @@ module.exports = function(grunt) {
 					    }),
 	                    userAgent: 'jsdom',
 	                    ignore: [
-	                    	".active",
-							".disabled",
-							"labD3"
+	                    	/.active/i,
+							/.disabled/i,
+							/labD3/i
 						],
 	                    inject: function(window){
 	                    	if(!contentJson.attributes.modernizr.length){
