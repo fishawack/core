@@ -108,39 +108,54 @@ module.exports = function(grunt) {
 	        return grunt.template.process(d, grunt.config.get());
 	    });
 
+	    var processors = [
+	    	require('autoprefixer')({browsers: 'last 6 versions'}),
+            require('postcss-assets')({
+                basePath: grunt.config.get("root"),
+                relativeTo: 'css/',
+                loadPaths: ['media/**/']
+            }),
+            require('postcss-uncss')({
+                html: contentJson.attributes.uncss.map(function(d, i){
+			        return grunt.template.process(d, grunt.config.get());
+			    }),
+                userAgent: 'jsdom',
+                ignore: [
+                	/.active/i,
+					/.disabled/i,
+					/labD3/i
+				],
+                inject: function(window){
+                	if(!contentJson.attributes.modernizr.length){
+                		window.document.documentElement.classList.add('modern');
+                	} else {
+                		contentJson.attributes.modernizr.forEach(function(d){
+                    		window.document.documentElement.classList.add('no-' + d, d);
+                    	});
+                	}
+                }
+            })
+	    ];
+
 	    var postcss = {
-	        options: {
-	            map: false,
-	            processors: [
-	                require('autoprefixer')({browsers: 'last 6 versions'}),
-	                require('postcss-assets')({
-	                    basePath: grunt.config.get("root"),
-	                    relativeTo: 'css/',
-	                    loadPaths: ['media/**/']
-	                }),
-	                require('postcss-uncss')({
-	                    html: contentJson.attributes.uncss.map(function(d, i){
-					        return grunt.template.process(d, grunt.config.get());
-					    }),
-	                    userAgent: 'jsdom',
-	                    ignore: [
-	                    	/.active/i,
-							/.disabled/i,
-							/labD3/i
-						],
-	                    inject: function(window){
-	                    	if(!contentJson.attributes.modernizr.length){
-	                    		window.document.documentElement.classList.add('modern');
-	                    	} else {
-	                    		contentJson.attributes.modernizr.forEach(function(d){
-		                    		window.document.documentElement.classList.add('no-' + d, d);
-		                    	});
-	                    	}
-	                    }
-	                })
-	            ]
+	        dev: {
+	        	options: {
+	        		map: false,
+	        		processors: processors
+	        	},
+	            files: {
+	                '<%= root %>/css/general.css': '<%= root %>/css/general.css'
+	            }
 	        },
-	        all: {
+	        dist: {
+	        	options: {
+	        		map: false,
+	        		processors: processors.concat([
+        				require('cssnano')({
+			            	preset: 'default',
+			        	})
+        			])
+	        	},
 	            files: {
 	                '<%= root %>/css/general.css': '<%= root %>/css/general.css'
 	            }
