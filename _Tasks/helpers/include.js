@@ -119,11 +119,24 @@ module.exports = function(grunt) {
 	                    loadPaths: ['media/**/']
 	                }),
 	                require('postcss-uncss')({
-	                    html: html,
+	                    html: contentJson.attributes.uncss.map(function(d, i){
+					        return grunt.template.process(d, grunt.config.get());
+					    }),
 	                    userAgent: 'jsdom',
-	                    ignore: grunt.file.readJSON('_Build/sass/ignore.json').map(function(d){
-	                        return new RegExp(d, "i");
-	                    })
+	                    ignore: [
+	                    	".active",
+							".disabled",
+							"labD3"
+						],
+	                    inject: function(window){
+	                    	if(!contentJson.attributes.modernizr.length){
+	                    		window.document.documentElement.classList.add('modern');
+	                    	} else {
+	                    		contentJson.attributes.modernizr.forEach(function(d){
+		                    		window.document.documentElement.classList.add('no-' + d, d);
+		                    	});
+	                    	}
+	                    }
 	                })
 	            ]
 	        },
