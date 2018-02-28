@@ -76,7 +76,7 @@
   },
   "scripts": {
     "start": "grunt",
-    "setup": "npm install",
+    "setup": "npm install --no-save",
     "deploy": "npm run deploy-s && grunt mail",
     "deploy-s": "npm run production && grunt deploy && grunt package",
     "production": "npm run content && grunt dist && npm test",
