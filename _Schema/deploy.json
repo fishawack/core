@@ -15,8 +15,7 @@
 				},
 				"ssh": {
 					"description": "The correct secret.json file to grab when deploying, should be stored in ~/targets",
-					"type": ["string", "null"],
-					"enum": ["internal", "vidaHost-meeting", "vidaHost-fishawack", null]
+					"type": ["string", "null"]
 				},
 				"ftp": {
 					"description": "The ftp IP, .ftppass with all ftp creds should be stored in ~/targets",

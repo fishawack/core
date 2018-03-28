@@ -14,6 +14,7 @@
 * python (windows only)
 * composer
 * jq
+* ftp (mac high sierra)
 
 If on a mac, this is the suggested route.
 
@@ -24,6 +25,7 @@ If on a mac, this is the suggested route.
 	* brew install wine
 	* brew install jq
 	* brew install cask
+	* brew install tnftp tnftpd telnet telnetd
 		* brew cask install java
 * Install NVM - [https://github.com/creationix/nvm]() - then use to install
 	* nvm install 5.5.0
