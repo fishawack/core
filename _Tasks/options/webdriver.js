@@ -1,8 +1,8 @@
 module.exports = {
     pdf: {
-        configFile: 'wdio.conf.js',
+        configFile: 'node_modules/config-grunt/wdio.conf.js',
         specs: [
-            '_Node/crawl.js'
+            'node_modules/config-grunt/_Node/crawl.js'
         ]
     }
 }

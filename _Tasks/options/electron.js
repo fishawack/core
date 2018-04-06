@@ -1,8 +1,8 @@
 module.exports = {
     options: {
         name: '<%= contentJson.attributes.title %>',
-        dir: '_App',
-        out: '_Electron'
+        dir: '_Packages/Electron/App',
+        out: '_Packages/Electron/'
     },
     macos: {
         options: {

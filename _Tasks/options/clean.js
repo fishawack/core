@@ -2,8 +2,9 @@ module.exports = {
 	build: [".tmp"],
     dist: ["<%= root %>/**/*", "_Build/**/generated/**/*"],
     content: ["_Build/content/**/*"],
-    deploy: ["_Zips", "_Login"],
-    pdfs: ["_Pdfs"],
+    zip: ['_Zips/**/*'],
+    deploy: ["_Login"],
+    pdf: ["_Pdfs"],
     app: ['_App/**/*'],
-    electron: ['_Electron/**/*']
+    electron: ['_Packages/Electron/**/*']
 }

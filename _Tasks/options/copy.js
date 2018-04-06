@@ -48,7 +48,17 @@ module.exports = {
         }]
     },
     electron: {
-        src: '_Node/electron.js',
-        dest: '_App/index.js'
+        files: [
+            {
+                src: '_Node/electron.js',
+                dest: '_Packages/Electron/App/index.js'
+            },
+            {
+                cwd: '<%= root %>/',
+                src: '**',
+                dest: '_Packages/Electron/App/',
+                expand: true
+            }
+        ]
     }
 }

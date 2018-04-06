@@ -1,26 +1,19 @@
 module.exports = {
-    options: {
-        archive: '_Zips/Deploy.zip'
-    },
     deploy: {
-        files: [
-            {
-                expand: true,
-                cwd: '<%= root %>',
-                src: ['**/*'],
-                dest: './'
-            }
-        ]
+        "options": {
+            'archive': '_Zips/Deploy.zip'
+        },
+        'cwd': '<%= root %>', 
+        'src': ['**/*'],
+        'expand': true
     },
     watertight: {
-        files: [
-            {
-                expand: true,
-                cwd: '_Login/',
-                src: ['**/*', '**/.htaccess'],
-                dest: './'
-            }
-        ]
+        "options": {
+            'archive': '_Zips/Deploy.zip'
+        },
+        'cwd': '_Login', 
+        'src': ['**/*', '**/.htaccess'],
+        'expand': true
     },
     app: {
         "options": {
@@ -34,7 +27,7 @@ module.exports = {
         "options": {
             'archive': '_Zips/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("dd-mm-yy") %>_Mac.zip'
         },
-        'cwd': '_Electron/<%= contentJson.attributes.title %>-darwin-x64/', 
+        'cwd': '_Packages/Electron/<%= contentJson.attributes.title %>-darwin-x64/', 
         'src': ['**'],
         'expand': true
     },
@@ -42,7 +35,7 @@ module.exports = {
         "options": {
             'archive': '_Zips/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("dd-mm-yy") %>_Win.zip'
         },
-        'cwd': '_Electron/<%= contentJson.attributes.title %>-win32-x64/', 
+        'cwd': '_Packages/Electron/<%= contentJson.attributes.title %>-win32-x64/', 
         'src': ['**'],
         'expand': true
     }

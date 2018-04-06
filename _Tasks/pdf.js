@@ -1,10 +1,3 @@
 module.exports = function(grunt) {
-	grunt.registerTask('pdf', function(){
-		if(!deployEnv.pdf){
-	        grunt.log.warn('No pdf generation for ' + deployTarget);
-	        return;
-	    }
-
-		grunt.task.run(['connect', 'webdriver', 'clean:build', 'shell:pdf']);
-	});
+	grunt.registerTask('pdf', ['clean:pdf', 'connect', 'webdriver:pdf', 'shell:pdf', 'clean:build']);
 };
