@@ -40,9 +40,8 @@ module.exports = function(grunt) {
                             buildHtmlEmail('issues')
                         ].join(''),
                         [
-                            (deployTarget === 'production') ? buildHtmlEmail('zips') : '',
-                            (contentJson.attributes.electron) ? buildHtmlEmail('electron') : '',
-                            (deployEnv.pdf) ? buildHtmlEmail('pdf') : ''
+                            (deployEnv.pdf) ? buildHtmlEmail('pdf') : '',
+                            (deployTarget === 'production') ? buildHtmlEmail('zips') : ''
                         ].join(''),
                         [
                             buildHtmlEmail('version'),
