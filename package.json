@@ -63,7 +63,7 @@
     "postcss-assets": "4.1.0",
     "postcss-uncss": "0.16.1",
     "sinon": "1.17.2",
-    "uncss": "git+https://github.com/mikemellor11/uncss.git#inject",
+    "uncss": "0.16.2",
     "vueify": "9.4.1",
     "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v4.0.0",
     "wdio-mocha-framework": "0.5.11",
