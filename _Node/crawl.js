@@ -4,6 +4,10 @@ var grunt = require('grunt');
 require('../_Tasks/helpers/include.js')(grunt);
 require('./createPdfsAndZips.js')(grunt);
 
+if(fileExists('capturePage.js', '_Node', grunt)){
+    require(process.cwd() + '/_Node/capturePage.js')(grunt);
+}
+
 var delay = 50;
 var captureIndex = 0;
 
@@ -18,27 +22,29 @@ var qualitySizes = {
 
 var quality = 'sd';
 
+if(typeof deployEnv.pdf === 'string'){
+    quality = deployEnv.pdf;
+}
+
 browser.setViewportSize({
     width: qualitySizes[quality][0],
     height: qualitySizes[quality][1]
 });
 
-describe('Base', function () {
-    it('Screenshot Page / Refs / Foots', function() {
-    	browser.url('http://localhost:9001/index.html');
+if(typeof capturePage === 'function'){
+    capturePage();
+} else {
+    describe('Base', function () {
+        it('Screenshot Page / Refs / Foots', function() {
+            browser.url('http://localhost:9001/index.html?capture=true');
 
-    	browser.execute(function(){
-            document.querySelector('html').classList.add('capture');
-            window.capture = true;
-            return false;
+            browser.waitForExist('.loaded', 50000);
+            
+            browser.pause(delay);
+
+            browser.saveScreenshot(".tmp/screenshots/" + (captureIndex++) + ".png");
+
+            createPdfsAndZips();
         });
-
-        browser.waitForExist('.loaded', 50000);
-        
-        browser.pause(delay);
-
-		browser.saveScreenshot(".tmp/screenshots/" + (captureIndex++) + ".png");
-
-        createPdfsAndZips();
     });
-});
+}

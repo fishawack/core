@@ -8,6 +8,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         //CONTENT IN CONIFG SO IT CAN BE PASSED TO GRUNT TASKS
         contentJson: contentJson,
+        configPath: configPath,
         //ROOT OF SITE WHERE FILES
         root: contentJson.attributes.root || '_Output',
         targets: {}
@@ -33,11 +34,11 @@ module.exports = function(grunt) {
         sshexec: 'grunt-ssh',
         sftp: 'grunt-ssh'
     })({
-        cwd: 'node_modules/config-grunt/'
+        cwd: configPath
     });
 
     // Load all custom tasks found in _Tasks
-    grunt.loadTasks('node_modules/config-grunt/_Tasks');
+    grunt.loadTasks(configPath + '_Tasks');
 
     watchSmokeTests();
 
@@ -59,7 +60,7 @@ function loadConfig(path) {
     var object = {};
     var key;
 
-    glob.sync('*', {cwd: 'node_modules/config-grunt/' + path}).forEach(function(option) {
+    glob.sync('*', {cwd: configPath + path}).forEach(function(option) {
         key = option.replace(/\.js$/,'');
         object[key] = require(path + option);
     });

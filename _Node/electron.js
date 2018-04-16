@@ -38,29 +38,6 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
 
-function getDate(){
-	return new Date().toISOString().split('T')[0];
-};
-
-// Listen for async message from renderer process
-ipcMain.on('save', (event, arg) => { 
-	var obj, 
-	filelocation = path.join(app.getPath('userData'), getDate() + '.json');
-
-	if(fs.existsSync(filelocation)) {
-		obj = JSON.parse(fs.readFileSync(filelocation, 'utf8'));
-	} else {
-		obj = {
-			date: getDate(),
-			pages: arg.allAreas
-		};
-	}
-
-	obj.pages[arg.area] += 1;
-
-	fs.writeFileSync(filelocation, JSON.stringify(obj, null, 4), 'utf8');
-});
-
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
 	// On macOS it is common for applications and their menu bar

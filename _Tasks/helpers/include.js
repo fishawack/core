@@ -416,6 +416,8 @@ module.exports = function(grunt) {
 	    this[z] = this[z].join("");
 	}
 
+	this.configPath = 'node_modules/config-grunt/';
+
 	this.contentPath = (fileExists('content.json', '_Build/', grunt)) ? '_Build/content.json' : '_Build/example/content.json';
 
 	this.contentJson = grunt.file.readJSON(contentPath);

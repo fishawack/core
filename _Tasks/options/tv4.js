@@ -4,9 +4,9 @@ module.exports = {
         	var grunt = require('grunt');
 
         	if(fileExists('content.json', '_Schema', grunt)){
-        		return grunt.file.readJSON('node_modules/config-grunt/_Schema/schema-custom.json');
+        		return grunt.file.readJSON(configPath + '_Schema/schema-custom.json');
         	} else {
-        		return grunt.file.readJSON('node_modules/config-grunt/_Schema/schema.json');
+        		return grunt.file.readJSON(configPath + '_Schema/schema.json');
         	}
         },
         banUnknownProperties: true
