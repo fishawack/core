@@ -50,7 +50,7 @@ module.exports = {
     electron: {
         files: [
             {
-                src: '_Node/electron.js',
+                src: "<%= (fileExists('electron.js', '_Node/', grunt) ? '_Node/electron.js' : this.configPath + '_Node/electron.js') %>",
                 dest: '_Packages/Electron/App/index.js'
             },
             {
