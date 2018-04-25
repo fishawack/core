@@ -1,6 +1,6 @@
 {
   "name": "config-grunt",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "dependencies": {
     "autoprefixer": "6.3.1",
     "browserify-istanbul": "2.0.0",
