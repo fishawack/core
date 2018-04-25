@@ -7,9 +7,6 @@ module.exports = function(grunt) {
 
         var nodemailer = grunt.config.get('nodemailer') || {};
 
-        coverageString = grunt.file.read('_Build/media/generated/__coverage.svg');
-        versionString = grunt.file.read('_Build/media/generated/__version.svg');
-
         var recipients = contentJson.attributes.email || [];
 
         switch(deployBranch){

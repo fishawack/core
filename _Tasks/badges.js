@@ -20,7 +20,7 @@ module.exports = function(grunt) {
             function buildBadge(text, value, colorscheme, file, cb){
                 badge({ text: [text, value], colorscheme: colorscheme, template: "flat" }, function(svg, err) {
                     grunt.file.write('_Build/media/generated/__' + file + '.svg', svg);
-                    cb();
+                    cb(null, process.cwd() + '/_Build/media/generated/__' + file + '.svg');
                 });
             }
 
@@ -30,7 +30,13 @@ module.exports = function(grunt) {
                 async.apply(buildBadge, " open ", "  " + open + "  ", (open) ? 'orange' : 'green', 'issues-open'),
                 async.apply(buildBadge, " under review ", "  " + review + "  ", (review) ? 'blue' : 'green', 'issues-review')
             ], function(err, results){
-                svg_to_png.convert(process.cwd() + '/_Build/media/generated/', '_Build/media/generated/');
+                if(process.env.NODE_ENV === 'development'){
+                    done();
+                } else {
+                    svg_to_png.convert(results, '_Build/media/generated/').then(function(){
+                        done();
+                    });
+                }
             });
         });
     });

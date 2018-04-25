@@ -426,8 +426,6 @@ module.exports = function(grunt) {
 
     this.gitLogString = "";
 
-    this.coverageString = "";
-
     this.deployBranch = (!grunt.option("branch")) ? require('git-branch').sync() : grunt.option("branch");
 
     switch(this.deployBranch){
