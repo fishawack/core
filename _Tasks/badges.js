@@ -1,6 +1,8 @@
 module.exports = function(grunt) {
     grunt.registerTask('badges', function() {
+        var async = require('async');
         var badge = require('gh-badges');
+        var svg_to_png = require('svg-to-png');
 
         var done = this.async();
 
@@ -15,22 +17,20 @@ module.exports = function(grunt) {
                 color = 'yellow';
             }
 
-            badge({ text: [" coverage ", pct.toFixed(0) + '%'], colorscheme: color, template: "flat" }, function(svg, err) {
-                grunt.file.write('_Build/media/generated/__coverage.svg', svg);
-
-                badge({ text: [" version ", grunt.config.get('pkg').version], colorscheme: 'blue', template: "flat" }, function(svg, err) {
-                    grunt.file.write('_Build/media/generated/__version.svg', svg);
-                    
-                    badge({ text: [" open ", "  " + open + "  "], colorscheme: (open) ? 'orange' : 'green', template: "flat" }, function(svg, err) {
-                        grunt.file.write('_Build/media/generated/__issues-open.svg', svg);
-                        
-                        badge({ text: [" under review ", "  " + review + "  "], colorscheme: (review) ? 'blue' : 'green', template: "flat" }, function(svg, err) {
-                            grunt.file.write('_Build/media/generated/__issues-review.svg', svg);
-                            
-                            done();
-                        });
-                    });
+            function buildBadge(text, value, colorscheme, file, cb){
+                badge({ text: [text, value], colorscheme: colorscheme, template: "flat" }, function(svg, err) {
+                    grunt.file.write('_Build/media/generated/__' + file + '.svg', svg);
+                    cb();
                 });
+            }
+
+            async.parallel([
+                async.apply(buildBadge, " coverage ", pct.toFixed(0) + '%', color, 'coverage'),
+                async.apply(buildBadge, " version ", grunt.config.get('pkg').version, 'blue', 'version'),
+                async.apply(buildBadge, " open ", "  " + open + "  ", (open) ? 'orange' : 'green', 'issues-open'),
+                async.apply(buildBadge, " under review ", "  " + review + "  ", (review) ? 'blue' : 'green', 'issues-review')
+            ], function(err, results){
+                svg_to_png.convert(process.cwd() + '/_Build/media/generated/', '_Build/media/generated/');
             });
         });
     });

@@ -122,7 +122,9 @@ module.exports = function(grunt) {
                 userAgent: 'jsdom',
                 ignore: [
                 	/.active/i,
+                	/.deactive/i,
 					/.disabled/i,
+					/.capture/i,
 					/labD3/i
 				],
                 inject: function(window){
@@ -342,7 +344,7 @@ module.exports = function(grunt) {
     		return '';
     	}
 
-        return grunt.file.read('node_modules/config-grunt/_Tasks/helpers/htmlEmail/' + type + '.html');
+        return grunt.file.read(this.configPath + '_Tasks/helpers/htmlEmail/' + type + '.html');
     }
 
 	if (!String.format) {
