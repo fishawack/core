@@ -7,6 +7,8 @@ module.exports = {
 			paths: [
 				'./_Build/js/',
 				'./_Build/js/libs/',
+				'./_Build/js/charts/',
+				'./_Build/js/data/',
 				'./node_modules/lab-d3/_Build/js/',
 				'./node_modules/lab-d3/_Build/js/charts/',
 				'./node_modules/lab-d3/_Build/js/data/'
@@ -14,16 +16,40 @@ module.exports = {
 		}
 	},
 	dev: {
-		files: {
-			'<%= root %>/js/script.js': ['_Build/js/script.js']
-		}
+		files: [
+			{
+				'<%= root %>/js/script.js': ['_Build/js/script.js']
+			},
+			{
+	            expand: true,
+	            cwd: '_Build/js/',
+	            src: ['**/--*.js'],
+	            dest: '<%= root %>/js/',
+	            flatten: true,
+	            rename: function(path, file){
+	            	return path + file.replace('--', '');
+	            }
+	        }
+		]
 	},
 	dist: {
 		options: {
 			exclude: ['dev']
 		},
-		files: {
-			'.tmp/js/script.js': ['_Build/js/script.js']
-		}
+		files: [
+			{
+				'.tmp/js/script.js': ['_Build/js/script.js']
+			},
+			{
+	            expand: true,
+	            cwd: '_Build/js/',
+	            src: ['**/--*.js'],
+	            dest: '.tmp/js/',
+	            flatten: true,
+	            rename: function(path, file){
+	            	return path + file.replace('--', '');
+	            }
+	        }
+		]
 	}
 }
