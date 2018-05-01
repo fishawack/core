@@ -18,7 +18,7 @@ module.exports = {
         files: ['_Build/content.json', '_Build/example/content.json']
     },
     html: {
-        files: ['_Build/*.html', '_Build/*.json', '_Build/example/content.json', '_Build/handlebars/**/*', '!_Build/handlebars/partials/generated/**/*'],
+        files: ['_Build/*.html', '_Build/html/**/*.html', '_Build/*.json', '_Build/example/content.json', '_Build/handlebars/**/*', '!_Build/handlebars/partials/generated/**/*'],
         tasks: ['jsonlint', 'tv4', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dev', 'clean:build']
     },
     assets: {

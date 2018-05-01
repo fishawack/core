@@ -3,8 +3,9 @@ module.exports = {
         'files': [{
             expand: true,
             cwd: '_Build/',
-            src: ['*.html', '!_*.html'],
-            dest: '.tmp/compiled/'
+            src: ['*.html', 'html/*.html', '!_*.html'],
+            dest: '.tmp/compiled/',
+            flatten: true
         }],
         'templateData': "<%= this.contentPath %>",
         'helpers': '_Build/handlebars/helpers/**/*.js',

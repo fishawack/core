@@ -145,9 +145,12 @@ module.exports = function(grunt) {
 	        		map: false,
 	        		processors: processors
 	        	},
-	            files: {
-	                '<%= root %>/css/general.css': '<%= root %>/css/general.css'
-	            }
+	            files: [{
+		            expand: true,
+		            cwd: '<%= root %>/css/',
+		            src: ['*.css'],
+		            dest: '<%= root %>/css/'
+		        }]
 	        },
 	        dist: {
 	        	options: {
@@ -158,9 +161,12 @@ module.exports = function(grunt) {
 			        	})
         			])
 	        	},
-	            files: {
-	                '<%= root %>/css/general.css': '<%= root %>/css/general.css'
-	            }
+	            files: [{
+		            expand: true,
+		            cwd: '<%= root %>/css/',
+		            src: ['*.css'],
+		            dest: '<%= root %>/css/'
+		        }]
 	        }
 	    };
 
