@@ -424,32 +424,40 @@ module.exports = function(grunt) {
 	    this[z] = this[z].join("");
 	}
 
-	this.configPath = 'node_modules/config-grunt/';
+	this.devProject = null;
 
-	this.contentPath = (fileExists('content.json', '_Build/', grunt)) ? '_Build/content.json' : '_Build/example/content.json';
+	if(grunt){
+		grunt.file.setBase('../' + (devProject || '..') + '/');
+	}
 
-	this.contentJson = grunt.file.readJSON(contentPath);
+	this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/config-grunt/';
 
-    this.gitLogString = "";
+	if(grunt){
+		this.contentPath = (fileExists('content.json', '_Build/', grunt)) ? '_Build/content.json' : '_Build/example/content.json';
+		
+		this.contentJson = grunt.file.readJSON(contentPath);
 
-    this.deployBranch = (!grunt.option("branch")) ? require('git-branch').sync() : grunt.option("branch");
+	    this.gitLogString = "";
 
-    switch(this.deployBranch){
-    	case 'master':
-    		this.deployTarget = 'production';
-    		break;
-		case 'qc':
-    		this.deployTarget = 'qc';
-    		break;
-		default:
-    		this.deployTarget = 'staging';
-    }
+	    this.deployBranch = (!grunt.option("branch")) ? require('git-branch').sync() : grunt.option("branch");
 
-    this.deployEnv = contentJson.attributes[deployTarget] || {};
+	    switch(this.deployBranch){
+	    	case 'master':
+	    		this.deployTarget = 'production';
+	    		break;
+			case 'qc':
+	    		this.deployTarget = 'qc';
+	    		break;
+			default:
+	    		this.deployTarget = 'staging';
+	    }
 
-    this.deployCred = {};
+	    this.deployEnv = contentJson.attributes[deployTarget] || {};
 
-    this.deployLocation = truePath((deployEnv.location || ''));
+	    this.deployCred = {};
 
-    this.deployUrl = truePath((deployEnv.url || ''));
+	    this.deployLocation = truePath((deployEnv.location || ''));
+
+	    this.deployUrl = truePath((deployEnv.url || ''));
+	}
 }

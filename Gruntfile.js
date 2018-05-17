@@ -1,7 +1,5 @@
 module.exports = function(grunt) {
 
-    grunt.file.setBase('../../');
-
     require('./_Tasks/helpers/include.js')(grunt);
 
     var config = {

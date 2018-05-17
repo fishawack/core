@@ -20,7 +20,8 @@ module.exports = {
 		    process: true,
 		    define: true,
 		    Modernizr: true
-		}
+		},
+		esversion: 6
 	},
     files: [
     	'_Build/js/**/*.js',

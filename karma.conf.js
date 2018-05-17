@@ -2,12 +2,13 @@
 // Generated on Tue Nov 03 2015 14:32:58 GMT+0000 (GMT)
 
 var istanbul = require('browserify-istanbul');
+require('./_Tasks/helpers/include.js')(null);
 
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '../../',
+    basePath: '../' + (devProject || '..') + '/',
 
 
     // frameworks to use
@@ -36,16 +37,24 @@ module.exports = function(config) {
     },
 
     browserify: {
-        debug: true,
-        transform: [istanbul({
-            ignore: ['node_modules/**/*', '_Test/**/*']
-        })],
+        transform: [
+                ['envify', {global: true}],
+                ['babelify', {
+                    presets: ["env"],
+                    plugins: ["transform-object-assign"]
+                }],
+                istanbul({
+                    ignore: ['node_modules/**/*', '_Test/**/*']
+                })
+            ],
         paths: [
             './_Build/js/',
             './_Build/js/libs/',
-            './node_modules/',
+            './_Build/js/charts/',
+            './_Build/js/data/',
+            './node_modules/lab-d3/_Build/js/',
             './node_modules/lab-d3/_Build/js/charts/',
-            './node_modules/lab-d3/_Build/js/'
+            './node_modules/lab-d3/_Build/js/data/'
         ]
     },
 

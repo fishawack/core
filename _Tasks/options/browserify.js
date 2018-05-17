@@ -1,6 +1,12 @@
 module.exports = {
 	options: {
-		transform: (contentJson.attributes.browserify || []).concat([['envify', {global: true}]]),
+		transform: (contentJson.attributes.browserify || []).concat([
+				['envify', {global: true}],
+				['babelify', {
+					presets: ["env"],
+					plugins: ["transform-object-assign"]
+				}]
+			]),
 		alias: {
 		},
 		browserifyOptions: {
