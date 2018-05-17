@@ -3,6 +3,7 @@ module.exports = {
 		transform: (contentJson.attributes.browserify || []).concat([
 				['envify', {global: true}],
 				['babelify', {
+					global: true,
 					presets: ["env"],
 					plugins: ["transform-object-assign"]
 				}]
