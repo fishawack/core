@@ -21,9 +21,9 @@ module.exports = function(grunt) {
 
         contentJson.attributes.content.forEach(function(d){
             if(d.ftp){
-                shell.content.command.push('wget -r --user=\"<%= targets.ftp["' + d.ftp + '"].username %>\" --password=\"<%= targets.ftp["' + d.ftp + '"].password %>\" -P _Build/content/ -nH --cut=' + (d.location.split('/').length - 1) + ' ftp://' + d.ftp + '/' + d.location);
+                shell.content.command.push('wget -r --user=\"<%= targets.ftp["' + d.ftp + '"].username %>\" --password=\"<%= targets.ftp["' + d.ftp + '"].password %>\" -P ' + ((d.saveTo) ? d.saveTo : '_Build/content/') + ' -nH --cut=' + (d.location.split('/').length - 1) + ' ftp://' + d.ftp + '/' + d.location);
             } else if(d.ssh) {
-                shell.content.command.push('scp -r <%= targets["' + d.ssh + '"].username %>@<%= targets["' + d.ssh + '"].host %>:' + d.location + ' _Build/content/');
+                shell.content.command.push('scp -r <%= targets["' + d.ssh + '"].username %>@<%= targets["' + d.ssh + '"].host %>:' + d.location + ' ' + ((d.saveTo) ? d.saveTo : '_Build/content/'));
             }
         });
 
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
                 load(d.request + '?per_page=100', function(data){
                     grunt.log.ok('Downloaded ' + d.name);
 
-                    grunt.file.write((d.obj.location || '_Build/content/compile/') + d.name + ((d.obj.ext) ? '.' + d.obj.ext : ''), JSON.stringify(data));
+                    grunt.file.write((d.obj.saveTo || '_Build/content/compile/') + d.name + ((d.obj.ext) ? '.' + d.obj.ext : ''), JSON.stringify(data));
 
                     cb();
                 });

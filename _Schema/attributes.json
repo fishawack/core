@@ -79,7 +79,8 @@
 							        	"items": {
 							        		"type": "string"
 							        	}
-							        }
+							        },
+							        "saveTo": {"type": ["string", "null"]}
 								}
 							}
 						]
