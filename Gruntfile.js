@@ -9,7 +9,9 @@ module.exports = function(grunt) {
         configPath: configPath,
         //ROOT OF SITE WHERE FILES
         root: contentJson.attributes.root || '_Output',
-        targets: {}
+        targets: {},
+        //SET IN PHONEGAP TASK
+        pullApp: ''
     };
 
     loadTargets(config);

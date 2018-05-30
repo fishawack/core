@@ -6,5 +6,6 @@ module.exports = {
     deploy: ["_Login"],
     pdf: ["_Pdfs"],
     app: ['_App/**/*'],
-    electron: ['_Packages/Electron/**/*']
+    electron: ['_Packages/Electron/**/*'],
+    phonegap: ['_Packages/Phonegap/**/*']
 }

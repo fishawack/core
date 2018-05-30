@@ -25,6 +25,13 @@
 					"check": function(){
 						return contentJson.attributes.electron;
 					}
+				},
+				{
+					"name": "iOS app",
+					"zip": "_iOS",
+					"check": function(){
+						return contentJson.attributes.phonegap;
+					}
 				}
 			].reduce(function(prev, next){
 				if(next.check && !next.check()){

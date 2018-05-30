@@ -30,7 +30,7 @@
 	            "cms": {
 	            	"type": "string"
 	            },
-	            "iOS": {
+	            "phonegap": {
                 	"type": "object",
 					"additionalProperties": false,
 					"properties": {

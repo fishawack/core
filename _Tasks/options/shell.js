@@ -7,7 +7,13 @@ module.exports = {
         stdout: true
     },
     pushApp: {
-    	command: "curl -X PUT -F file=@_Zips/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today(\"dd-mm-yy\") %>.zip -F 'data={\"keys\":{\"ios\":{\"id\":592790,\"password\":\"13Orange02\"}}}' https://build.phonegap.com/api/v1/apps/2335152?auth_token=9tsERPEn2PamsbzFFjAB"
+        options: {
+            stdout: false
+        },
+        command: "curl -X PUT -F file=@_Zips/Deploy.zip -F 'data={\"keys\":{\"ios\":{\"id\":<%= (contentJson.attributes.phonegap && contentJson.attributes.phonegap.signingKey || '') %>,\"password\":\"13Orange02\"}}}' https://build.phonegap.com/api/v1/apps/<%= (contentJson.attributes.phonegap && contentJson.attributes.phonegap.appID || '') %>?auth_token=9tsERPEn2PamsbzFFjAB"
+    },
+    pullApp: {
+        command: "curl -o _Packages/iOS/app.ipa <%= pullApp %>"
     },
     pdf: {
         command: "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile='_Pdfs/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today('dd-mm-yy') %>.pdf' '_Pdfs/raw.pdf'"

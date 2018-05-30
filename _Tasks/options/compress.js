@@ -38,5 +38,21 @@ module.exports = {
         'cwd': '_Packages/Electron/<%= contentJson.attributes.title %>-win32-x64/', 
         'src': ['**'],
         'expand': true
+    },
+    phonegap: {
+        "options": {
+            'archive': '_Zips/Deploy.zip'
+        }, 
+        'cwd': '_Packages/Phonegap', 
+        'src': ['**'],
+        'expand': true
+    },
+    ios: {
+        "options": {
+            'archive': '_Zips/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("dd-mm-yy") %>_iOS.zip'
+        },
+        'cwd': '_Packages/iOS/', 
+        'src': ['app.ipa'],
+        'expand': true
     }
 }

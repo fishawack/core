@@ -12,6 +12,9 @@ module.exports = function(grunt) {
             /* ELECTRON */
             (contentJson.attributes.electron) ? package.push('package:electron', 'compress:mac', 'compress:win') : grunt.log.warn('No electron packaging specified');
 
+            /* PHONEGAP */
+            (contentJson.attributes.phonegap) ? package.push('package:phonegap', 'compress:ios') : grunt.log.warn('No phonegap packaging specified');
+
             /* AUTO-PACKAGE */
             package.push('ftpscript:package');
         } else {

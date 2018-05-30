@@ -60,5 +60,15 @@ module.exports = {
                 expand: true
             }
         ]
+    },
+    phonegap: {
+        files: [
+            {
+                cwd: '<%= root %>/',
+                src: '**',
+                dest: '_Packages/Phonegap/',
+                expand: true
+            }
+        ]
     }
 }
