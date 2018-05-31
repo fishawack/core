@@ -2,7 +2,7 @@ var exec = require('child_process').exec;
 
 module.exports = function(grunt) {
     grunt.registerTask('createConfigXml', function() {
-        var xmlBuilder = require('xmlBuilder');
+        var xmlBuilder = require('xmlbuilder');
         grunt.file.write('_Packages/Phonegap/config.xml', xmlBuilder.create(
                 JSON.parse(grunt.template.process(grunt.file.read(configPath + 'phonegap.json')))
             ).end({ pretty: true})
