@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function(grunt, hasBase) {
 	this.loadTargets = function(config){
 		var fs = require('fs');
 		var os = require('os');
@@ -426,7 +426,7 @@ module.exports = function(grunt) {
 
 	this.devProject = null;
 
-	if(grunt){
+	if(grunt && !hasBase){
 		grunt.file.setBase('../' + (devProject || '..') + '/');
 	}
 

@@ -1,7 +1,7 @@
 'use strict';
 
 var grunt = require('grunt');
-require('../_Tasks/helpers/include.js')(grunt);
+require('../_Tasks/helpers/include.js')(grunt, true);
 require('./createPdfsAndZips.js')(grunt);
 
 if(fileExists('capturePage.js', '_Node', grunt)){
