@@ -15,7 +15,7 @@ module.exports = {
         ],
         'globals': [
             {
-                dev: '<%= (deployTarget === "production") ? false : true %>',
+                dev: '<%= dev %>',
                 target: '<%= deployTarget %>',
                 version: '<%= pkg.version %>'
             }
