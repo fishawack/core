@@ -58,6 +58,10 @@
 				},
 				"pdf": {
 					"type": ["string", "boolean"]
+				},
+				"ratio": {
+					"type": ["string"],
+					"enum": ["16:9", "4:3", null]
 				}
 			}
 		}
