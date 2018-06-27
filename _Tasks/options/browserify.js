@@ -21,7 +21,8 @@ module.exports = {
 				'./node_modules/lab-d3/_Build/js/charts/',
 				'./node_modules/lab-d3/_Build/js/data/'
 			]
-		}
+		},
+		cacheFile: 'node_modules/.browserify-cache.json'
 	},
 	dev: {
 		files: [
