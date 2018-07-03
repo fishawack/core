@@ -40,8 +40,11 @@ module.exports = function(config) {
         transform: [
                 ['envify', {global: true}],
                 ['babelify', {
+                    global: true,
+                    ignore: /node_modules\/(?!lab-d3|vue2-filters)(?!$.)/,
                     presets: ["env"],
-                    plugins: ["transform-object-assign"]
+                    plugins: ["transform-object-assign"],
+                    babelrc: false
                 }],
                 istanbul({
                     ignore: ['node_modules/**/*', '_Test/**/*']
