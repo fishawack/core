@@ -1,10 +1,26 @@
 <li>
 	<strong>Url</strong>: 
 	<ul>
-		<li>
-			<a href="<%= encodeURI(deployUrl) %>">
-				<%= encodeURI(deployUrl) %>
-			</a>
-		</li>
+		<%= 
+			(function(){
+				var site = encodeURI(deployUrl);
+				var url = '';
+				var html = '';
+				var ratio = contentJson.attributes.ratio;
+
+				if(ratio){	
+					url = 'https://demo.fishawack.solutions/Lab/Ar/index.html';
+					url += '?site=' + encodeURIComponent(deployUrl);
+					url += '&ratio=' + ratio;
+
+					html += '<li><a href="' + url + '">' + site + '</a> (forced: ' + ratio + ')</li>';
+				} else {
+					url = site;
+					html += '<li><a href="' + url + '">' + url + '</a></li>';
+				}
+
+				return html;
+			}())
+		%>
 	</ul>
 </li>

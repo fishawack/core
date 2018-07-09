@@ -35,8 +35,8 @@ var quality = 'sd';
 if(typeof deployEnv.pdf === 'string'){
     quality = deployEnv.pdf;
 
-    if(deployEnv.ratio){
-        ratio = deployEnv.ratio;
+    if(contentJson.attributes.ratio){
+        ratio = contentJson.attributes.ratio;
     }
 }
 

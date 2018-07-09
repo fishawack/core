@@ -18,6 +18,10 @@
 	            "repo": {
 		        	"type": "string"
 	            },
+	            "ratio": {
+		        	"type": "string",
+		        	"enum": ["16:9", "4:3"]
+	            },
 	            "code": {
 		        	"type": "string"
 	            },
