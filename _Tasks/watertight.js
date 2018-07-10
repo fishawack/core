@@ -78,8 +78,12 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: watertightPath + '/www/watertight/public_html/',
-                        src: ['**/*', ('**/' + ssl)],
+                        src: ['**/*'],
                         dest: '_Login/'
+                    },
+                    {
+                        src: watertightPath + '/www/watertight/public_html/' + ssl,
+                        dest: '_Login/.htaccess'
                     },
                     {
                         expand: true,
@@ -101,8 +105,12 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: watertightPath + '/www/watertight/',
-                        src: ['**/*', ('**/' + ssl), '!composer.*'],
+                        src: ['**/*', '!composer.*'],
                         dest: '_Login/'
+                    },
+                    {
+                        src: watertightPath + '/www/watertight/public_html/' + ssl,
+                        dest: '_Login/public_html/.htaccess'
                     },
                     {
                         expand: true,
