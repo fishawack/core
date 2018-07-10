@@ -64,7 +64,7 @@ module.exports = function(grunt) {
 
         var copy = grunt.config.get('copy');
 
-        var ssl = (deployEnv.ssl) ? '.htaccess-nossl' : '.htaccess';
+        var ssl = (deployEnv.ssl === false) ? '.htaccess-nossl' : '.htaccess';
 
         if(deployEnv.subDir){
             copy['login'] = {
