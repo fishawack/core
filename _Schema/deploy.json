@@ -29,6 +29,9 @@
 					"type": ["string", "null"],
 					"enum": ["bootstrap", "style-1", null]
 				},
+				"ssl": {
+					"type": "boolean"
+				},
 				"logo": {
 					"description": "Set which logo to use on the login page (only works on style-1)",
 					"type": "string"

@@ -70,7 +70,7 @@
     "svg-to-png": "3.1.2",
     "uncss": "0.16.2",
     "vueify": "9.4.1",
-    "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v4.0.0",
+    "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v4.0.1",
     "wdio-mocha-framework": "0.5.11",
     "wdio-selenium-standalone-service": "0.0.9",
     "webdriverio": "4.8.0",

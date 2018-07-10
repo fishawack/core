@@ -64,6 +64,8 @@ module.exports = function(grunt) {
 
         var copy = grunt.config.get('copy');
 
+        var ssl = (deployEnv.ssl) ? '.htaccess-nossl' : '.htaccess';
+
         if(deployEnv.subDir){
             copy['login'] = {
                 files: [
@@ -76,7 +78,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: watertightPath + '/www/watertight/public_html/',
-                        src: ['**/*', '**/.htaccess'],
+                        src: ['**/*', ('**/' + ssl)],
                         dest: '_Login/'
                     },
                     {
@@ -99,7 +101,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: watertightPath + '/www/watertight/',
-                        src: ['**/*', '**/.htaccess', '!composer.*'],
+                        src: ['**/*', ('**/' + ssl), '!composer.*'],
                         dest: '_Login/'
                     },
                     {
