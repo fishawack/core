@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         var deploy = [];
 
         if(deployTarget === 'production'){
-            deploy.push('env:dist', 'browserify:dist', 'uglify:dist');
+            deploy.push('env:dist', 'clean:browserify', 'browserify:dist', 'uglify:dist');
         }
 
         if(deployEnv.ftp){
