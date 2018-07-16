@@ -48,7 +48,11 @@
             },
             {
                 "@name": "StatusBarOverlaysWebView",
-                "@value": "false"
+                "@value": "true"
+            },
+            {
+                "@name": "AppendUserAgent",
+                "@value": "Phonegap"
             }
         ],
         "allow-navigation": {
