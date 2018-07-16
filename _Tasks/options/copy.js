@@ -1,11 +1,13 @@
 module.exports = {
     content: {
-        files: [{
-            expand: true,
-            cwd: '_Build/content/media',
-            src: ['**/*'],
-            dest: '<%= root %>/media/content'
-        }]
+        files: [
+            {
+                expand: true,
+                cwd: '_Build/content/media',
+                src: ['**/*'],
+                dest: '<%= root %>/media/content'
+            }
+        ].concat(contentJson.attributes.copy || [])
     },
     assets: {
         files: [{

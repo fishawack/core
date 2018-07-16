@@ -90,6 +90,28 @@
 						]
 					}
 				},
+				"copy": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"src": {
+								"type": ["string", "array", "null"],
+								"items": {
+									"type": "string"
+								}
+							},
+							"dest": {
+								"type": ["string", "array", "null"],
+								"items": {
+									"type": "string"
+								}
+							},
+							"expand": {"type": "boolean"},
+							"cwd": {"type": "string"}
+						}
+					}
+				},
 				"modernizr": {
 					"type": "array",
 					"items": {
