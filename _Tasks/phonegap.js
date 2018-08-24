@@ -39,8 +39,13 @@ function checkAppStatus(command, done, grunt){
     exec(command, function(error, stdout, stderr) {
         var response = JSON.parse(stdout);
 
+        if(getFilesize("_Zips/Deploy.zip") < 5000000){
+            started = true;
+        }
+
         if(!response.error && !started){
             grunt.log.warn('Still working its way through phonegap backend...');
+            grunt.verbose.warn(response);
         } else if(response.error){
             started = true;
             

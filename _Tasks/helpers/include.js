@@ -280,7 +280,7 @@ module.exports = function(grunt, hasBase) {
         return found;
     }
 
-	this.getFilesizeInBytes = function (filename) {
+	this.getFilesize = function (filename) {
         var fs = require("fs");
         var stats;
 
@@ -292,8 +292,12 @@ module.exports = function(grunt, hasBase) {
         }
         
         var stats = fs.statSync(filename);
-        var fileSizeInBytes = stats["size"];
-        return formatBytes(fileSizeInBytes, 1);
+        
+        return stats["size"];;
+    }
+
+	this.getFilesizeInBytes = function (filename) {
+        return formatBytes(getFilesize(filename), 1);
     }
 
     this.formatBytes = function(bytes, decimals) {
