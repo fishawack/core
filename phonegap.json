@@ -3,6 +3,7 @@
         "@xmlns": "http://www.w3.org/ns/widgets",
         "@xmlns:gap": "http://phonegap.com/ns/1.0",
         "@id": "<%= contentJson.attributes.phonegap.bundle %>",
+        "@version": "<%= pkg.version %>",
         "name": "<%= contentJson.attributes.title %>",
         "author": {
             "@href": "http://www.fishawack.com",
@@ -53,6 +54,10 @@
             {
                 "@name": "AppendUserAgent",
                 "@value": "Phonegap"
+            },
+            {
+                "@name": "AllowInlineMediaPlayback",
+                "@value": "true"
             }
         ],
         "allow-navigation": {
