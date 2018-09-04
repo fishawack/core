@@ -29,7 +29,7 @@
     "grunt-contrib-jshint": "0.11.2",
     "grunt-contrib-uglify": "2.0.0",
     "grunt-contrib-watch": "1.0.0",
-    "grunt-electron": "7.0.0",
+    "grunt-electron": "9.0.1",
     "grunt-env": "0.4.4",
     "grunt-fontello-svg": "0.1.0",
     "grunt-ftpscript": "0.1.7",
