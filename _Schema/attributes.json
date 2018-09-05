@@ -29,7 +29,15 @@
 		        	"type": "string"
 	            },
 	            "electron": {
-	            	"type": "boolean"
+	            	"type": ["object", "boolean"],
+					"properties": {
+						"dependancies": {
+							"type": "object",
+				        	"patternProperties": {
+		        				"additionalProperties": true
+		        			}
+						}
+					},
 	            },
 	            "cms": {
 	            	"type": "string"

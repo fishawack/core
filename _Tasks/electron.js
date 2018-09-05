@@ -1,11 +1,32 @@
+var exec = require('child_process').exec;
+
 module.exports = function(grunt) {
-    grunt.registerTask('package:electron', ['clean:electron', 'copy:electron', 'write:electron', 'electron']);
+    grunt.registerTask('package:electron', ['clean:electron', 'copy:electron', 'write:electron', 'install:electron', 'electron']);
 
     grunt.registerTask('write:electron', function(){
-        grunt.file.write('_Packages/Electron/App/package.json', JSON.stringify({
+    	var package = {
             "name": contentJson.attributes.title.toLowerCase().replace(/ /g,'-'),
-            "version": "1.0.0",
+            "version": grunt.config.get('pkg').version,
             "main": "index.js"
-        }, null, 4));
+        };
+
+        if(typeof contentJson.attributes.electron === 'object'){
+        	package = Object.assign(package, contentJson.attributes.electron);
+        }
+
+        grunt.file.write('_Packages/Electron/App/package.json', JSON.stringify(package, null, 4));
+    });
+
+    grunt.registerTask('install:electron', function(){
+        var done = this.async();
+
+        grunt.log.writeln('Installing electron dependencies...');
+
+        exec('npm --prefix _Packages/Electron/App install --no-save _Packages/Electron/App --production', function(error, stdout, stderr) {
+        	
+	        console.log(stdout, stderr);
+
+	        done();
+	    });
     });
 };
