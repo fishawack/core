@@ -31,13 +31,11 @@
 	            "electron": {
 	            	"type": ["object", "boolean"],
 					"properties": {
-						"dependancies": {
+						"dependencies": {
 							"type": "object",
-				        	"patternProperties": {
-		        				"additionalProperties": true
-		        			}
+							"additionalProperties": true
 						}
-					},
+					}
 	            },
 	            "cms": {
 	            	"type": "string"
