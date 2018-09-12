@@ -125,12 +125,20 @@ module.exports = function(grunt, hasBase) {
                 	/.deactive/i,
 					/.disabled/i,
 					/.capture/i,
-					/labD3/i
+					/.icon/i,
+					/labD3/i,
+					/span/i,
+					/sup/i,
+					/sub/i,
+					/small/i,
+					/strong/i,
 				],
                 inject: function(window){
                 	if(!contentJson.attributes.modernizr.length){
                 		window.document.documentElement.classList.add('modern');
                 	} else {
+                		window.document.documentElement.classList.add('no-js', 'js', 'loading', 'staging', 'production', 'qc');
+
                 		contentJson.attributes.modernizr.forEach(function(d){
                     		window.document.documentElement.classList.add('no-' + d, d);
                     	});
