@@ -5,7 +5,8 @@ module.exports = {
         },
         'cwd': '<%= root %>', 
         'src': ['**/*'],
-        'expand': true
+        'expand': true,
+        'dot': true
     },
     watertight: {
         "options": {
@@ -13,7 +14,8 @@ module.exports = {
         },
         'cwd': '_Login', 
         'src': ['**/*', '**/.htaccess'],
-        'expand': true
+        'expand': true,
+        'dot': true
     },
     app: {
         "options": {
@@ -21,7 +23,8 @@ module.exports = {
         },
         'cwd': '_Output/', 
         'src': ['**'],
-        'expand': true
+        'expand': true,
+        'dot': true
     },
     mac: {
         "options": {
@@ -29,7 +32,8 @@ module.exports = {
         },
         'cwd': '_Packages/Electron/<%= contentJson.attributes.title %>-darwin-x64/', 
         'src': ['**'],
-        'expand': true
+        'expand': true,
+        'dot': true
     },
     win: {
         "options": {
@@ -37,7 +41,8 @@ module.exports = {
         },
         'cwd': '_Packages/Electron/<%= contentJson.attributes.title %>-win32-x64/', 
         'src': ['**'],
-        'expand': true
+        'expand': true,
+        'dot': true
     },
     phonegap: {
         "options": {
@@ -45,7 +50,8 @@ module.exports = {
         }, 
         'cwd': '_Packages/Phonegap', 
         'src': ['**'],
-        'expand': true
+        'expand': true,
+        'dot': true
     },
     ios: {
         "options": {
@@ -53,6 +59,7 @@ module.exports = {
         },
         'cwd': '_Packages/iOS/', 
         'src': ['app.ipa'],
-        'expand': true
+        'expand': true,
+        'dot': true
     }
 }
