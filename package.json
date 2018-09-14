@@ -20,7 +20,7 @@
     "grunt-casperjs": "2.2.1",
     "grunt-compile-handlebars": "git+https://github.com/mikemellor11/grunt-compile-handlebars.git#master",
     "grunt-contrib-clean": "1.0.0",
-    "grunt-contrib-compress": "1.3.0",
+    "grunt-contrib-compress": "1.4.3",
     "grunt-contrib-concat": "1.0.1",
     "grunt-contrib-connect": "1.0.1",
     "grunt-contrib-copy": "0.8.0",
