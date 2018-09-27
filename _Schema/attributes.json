@@ -124,6 +124,10 @@
 						"type": "string"
 					}
 		        },
+		        "env": {
+		        	"type": "object",
+		        	"additionalProperties": true
+		        },
 		        "uncss": {
 		        	"type": "array",
 		        	"items": {

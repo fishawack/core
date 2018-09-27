@@ -61,7 +61,11 @@
 				},
 				"pdf": {
 					"type": ["string", "boolean"]
-				}
+				},
+				"env": {
+		        	"type": "object",
+		        	"additionalProperties": true
+		        }
 			}
 		}
 	}
