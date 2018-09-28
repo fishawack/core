@@ -6,7 +6,6 @@ module.exports = {
     },
     continuous: {
         configFile: '<%= configPath %>karma.conf.js',
-        singleRun: true,
-        browsers: ['PhantomJS', 'Chrome']
+        singleRun: true
     }
 }
