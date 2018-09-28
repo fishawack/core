@@ -38,6 +38,7 @@ module.exports = function(config) {
 
     browserify: {
         transform: [
+                ['brfs'],
                 ['envify', {global: true}],
                 ['babelify', {
                     global: true,
