@@ -11,6 +11,7 @@
     "browserify-istanbul": "3.0.1",
     "chai": "3.4.0",
     "cssnano": "3.10.0",
+    "easy-pdf-merge": "0.2.0",
     "envify": "4.0.0",
     "gh-badges": "1.3.0",
     "git-branch": "1.0.0",
@@ -73,6 +74,8 @@
     "vueify": "9.4.1",
     "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v4.0.1",
     "wdio-mocha-framework": "0.5.11",
+    "wdio-phantomjs-service": "0.2.2",
+    "wdio-screenshot": "0.6.0",
     "wdio-selenium-standalone-service": "0.0.9",
     "webdriverio": "4.8.0",
     "xmlbuilder": "8.2.2"

@@ -1,10 +1,11 @@
 module.exports = function(grunt) {
 	var PDFImagePack = require("pdf-image-pack");
-	var pdfCreator = new PDFImagePack();
-
+	var async = require('async');
 	var path = '.tmp/screenshots/';
+	var merge = require('easy-pdf-merge');
 
 	grunt.file.mkdir('_Pdfs');
+	grunt.file.mkdir('.tmp/pdfs/');
 
 	this.createPdfsAndZips = function(){
 		describe("Create pdf", function () {
@@ -19,15 +20,32 @@ module.exports = function(grunt) {
 
 		        arrayOfScreens.alphanumSort(false);
 
+		        var pdfTasks = [];
+
+		        for(var i = 0; i < arrayOfScreens.length; i++){
+		        	pdfTasks.push((function(i){
+		        		return function(callback){
+			        		new PDFImagePack().output([path + arrayOfScreens[i]], '.tmp/pdfs/' + i + '.pdf', function(err){
+				            	if(err){
+				            		console.log(err);
+				            	}
+
+				            	callback();
+				            });
+			        	};
+		        	}(i)));
+		        }
+
 		        browser.call(function () {
 			        return new Promise(function(resolve, reject) {
-			            pdfCreator.output(arrayOfScreens.map(function(d){return path + d;}), '_Pdfs/raw.pdf', function(err){
-			            	if(err){
-			            		console.log(err);
-			            		reject();
-			            	}
+			            async.series(pdfTasks, function(){
+			            	merge(arrayOfScreens.map(function(d, i){return '.tmp/pdfs/' + i + '.pdf';}), '_Pdfs/raw.pdf',function(err){
+							        if(err)
+							        	return console.log(err);
 
-			            	resolve();
+							        console.log('Successfully merged!');
+							        resolve();
+							});
 			            });
 			        });
 			    });
