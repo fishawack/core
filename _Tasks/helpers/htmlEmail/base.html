@@ -20,6 +20,18 @@
           .badge, .badge img, .badge svg{vertical-align: middle; display: inline-block; margin: 0;}
           .badge__container *{vertical-align: middle;}
           hr{margin: 1em 0;}
+          a{ 
+            /* Warning: Needed for oldIE support, but words are broken up letter-by-letter */
+            -ms-word-break: break-all;
+            word-break: break-all;
+            /* Non standard for webkit */
+            word-break: break-word;
+
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            -ms-hyphens: auto;
+            hyphens: auto;
+          }
         </style>
     </head>
     <body style="width:100%; margin:0; padding:0; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">

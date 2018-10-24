@@ -23,16 +23,20 @@
 				var html = '';
 				var ratio = contentJson.attributes.ratio;
 
-				if(ratio){	
-					url = 'https://demo.fishawack.solutions/Lab/Ar/index.html';
+				if(ratio){
+					if(deployEnv.url.split(':')[0] === 'https'){
+						url = 'https://demo.fishawack.solutions/Lab/Ar/index.html';
+					} else {
+						url = 'http://digital-internal.fishawack.staging/Lab/Ar/index.html';
+					}
+
 					url += '?site=' + encodeURIComponent(ext);
 					url += '&ratio=' + ratio;
-
-					html += '<li><strong>Auto-login url</strong>: <a href="' + url + '">' + site + '</a> (forced: ' + ratio + ')</li>';
 				} else {
 					url = site;
-					html += '<li><strong>Auto-login url</strong>: <a href="' + url + '">' + url + '</a></li>';
 				}
+
+				html += '<li><strong>Auto-login url</strong>: <a href="' + url + '">' + url + '</a></li>';
 
 				return prev += '<li><strong>User</strong>:<ul>' + username + password + valid + html + '</ul></li>';
 			}, '')
