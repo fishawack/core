@@ -14,7 +14,7 @@ module.exports = {
 	unpack: {
 		command: [
 			'cd <%= deployLocation %>',
-			'unzip Deploy.zip',
+			'unzip -o Deploy.zip',
 			'rm Deploy.zip'
 		].join(' && ')
 	},
