@@ -60,15 +60,15 @@ browser.setViewportSize({
 if(typeof capturePage === 'function'){
     capturePage();
 } else {
-    describe('Base', function () {
-        it('Screenshot Page / Refs / Foots', function() {
+    describe('pdf', function () {
+        it('Screenshot', function() {
             browser.url('http://localhost:9001/index.html?capture=true');
 
             browser.waitForExist('.loaded', 50000);
             
             browser.pause(delay);
 
-            browser.saveScreenshot(".tmp/screenshots/" + (captureIndex++) + ".png");
+            browser.saveDocumentScreenshot(".tmp/screenshots/" + (captureIndex++) + ".png");
 
             createPdfsAndZips();
         });

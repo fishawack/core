@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 		        for(var i = 0; i < arrayOfScreens.length; i++){
 		        	pdfTasks.push((function(i){
 		        		return function(callback){
-			        		new PDFImagePack().output([path + arrayOfScreens[i]], '.tmp/pdfs/' + i + '.pdf', function(err){
+			        		new PDFImagePack().output([path + arrayOfScreens[i]], ((arrayOfScreens.length > 1) ? '.tmp/pdfs/' + i + '.pdf' : '_Pdfs/raw.pdf'), function(err){
 				            	if(err){
 				            		console.log(err);
 				            	}
@@ -39,13 +39,17 @@ module.exports = function(grunt) {
 		        browser.call(function () {
 			        return new Promise(function(resolve, reject) {
 			            async.series(pdfTasks, function(){
-			            	merge(arrayOfScreens.map(function(d, i){return '.tmp/pdfs/' + i + '.pdf';}), '_Pdfs/raw.pdf',function(err){
-							        if(err)
-							        	return console.log(err);
+			            	if(arrayOfScreens.length > 1){
+			            		merge(arrayOfScreens.map(function(d, i){return '.tmp/pdfs/' + i + '.pdf';}), '_Pdfs/raw.pdf',function(err){
+								        if(err)
+								        	return console.log(err);
 
-							        console.log('Successfully merged!');
-							        resolve();
-							});
+								        console.log('Successfully merged!');
+								        resolve();
+								});
+			            	} else {
+			            		resolve();
+			            	}
 			            });
 			        });
 			    });
