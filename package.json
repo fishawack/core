@@ -1,6 +1,26 @@
 {
-  "name": "config-grunt",
+  "name": "@fishawack/config-grunt",
   "version": "3.2.21",
+  "description": "Grunt config building web application",
+  "scripts": {
+    "start": "grunt",
+    "setup": "npm install --no-save",
+    "deploy": "npm run deploy-s && grunt mail",
+    "deploy-s": "npm run production && grunt deploy && grunt package",
+    "production": "npm run content && grunt dist && npm test",
+    "content": "grunt content",
+    "test": "grunt validate"
+  },
+  "license": "BSD-3-Clause",
+  "author": {
+    "name": "Fishawack",
+    "url": "http://fishawack.com/"
+  },
+  "keywords": [
+    "grunt",
+    "config",
+    "build"
+  ],
   "dependencies": {
     "autoprefixer": "6.3.1",
     "babelify": "8.0.0",
@@ -79,19 +99,5 @@
     "wdio-selenium-standalone-service": "0.0.9",
     "webdriverio": "4.8.0",
     "xmlbuilder": "8.2.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://mmellor@bitbucket.org/"
-  },
-  "scripts": {
-    "start": "grunt",
-    "setup": "npm install --no-save",
-    "deploy": "npm run deploy-s && grunt mail",
-    "deploy-s": "npm run production && grunt deploy && grunt package",
-    "production": "npm run content && grunt dist && npm test",
-    "content": "grunt content",
-    "test": "grunt validate"
-  },
-  "license": "MIT"
+  }
 }

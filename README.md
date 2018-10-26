@@ -47,3 +47,4 @@ Create the following files - the json content can be found on gitlab snippets un
 * dumbledore.json
 * vidaHost-fishawack.json
 * vidaHost-meeting.json
+* fishawack.json
