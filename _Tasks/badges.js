@@ -69,7 +69,7 @@ function issues(cb){
     request({
         url: "http://diggit01.fw.local/api/v4/projects/" + encodeURIComponent(contentJson.attributes.repo) + "/issues",
         headers: {
-            "PRIVATE-TOKEN": "Qc9suJeXEPmiB3gDbuxX"
+            "PRIVATE-TOKEN": config.targets.misc.gitlab.token
         }
     }, function(error, response, body){
         var open = 0;

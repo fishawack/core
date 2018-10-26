@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 
         grunt.log.writeln('Polling phonegap build...');
 
-        checkAppStatus("curl " + grunt.template.process('https://build.phonegap.com/api/v1/apps/<%= contentJson.attributes.phonegap.appID %>/ios?auth_token=9tsERPEn2PamsbzFFjAB'), done, grunt);
+        checkAppStatus("curl " + grunt.template.process('https://build.phonegap.com/api/v1/apps/<%= contentJson.attributes.phonegap.appID %>/ios?auth_token=<%= config.targets.misc.phonegap.token %>'), done, grunt);
     });
 
     grunt.registerTask('package:phonegap', function(){
