@@ -2,7 +2,7 @@ module.exports = function(grunt) {
 
     require('./_Tasks/helpers/include.js')(grunt);
 
-    var config = {
+    config = {
         dev: grunt.cli.tasks.indexOf('dist') === -1,
         pkg: grunt.file.readJSON('package.json'),
         //CONTENT IN CONIFG SO IT CAN BE PASSED TO GRUNT TASKS

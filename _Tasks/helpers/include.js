@@ -13,6 +13,10 @@ module.exports = function(grunt, hasBase) {
 	    	{
 	    		file: '.ftppass',
 	    		key: 'ftp'
+	    	},
+	    	{
+	    		file: 'misc.json',
+	    		key: 'misc'
 	    	}
 	    ];
 
@@ -441,6 +445,8 @@ module.exports = function(grunt, hasBase) {
 	if(grunt && !hasBase){
 		grunt.file.setBase('../' + (devProject || '..') + '/');
 	}
+
+	this.config = null;
 
 	this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/config-grunt/';
 
