@@ -443,12 +443,12 @@ module.exports = function(grunt, hasBase) {
 	this.devProject = null;
 
 	if(grunt && !hasBase){
-		grunt.file.setBase('../' + (devProject || '..') + '/');
+		grunt.file.setBase('../' + (devProject || '../..') + '/');
 	}
 
 	this.config = null;
 
-	this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/config-grunt/';
+	this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/@fishawack/config-grunt/';
 
 	if(grunt){
 		this.contentPath = (fileExists('content.json', '_Build/', grunt)) ? '_Build/content.json' : '_Build/example/content.json';

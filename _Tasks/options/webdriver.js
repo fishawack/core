@@ -1,6 +1,6 @@
 module.exports = {
     pdf: {
-        configFile: 'node_modules/config-grunt/wdio.conf.js',
+        configFile: 'node_modules/@fishawack/config-grunt/wdio.conf.js',
         specs: [
             '<%= configPath %>_Node/crawl.js'
         ]
