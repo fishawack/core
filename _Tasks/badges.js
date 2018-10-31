@@ -1,3 +1,9 @@
+var token = '';
+
+if(config.targets.misc && config.targets.misc.gitlab){
+    token = config.targets.misc.gitlab.token;
+}
+
 module.exports = function(grunt) {
     grunt.registerTask('badges', function() {
         var async = require('async');
@@ -69,7 +75,7 @@ function issues(cb){
     request({
         url: "http://diggit01.fw.local/api/v4/projects/" + encodeURIComponent(contentJson.attributes.repo) + "/issues",
         headers: {
-            "PRIVATE-TOKEN": config.targets.misc.gitlab.token
+            "PRIVATE-TOKEN": token
         }
     }, function(error, response, body){
         var open = 0;

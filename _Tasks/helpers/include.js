@@ -54,8 +54,7 @@ module.exports = function(grunt, hasBase) {
 					fs.copyFileSync(path + file, save);
 					grunt.log.ok(file + ' copied');
 				} catch(e){
-					grunt.fail.warn(file + ' not found at ' + path);
-					return;
+					grunt.log.warn(file + ' not found at ' + path);
 				}
 		    }
 
