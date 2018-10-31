@@ -8,7 +8,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '../' + (devProject || '..') + '/',
+    basePath: '../' + (devProject || '../..') + '/',
 
 
     // frameworks to use
@@ -56,9 +56,9 @@ module.exports = function(config) {
             './_Build/js/libs/',
             './_Build/js/charts/',
             './_Build/js/data/',
-            './node_modules/lab-d3/_Build/js/',
-            './node_modules/lab-d3/_Build/js/charts/',
-            './node_modules/lab-d3/_Build/js/data/'
+            './node_modules/@fishawack/lab-d3/_Build/js/',
+            './node_modules/@fishawack/lab-d3/_Build/js/charts/',
+            './node_modules/@fishawack/lab-d3/_Build/js/data/'
         ]
     },
 

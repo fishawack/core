@@ -20,10 +20,10 @@ module.exports = {
 				'./_Build/js/libs/',
 				'./_Build/js/charts/',
 				'./_Build/js/data/',
-				'./node_modules/lab-d3/_Build/js/',
-				'./node_modules/lab-d3/_Build/js/libs',
-				'./node_modules/lab-d3/_Build/js/charts/',
-				'./node_modules/lab-d3/_Build/js/data/'
+				'./node_modules/@fishawack/lab-d3/_Build/js/',
+				'./node_modules/@fishawack/lab-d3/_Build/js/libs',
+				'./node_modules/@fishawack/lab-d3/_Build/js/charts/',
+				'./node_modules/@fishawack/lab-d3/_Build/js/data/'
 			]
 		},
 		cacheFile: 'node_modules/.browserify-cache.json'
