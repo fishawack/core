@@ -20,8 +20,11 @@ module.exports = function(grunt) {
         };
 
         contentJson.attributes.content.forEach(function(d){
-            if(d.ftp){
-                shell.content.command.push('wget -r --user=\"<%= targets.ftp["' + d.ftp + '"].username %>\" --password=\"<%= targets.ftp["' + d.ftp + '"].password %>\" -P ' + ((d.saveTo) ? d.saveTo : '_Build/content/') + ' -nH --cut=' + (d.location.split('/').length - 1) + ' ftp://' + d.ftp + '/' + d.location);
+            if(d.ftp || d.ftps){
+                var ssl = (d.ftps) ? 'ftps' : 'ftp';
+                var creds = (d.ftps) ? d.ftps : d.ftp;
+
+                shell.content.command.push('wget -r --user=\'<%= targets.ftp["' + creds + '"].username %>\' --password=\'<%= targets.ftp["' + creds + '"].password %>\' -P ' + ((d.saveTo) ? d.saveTo : '_Build/content/') + ' -nH --cut=' + (d.location.split('/').length - 1) + ' \'' + ssl + '://' + creds + '/' + d.location + '\'');
             } else if(d.ssh) {
                 shell.content.command.push('scp -r <%= targets["' + d.ssh + '"].username %>@<%= targets["' + d.ssh + '"].host %>:' + d.location + ' ' + ((d.saveTo) ? d.saveTo : '_Build/content/'));
             }
