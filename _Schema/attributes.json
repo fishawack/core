@@ -167,6 +167,12 @@
 		        	"items": {
 						"type": "string"
 					}
+		        },
+		        "babelify": {
+		        	"type": "array",
+		        	"items": {
+						"type": "string"
+					}
 		        }
             },
             "required": ["title", "repo", "root", "googleTrackingID", "modernizr", "uncss", "template", "toggle"]

@@ -6,7 +6,7 @@ module.exports = {
 				}],
 				['babelify', {
 					global: true,
-					ignore: /node_modules\/(?!lab-d3|vue2-filters)(?!$.)/,
+					ignore: RegExp('node_modules\/(?!' + ['@fishawack', 'vue2-filters'].concat((contentJson.attributes.babelify || [])).join('|') +')(?!$.)', 'g'),
 					presets: ["env"],
 					plugins: ["transform-object-assign"],
 					babelrc: false
