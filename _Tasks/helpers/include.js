@@ -135,6 +135,7 @@ module.exports = function(grunt, hasBase) {
 					/sub/i,
 					/small/i,
 					/strong/i,
+					/a/i
 				],
                 inject: function(window){
                 	if(!contentJson.attributes.modernizr.length){

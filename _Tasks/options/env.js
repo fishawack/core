@@ -6,12 +6,9 @@ module.exports = {
 		NODE_ENV : 'development',
 		NODE_IP : '<%= getIP() %>'
     },
-    stage : {
-		NODE_ENV : 'staging',
-		concat : contentJson.attributes.staging && contentJson.attributes.staging.env || {}
-    },
     dist : {
 		NODE_ENV : 'production',
-		concat : contentJson.attributes.production && contentJson.attributes.production.env || {}
+		NODE_TARGET : deployTarget,
+		concat : contentJson.attributes[deployTarget] && contentJson.attributes[deployTarget].env || {}
     }
 }

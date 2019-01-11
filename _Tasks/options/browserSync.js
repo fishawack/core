@@ -5,7 +5,7 @@ module.exports = {
                 '<%= root %>/css/*.css',
                 '<%= root %>/*.html',
                 '<%= root %>/js/*.js',
-                '<%= root %>/media/**/*.{png,jpg,jpeg,gif,JPG,JPEG,PNG,GIF}',
+                '<%= root %>/media/**/*.{png,jpg,jpeg,gif,JPG,JPEG,PNG,GIF,json}',
                 '<%= root %>/svg/**/*.{png,jpg,jpeg,gif,JPG,JPEG,PNG,GIF}'
             ]
         },
