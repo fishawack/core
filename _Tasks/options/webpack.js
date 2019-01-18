@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const path = require('path');
 
@@ -28,7 +29,14 @@ module.exports = {
 				'./node_modules/@fishawack/lab-d3/_Build/js/libs',
 				'./node_modules/@fishawack/lab-d3/_Build/js/charts/',
 				'./node_modules/@fishawack/lab-d3/_Build/js/data/',
-				'node_modules'
+				'node_modules',
+				(devProject) ? path.resolve(__dirname, "../../node_modules") : ""
+			]
+		},
+		resolveLoader: {
+			modules: [
+				"node_modules",
+				(devProject) ? path.resolve(__dirname, "../../node_modules") : ""
 			]
 		},
 		module: {
@@ -49,9 +57,11 @@ module.exports = {
 				{
 					loader: 'babel-loader',
 					options: {
-						presets: ['babel-preset-env'],
+						presets: [
+							require.resolve('babel-preset-env')
+						],
 						plugins: [
-							'babel-plugin-transform-object-assign'
+							require.resolve('babel-plugin-transform-object-assign')
 						]
 					}
 				}
@@ -61,7 +71,14 @@ module.exports = {
 		},
 		plugins: [
 	    	// make sure to include the plugin!
-	    	new VueLoaderPlugin()
+	    	new VueLoaderPlugin(),
+	    	new webpack.EnvironmentPlugin(
+	    		Object.assign(
+	    			{ NODE_TARGET : deployTarget },
+	    			contentJson.attributes.env,
+	    			contentJson.attributes[deployTarget] && contentJson.attributes[deployTarget].env || {}
+    			)
+    		)
 	    ]
 	}
 }
