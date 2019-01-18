@@ -1,7 +1,6 @@
 module.exports = {
 	build: [".tmp"],
     dist: ["<%= root %>/**/*", "_Build/**/generated/**/*"],
-    browserify: ["node_modules/.browserify-cache.json"],
     content: ["_Build/content/**/*"],
     zip: ['_Zips/**/*'],
     deploy: ["_Login"],

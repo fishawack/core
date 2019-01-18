@@ -4,11 +4,11 @@ module.exports = {
     },
     vue: {
         files: ['_Build/vue/**/*.{vue,js}'],
-        tasks: ['jshint', 'browserify:dev', 'concat:dev', 'compile-vue', 'sass', 'postcss:dev', 'clean:build']
+        tasks: ['jshint', 'webpack', 'concat:dev', 'compile-vue', 'sass', 'postcss:dev', 'clean:build']
     },
     scripts: {
         files: ['_Build/js/**/*.js', '!_Build/js/generated/**/*'],
-        tasks: ['jshint', 'browserify:dev', 'concat:dev', 'karma:unit:run']
+        tasks: ['jshint', 'webpack', 'concat:dev', 'karma:unit:run']
     },
     styles: {
         files: ['_Build/vue/**/*.scss', '_Build/sass/**/*.scss', '_Build/sass/**/*.json'],
