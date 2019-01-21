@@ -1,19 +1,26 @@
 const webpack = require('webpack');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const path = require('path');
+
+const grunt = require('grunt');
+
+// Javascript files in _Build/js that start with '--' will be treated as entry points and an output file will be generated with the same name minus the '--' prefix i.e _Build/js/libs/--test.js -> _Output/js/test.js
+var entryPoints = {};
+grunt.file.expand({
+	expand: true,
+	cwd: './_Build/js/'
+}, '**/--*.js').forEach(function(element, index){
+	entryPoints[element.split('--')[1].split('.js')[0]] = './_Build/js/' + element;
+});
 
 module.exports = {
 	options: {
 		watch: false,
-		cache: true
-	},
-	default: {
-		mode: process.env.NODE_ENV,
-		entry: './_Build/js/script.js',
-		output: {
-			filename: 'script.js',
-			path: path.resolve(process.cwd(), './_Output/js')
-		},
+		cache: true,
+		entry: Object.assign(
+			{ script: './_Build/js/script.js' },
+			entryPoints
+		),
 		resolve: {
 			alias: {
 				'vue$': 'vue/dist/vue.runtime.common.js',
@@ -30,13 +37,13 @@ module.exports = {
 				'./node_modules/@fishawack/lab-d3/_Build/js/charts/',
 				'./node_modules/@fishawack/lab-d3/_Build/js/data/',
 				'node_modules',
-				(devProject) ? path.resolve(__dirname, "../../node_modules") : ""
+				path.resolve(__dirname, "../../node_modules") // Used for config-grunt dev
 			]
 		},
 		resolveLoader: {
 			modules: [
 				"node_modules",
-				(devProject) ? path.resolve(__dirname, "../../node_modules") : ""
+				path.resolve(__dirname, "../../node_modules") // Used for config-grunt dev
 			]
 		},
 		module: {
@@ -79,6 +86,31 @@ module.exports = {
 	    			contentJson.attributes[deployTarget] && contentJson.attributes[deployTarget].env || {}
     			)
     		)
-	    ]
+	    ],
+	    optimization: {
+			splitChunks: ((!contentJson.attributes.splitChunks) ? {} : {
+				cacheGroups: {
+					commons: {
+						name: 'commons',
+						chunks: 'initial',
+						minChunks: 2
+					}
+				}
+			})
+		}
+	},
+	dev: {
+		mode: "development",
+		output: {
+			filename: '[name].js',
+			path: path.resolve(process.cwd(),'<%= root %>/js/')
+		}
+	},
+	dist:{
+		mode: "production",
+		output: {
+			filename: '[name].js',
+			path: path.resolve(process.cwd(), '.tmp/js/')
+		}
 	}
 }

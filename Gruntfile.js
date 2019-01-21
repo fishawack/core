@@ -49,9 +49,9 @@ module.exports = function(grunt) {
     // Setup custom postcss code / can't load from external files from plugin
     postcssCustom();
 
-    grunt.registerTask('default', ['env:dev', 'karma:unit:start', 'badges', 'jshint', 'modernizr', 'tv4', 'webpack', 'concat:dev', 'fontello_svg', 'svgfit', 'svgmin', 'svg_sprite', 'copy:content', 'copy:assets', 'copy:svg', 'copy:svgasis', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dev', 'clean:build', 'browserSync', 'watch']);
+    grunt.registerTask('default', ['env:dev', 'karma:unit:start', 'badges', 'jshint', 'modernizr', 'tv4', 'webpack:dev', 'concat:dev', 'fontello_svg', 'svgfit', 'svgmin', 'svg_sprite', 'copy:content', 'copy:assets', 'copy:svg', 'copy:svgasis', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dev', 'clean:build', 'browserSync', 'watch']);
     
-    grunt.registerTask('dist', ['env:dist', 'clean:dist', 'badges', 'jshint', 'modernizr', 'tv4', 'webpack', 'concat:dist', 'uglify:dist', 'fontello_svg', 'svgfit', 'svgmin', 'svg_sprite', 'copy:content', 'copy:assets', 'copy:svg', 'copy:svgasis', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dist', 'imagemin', 'clean:build']);
+    grunt.registerTask('dist', ['env:dist', 'clean:dist', 'badges', 'jshint', 'modernizr', 'tv4', 'webpack:dist', 'concat:dist', 'uglify:dist', 'fontello_svg', 'svgfit', 'svgmin', 'svg_sprite', 'copy:content', 'copy:assets', 'copy:svg', 'copy:svgasis', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dist', 'imagemin', 'clean:build']);
 
     grunt.registerTask('validate', ['jshint', 'tv4', 'connect', 'casperjs:local', 'karma:continuous', 'coverage']);
 };

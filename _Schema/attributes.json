@@ -134,6 +134,10 @@
 		        		"type": "string"
 		        	}
 		        },
+		        "splitChunks": {
+		        	"description": "If true will pull out shared javascript librarys to a commons.js file",
+		        	"type": "boolean"
+		        },
 		        "template": {
 		        	"type": "object",
 	    			"patternProperties": {
