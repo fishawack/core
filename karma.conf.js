@@ -1,8 +1,8 @@
 // Karma configuration
 // Generated on Tue Nov 03 2015 14:32:58 GMT+0000 (GMT)
 
-var istanbul = require('browserify-istanbul');
 require('./_Tasks/helpers/include.js')(null);
+var path = require('path');
 
 module.exports = function(config) {
   config.set({
@@ -13,7 +13,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['browserify', 'mocha', 'chai', 'sinon', 'fixture'],
+    frameworks: ['mocha', 'chai', 'sinon', 'fixture'],
 
 
     // list of files / patterns to load in the browser
@@ -33,33 +33,76 @@ module.exports = function(config) {
     preprocessors: {
         '_Test/karma/fixtures/**/*.html'   : ['html2js'],
         '_Test/karma/fixtures/**/*.json'   : ['json_fixtures'],
-        '_Test/karma/**/*.js': ['browserify']
+        '_Test/karma/**/*.js': ['webpack']
     },
 
-    browserify: {
-        transform: [
-                ['brfs'],
-                ['envify', {global: true}],
-                ['babelify', {
-                    global: true,
-                    ignore: /node_modules\/(?!lab-d3|vue2-filters)(?!$.)/,
-                    presets: ["env"],
-                    plugins: ["transform-object-assign"],
-                    babelrc: false
-                }],
-                istanbul({
-                    ignore: ['node_modules/**/*', '_Test/**/*']
-                })
-            ],
-        paths: [
-            './_Build/js/',
-            './_Build/js/libs/',
-            './_Build/js/charts/',
-            './_Build/js/data/',
-            './node_modules/@fishawack/lab-d3/_Build/js/',
-            './node_modules/@fishawack/lab-d3/_Build/js/charts/',
-            './node_modules/@fishawack/lab-d3/_Build/js/data/'
-        ]
+    // SHOULD BE PULLED FROM _Tasks/options/webpack.js, NEED TO FIGURE OUT INCLUDE ISSUE OF GRUNT VARS NOT AVAILABLE ON KARMA:UNIT:START
+    webpack: {
+        mode: "production",
+        resolve: {
+                alias: {
+                'vue$': 'vue/dist/vue.runtime.common.js',
+                'vue-router$': 'vue-router/dist/vue-router.common.js',
+                'vuex$': 'vuex/dist/vuex.common.js'
+            },
+            modules: [
+                './_Build/js/',
+                './_Build/js/libs/',
+                './_Build/js/charts/',
+                './_Build/js/data/',
+                './node_modules/@fishawack/lab-d3/_Build/js/',
+                './node_modules/@fishawack/lab-d3/_Build/js/libs',
+                './node_modules/@fishawack/lab-d3/_Build/js/charts/',
+                './node_modules/@fishawack/lab-d3/_Build/js/data/',
+                'node_modules',
+                path.resolve(__dirname, "node_modules") // Used for config-grunt dev
+            ]
+        },
+        resolveLoader: {
+            modules: [
+                "node_modules",
+                path.resolve(__dirname, "node_modules") // Used for config-grunt dev
+            ]
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.vue$/,
+                    use: [
+                        'vue-loader'
+                    ]
+                },
+                {
+                    parser: { amd: false }
+                },
+                {
+                    test: /\.m?js$/,
+                    exclude: /(node_modules|bower_components)/,
+                    use: [
+                        {
+                            loader: 'babel-loader',
+                            options: {
+                                presets: [
+                                    require.resolve('babel-preset-env')
+                                ],
+                                plugins: [
+                                    require.resolve('babel-plugin-transform-object-assign')
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    test: /\.m?js$/,
+                    include: path.resolve('./_Build/js/'),
+                    use: [
+                        {
+                            loader: 'istanbul-instrumenter-loader'
+                        }
+                    ]
+                }
+            ]
+        }
     },
 
     jsonFixturesPreprocessor: {

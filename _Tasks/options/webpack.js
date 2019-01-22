@@ -48,32 +48,32 @@ module.exports = {
 		},
 		module: {
 			rules: [
-			{
-				test: /\.vue$/,
-				use: [
-					'vue-loader'
-				]
-			},
-			{
-				parser: { amd: false }
-			},
-			{
-				test: /\.m?js$/,
-				exclude: /(node_modules|bower_components)/,
-				use: [
 				{
-					loader: 'babel-loader',
-					options: {
-						presets: [
-							require.resolve('babel-preset-env')
-						],
-						plugins: [
-							require.resolve('babel-plugin-transform-object-assign')
-						]
-					}
+					test: /\.vue$/,
+					use: [
+						'vue-loader'
+					]
+				},
+				{
+					parser: { amd: false }
+				},
+				{
+					test: /\.m?js$/,
+					exclude: /(node_modules|bower_components)/,
+					use: [
+						{
+							loader: 'babel-loader',
+							options: {
+								presets: [
+									require.resolve('babel-preset-env')
+								],
+								plugins: [
+									require.resolve('babel-plugin-transform-object-assign')
+								]
+							}
+						}
+					]
 				}
-				]
-			}
 			]
 		},
 		plugins: [
