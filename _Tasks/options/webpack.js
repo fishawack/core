@@ -22,11 +22,6 @@ module.exports = {
 			entryPoints
 		),
 		resolve: {
-			alias: {
-				'vue$': 'vue/dist/vue.runtime.common.js',
-				'vue-router$': 'vue-router/dist/vue-router.common.js',
-				'vuex$': 'vuex/dist/vuex.common.js'
-			},
 			modules: [
 				'./_Build/js/',
 				'./_Build/js/libs/',
