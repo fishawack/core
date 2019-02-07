@@ -39,6 +39,7 @@ module.exports = function(config) {
     // SHOULD BE PULLED FROM _Tasks/options/webpack.js, NEED TO FIGURE OUT INCLUDE ISSUE OF GRUNT VARS NOT AVAILABLE ON KARMA:UNIT:START
     webpack: {
         mode: "production",
+        cache: true,
         resolve: {
             modules: [
                 './_Build/js/',
@@ -92,14 +93,24 @@ module.exports = function(config) {
                     include: path.resolve('./_Build/js/'),
                     use: [
                         {
-                            loader: 'istanbul-instrumenter-loader'
-                        },
-                        query: {
-                            esModules: true
+                            loader: 'istanbul-instrumenter-loader',
+                            query: {
+                                esModules: true
+                            }
                         }
                     ]
                 }
             ]
+        }
+    },
+
+    webpackMiddleware: {
+        noInfo: true,
+        quiet: true,
+        logLevel: "error",
+        stats: {
+            // options i.e. 
+            chunks: false
         }
     },
 
