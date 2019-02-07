@@ -93,6 +93,9 @@ module.exports = function(config) {
                     use: [
                         {
                             loader: 'istanbul-instrumenter-loader'
+                        },
+                        query: {
+                            esModules: true
                         }
                     ]
                 }
