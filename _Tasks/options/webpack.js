@@ -21,6 +21,11 @@ module.exports = {
 			{ script: './_Build/js/script.js' },
 			entryPoints
 		),
+		output: {
+			filename: '[name].js',
+			chunkFilename: '[name].dynamic.js',
+			publicPath: 'js/'
+		},
 		resolve: {
 			modules: [
 				'./_Build/js/',
@@ -60,10 +65,11 @@ module.exports = {
 							loader: 'babel-loader',
 							options: {
 								presets: [
-									require.resolve('babel-preset-env')
+									require.resolve('@babel/preset-env')
 								],
 								plugins: [
-									require.resolve('babel-plugin-transform-object-assign')
+									require.resolve('@babel/plugin-transform-object-assign'),
+									require.resolve('@babel/plugin-syntax-dynamic-import')
 								]
 							}
 						}
@@ -72,7 +78,6 @@ module.exports = {
 			]
 		},
 		plugins: [
-	    	// make sure to include the plugin!
 	    	new VueLoaderPlugin(),
 	    	new webpack.EnvironmentPlugin(
 	    		Object.assign(
@@ -97,14 +102,12 @@ module.exports = {
 	dev: {
 		mode: "development",
 		output: {
-			filename: '[name].js',
 			path: path.resolve(process.cwd(),'<%= root %>/js/')
 		}
 	},
 	dist:{
 		mode: "production",
 		output: {
-			filename: '[name].js',
 			path: path.resolve(process.cwd(), '.tmp/js/')
 		}
 	}

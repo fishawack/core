@@ -79,10 +79,10 @@ module.exports = function(config) {
                             loader: 'babel-loader',
                             options: {
                                 presets: [
-                                    require.resolve('babel-preset-env')
+                                    require.resolve('@babel/preset-env')
                                 ],
                                 plugins: [
-                                    require.resolve('babel-plugin-transform-object-assign')
+                                    require.resolve('@babel/plugin-transform-object-assign')
                                 ]
                             }
                         }
