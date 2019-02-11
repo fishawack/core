@@ -129,13 +129,15 @@ module.exports = function(grunt, hasBase) {
 					/.disabled/i,
 					/.capture/i,
 					/.icon/i,
-					/labD3/i,
-					/span/i,
-					/sup/i,
-					/sub/i,
-					/small/i,
-					/strong/i,
-					/a/i
+					/\blabD3\b/i,
+					/\bspan\b/i,
+					/\bsup\b/i,
+					/\bsub\b/i,
+					/\bsmall\b/i,
+					/\bstrong\b/i,
+					/\bem\b/i,
+					/\bi\b/i,
+					/\ba\b/i
 				],
                 inject: function(window){
                 	if(!contentJson.attributes.modernizr.length){
