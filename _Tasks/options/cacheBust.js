@@ -9,7 +9,8 @@ module.exports = {
     },
     default: {
         src: [
-            "<%= root %>/index.html"
+            '<%= root %>/*.html', 
+            '<%= root %>/html/*.html'
         ]
     }
 }

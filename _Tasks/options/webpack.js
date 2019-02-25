@@ -28,14 +28,6 @@ module.exports = {
 		},
 		resolve: {
 			modules: [
-				'./_Build/js/',
-				'./_Build/js/libs/',
-				'./_Build/js/charts/',
-				'./_Build/js/data/',
-				'./node_modules/@fishawack/lab-d3/_Build/js/',
-				'./node_modules/@fishawack/lab-d3/_Build/js/libs',
-				'./node_modules/@fishawack/lab-d3/_Build/js/charts/',
-				'./node_modules/@fishawack/lab-d3/_Build/js/data/',
 				'node_modules',
 				path.resolve(__dirname, "../../node_modules") // Used for config-grunt dev
 			]
