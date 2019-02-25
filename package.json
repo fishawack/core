@@ -96,7 +96,6 @@
     "uncss": "0.16.2",
     "vue-loader": "15.4.2",
     "vue-template-compiler": "2.5.17",
-    "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v4.0.1",
     "wdio-mocha-framework": "0.5.11",
     "wdio-phantomjs-service": "0.2.2",
     "wdio-screenshot": "0.6.0",
@@ -104,5 +103,8 @@
     "webdriverio": "4.8.0",
     "webpack": "4.27.1",
     "xmlbuilder": "8.2.2"
+  },
+  "optionalDependencies§": {
+    "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v4.0.1"
   }
 }
