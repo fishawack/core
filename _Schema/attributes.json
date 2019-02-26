@@ -47,6 +47,12 @@
 						"signingKey": {
 							"type": "string"
 						},
+						"signingPassword": {
+							"type": "string"
+						},
+						"badge": {
+							"type": "badge"
+						},
 						"appID": {
 							"type": "string"
 						},
@@ -57,7 +63,7 @@
 							"type": "string"
 						}
 					},
-					"required": ["signingKey", "appID", "phonegapVersion", "bundle"]
+					"required": ["signingKey", "signingPassword", "badge", "appID", "phonegapVersion", "bundle"]
 		    	},
 	            "email": {
 	            	"type": "array",

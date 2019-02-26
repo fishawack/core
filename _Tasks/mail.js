@@ -40,6 +40,7 @@ module.exports = function(grunt) {
                             buildHtmlEmail('version'),
                             buildHtmlEmail('coverage'),
                             buildHtmlEmail('status'),
+                            buildHtmlEmail('phonegap'),
                             buildHtmlEmail('instance'),
                             (contentJson.attributes.googleTrackingID) ? buildHtmlEmail('google') : '',
                             buildHtmlEmail('git')
