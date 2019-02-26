@@ -1,5 +1,4 @@
 var exec = require('child_process').exec;
-var started = false;
 
 module.exports = function(grunt) {
     grunt.registerTask('createConfigXml', function() {
@@ -13,9 +12,9 @@ module.exports = function(grunt) {
     grunt.registerTask('waitForAppBuild', function(){
         var done = this.async();
 
-        grunt.log.writeln('Polling phonegap build...');
+        grunt.log.ok('Polling phonegap build...');
 
-        checkAppStatus("curl " + grunt.template.process('https://build.phonegap.com/api/v1/apps/<%= contentJson.attributes.phonegap.appID %>/ios?auth_token=<%= config.targets.misc.phonegap.token %>'), done, grunt);
+        checkAppStatus("curl " + grunt.template.process('https://build.phonegap.com/api/v1/apps/<%= contentJson.attributes.phonegap.appID %>?auth_token=<%= config.targets.misc.phonegap.token %>'), done, grunt);
     });
 
     grunt.registerTask('package:phonegap', function(){
@@ -39,34 +38,32 @@ function checkAppStatus(command, done, grunt){
     exec(command, function(error, stdout, stderr) {
         var response = JSON.parse(stdout);
 
-        if(getFilesize("_Zips/Deploy.zip") < 5000000){
-            started = true;
-        }
-
-        if(!response.error && !started){
-            grunt.log.warn('Still working its way through phonegap backend...');
-            grunt.verbose.warn(response);
-        } else if(response.error){
-            started = true;
+        if(response.status.ios === 'error'){
+            grunt.fatal('Phonegap build failed - ' + response.error.ios);
+            return;
+        } else if(response.status.ios === 'complete') {
+            grunt.log.ok("App ready - downloading...");
             
-            grunt.log.warn('App still processing...');
-            grunt.verbose.warn(response.error);
-        } else if(!response.location){
-            grunt.log.warn('App ready - response not ready yet...');
-            grunt.verbose.warn(response.location);
-        } else {
-            grunt.log.ok("App ready");
-            
-            var shell = grunt.config.get('shell');
-            shell.pullApp.command += "\"" + response.location  + "\"";
-            grunt.config.set('shell', shell);
-
-            done();
+            getAppLocation("curl " + grunt.template.process('https://build.phonegap.com/api/v1/apps/<%= contentJson.attributes.phonegap.appID %>/ios?auth_token=<%= config.targets.misc.phonegap.token %>'), done, grunt);
             return;
         }
+
+        grunt.log.warn('App still processing...');
 
         setTimeout(function(){
             checkAppStatus(command, done, grunt);
         }, 2000);
+    });
+}
+
+function getAppLocation(command, done, grunt){
+    exec(command, function(error, stdout, stderr) {
+        var response = JSON.parse(stdout);
+
+        var shell = grunt.config.get('shell');
+        shell.pullApp.command += "\"" + response.location  + "\"";
+        grunt.config.set('shell', shell);
+
+        done();
     });
 }
