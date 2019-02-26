@@ -51,7 +51,7 @@
 							"type": "string"
 						},
 						"badge": {
-							"type": "badge"
+							"type": "string"
 						},
 						"appID": {
 							"type": "string"
