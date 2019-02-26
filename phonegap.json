@@ -82,102 +82,102 @@
                 "@name": "ios",
                 "icon": [
                     {
-                        "@src": "media/content/icons/ios/icon.png",
+                        "@src": "media/content/icon/ios/icon.png",
                         "@width": "57",
                         "@height": "57"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon@2x.png",
+                        "@src": "media/content/icon/ios/icon@2x.png",
                         "@width": "114",
                         "@height": "114"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-small-40.png",
+                        "@src": "media/content/icon/ios/icon-small-40.png",
                         "@width": "40",
                         "@height": "40"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-small-40@2x.png",
+                        "@src": "media/content/icon/ios/icon-small-40@2x.png",
                         "@width": "80",
                         "@height": "80"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-small-40@3x.png",
+                        "@src": "media/content/icon/ios/icon-small-40@3x.png",
                         "@width": "120",
                         "@height": "120"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-small-50.png",
+                        "@src": "media/content/icon/ios/icon-small-50.png",
                         "@width": "50",
                         "@height": "50"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-small-50@2x.png",
+                        "@src": "media/content/icon/ios/icon-small-50@2x.png",
                         "@width": "100",
                         "@height": "100"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-60.png",
+                        "@src": "media/content/icon/ios/icon-60.png",
                         "@width": "60",
                         "@height": "60"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-60@2x.png",
+                        "@src": "media/content/icon/ios/icon-60@2x.png",
                         "@width": "120",
                         "@height": "120"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-60@3x.png",
+                        "@src": "media/content/icon/ios/icon-60@3x.png",
                         "@width": "180",
                         "@height": "180"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-72.png",
+                        "@src": "media/content/icon/ios/icon-72.png",
                         "@width": "72",
                         "@height": "72"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-72@2x.png",
+                        "@src": "media/content/icon/ios/icon-72@2x.png",
                         "@width": "144",
                         "@height": "144"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-76.png",
+                        "@src": "media/content/icon/ios/icon-76.png",
                         "@width": "76",
                         "@height": "76"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-76@2x.png",
+                        "@src": "media/content/icon/ios/icon-76@2x.png",
                         "@width": "152",
                         "@height": "152"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-small.png",
+                        "@src": "media/content/icon/ios/icon-small.png",
                         "@width": "29",
                         "@height": "29"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-small@2x.png",
+                        "@src": "media/content/icon/ios/icon-small@2x.png",
                         "@width": "58",
                         "@height": "58"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-small@3x.png",
+                        "@src": "media/content/icon/ios/icon-small@3x.png",
                         "@width": "87",
                         "@height": "87"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-83.5@2x.png",
+                        "@src": "media/content/icon/ios/icon-83.5@2x.png",
                         "@width": "167",
                         "@height": "167"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-167.png",
+                        "@src": "media/content/icon/ios/icon-167.png",
                         "@width": "167",
                         "@height": "167"
                     },
                     {
-                        "@src": "media/content/icons/ios/icon-1024.png",
+                        "@src": "media/content/icon/ios/icon-1024.png",
                         "@width": "1024",
                         "@height": "1024"
                     }
