@@ -9,16 +9,10 @@ module.exports = function(grunt) {
 
         var recipients = contentJson.attributes.email || [];
 
-        switch(deployBranch){
-            case 'qc':
-                recipients.push('qc@fishawack.com');
-            case 'master':
-            case 'development':
-                recipients.push('digital@f-grp.com');
-                break;
-            default:
-                grunt.log.warn('Deployments from feature branches don\'t send emails');
-                return;
+        if(deployBranch !== 'qc' && deployBranch !== 'development' && deployBranch !== 'master'){
+            grunt.log.warn('Deployments from feature branches don\'t send emails');
+        } else {
+            recipients.push('digital@f-grp.com');    
         }
 
         nodemailer['deploy'] = {
