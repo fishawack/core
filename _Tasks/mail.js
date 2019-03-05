@@ -40,7 +40,7 @@ module.exports = function(grunt) {
                             buildHtmlEmail('version'),
                             buildHtmlEmail('coverage'),
                             buildHtmlEmail('status'),
-                            buildHtmlEmail('phonegap'),
+                            (deployTarget === 'production' && contentJson.attributes.phonegap) ? buildHtmlEmail('phonegap') : '',,
                             buildHtmlEmail('instance'),
                             (contentJson.attributes.googleTrackingID) ? buildHtmlEmail('google') : '',
                             buildHtmlEmail('git')
