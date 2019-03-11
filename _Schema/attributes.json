@@ -64,6 +64,10 @@
 						},
 						"version": {
 							"type": "string"
+						},
+						"orientation": {
+							"type": "string",
+							"enum": ["landscape", "portrait", "default"]
 						}
 					},
 					"required": ["signingKey", "signingPassword", "badge", "appID", "phonegapVersion", "bundle"]

@@ -66,6 +66,10 @@
             {
                 "@name": "DisallowOverscroll",
                 "@value": "true"
+            },
+            {
+                "@name": "Orientation",
+                "@value": "<%= contentJson.attributes.phonegap.orientation || 'default' %>"
             }
         ],
         "allow-navigation": {
