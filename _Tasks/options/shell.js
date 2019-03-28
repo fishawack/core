@@ -22,6 +22,6 @@ module.exports = {
         command: "curl --create-dirs -o _Packages/iOS/app.ipa "
     },
     pdf: {
-        command: "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile='_Pdfs/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today('dd-mm-yy') %>.pdf' '_Pdfs/raw.pdf'"
+        command: "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile='_Pdfs/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today('yyyy-mm-dd') %>.pdf' '_Pdfs/raw.pdf'"
     }
 }

@@ -361,7 +361,7 @@ module.exports = function(grunt, hasBase) {
     }
 
     this.buildHtmlEmail = function(type){
-    	var file = contentJson.attributes.title + '_' + grunt.file.readJSON('package.json').version + '_' + grunt.template.today('dd-mm-yy') + '.pdf';
+    	var file = contentJson.attributes.title + '_' + grunt.file.readJSON('package.json').version + '_' + grunt.template.today('yyyy-mm-dd') + '.pdf';
     	
     	if(type === 'pdf' && !fileExists(file, '_Pdfs/', grunt)){
     		grunt.log.warn(file + ' file not found');

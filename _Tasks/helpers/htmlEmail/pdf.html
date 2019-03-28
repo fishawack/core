@@ -2,8 +2,8 @@
 	<strong>Pdf</strong>:
 	<ul>
 		<li>
-			<a href="<%= encodeURI('http://internal.fishawack.staging/Auto-Package/' + pkg.name + '/' + contentJson.attributes.title + '_' + pkg.version + '_' + grunt.template.today("dd-mm-yy") + '.pdf') %>">
-				<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("dd-mm-yy") %>.pdf
+			<a href="<%= encodeURI('http://internal.fishawack.staging/Auto-Package/' + pkg.name + '/' + contentJson.attributes.title + '_' + pkg.version + '_' + grunt.template.today("yyyy-mm-dd") + '.pdf') %>">
+				<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("yyyy-mm-dd") %>.pdf
 			</a>
 		</li>
 		<li>
@@ -12,7 +12,7 @@
 		</li>
 		<li>
 			<strong>Size</strong>: 
-			<%= getFilesizeInBytes("_Pdfs/" + contentJson.attributes.title + "_" + pkg.version + "_" + grunt.template.today("dd-mm-yy") + ".pdf") %>
+			<%= getFilesizeInBytes("_Pdfs/" + contentJson.attributes.title + "_" + pkg.version + "_" + grunt.template.today("yyyy-mm-dd") + ".pdf") %>
 		</li>
 	</ul>
 </li>

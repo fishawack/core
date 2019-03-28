@@ -59,9 +59,9 @@
 					return prev;
 				}
 
-				var filename = contentJson.attributes.title + '_' + pkg.version + '_' + grunt.template.today("dd-mm-yy") + next.zip + '.zip'; 
+				var filename = contentJson.attributes.title + '_' + pkg.version + '_' + grunt.template.today("yyyy-mm-dd") + next.zip + '.zip'; 
 				var ext = encodeURI('http://internal.fishawack.staging/Auto-Package/' + pkg.name + '/' + filename);
-				var raw = getFilesizeInBytes("_Zips/" + contentJson.attributes.title + "_" + pkg.version + "_" + grunt.template.today("dd-mm-yy") + next.zip + ".zip");
+				var raw = getFilesizeInBytes("_Zips/" + contentJson.attributes.title + "_" + pkg.version + "_" + grunt.template.today("yyyy-mm-dd") + next.zip + ".zip");
 
 				var name = '<strong>' + next.name + '</strong>:';
 				var url = '<li><a href="' + ext + '">' + filename + '</a></li>';
