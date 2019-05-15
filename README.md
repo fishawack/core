@@ -41,77 +41,122 @@ These dependancies are only needed if you're planning to build a pdf locally or 
 
 ### Mac
 
-* Install brew - [http://brew.sh/](http://brew.sh/) - then use to install the following
-    * `brew install git`
-    * `brew install wget`
-    * `brew install imagemagick`
-    * `brew insatll ghostscript`
-    * `brew install wine`
-    * `brew install jq`
-    * `brew install tnftp tnftpd telnet telnetd`
-    * `brew install cask`
-    * `brew cask install java8`
-    * `brew cask install xquartz`
-* Install Nvm - [https://github.com/creationix/nvm](https://github.com/creationix/nvm) - then use to install
-    * `nvm install 10.0.0`
-    * `npm install grunt-cli -g`
+* Install brew - [http://brew.sh/](http://brew.sh/) - then run the following commands
+
+```bash
+brew install git
+brew install wget
+brew install imagemagick
+brew install ghostscript
+brew install wine
+brew install jq
+brew install tnftp tnftpd telnet telnetd
+brew install cask
+brew cask install java8
+brew cask install xquartz
+```
+
+* Install Nvm - [https://github.com/creationix/nvm](https://github.com/creationix/nvm) - then run the following commands
+
+```bash
+nvm install 10.0.0
+npm install grunt-cli -g
+```
+
 * Install composer [https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
 
 ### Windows
 
 * Install choco - [https://chocolatey.org/](https://chocolatey.org/) then use to install the following
-    * `choco install git`
-    * `choco install wget`
-    * `choco install imagemagick`
-    * `choco insatll ghostscript`
-    * `choco install wine`
-    * `choco install jq`
-    * `choco install java8`
-    * `choco install xquartz`
+
+```bash
+choco install git
+choco install wget
+choco install imagemagick
+choco install ghostscript
+choco install wine
+choco install jq
+choco install java8
+choco install xquartz
+```
+
 * Install Nvm - [https://github.com/coreybutler/nvm-windows](https://github.com/coreybutler/nvm-windows)
-    * `nvm install 10.0.0`
-    * `npm install grunt-cli -g`
+
+```bash
+nvm install 10.0.0
+npm install grunt-cli -g
+```
+
 * Install composer [https://getcomposer.org/doc/00-intro.md#installation-windows](https://getcomposer.org/doc/00-intro.md#installation-windows)
 
 ## Commands
 
 Regardless of what the repo uses under the hood the following commands should be the only commands needed when interacting with a repo.
 
-#### `npm run setup`
+### Setup
 
 Runs all install scripts needed to build the repo and lastly runs `npm run content` to pull down assets.
 
-#### `npm start`
+```bash
+npm run setup
+```
+### Build (watch)
 
 Bundle's the code and begins the watch task ready for development.
 
-#### `npm test`
+```bash
+npm start
+```
 
-Runs tests.
-
-#### `npm run content`
+### Content
 
 Pulls any assets from the server and any json endpoints that are needed locally.
 
-#### `npm run deploy`
+```bash
+npm run content
+```
 
-Transfer the build via ftp or ssh to the server based on which branch you're currently on. 
+### Test
+
+Runs smoke/unit/build tests and linters.
+
+```bash
+npm test
+```
+
+### Production
+
+Bundles the app in production mode.
+
+```bash
+npm run production
+```
+
+### Deploy
+
+Transfers the build to a server based on which branch you're currently on.
+
+```bash
+npm run deploy
+```
 
 If on the **development** branch this command will deploy to **staging**.
 
 If on the **master** branch this command will deploy to **production**.
 
-If on any other branch this command **won't** deploy anywhere.
+If on any other branch this command **won't** deploy anywhere but will still prepare the bundle in production mode.
 
 ## Credentials
 
 Credentials are needed in the root of each project so that the automated scripts can properly deploy and fetch content from the server. To mitigate the need to manually copy credentials each time we create a folder on the root of each individuals machine that contains their unique creds. The automated script will automatically grab the `id_rsa` found in the default location in `~/.ssh/`. It will then grab any `secret.json` files it needs for which ever server the current project needs to be deployed onto. If it can't find the correct `secret.json` for a server it will silently fail.
 
+> For the automated scripts to work only 1 id_rsa can exist on a persons machine. If you plan on using multiple then you'll need to manually copy credentials as it won't know which id_rsa to use
+
 ### Target folder
 
 Create the target folder in the root of the machine by running the following command.
 
-```sh
+```bash
 mkdir ~/targets
 ```
 
@@ -206,21 +251,44 @@ We currently keep our binary assets on our fishawack file sharing platform egnyt
 * Name: Egnyte
 * Protocol: `ftps`
 * Path: `Shared/FW/Knutsford/Digital/Auto-Content/`
+* IP: `ftp-fishawack.egnyte.com`
 
 **Old location**
 * Name: eSource box
 * Protocol: `ftp`
 * Path: `Auto-Content/`
+* IP: `10.1.8.4`
 
 The `Auto-Content` folder contains folders with the same names as the repo names in bitbucket. Some products have a parent folder e.g. `Wave` that contains all waves as not to clutter up the `Auto-Content` folder with instances.
 
-### Media
+The json that dictates which asset folders are pulled can be found in the `_Build/content.json`.
+
+```json
+{
+    "attributes": {
+        ...
+        "content": [
+            {
+                "ftps": "ftp-fishawack.egnyte.com",
+                "location": "Shared/FW/Knutsford/Digital/Auto-Content/arbor-scroll/"
+            },
+            {
+                "ftp": "10.1.8.4",
+                "location": "Auto-Content/arbor-scroll/"
+            }
+        ],
+        ...
+    }
+}
+````
+
+### Media folder
 
 Inside the repo named folder you will usually find a media folder. Any files inside this media folder will get pulled through and be available to the front end via image tags / sass resolves. Anything outside the media folder will still get pulled into the repo but won't be included in the front end bundled files. The primary use case for this are excel files / pre process files that are used in the build phase but not needed in the final site.
 
 Here is a common structure you're likely to see in the Auto-Content location.
 
-```
+```bash
 .../Auto-Content/myapp/media/images/background.jpg
 .../Auto-Content/myapp/media/fonts/Roboto.woff
 .../Auto-Content/myapp/media/videos/video.webm
@@ -237,13 +305,13 @@ All binary assets (jpg,png,mp4) should **not** be kept in version control. Not o
 
 Though the media files are placed in the git ignored `_Build/content/media` when pulled from the server, they are placed in `_Output/media/content` when copied to the `_Output` folder. Note the `media` and `content` folders are flipped in the final output folder so image tags need to reflect this.
 
-> Be sure to use relative paths when referencing assets.
+> Be sure to use relative paths when referencing assets. If an absolute url is needed it should be done with a `<base href="/"/>` tag.
 
 ```html
-// Bad
+<!-- Bad -->
 <img src="content/media/images/background.jpg">
 
-// Good
+<!-- Good -->
 <img src="media/content/images/background.jpg">
 ```
 
@@ -263,7 +331,7 @@ To create another entry point simply create a new javascript file and prefix it 
 
 > Remember to include the script tag in the html to import this new file
 
-```
+```bash
 _Build/js/--newEntry.js   >>   _Output/js/newEntry.js
 ```
 
@@ -283,8 +351,79 @@ var lib = require('es6-file-with-no-default-export.js').default;
 
 Not so important anymore (any maybe deprecated soon) but any file that needs to be included in the head of the document and thus before the rest of the document is ready should be defined with a double underscore `__`. The primary use case for this is modernizr which according to the docs should be imported in the head of the document before the other scripts have run. Modernizr itself has its own workflow outlined elsewhere in this documentation.
 
-```
+```bash
 _Build/js/__important.js   >>   _Output/js/crucial.js
+```
+
+### Enviroment variables
+
+Within the javascript you can use node style enviroment variables which will be proccessed during the bundling and rendered to static strings in the final output.
+
+#### Source
+```js
+if(process.env.NODE_ENV === "development")
+```
+
+#### Output
+```js
+if("development" === "development")
+```
+
+#### Predefined
+
+These variables are predefined and are automatically avaiable to use.
+
+```js
+process.env.NODE_ENV === "development" // when running development build
+process.env.NODE_ENV === "production" // when running distribution build
+
+process.env.NODE_TARGET === "production" // when on master branch
+process.env.NODE_TARGET === "qc" // when on qc branch
+process.env.NODE_TARGET === "staging" // when on any other branch
+```
+
+#### Custom
+
+Custom enviroment varibles can be defined globally in the `content.json`.
+
+```json
+{
+    "attributes": {
+        ...
+        "env": {
+            "CONTENT": "./arbor-2018"
+        },
+        ...
+    }
+}
+```
+
+```js
+process.env.CONTENT === "./arbor-2018"
+```
+
+You can also define custom enviroment variables per target that will override global ones.
+
+```json
+{
+    "attributes": {
+        ...
+        "staging": {
+            ...
+            "env": {
+                "CONTENT": "./staging-arbor-2018"
+            }
+        }
+        "env": {
+            "CONTENT": "./arbor-2018"
+        },
+        ...
+    }
+}
+```
+
+```js
+process.env.CONTENT === "./staging-arbor-2018"
 ```
 
 ### Linting
@@ -303,23 +442,41 @@ To create another entry point simply create a new sass file and exclude the stan
 
 > Remember to include the link tag in the html to import this new file
 
-```
+```bash
 _Build/sass/newEntry.scss   >>   _Output/css/newEntry.css
 ```
 
 ### Prefixing
 
-You **don't** need to prefix any css properties with browser prefixes as the bundler will automatically apply them.
+You **don't** need to prefix any css properties with browser prefixes as the bundler will automatically apply them based on the latest browser version.
+
+#### Source
+```scss
+.class1{
+    appearance: none;
+}
+```
+
+#### Output
+```scss
+.class1{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+```
 
 ### Uncss
 
 Classes that aren't present in any html files **before** javascript runs are considered redundant and are removed from the final bundled css file.
 
+#### Html
 ```html
 <div class="class1"></div>
 ```
 
-```css
+#### Sass
+```scss
 // Will appear in final css file
 .class1{
     ...
@@ -355,7 +512,7 @@ document.querySelector('.button').classList.add('active');
 
 They'll be more on this in the pdf section of this documentation but when the pdf process is happening there is a global `.capture` class added to the root of the document. This is so things like animations/transitions can be turned off where needed so the pdf can capture correctly.
 
-```css
+```scss
 .animatedThing{
     color: red;
     transition: color 0.2s;
@@ -374,7 +531,7 @@ This class is used to prefix all classes added through our dynamic d3 data visua
 
 When pulling in assets via css the `resolve` postcss process should be used in place of the standard `url`. This is due to some products needed to package themselves different for different deliveries, this causes the project structure to change and therefore the asset paths are different. By allowing resolve to calculate the asset path this issue can be mitigated.
 
-```css
+```scss
 // Bad
 .class1{
     background-image: url("./media/images/background.jpg");    
@@ -393,7 +550,7 @@ The default entry point for html is `_Build/index.html`.
 Any html found in the root of `_Build/` or in `_Build/html/` will generate a corresponding html file in the root of the `_Output` folder.
 
 #### Build 
-```
+```bash
 _Build/index.html
 _Build/contact.html
 _Build/html/404.html
@@ -401,7 +558,7 @@ _Build/html/login.html
 ```
 
 #### Output
-```
+```bash
 _Output/index.html
 _Output/contact.html
 _Output/404.html
@@ -420,19 +577,234 @@ Handlebar partials and helpers can be found in `_Build/handlebars`.
 
 ## Svg
 
-Svg's can be split into 2 categories, icons and images.
+### Optimization
 
-### Icons
+Svg files found in the following locations go through the optimization process.
 
-Icons are svg's where the only thing you want from the file is the shape. Everything is stripped from the svg including colors / paths / fills / id's / classes during the bundle process and only the path remains. The color and optional stroke are then applied by css by the front end. This allows full control over the color scheme of the icon set and allows easy transitioning and color flipping based on hovers/clicks/active states.
+```bash
+_Build/svg/
+_Build/icons/generated/
+```
 
-> If the artwork is made up of strokes they'll need to be converted to paths otherwise they'll be stipped from the svg file during the bundle process.
+There are different levels of optimization that svg's go through dictated by the prefix found before the filename.
 
-### Images
+#### No prefix
 
-Images are svg's where they potentially contain many colors / strokes / stroke widths. These files still go through some optimization but will leave all important information in the file.
+Will have all properties and strokes stripped leaving only the shape. Will also combine any paths or shapes that intersect.
+
+```bash
+menu.svg
+```
+
+#### Double hyphen
+
+Will have only non vital properties stripped but should retain it's appearance/colors/fills.
+
+```bash
+--menu.svg
+```
+
+#### Double underscore
+
+Same as the double hyphen but these svg's **aren't** added to the global [sprite sheet](#config-grunt-svg-sprite-sheet)
+
+```bash
+__menu.svg
+```
+
+### Sprite sheet
+
+The sprite sheet should generally contain simple shapes that are shared across the site generally icons and logos. It is usually imported by handlebars in the body of the page.
+
+#### Handlebars
+```handlebars
+<!doctype html>
+<html>
+    ...
+    <body>
+        {{> svgSprite}}
+
+        ...
+    </body>
+</html>
+```
+
+To include an svg from the sprite sheet do one of the following.
+
+#### Handlebars
+```handlebars
+<!-- Full optimization -->
+{{> svg name="menu"}}
+
+<!-- Minimal optimization -->
+{{> svg name="--logo"}}
+
+<!-- Error - not included in the sprite sheet -->
+{{> svg name="__figure"}}
+```
+
+#### Vue
+```handlebars
+<!-- Full optimization -->
+<svg><use xlink:href="#menu"></use></svg>
+
+<!-- Minimal optimization -->
+<svg><use xlink:href="#--logo"></use></svg>
+
+<!-- Error - not included in the sprite sheet -->
+<svg><use xlink:href="#__figure"></use></svg>
+```
+
+### Embedding
+
+If direct access to the svg inner elements is needed then the svg will need embedding in the page.
+
+> If an svg is **only** ever going to be embedded make sure not to accidentally use the `--` double hyphen prefix instead of the `__` double underscore. Doing this will unnecessarily inflate the sprite sheet.
+
+To embed a file directly in the html markup do one of the following.
+
+#### Handlebars
+```handlebars
+<!-- Full optimization -->
+{{> svg name="menu" embed=true}}
+
+<!-- Minimal optimization -->
+{{> svg name="--logo" embed=true}}
+
+<!-- Minimal optimization -->
+{{> svg name="__figure" embed=true}}
+```
+
+If the optimization is still causing issues and you want the **original** svg markup embedding you can do the following
+
+```handlebars
+{{> svg name="menu" embed=true asis=true}}
+```
+
+#### Vue
+
+If you need to use an embedded svg in a dynamic templating language like vue then you'll need to grab the actual markup and insert it directly into your vue/html markup. The optimized files can be found in `_Build/handlebars/partials/generated/embed`.
+
+### External
+
+If the svg is a one off figure and/or doesn't need any styling applying or it's markup accessing then referencing an external file is the best way to go. Svg's can be dropped into `_Build/media` and referenced via image tags or css background images just like any other binary asset.
+
+> Svg's can be dropped directly into the media folder as they contain actual code and can therefore be properly versioned by git, [see above](#config-grunt-assets-non-binary)
+
+#### Html
+```html
+<img src="media/figure.svg" alt="figure">
+```
+
+#### Sass
+```scss
+.container{
+    background-image: resolve("figure.svg");
+}
+```
+
+## Icons
+
+### Fontello
+
+Icons are automatically pulled from [http://fontello.com/](http://fontello.com/) during the build process. The config that controls this can be found in `_Build/icons/config.json`. To add or remove icons do the following steps:
+
+* Go to the fontello website
+* Drag and drop the `config.json` file into the webpage. 
+* This will highlight all the currently selected icons and allow you to select/deselect others. 
+* Press the small arrow to the right on the "Download webfont" button and click "Get config only" 
+* Replace the existing `config.json` with the downloaded one.
+
+> `_Build/icons/config.json` isn't watched by the bundler so you will need to stop the watch and run `npm start` for the new files to be pulled down.
+
+> The pulled icons are stored in the git ignored `_Build/icons/generated` and shouldn't be modified. 
+
+### Custom
+
+If a custom icon set has been created it can be used by dropping it into the `_Build/svg/'` folder. If the icon set already contains it's colors and final appearance then the svg files will need prefixing with a [double hyphen](#config-grunt-svg-optimization) `--`.
+
+> If the icon is made up of strokes and [isn't* prefixed](#config-grunt-svg-optimization) then those strokes will need converting to paths by a designer
+
+### Importing
+
+Whether the icons are custom or have come from fontello they should end up in the global [spritesheet](#config-grunt-svg-optimization) and can be imported in one of the following ways.
+
+> Make sure the Lab Ui ["icon.scss"](https://demo.fishawack.solutions/Lab/Ui/#Icons) component has been imported
+
+#### Html
+```html
+<div class="icon">
+    <svg>
+        <use xlink:href="#menu"></use>
+    </svg>
+</div>
+```
+
+#### Handlebars
+```handlebars
+{{> icon name="menu"}}
+
+// Adding a class
+{{> icon name="menu" class="icon--small"}}
+
+// Will embed the svg markup directly in the page
+{{> icon name="menu" class="icon--small" embed=true}}
+
+// Will embed the original svg markup directly in the page
+{{> icon name="menu" class="icon--small" embed=true asis=true}}
+```
+
+#### Vue
+```handlebars
+<GIcon name="menu"/>
+
+// Adding a class
+<GIcon name="menu" class="icon--small"/>
+```
 
 ## Modernizr
+
+To add a modernizr check into the build add the relevant property to the json object found in `_Build/content.json`. Modernizr will automatically apply the css rules to the root html element and the javascript `Modernizr` object will be avaiable globally on the window object.
+
+#### Json
+```json
+{
+    "attributes": {
+        ...
+        "modernizr": [
+            "flexbox"
+        ],
+        ...
+    }
+}
+```
+
+#### Html
+```html
+<html class="flexbox / no-flexbox">
+    ...
+</html>
+```
+
+#### Sass
+```scss
+.class1{
+    .flexbox &{
+        display: flex;
+    }
+
+    .no-flexbox &{
+        display: inline-block;
+    }
+}
+```
+
+#### Javascript
+```js
+if(window.Modernizr.flexbox){
+    console.log("Supported");
+}
+```
 
 ## Testing
 
@@ -514,3 +886,5 @@ module.exports = function(grunt) {
 4. Make sure the project has been built with an output folder and run the following command: `$grunt pdf`. ($grunt being an alias for `grunt --gruntfile node_modules/@fishawack/config-grunt/Gruntfile.js`).
 
 ## Deploying
+
+### Servers
