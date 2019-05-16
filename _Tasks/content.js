@@ -9,24 +9,32 @@ module.exports = function(grunt) {
         var shell = {
             options: {
                 execOptions: {
-                    maxBuffer: 20000 * 1024
+                    maxBuffer: 20000 * 2048
                 },
                 stderr: true,
                 stdout: true
             },
             content: {
-                command: ['echo'] // Dummy command needed as fails with no commands
+                command: []
             }
         };
 
-        contentJson.attributes.content.forEach(function(d){
-            if(d.ftp || d.ftps){
-                var ssl = (d.ftps) ? 'ftps' : 'ftp';
-                var creds = (d.ftps) ? d.ftps : d.ftp;
+        var commands = ['clean:content', 'shell:content', 'content-request'];
 
-                shell.content.command.push('wget -r --user=\'<%= targets.ftp["' + creds + '"].username %>\' --password=\'<%= targets.ftp["' + creds + '"].password %>\' -P ' + ((d.saveTo) ? d.saveTo : '_Build/content/') + ' -nH --cut=' + (d.location.split('/').length - 1) + ' \'' + ssl + '://' + creds + '/' + d.location + '\'');
+        contentJson.attributes.content.forEach(function(d){
+            var saveTo = (d.saveTo) ? d.saveTo : '_Build/content/';
+
+            if(d.ftp || d.ftps){
+                var protocol = (d.ftps) ? 'ftps' : 'ftp';
+                var ip = (d.ftps) ? d.ftps : d.ftp;
+
+                shell.content.command.push('wget -r --user=\'<%= targets.ftp["' + ip + '"].username %>\' --password=\'<%= targets.ftp["' + ip + '"].password %>\' -P ' + saveTo + ' -nH --cut=' + (d.location.split('/').length - 1) + ' \'' + protocol + '://' + ip + '/' + d.location + '\'');
             } else if(d.ssh) {
-                shell.content.command.push('scp -r <%= targets["' + d.ssh + '"].username %>@<%= targets["' + d.ssh + '"].host %>:' + d.location + ' ' + ((d.saveTo) ? d.saveTo : '_Build/content/'));
+                shell.content.command.push('scp -r <%= targets["' + d.ssh + '"].username %>@<%= targets["' + d.ssh + '"].host %>:' + d.location + ' ' + saveTo);
+            } else if(d.lftp){
+                shell.content.command.push(`lftp -d -e 'mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>',<%= targets.ftp["${d.lftp}"].password %> sftp://${d.lftp}`);
+
+                commands.shift();
             }
         });
 
@@ -34,7 +42,7 @@ module.exports = function(grunt) {
 
         grunt.config.set('shell', shell);
 
-        grunt.task.run('clean:content', 'shell:content', 'content-request');
+        grunt.task.run(commands);
     });
 
     grunt.registerTask('content-request', function(){

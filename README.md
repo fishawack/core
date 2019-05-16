@@ -50,6 +50,7 @@ brew install imagemagick
 brew install ghostscript
 brew install wine
 brew install jq
+brew install lftp
 brew install tnftp tnftpd telnet telnetd
 brew install cask
 brew cask install java8
@@ -76,6 +77,7 @@ choco install imagemagick
 choco install ghostscript
 choco install wine
 choco install jq
+choco install lftp
 choco install java8
 choco install xquartz
 ```
@@ -168,7 +170,7 @@ There are three types of file that can be found here.
 
 #### `.ftppass`
 
-This file is used for ftp/sftp/ftps details. All details go into this single file in the following format 
+This file is used for ftp/sftp/ftps/lftp details. All details go into this single file in the following format 
 
 ```json
 {
@@ -249,7 +251,7 @@ We currently keep our binary assets on our fishawack file sharing platform egnyt
 
 **Current location**
 * Name: Egnyte
-* Protocol: `ftps`
+* Protocol: `[ftps,lftp]`
 * Path: `Shared/FW/Knutsford/Digital/Auto-Content/`
 * IP: `ftp-fishawack.egnyte.com`
 
@@ -269,7 +271,7 @@ The json that dictates which asset folders are pulled can be found in the `_Buil
         ...
         "content": [
             {
-                "ftps": "ftp-fishawack.egnyte.com",
+                "lftp": "ftp-fishawack.egnyte.com",
                 "location": "Shared/FW/Knutsford/Digital/Auto-Content/arbor-scroll/"
             },
             {
