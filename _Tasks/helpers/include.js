@@ -1,4 +1,6 @@
 module.exports = function(grunt, hasBase) {
+	var _ = require('lodash');
+
 	this.loadTargets = function(config){
 		var fs = require('fs');
 		var os = require('os');
@@ -443,6 +445,28 @@ module.exports = function(grunt, hasBase) {
 	    this[z] = this[z].join("");
 	}
 
+	grunt.registerTask('reload', function(){
+		reload();
+    });
+
+    this.reload = function(){
+    	var json = {};
+
+        grunt.file.expand([
+					'_Build/config/*.json',
+					contentPathTrue
+					
+				]).forEach(function(d){
+					_.mergeWith(json, grunt.file.readJSON(d), function(obj, src) {
+							if (_.isArray(obj)) {
+								return obj.concat(src);
+							}
+						});
+		    });
+
+		grunt.file.write(contentPath, JSON.stringify(json, null, 4));
+    }
+
 	this.devProject = null;
 
 	if(grunt && !hasBase){
@@ -454,7 +478,10 @@ module.exports = function(grunt, hasBase) {
 	this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/@fishawack/config-grunt/';
 
 	if(grunt){
-		this.contentPath = (fileExists('content.json', '_Build/', grunt)) ? '_Build/content.json' : '_Build/example/content.json';
+		this.contentPath = '.tmp/content.json';
+		this.contentPathTrue = (fileExists('content.json', '_Build/', grunt)) ? '_Build/content.json' : '_Build/example/content.json';
+
+		reload();
 		
 		this.contentJson = grunt.file.readJSON(contentPath);
 

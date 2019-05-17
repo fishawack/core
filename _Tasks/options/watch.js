@@ -11,15 +11,20 @@ module.exports = {
         tasks: ['jshint', 'webpack:dev', 'concat:dev', 'karma:unit:run']
     },
     styles: {
-        files: ['_Build/vue/**/*.scss', '_Build/sass/**/*.scss', '_Build/sass/**/*.json'],
+        files: ['_Build/vue/**/*.scss', '_Build/sass/**/*.scss'],
         tasks: ['compile-vue', 'sass', 'postcss:dev', 'clean:build']
     },
-    content: {
-        files: ['_Build/content.json', '_Build/example/content.json']
-    },
     html: {
-        files: ['_Build/*.html', '_Build/html/**/*.html', '_Build/*.json', '_Build/example/content.json', '_Build/handlebars/**/*', '!_Build/handlebars/partials/generated/**/*'],
-        tasks: ['jsonlint', 'tv4', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dev', 'clean:build']
+        files: [
+                '_Build/*.json',
+                '_Build/example/content.json',
+                '_Build/config/*.json',
+                '_Build/*.html',
+                '_Build/html/**/*.html',
+                '_Build/handlebars/**/*',
+                '!_Build/handlebars/partials/generated/**/*'
+            ],
+        tasks: ['reload', 'jsonlint', 'tv4', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dev', 'clean:build']
     },
     assets: {
         files: ['_Build/media/**/*'],
