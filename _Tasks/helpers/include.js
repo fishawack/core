@@ -445,10 +445,6 @@ module.exports = function(grunt, hasBase) {
 	    this[z] = this[z].join("");
 	}
 
-	grunt.registerTask('reload', function(){
-		reload();
-    });
-
     this.reload = function(){
     	var json = {};
 
