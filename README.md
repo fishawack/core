@@ -294,7 +294,7 @@ The json that dictates which asset folders are pulled can be found in the `_Buil
         ...
     }
 }
-````
+```
 
 ### Media folder
 

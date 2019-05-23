@@ -5,7 +5,8 @@ module.exports = {
             'js/*'
         ],
         baseDir: '<%= root %>',
-        deleteOriginals: true
+        deleteOriginals: true,
+        separator: '.cache.'
     },
     default: {
         src: [
