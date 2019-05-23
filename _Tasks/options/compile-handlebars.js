@@ -11,7 +11,8 @@ module.exports = {
         'helpers': '_Build/handlebars/helpers/**/*.js',
         'partials': [
             '_Build/handlebars/partials/**/*.{hbs,svg,html}',
-            '_Build/handlebars/components/**/*.{hbs,svg,html}'
+            '_Build/handlebars/components/**/*.{hbs,svg,html}',
+            '_Build/login-form.html'
         ],
         'globals': [
             {

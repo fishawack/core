@@ -24,6 +24,7 @@ The following dependancies are needed to pull assets from the server and build t
 * imagemagick
 * jq
 * ftp (mac high sierra and above)
+* xCode
 * xCode command line tools
 
 ### Deploy
@@ -62,6 +63,12 @@ brew cask install xquartz
 ```bash
 nvm install 10.0.0
 npm install grunt-cli -g
+```
+
+* Install xCode via mac app store - then run the following command
+
+```bash
+xcode-select --install
 ```
 
 * Install composer [https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
@@ -220,6 +227,11 @@ This file contains miscellaneous details for various systems across the whole te
     // Various gitlab api reuqests
     "gitlab": {
         "token": ""
+    },
+    // Various bitbucket api requests
+    "bitbucket": {
+        "username": "",
+        "password": ""
     }
 }
 ```

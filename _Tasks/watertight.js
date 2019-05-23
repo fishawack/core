@@ -8,27 +8,25 @@ module.exports = function(grunt) {
 
         grunt.file.write('_Login/app/users.php', watertightBridge.buildUserPhp(deployEnv.users));
 
-        if(deployEnv.subDir){
-            grunt.file.write(
-                '_Login/index.php',
-                grunt.file.read('_Login/index.php').replace('<!-- appPath -->', '')
-            );
-
-            grunt.file.write(
-                '_Login/index.php',
-                grunt.file.read('_Login/index.php').replace('<!-- appCookie -->', (deployEnv.cookie) ? deployEnv.cookie : contentJson.attributes.title)
-            );
-        } else {
-            grunt.file.write(
-                '_Login/public_html/index.php',
-                grunt.file.read('_Login/public_html/index.php').replace('<!-- appPath -->', '../')
-            );
-
-            grunt.file.write(
-                '_Login/public_html/index.php',
-                grunt.file.read('_Login/public_html/index.php').replace('<!-- appCookie -->', (deployEnv.cookie) ? deployEnv.cookie : contentJson.attributes.title)
-            );
+        var customLogin = fileExists('login.html', '_Output/', grunt);
+        
+        var indexPath = '_Login/index.php';
+        var appPath = '';
+        
+        if(!deployEnv.subDir){
+            indexPath = '_Login/public_html/index.php';
+            appPath = '../'
         }
+
+        var indexPhp = grunt.file.read(indexPath);
+        indexPhp = indexPhp.replace('<!-- appPath -->', appPath);
+        indexPhp = indexPhp.replace('<!-- appCookie -->', (deployEnv.cookie) ? deployEnv.cookie : contentJson.attributes.title);
+        indexPhp = indexPhp.replace('<!-- customLogin -->', customLogin);
+
+        grunt.file.write(
+            indexPath,
+            indexPhp
+        );
 
         grunt.file.write(
             '_Login/app/app.php',
@@ -40,20 +38,17 @@ module.exports = function(grunt) {
             grunt.file.read('_Login/app/app.php').replace('<!-- siteTitle -->', contentJson.attributes.title)
         );
 
-        if(deployEnv.loginType === 'style-1'){
+        if(customLogin){
             grunt.file.write(
                 '_Login/app/views/login.php',
-                grunt.file.read('_Login/app/views/login-alt.php').replace('<!-- siteLogo -->', deployEnv.logo)
+                grunt.file.read('_Output/login.html')
             );
+        }
 
-            grunt.file.write(
-                '_Login/app/views/layout.php',
-                grunt.file.read('_Login/app/views/layout-alt.php').replace('<!-- siteTitle -->', contentJson.attributes.title)
-            );
-
+        if(fileExists('login-form.html', '_Output/', grunt)){
             grunt.file.write(
                 '_Login/app/views/forms/login.html',
-                grunt.file.read('_Login/app/views/forms/login-alt.html')
+                grunt.file.read('_Output/login-form.html')
             );
         }
     });
