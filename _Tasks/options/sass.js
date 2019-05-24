@@ -1,6 +1,7 @@
 module.exports = {
     default: {
         options: {
+            implementation: require('node-sass'),
             outputStyle: 'expanded',
             sourceMap: false,
             sourceComments: true,
