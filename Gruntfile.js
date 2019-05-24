@@ -37,7 +37,8 @@ module.exports = function(grunt) {
     // Load all grunt npm tasks with the prefix 'grunt-'
     require('jit-grunt')(grunt, {
         sshexec: 'grunt-ssh',
-        sftp: 'grunt-ssh'
+        sftp: 'grunt-ssh',
+        postcss: '@lodder/grunt-postcss'
     })({
         cwd: configPath
     });
@@ -49,9 +50,6 @@ module.exports = function(grunt) {
 
     // Setup custom template handlebar code
     templateCustom();        
-
-    // Setup custom postcss code / can't load from external files from plugin
-    postcssCustom();
 
     grunt.registerTask('default', ['clean:cache', 'env:dev', 'karma:unit:start', 'badges', 'jshint', 'modernizr', 'tv4', 'webpack:dev', 'concat:dev', 'fontello_svg', 'svgfit', 'svgmin', 'svg_sprite', 'copy:content', 'copy:assets', 'copy:svg', 'copy:svgasis', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dev', 'clean:build', 'browserSync', 'watch']);
     

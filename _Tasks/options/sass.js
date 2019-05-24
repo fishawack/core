@@ -18,7 +18,7 @@ module.exports = {
             expand: true,
             cwd: '_Build/sass/',
             src: ['**/*.scss', '!**/_*.scss'],
-            dest: '<%= root %>/css/',
+            dest: '.tmp/css/',
             ext: '.css',
             flatten: true
         }]

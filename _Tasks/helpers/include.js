@@ -1,5 +1,6 @@
 module.exports = function(grunt, hasBase) {
-	var _ = require('lodash');
+	this._ = require('lodash');
+	this.grunt = grunt;
 
 	this.loadTargets = function(config){
 		var fs = require('fs');
@@ -106,88 +107,6 @@ module.exports = function(grunt, hasBase) {
 
 			handlebars.push(obj);
 		}
-	};
-
-	this.postcssCustom = function(){
-		var html = contentJson.attributes.uncss.map(function(d, i){
-	        return grunt.template.process(d, grunt.config.get());
-	    });
-
-	    var processors = [
-	    	require('autoprefixer')({browsers: 'last 6 versions'}),
-            require('postcss-assets')({
-                basePath: grunt.config.get("root"),
-                relativeTo: 'css/',
-                loadPaths: ['media/**/']
-            }),
-            require('postcss-uncss')({
-                html: contentJson.attributes.uncss.map(function(d, i){
-			        return grunt.template.process(d, grunt.config.get());
-			    }),
-                userAgent: 'jsdom',
-                ignore: [
-                	/.active/i,
-                	/.deactive/i,
-					/.disabled/i,
-					/.capture/i,
-					/.icon/i,
-					/.labD3/i,
-					/\bspan\b/i,
-					/\bsup\b/i,
-					/\bsub\b/i,
-					/\bsmall\b/i,
-					/\bstrong\b/i,
-					/\bb\b/i,
-					/\bem\b/i,
-					/\bi\b/i,
-					/\ba\b/i
-				],
-                inject: function(window){
-                	if(!contentJson.attributes.modernizr.length){
-                		window.document.documentElement.classList.add('modern');
-                	} else {
-                		window.document.documentElement.classList.add('no-js', 'js', 'loading', 'staging', 'production', 'qc');
-
-                		contentJson.attributes.modernizr.forEach(function(d){
-                    		window.document.documentElement.classList.add('no-' + d, d);
-                    	});
-                	}
-                }
-            })
-	    ];
-
-	    var postcss = {
-	        dev: {
-	        	options: {
-	        		map: false,
-	        		processors: processors
-	        	},
-	            files: [{
-		            expand: true,
-		            cwd: '<%= root %>/css/',
-		            src: ['*.css'],
-		            dest: '<%= root %>/css/'
-		        }]
-	        },
-	        dist: {
-	        	options: {
-	        		map: false,
-	        		processors: processors.concat([
-        				require('cssnano')({
-			            	preset: 'default',
-			        	})
-        			])
-	        	},
-	            files: [{
-		            expand: true,
-		            cwd: '<%= root %>/css/',
-		            src: ['*.css'],
-		            dest: '<%= root %>/css/'
-		        }]
-	        }
-	    };
-
-	    grunt.config.set('postcss', postcss);
 	};
 
 	this.safeLoad = function(grunt, file, json, cwd){
