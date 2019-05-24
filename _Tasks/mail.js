@@ -5,7 +5,22 @@ module.exports = function(grunt) {
             return;
         }
 
-        var nodemailer = grunt.config.get('nodemailer') || {};
+        var username = '';
+        var password = '';
+
+        if(config.targets.misc && config.targets.misc.nodemailer){
+            username = config.targets.misc.nodemailer.username;
+            password = config.targets.misc.nodemailer.password; 
+        } else {
+            grunt.log.warn('Cannot find nodemailer credentials in ~/targets/misc.json');
+            return;
+        }
+
+        var nodemailer = {
+            options: {
+                transport: require('nodemailer').createTransport('smtps://' + username + ':' + password + '@smtp.gmail.com').transporter
+            }
+        };
 
         var recipients = contentJson.attributes.email || [];
 

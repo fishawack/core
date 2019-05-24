@@ -1,20 +1,23 @@
-const webpack = require('webpack');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const path = require('path');
+var config;
+var path;
 
-const grunt = require('grunt');
+function setup(){
+	const webpack = require('webpack');
+	const VueLoaderPlugin = require('vue-loader/lib/plugin');
+	path = require('path');
 
-// Javascript files in _Build/js that start with '--' will be treated as entry points and an output file will be generated with the same name minus the '--' prefix i.e _Build/js/libs/--test.js -> _Output/js/test.js
-var entryPoints = {};
-grunt.file.expand({
-	expand: true,
-	cwd: './_Build/js/'
-}, '**/--*.js').forEach(function(element, index){
-	entryPoints[element.split('--')[1].split('.js')[0]] = './_Build/js/' + element;
-});
+	const grunt = require('grunt');
 
-module.exports = {
-	options: {
+	// Javascript files in _Build/js that start with '--' will be treated as entry points and an output file will be generated with the same name minus the '--' prefix i.e _Build/js/libs/--test.js -> _Output/js/test.js
+	var entryPoints = {};
+	grunt.file.expand({
+		expand: true,
+		cwd: './_Build/js/'
+	}, '**/--*.js').forEach(function(element, index){
+		entryPoints[element.split('--')[1].split('.js')[0]] = './_Build/js/' + element;
+	});
+
+	config = {
 		watch: false,
 		cache: true,
 		entry: Object.assign(
@@ -90,17 +93,32 @@ module.exports = {
 				}
 			})
 		}
-	},
-	dev: {
-		mode: "development",
-		output: {
-			path: path.resolve(process.cwd(),'<%= root %>/js/')
+	};
+}
+
+module.exports = {
+	dev: () => {
+		if(!config){
+			setup();
 		}
+
+		return Object.assign(config, {
+			mode: "development",
+			output: {
+				path: path.resolve(process.cwd(),'<%= root %>/js/')
+			}
+		});
 	},
-	dist:{
-		mode: "production",
-		output: {
-			path: path.resolve(process.cwd(), '.tmp/js/')
+	dist: () => {
+		if(!config){
+			setup();
 		}
+
+		return Object.assign(config, {
+			mode: "production",
+			output: {
+				path: path.resolve(process.cwd(), '.tmp/js/')
+			}
+		});
 	}
 }

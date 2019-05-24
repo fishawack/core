@@ -1,7 +1,7 @@
-module.exports = function(grunt) {
-	var jsdom = require("jsdom");
-	
+module.exports = function(grunt) {	
     grunt.registerTask('compile-vue', function(){
+        var jsdom = require("jsdom");
+        
     	var cwd = '_Build/vue/';
 
 	    grunt.file.expand({cwd: cwd}, '**/*.vue').forEach(function(element, index){
