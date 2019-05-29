@@ -902,3 +902,47 @@ module.exports = function(grunt) {
 ## Deploying
 
 ### Servers
+
+### iOS packaging with PhoneGap
+
+You'll need to make sure you have a copy of the latest signed certificate! You'll then need to login to the Apple iOS developers portal to create a provisioning profile:
+
+[Apple Developer Portal](developer.apple.com)
+
+#### Create App ID
+
+1. Go to Identifiers > App IDs, click "+" to create a new ID
+2. Fill in Name of your app (i.e SantenCubeApp)
+3. Use Explicit App ID, Bundle ID should follow this notation: com.fishawack.(lowercase of name filled above) i.e. com.fishawack.santencubeapp
+4. Check any services you require (normally none of them)
+5. Confirm and regster your app
+
+#### Create Provision Profile
+
+1. Go to Provisioning Profiles > All > click the "+" to create a new profile
+2. Select "In House", click "Continue"
+3. App ID select the one you just created in the last section, click "Continue"
+4. Select the Certificate with the longest expiry date and continue
+5. Profile name: use App name from previous section and continue
+6. Download provisioning profile!
+
+### Create App in PhoneGap Build
+
+1. Login via [PhoneGap Build]( https://build.phonegap.com/apps )
+2. Go to top right corner where the account icon is, in the drop down select "Edit Account"
+3. Under "Signing Keys", Add a key in the iOS section
+4. Use the name you've been using in these sections again and upload the certificate and keys
+5. Go back to the main Dashboard and Create new app by uploading a zip file
+6. In the App. you can now select your Key for iOS and trigger a build, you will need to unlock it first by clicking the pad lock
+
+You're all done, you should be able to populate your repo with the info provided on the page, add this to your content.json under the attributes object:
+
+```json
+"phonegap": {
+    "signingKey": "SigningKeyGoesHere",
+        "appID": "AppIDGoesHere",
+        "phonegapVersion": "cli-7.1.0",
+        "bundle": "com.fishawack.AppNameGoesHere"
+}
+```
+
