@@ -19,22 +19,25 @@ module.exports = function(grunt) {
             }
         };
 
-        var commands = ['clean:content', 'shell:content', 'content-request'];
+        var commands = ['shell:content', 'content-request', 'copy:content'];
 
-        contentJson.attributes.content.forEach(function(d){
-            var saveTo = (d.saveTo) ? d.saveTo : '_Build/content/';
+        contentJson.attributes.content.forEach(function(d, i){
+            var saveTo = (d.saveTo) ? d.saveTo : `_Build/content/content-${i}/`;
+
+            shell.content.command.push(`rm -rf ${saveTo}`);
 
             if(d.ftp || d.ftps){
                 var protocol = (d.ftps) ? 'ftps' : 'ftp';
                 var ip = (d.ftps) ? d.ftps : d.ftp;
 
-                shell.content.command.push('wget -r --user=\'<%= targets.ftp["' + ip + '"].username %>\' --password=\'<%= targets.ftp["' + ip + '"].password %>\' -P ' + saveTo + ' -nH --cut=' + (d.location.split('/').length - 1) + ' \'' + protocol + '://' + ip + '/' + d.location + '\'');
+                shell.content.command.push(`wget -r --user='<%= targets.ftp["${ip}"].username %>' --password='<%= targets.ftp["${ip}"].password %>' -P ${saveTo} -nH --cut=${d.location.split('/').length - 1} '${protocol}://${ip}/${d.location}'`);
             } else if(d.ssh) {
-                shell.content.command.push('scp -r <%= targets["' + d.ssh + '"].username %>@<%= targets["' + d.ssh + '"].host %>:' + d.location + ' ' + saveTo);
+                shell.content.command.push(`scp -r <%= targets["${d.ssh}"].username %>@<%= targets["${d.ssh}"].host %>:${d.location} ${saveTo}`);
             } else if(d.lftp){
-                shell.content.command.push(`lftp -d -e 'mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>',<%= targets.ftp["${d.lftp}"].password %> sftp://${d.lftp}`);
+                // Remove the rm -rf command as lftp needs to mirror
+                shell.content.command.pop();
 
-                commands.shift();
+                shell.content.command.push(`lftp -d -e 'mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>',<%= targets.ftp["${d.lftp}"].password %> sftp://${d.lftp}`);
             }
         });
 
@@ -56,13 +59,14 @@ module.exports = function(grunt) {
         var request = require('request');
         var requests = [];
 
-        contentJson.attributes.content.forEach(function(d){
+        contentJson.attributes.content.forEach(function(d, i){
             if(d.url){
                 d.endpoints.forEach(function(dd){
                     requests.push({
                         name: dd,
                         request: d.url.replace(/\/+$/, "") + '/' + dd,
-                        obj: d
+                        obj: d,
+                        i: i
                     });
                 });
             }
@@ -72,10 +76,12 @@ module.exports = function(grunt) {
             var done = this.async();
 
             async.forEach(requests, function(d, cb){
+                var saveTo = (d.obj.saveTo) ? d.obj.saveTo : `_Build/content/content-${d.i}/`;
+
                 load(d.request + '?per_page=100', function(data){
                     grunt.log.ok('Downloaded ' + d.name);
 
-                    grunt.file.write((d.obj.saveTo || '_Build/content/compile/') + d.name + ((d.obj.ext) ? '.' + d.obj.ext : ''), JSON.stringify(data));
+                    grunt.file.write(saveTo + d.name + ((d.obj.ext) ? '.' + d.obj.ext : ''), JSON.stringify(data));
 
                     cb();
                 });

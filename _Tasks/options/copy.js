@@ -3,9 +3,15 @@ module.exports = {
         files: [
             {
                 expand: true,
-                cwd: '_Build/content/media',
-                src: ['**/*'],
-                dest: '<%= root %>/media/content'
+                cwd: '_Build/content/',
+                src: ['**/media/**/*'],
+                dest: '<%= root %>/media/content/',
+                rename: function(dest, src) {
+                    var parts = src.split('/');
+                    parts.shift();// Remove content-${i}
+                    parts.shift();// Remove media
+                    return dest + parts.join('/');
+                }
             }
         ].concat(contentJson.attributes.copy || [])
     },
