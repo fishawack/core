@@ -382,7 +382,7 @@ module.exports = function(grunt, hasBase) {
 		grunt.file.write(contentPath, JSON.stringify(json, null, 4));
     }
 
-	this.devProject = null;
+	this.devProject = require('./dev.js');
 
 	if(grunt && !hasBase){
 		grunt.file.setBase('../' + (devProject || '../..') + '/');

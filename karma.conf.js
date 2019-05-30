@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Tue Nov 03 2015 14:32:58 GMT+0000 (GMT)
 
-require('./_Tasks/helpers/include.js')(null);
+var devProject = require('./_Tasks/helpers/dev.js');
 var path = require('path');
 
 module.exports = function(config) {
