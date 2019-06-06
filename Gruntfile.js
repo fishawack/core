@@ -15,7 +15,7 @@ module.exports = function(grunt) {
         pullApp: ''
     };
 
-    if(config.dev){
+    if(devProject){
         require('time-grunt')(grunt);
     }
 
