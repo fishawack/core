@@ -37,7 +37,7 @@ module.exports = function(grunt) {
                 // Remove the rm -rf command as lftp needs to mirror
                 shell.content.command.pop();
 
-                shell.content.command.push(`lftp -d -e 'mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>',<%= targets.ftp["${d.lftp}"].password %> sftp://${d.lftp}`);
+                shell.content.command.push(`lftp -d -e 'set sftp:auto-confirm yes; mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>',<%= targets.ftp["${d.lftp}"].password %> sftp://${d.lftp}`);
             }
         });
 
