@@ -46,7 +46,14 @@ function setup(){
 				{
 					test: /\.vue$/,
 					use: [
-						'vue-loader'
+						{
+							loader: 'vue-loader',
+							options: {
+								compilerOptions: {
+									preserveWhitespace: false
+								}
+							}
+						}
 					]
 				},
 				{
