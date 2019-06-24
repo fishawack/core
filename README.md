@@ -946,3 +946,16 @@ You're all done, you should be able to populate your repo with the info provided
 }
 ```
 
+## Changelog
+
+### 4.2.2
+* Added `preserveWhitespace: false` to `vue-loader` to remove whitespace in the rendered vue templates
+
+### 4.2.1
+* Added an "auto confirm" to the lftp command to stop it failing on first use
+
+### 4.2.0
+* Changed the structure of pulled folders, each folder now goes into it's own directory and merged at build time
+* Grunt tasks start much faster as `requires` aren't pulled in until needed
+* Bumped `node-sass` and `grunt-sass` to latest versions
+* `node-sass` now saves to `.tmp` before postcss then processes and saves it to `_Output`
