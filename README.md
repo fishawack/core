@@ -948,6 +948,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.2.3
+* Fixed lftp bug that occurred when running content pulls on linux machines
+
 ### 4.2.2
 * Added `preserveWhitespace: false` to `vue-loader` to remove whitespace in the rendered vue templates
 

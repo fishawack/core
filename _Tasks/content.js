@@ -22,7 +22,7 @@ module.exports = function(grunt) {
         var commands = ['shell:content', 'content-request', 'copy:content'];
 
         contentJson.attributes.content.forEach(function(d, i){
-            var saveTo = (d.saveTo) ? d.saveTo : `_Build/content/content-${i}/`;
+            var saveTo = (d.saveTo) ? d.saveTo : `_Build/content/content-${i}`;
 
             shell.content.command.push(`rm -rf ${saveTo}`);
 
