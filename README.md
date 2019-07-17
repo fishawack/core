@@ -948,6 +948,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.2.4
+* Bumped `grunt-svg-sprite` as it suddenly started throwin an error
+
 ### 4.2.3
 * Fixed lftp bug that occurred when running content pulls on linux machines
 
