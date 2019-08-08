@@ -54,7 +54,7 @@ module.exports = function(grunt) {
 			            	if(arrayOfScreens.length > 1){
 			            		merge(arrayOfScreens.map(
 			            			function(d, i){return `.tmp/pdfs/${j}/${i}.pdf`;}), 
-			            			`_Pdfs/${contentJson.attributes.title}_${width}x${height}_${grunt.template.today('yyyy-mm-dd')}.pdf`,
+			            			`.tmp/pdfs/${j}.pdf`,
 			            			function(err){
 								        if(err)
 								        	return console.log(err);
