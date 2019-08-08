@@ -8,69 +8,58 @@ if(fileExists('capturePage.js', '_Node', grunt)){
     require(process.cwd() + '/_Node/capturePage.js')(grunt);
 }
 
-var delay = 50;
-var captureIndex = 0;
-
 grunt.file.mkdir('.tmp/screenshots/');
 
-var qualitySizes = {
-    '16:9': {
-    	hd: [1920, 1080],
-    	hd_retina: [960, 540],
-    	sd: [1080, 608],
-    	test: [16, 9]
-    },
-    '9:16': {
-        hd: [1080, 1920],
-        hd_retina: [540, 960],
-        sd: [608, 1080],
-        test: [9, 16]
-    },
-    '4:3': {
-        hd: [1366, 1024],
-        hd_retina: [683, 512],
-        sd: [1024, 768],
-        test: [20, 15]
-    },
-    '3:4': {
-        hd: [1024, 1366],
-        hd_retina: [512, 683],
-        sd: [768, 1024],
-        test: [15, 20]
-    }
-};
+var captureIndex;
 
-var ratio = '16:9';
-
-var quality = 'sd';
-
-if(typeof deployEnv.pdf === 'string'){
-    quality = deployEnv.pdf;
-
-    if(contentJson.attributes.ratio){
-        ratio = contentJson.attributes.ratio;
-    }
+var sizes = [[1080, 608]];
+if(deployEnv.pdf && deployEnv.pdf.sizes){
+    sizes = deployEnv.pdf.sizes;
 }
 
-browser.setViewportSize({
-    width: qualitySizes[ratio][quality][0],
-    height: qualitySizes[ratio][quality][1]
-});
+var pages = ['index.html'];
+if(deployEnv.pdf && deployEnv.pdf.pages){
+    pages = deployEnv.pdf.pages;
+}
 
-if(typeof capturePage === 'function'){
-    capturePage();
-} else {
-    describe('pdf', function () {
-        it('Screenshot', function() {
-            browser.url('http://localhost:9001/index.html?capture=true');
+for(var i = 0; i < sizes.length; i++){
+    captureSize(i);
+}
+
+createPdfsAndZips(sizes);
+
+function captureSize(index){
+    grunt.file.mkdir(`.tmp/screenshots/${index}/`);
+
+    var width = sizes[index][0];
+    var height = sizes[index][1];
+
+    describe(`Size ${width}x${height}`, function () {
+        it('init', function() {
+            browser.setViewportSize({
+                width: width,
+                height: height
+            });
+
+            captureIndex = 0;
+        });
+
+        for(var i = 0; i < pages.length; i++){
+            capturePage(i, index);
+        }
+    });
+}
+
+function capturePage(index, sizeIndex){
+    var page = pages[index];
+
+    describe(`Page ${page}`, function () {
+        it('screenshot', function() {
+            browser.url(`http://localhost:9001/${page}?capture=true`);
 
             browser.waitForExist('.loaded', 50000);
-            
-            browser.pause(delay);
 
-            browser.saveDocumentScreenshot(".tmp/screenshots/" + (captureIndex++) + ".png");
-
-            createPdfsAndZips();
+            browser.saveDocumentScreenshot(`.tmp/screenshots/${sizeIndex}/${captureIndex++}.png`);
         });
     });
 }
