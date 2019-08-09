@@ -81,7 +81,7 @@ var capture = {
     screenshot: {
         index: 0,
         call: function(viewportOnly){
-            if(!viewportOnly){
+            if(viewportOnly){
                 browser.saveScreenshot(`.tmp/screenshots/${capture.screenshot.index++}.png`);
             } else {
                 browser.saveDocumentScreenshot(`.tmp/screenshots/${capture.screenshot.index++}.png`);
