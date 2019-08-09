@@ -68,7 +68,35 @@
 					}
 				},
 				"pdf": {
-					"type": ["string", "boolean"]
+					"type": ["string", "boolean", "object"],
+					"properties": {
+						"browsers": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"chrome", 
+									"firefox",
+									"safari"
+								]
+							}
+						},
+						"pages": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"sizes": {
+							"type": "array",
+							"items": {
+								"type": "array",
+								"items": {
+									"type": "number"
+								}
+							}
+						}
+					}
 				},
 				"env": {
 		        	"type": "object",
