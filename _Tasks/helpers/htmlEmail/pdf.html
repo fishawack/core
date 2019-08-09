@@ -1,18 +1,40 @@
 <li>
 	<strong>Pdf</strong>:
 	<ul>
-		<li>
-			<a href="<%= encodeURI('http://internal.fishawack.staging/Auto-Package/' + pkg.name + '/' + contentJson.attributes.title + '_' + pkg.version + '_' + grunt.template.today("yyyy-mm-dd") + '.pdf') %>">
-				<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("yyyy-mm-dd") %>.pdf
-			</a>
-		</li>
-		<li>
-			<strong>Expires</strong>: 
-			<%= new Date(new Date().setMonth(new Date().getMonth() + 2)).toDateString() %>
-		</li>
-		<li>
-			<strong>Size</strong>: 
-			<%= getFilesizeInBytes("_Pdfs/" + contentJson.attributes.title + "_" + pkg.version + "_" + grunt.template.today("yyyy-mm-dd") + ".pdf") %>
-		</li>
+		<%=
+			(deployEnv.pdf && deployEnv.pdf.browsers || ["chrome"]).map((d) => {
+				var browser = d;
+
+				return `<li>
+					<strong>${d[0].toUpperCase()}${d.slice(1)}</strong>:<ul>
+						${(deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]]).map((d) => {
+							var width = d[0];
+							var height = d[1];
+							var file = `${contentJson.attributes.title}_${width}x${height}_${grunt.template.today('yyyy-mm-dd')}_${browser}.pdf`;
+							var url = `http://internal.fishawack.staging/Auto-Package/${pkg.name}/`;
+
+							return `<li>
+								<strong>${width}x${height}</strong>:
+								<ul>
+									<li>
+										<a href="${encodeURI(url + file)}">
+											${file}
+										</a>
+									</li>
+									<li>
+										<strong>Size</strong>: 
+										${getFilesizeInBytes(`_Pdfs/${file}`)}
+									</li>
+									<li>
+										<strong>Expires</strong>: 
+										${new Date(new Date().setMonth(new Date().getMonth() + 2)).toDateString()}
+									</li>
+								</ul>
+							</li>`;
+						}).join('')}
+					</ul>
+				</li>`;
+			}).join('')
+		%>
 	</ul>
 </li>

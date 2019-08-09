@@ -283,14 +283,7 @@ module.exports = function(grunt, hasBase) {
     }
 
     this.buildHtmlEmail = function(type){
-    	var file = contentJson.attributes.title + '_' + grunt.file.readJSON('package.json').version + '_' + grunt.template.today('yyyy-mm-dd') + '.pdf';
-    	
-    	if(type === 'pdf' && !fileExists(file, '_Pdfs/', grunt)){
-    		grunt.log.warn(file + ' file not found');
-    		return '';
-    	}
-
-        return grunt.file.read(this.configPath + '_Tasks/helpers/htmlEmail/' + type + '.html');
+        return grunt.config.process(grunt.file.read(this.configPath + '_Tasks/helpers/htmlEmail/' + type + '.html'));
     }
 
 	if (!String.format) {
