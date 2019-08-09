@@ -36,7 +36,7 @@ module.exports = function(grunt) {
 		        		return function(callback){
 			        		new PDFImagePack().output(
 			        			[`${path}${j}/${arrayOfScreens[i]}`], 
-			        			((arrayOfScreens.length > 1) ? `.tmp/pdfs/${j}/${i}.pdf` : `_Pdfs/${j}/raw.pdf`),
+			        			((arrayOfScreens.length > 1) ? `.tmp/pdfs/${j}/${i}.pdf` : `.tmp/pdfs/${j}.pdf`),
 			        			function(err){
 					            	if(err){
 					            		console.log(err);
