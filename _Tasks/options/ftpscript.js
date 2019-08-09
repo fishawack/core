@@ -21,7 +21,7 @@ module.exports = {
         files: [{
             expand: true,
             cwd: '_Pdfs/',
-            src: ["<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today('yyyy-mm-dd') %>.pdf"],
+            src: ["*.pdf"],
             dest: './Auto-Package/<%= pkg.name %>' + '/'
         }]
     },
