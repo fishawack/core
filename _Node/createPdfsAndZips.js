@@ -3,27 +3,21 @@ module.exports = function(grunt) {
 	var async = require('async');
 	var path = '.tmp/screenshots/';
 	var merge = require('easy-pdf-merge');
+	var fs = require('fs-extra');
+	var exec = require('child_process').exec;
 
-	grunt.file.mkdir('_Pdfs');
 	grunt.file.mkdir('.tmp/pdfs/');
 
-	this.createPdfsAndZips = function(sizes){
-	    for(var j = 0; j < sizes.length; j++){
-			generate(j, sizes);
-	    }
-	}
+	this.createPdfsAndZips = function(browserName, width, height){
+		describe(`Archiving and packing`, function () {
+			before(function(){
+	            fs.mkdirpSync(`.tmp/pdfs/`);
+	        });
 
-	function generate(j, sizes){
-		grunt.file.mkdir(`.tmp/pdfs/${j}`);
-
-		var width = sizes[j][0];
-    	var height = sizes[j][1];
-
-		describe(`Size ${width}x${height}`, function () {
-	    	it(`Archiving and packing`, function() {
+	    	it(`Merging pdfs`, function() {
 			    var arrayOfScreens = [];
 
-		        grunt.file.expand({cwd: `${path}${j}/`}, '*').forEach(function(element, index){
+		        grunt.file.expand({cwd: path}, '*').forEach(function(element, index){
 		        	arrayOfScreens.push(element);
 		        });
 
@@ -32,11 +26,11 @@ module.exports = function(grunt) {
 		        var pdfTasks = [];
 
 		        for(var i = 0; i < arrayOfScreens.length; i++){
-		        	pdfTasks.push((function(i, j){
+		        	pdfTasks.push((function(i){
 		        		return function(callback){
 			        		new PDFImagePack().output(
-			        			[`${path}${j}/${arrayOfScreens[i]}`], 
-			        			((arrayOfScreens.length > 1) ? `.tmp/pdfs/${j}/${i}.pdf` : `.tmp/pdfs/${j}.pdf`),
+			        			[path + arrayOfScreens[i]], 
+			        			((arrayOfScreens.length > 1) ? `.tmp/pdfs/${i}.pdf` : `.tmp/pdfs/raw.pdf`),
 			        			function(err){
 					            	if(err){
 					            		console.log(err);
@@ -45,7 +39,7 @@ module.exports = function(grunt) {
 				            		callback();
 				            	});
 			        	};
-		        	}(i, j)));
+		        	}(i)));
 		        }
 
 		        browser.call(function () {
@@ -53,8 +47,8 @@ module.exports = function(grunt) {
 			            async.series(pdfTasks, function(){
 			            	if(arrayOfScreens.length > 1){
 			            		merge(arrayOfScreens.map(
-			            			function(d, i){return `.tmp/pdfs/${j}/${i}.pdf`;}), 
-			            			`.tmp/pdfs/${j}.pdf`,
+			            			function(d, i){return `.tmp/pdfs/${i}.pdf`;}), 
+			            			`.tmp/pdfs/raw.pdf`,
 			            			function(err){
 								        if(err)
 								        	return console.log(err);
@@ -68,6 +62,28 @@ module.exports = function(grunt) {
 			        });
 			    });
 	        });
-        });
+
+	        it(`Optimizing pdf`, function() {
+		        browser.call(function () {
+			        return new Promise(function(resolve, reject) {
+			        	var pdf = `${contentJson.attributes.title}_${width}x${height}_${grunt.template.today('yyyy-mm-dd')}_${browserName}.pdf`;
+
+			        	var command = `gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile='_Pdfs/${pdf}' '.tmp/pdfs/raw.pdf'`;
+
+			            exec(command, function(error, stdout, stderr) {
+					        if(error){
+					        	reject();
+					        }
+
+					        resolve();
+					    });
+			        });
+			    });
+	        });
+
+	        after(function(){
+	            fs.removeSync(`.tmp/pdfs/`);
+	        });
+	    });
 	}
 }

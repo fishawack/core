@@ -1,14 +1,15 @@
 'use strict';
 
 var grunt = require('grunt');
+var fs = require('fs-extra');
 require('../_Tasks/helpers/include.js')(grunt, true);
 require('./createPdfsAndZips.js')(grunt);
+
+fs.mkdirpSync('_Pdfs');
 
 if(fileExists('capturePage.js', '_Node', grunt)){
     require(process.cwd() + '/_Node/capturePage.js')(grunt);
 }
-
-grunt.file.mkdir('.tmp/screenshots/');
 
 var captureIndex;
 
@@ -23,18 +24,21 @@ if(deployEnv.pdf && deployEnv.pdf.pages){
 }
 
 for(var i = 0; i < sizes.length; i++){
-    captureSize(i);
+    var width = sizes[i][0];
+    var height = sizes[i][1];
+
+    captureSize(
+        width,
+        height
+    );
 }
 
-createPdfsAndZips(sizes);
-
-function captureSize(index){
-    grunt.file.mkdir(`.tmp/screenshots/${index}/`);
-
-    var width = sizes[index][0];
-    var height = sizes[index][1];
-
+function captureSize(width, height){
     describe(`Size ${width}x${height}`, function () {
+        before(function(){
+            fs.mkdirpSync(`.tmp/screenshots/`);
+        });
+
         it('init', function() {
             browser.setViewportSize({
                 width: width,
@@ -44,13 +48,27 @@ function captureSize(index){
             captureIndex = 0;
         });
 
-        for(var i = 0; i < pages.length; i++){
-            capturePage(i, index);
+        if(typeof capturePage === "function"){
+            capturePage();
+        } else {
+            for(var i = 0; i < pages.length; i++){
+                asdf(i);
+            }
         }
+
+        createPdfsAndZips(
+            browser.desiredCapabilities.browserName,
+            width,
+            height
+        );
+
+        after(function(){
+            fs.removeSync(`.tmp/screenshots/`);
+        });
     });
 }
 
-function capturePage(index, sizeIndex){
+function asdf(index){
     var page = pages[index];
 
     describe(`Page ${page}`, function () {
@@ -59,7 +77,7 @@ function capturePage(index, sizeIndex){
 
             browser.waitForExist('.loaded', 50000);
 
-            browser.saveDocumentScreenshot(`.tmp/screenshots/${sizeIndex}/${captureIndex++}.png`);
+            browser.saveScreenshot(`.tmp/screenshots/${captureIndex++}.png`);
         });
     });
 }

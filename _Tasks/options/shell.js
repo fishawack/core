@@ -20,20 +20,5 @@ module.exports = {
     },
     pullApp: {
         command: "curl --create-dirs -o _Packages/iOS/app.ipa "
-    },
-    pdf: {
-        command: function(){
-            var sizes = [[1080, 608]];
-            if(deployEnv.pdf && deployEnv.pdf.sizes){
-                sizes = deployEnv.pdf.sizes;
-            }
-
-            return sizes.map((d, i) => {
-                var width = sizes[i][0];
-                var height = sizes[i][1];
-
-                return `gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile='_Pdfs/${contentJson.attributes.title}_${width}x${height}_${grunt.template.today('yyyy-mm-dd')}.pdf' '.tmp/pdfs/${i}.pdf'`;
-            }).join(' && ');
-        }
     }
 }
