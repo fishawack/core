@@ -15,6 +15,7 @@ if(fileExists('capture.js', '_Node', grunt)){
 
 var capture = {
     size: {
+        array: null,
         index: 0,
         browser: '',
         width: 0,
@@ -54,11 +55,12 @@ var capture = {
         }
     },
     page: {
+        array: null,
         index: 0,
         name: '',
         call: function(){
             var page = capture.page.name;
-            
+
             describe(`Page ${page}`, function () {
                 before(function(){
                     browser.url(`http://localhost:9001/${page}?capture=true`);
@@ -87,8 +89,8 @@ var capture = {
     }
 };
 
-var sizes = deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]];
-var pages = deployEnv.pdf && deployEnv.pdf.pages || ['index.html'];
+var sizes = capture.size.array = deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]];
+var pages = capture.page.array = deployEnv.pdf && deployEnv.pdf.pages || ['index.html'];
 
 for(var i = 0; i < sizes.length; i++){
     capture.size.index = i;
