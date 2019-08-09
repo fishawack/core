@@ -7,7 +7,7 @@ require('./createPdfsAndZips.js')(grunt);
 
 fs.mkdirpSync('_Pdfs');
 
-var custom;
+var custom = {};
 
 if(fileExists('capture.js', '_Node', grunt)){
     custom = require(process.cwd() + '/_Node/capture.js');
