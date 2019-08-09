@@ -20,20 +20,22 @@ var capture = {
         browser: '',
         width: 0,
         height: 0,
-        call: function(){
-            var width = capture.size.width;
-            var height = capture.size.height;
-
-            describe(`Size ${width}x${height}`, function () {
+        call: function(index){
+            describe(`Size ${sizes[index][0]}x${sizes[index][1]}`, function () {
                 before(function(){
+                    capture.size.index = index;
+                    capture.size.width = sizes[index][0];
+                    capture.size.height = sizes[index][1];
+                    capture.size.browser = browser.desiredCapabilities.browserName;
+                    
+                    capture.screenshot.index = 0;
+
                     fs.mkdirpSync(`.tmp/screenshots/`);
 
                     browser.setViewportSize({
-                        width: width,
-                        height: height
+                        width: capture.size.width,
+                        height: capture.size.height
                     });
-
-                    capture.screenshot.index = 0;
                 });
 
                 if(custom.size){
@@ -41,9 +43,7 @@ var capture = {
                 }
 
                 for(var i = 0; i < pages.length; i++){
-                    capture.page.index = i;
-                    capture.page.name = pages[i];
-                    capture.page.call();
+                    capture.page.call(i);
                 }
 
                 createPdfsAndZips(capture);
@@ -58,12 +58,13 @@ var capture = {
         array: null,
         index: 0,
         name: '',
-        call: function(){
-            var page = capture.page.name;
-
-            describe(`Page ${page}`, function () {
+        call: function(index){
+            describe(`Page ${pages[index]}`, function () {
                 before(function(){
-                    browser.url(`http://localhost:9001/${page}?capture=true`);
+                    capture.page.index = index;
+                    capture.page.name = pages[index];
+
+                    browser.url(`http://localhost:9001/${capture.page.name}?capture=true`);
                     browser.waitForExist('.loaded', 50000);
                 });
 
@@ -93,9 +94,5 @@ var sizes = capture.size.array = deployEnv.pdf && deployEnv.pdf.sizes || [[1080,
 var pages = capture.page.array = deployEnv.pdf && deployEnv.pdf.pages || ['index.html'];
 
 for(var i = 0; i < sizes.length; i++){
-    capture.size.index = i;
-    capture.size.width = sizes[i][0];
-    capture.size.height = sizes[i][1];
-    capture.size.browser = browser.desiredCapabilities.browserName;
-    capture.size.call();
+    capture.size.call(i);
 }
