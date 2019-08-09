@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 
 	grunt.file.mkdir('.tmp/pdfs/');
 
-	this.createPdfsAndZips = function(browserName, width, height){
+	this.createPdfsAndZips = function(capture){
 		describe(`Archiving and packing`, function () {
 			before(function(){
 	            fs.mkdirpSync(`.tmp/pdfs/`);
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
 	        it(`Optimizing pdf`, function() {
 		        browser.call(function () {
 			        return new Promise(function(resolve, reject) {
-			        	var pdf = `${contentJson.attributes.title}_${width}x${height}_${grunt.template.today('yyyy-mm-dd')}_${browserName}.pdf`;
+			        	var pdf = `${contentJson.attributes.title}_${capture.size.width}x${capture.size.height}_${grunt.template.today('yyyy-mm-dd')}_${capture.size.browser}.pdf`;
 
 			        	var command = `gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile='_Pdfs/${pdf}' '.tmp/pdfs/raw.pdf'`;
 
