@@ -20,14 +20,19 @@ var capture = {
         browser: '',
         width: 0,
         height: 0,
+        init: function(index){
+            capture.size.index = index;
+            capture.size.width = capture.size.array[index][0];
+            capture.size.height = capture.size.array[index][1];
+            capture.size.browser = browser.desiredCapabilities.browserName;
+        },
         call: function(index){
-            describe(`Size ${sizes[index][0]}x${sizes[index][1]}`, function () {
+            capture.size.init(index);
+
+            describe(`Size ${capture.size.array[index][0]}x${capture.size.array[index][1]}`, function () {
                 before(function(){
-                    capture.size.index = index;
-                    capture.size.width = sizes[index][0];
-                    capture.size.height = sizes[index][1];
-                    capture.size.browser = browser.desiredCapabilities.browserName;
-                    
+                    capture.size.init(index);
+
                     capture.screenshot.index = 0;
 
                     fs.mkdirpSync(`.tmp/screenshots/`);
@@ -42,7 +47,7 @@ var capture = {
                     custom.size(capture);
                 }
 
-                for(var i = 0; i < pages.length; i++){
+                for(var i = 0; i < capture.page.array.length; i++){
                     capture.page.call(i);
                 }
 
@@ -58,14 +63,19 @@ var capture = {
         array: null,
         index: 0,
         name: '',
+        init: function(index){
+            capture.page.index = index;
+            capture.page.name = capture.page.array[index];
+        },
         call: function(index){
-            describe(`Page ${pages[index]}`, function () {
-                before(function(){
-                    capture.page.index = index;
-                    capture.page.name = pages[index];
+            capture.page.init(index);
 
-                    var page = pages[index].split('#')[0] || 'index.html';
-                    var hash = pages[index].split('#')[1] || '/';
+            describe(`Page ${capture.page.array[index]}`, function () {
+                before(function(){
+                    capture.page.init(index);
+
+                    var page = capture.page.array[index].split('#')[0] || 'index.html';
+                    var hash = capture.page.array[index].split('#')[1] || '/';
 
                     browser.url(`http://localhost:9001/${page}?capture=true#${hash}`);
                     browser.waitForExist('.loaded', 50000);
@@ -93,9 +103,9 @@ var capture = {
     }
 };
 
-var sizes = capture.size.array = deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]];
-var pages = capture.page.array = deployEnv.pdf && deployEnv.pdf.pages || ['index.html'];
+capture.size.array = deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]];
+capture.page.array = deployEnv.pdf && deployEnv.pdf.pages || ['index.html'];
 
-for(var i = 0; i < sizes.length; i++){
+for(var i = 0; i < capture.size.array.length; i++){
     capture.size.call(i);
 }
