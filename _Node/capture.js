@@ -6,6 +6,7 @@ require('../_Tasks/helpers/include.js')(grunt, true);
 require('./createPdfsAndZips.js')(grunt);
 
 fs.mkdirpSync('_Pdfs');
+fs.mkdirpSync(`.tmp/screenshots/`);
 
 var custom = {};
 
@@ -35,7 +36,7 @@ var capture = {
 
                     capture.screenshot.index = 0;
 
-                    fs.mkdirpSync(`.tmp/screenshots/`);
+                    fs.mkdirpSync(`.tmp/screenshots/${capture.size.browser}/`);
 
                     browser.setViewportSize({
                         width: capture.size.width,
@@ -52,10 +53,6 @@ var capture = {
                 }
 
                 createPdfsAndZips(capture);
-
-                after(function(){
-                    fs.removeSync(`.tmp/screenshots/`);
-                });
             });
         }
     },
@@ -95,9 +92,9 @@ var capture = {
         index: 0,
         call: function(viewportOnly){
             if(viewportOnly){
-                browser.saveScreenshot(`.tmp/screenshots/${capture.screenshot.index++}.png`);
+                browser.saveScreenshot(`.tmp/screenshots/${capture.size.browser}/${capture.screenshot.index++}.png`);
             } else {
-                browser.saveDocumentScreenshot(`.tmp/screenshots/${capture.screenshot.index++}.png`);
+                browser.saveDocumentScreenshot(`.tmp/screenshots/${capture.size.browser}/${capture.screenshot.index++}.png`);
             }
         }
     }
