@@ -64,7 +64,10 @@ var capture = {
                     capture.page.index = index;
                     capture.page.name = pages[index];
 
-                    browser.url(`http://localhost:9001/${capture.page.name}?capture=true`);
+                    var page = pages[index].split('#')[0] || 'index.html';
+                    var hash = pages[index].split('#')[1] || '/';
+
+                    browser.url(`http://localhost:9001/${page}?capture=true#${hash}`);
                     browser.waitForExist('.loaded', 50000);
                 });
 
