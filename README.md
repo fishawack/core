@@ -1017,6 +1017,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.3.1
+* Use `watertight-node-auto` v4.0.3
+
 ### 4.3.0
 * Pdf generation overhauled to allow multiple sizes and multiple browsers
 

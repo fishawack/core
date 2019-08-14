@@ -109,6 +109,6 @@
     "xmlbuilder": "8.2.2"
   },
   "optionalDependencies": {
-    "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v4.0.2"
+    "watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v4.0.3"
   }
 }
