@@ -1,27 +1,39 @@
 module.exports = function(grunt) {
     grunt.registerTask('writePhp', function(){
         var watertightBridge = require('watertight');
-
-        generateUserPasswords();
         
         grunt.file.write('_Login/app/controllers/securedsite.php', watertightBridge.buildHtmlRoutesPhp(grunt.file.expand({cwd: grunt.config.get("root")}, '*.html')));
 
-        grunt.file.write('_Login/app/users.php', watertightBridge.buildUserPhp(deployEnv.users));
+        if(deployEnv.users){
+            generateUserPasswords();
+
+            grunt.file.write('_Login/app/users.php', watertightBridge.buildUserPhp(deployEnv.users));
+        }
 
         var customLogin = fileExists('login.html', '_Output/', grunt);
         
         var indexPath = '_Login/index.php';
         var appPath = '';
+        var envPath = './app/views/securedsite/';
+        var envSave = '_Login/app/views/securedsite/';
         
         if(!deployEnv.subDir){
             indexPath = '_Login/public_html/index.php';
             appPath = '../'
+            envPath = '../';
+            envSave = '_Login/';
         }
+
+        grunt.file.write(`${envSave}.env`, watertightBridge.buildEnv(Object.assign(
+                contentJson.attributes.env,
+                contentJson.attributes[deployTarget] && contentJson.attributes[deployTarget].env || {}
+            )));
 
         var indexPhp = grunt.file.read(indexPath);
         indexPhp = indexPhp.replace('<!-- appPath -->', appPath);
         indexPhp = indexPhp.replace('<!-- appCookie -->', (deployEnv.cookie) ? deployEnv.cookie : contentJson.attributes.title);
         indexPhp = indexPhp.replace('<!-- customLogin -->', customLogin);
+        indexPhp = indexPhp.replace('<!-- envPath -->', envPath);
 
         grunt.file.write(
             indexPath,
