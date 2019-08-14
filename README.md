@@ -824,80 +824,149 @@ if(window.Modernizr.flexbox){
 
 ## Pdf
 
-* Webdriver IO is used to capture screenshots of pages and states, pulling these images into a pdf document. (http://v4.webdriver.io/v4.8/api.html).
-* The general automation process, once working, is as follows:
-    
-    1. capturePage.js file will add the _?capture=true#_ query string to every page incrementally (you can also add functions to check for specific cp- classes in this file, which can then be called in capturePage function).
-    
-    2. script.js will check to see if capture query string has been set to true and if so, the capture class will be added to the html element and window.capture will be set to true.
+[Webdriver IO](http://v4.webdriver.io/v4.8/api.html) is used for the capture process. To enable the pdf generation you need to add a pdf property to the deploy target you'd like the pdf to be genereated on.
 
-### Guidelines
-
-1. Create a staging object in the _Build/content.json file, resembling the below:
-
+#### JSON
 ```json
 "staging": {
-    "url": "http://digital-internal.fishawack.staging/Bespoke/",
-    "location": "/srv/www/digital-internal.fishawack.staging/public/Bespoke/",
-    "ssh": "dumbledore",
-    "subDir": "{PROJECTNAME}",
-    "pdf": "test/sd/hd"
+    ...
+    "pdf": true
 }
 ```
 
-2. Create a _Node folder outside of _Build with a capturePage.js file. An example would be the following (hardcore or loop through all pages, adding them to the pages array):
-    
-```js
-module.exports = function(grunt) {
-    var delay = 50;
-    var index = 0;
-    var captureIndex = 0;
+This will capture just the `index.html` in the `chrome` browser at `1080x608` 16:9 aspect ratio.
 
-    var pages = [
-        '/'
-    ];
+To fine tune the pdf generation an object can be passed into the pdf property enabling more control over the pdf/pdf's that are generated.
 
-    this.capturePage = function(){
-        describe('pdf', function () {
-            it('Screenshot', function(done) {
-                browser.url('http://localhost:9001/index.html?capture=true#' + pages[index]);
-
-                browser.waitForExist('.loaded', 2000);
-
-                browser.pause(delay);
-
-                browser.saveDocumentScreenshot(".tmp/screenshots/" + (captureIndex++) + ".png");
-
-                captureRefs();
-
-                index += 1;
-
-                if(index < pages.length){
-                    capturePage();
-                } else {
-                    createPdfsAndZips();
-                }
-            });
-        });
-    };
-
-    this.captureRefs = function(){
-        if(browser.isExisting('.cp-refs')){
-            browser.click('.cp-refs');
-
-            browser.pause(delay);
-
-            browser.saveDocumentScreenshot(".tmp/screenshots/" + (captureIndex++) + ".png");
-
-            browser.click('.cp-close');
+#### JSON
+```json
+{
+    "staging": {
+        ...
+        "pdf": {
+            "browsers": [
+                "chrome",
+                "firefox",
+                "safari"
+            ],
+            "pages": [
+                "index.html",
+                "login.html",
+                "#/about",
+                "#/terms",
+                "#/privacy",
+                "#/404"
+            ],
+            "sizes": [
+                [1080, 608],
+                [1366, 1024],
+                [768, 1024]
+            ]
         }
     }
 }
 ```
 
-3. Make sure all animation durations, setTimeouts or custom styles are removed, where necessary, in order to ensure all content can be captured in screenshots. Add styles with a "cp-" prefix to make changes if needed.
+This will generate 3 sizes for 3 browsers (9 pdfs) capturing all the pages found in the pages array.
 
-4. Make sure the project has been built with an output folder and run the following command: `$grunt pdf`. ($grunt being an alias for `grunt --gruntfile node_modules/@fishawack/config-grunt/Gruntfile.js`).
+> Hashbangs without `.html` in front of them will go to the default `index.html#/`. You can however pass in different html files if you have multiple vue entry points `newPage.html#/about`.
+
+### Client side
+
+The pdf generation loads pages and takes screenshots as soon as the `.loaded` class appears on the root html element. This class **you** need to apply yourself when you're happy that the page has loaded what it needs to load to be considered finished and ready for capture.
+
+> The `.loading` class isn't required for the pdf process but it's generally good practice to have it on the root to begin with and swap it out for `.loaded` when the page is ready. This allows loading indicators to spin on initial load.
+
+#### Javascript
+```javascript
+(function(){
+    ...
+
+    document.querySelector('html').classList.remove('loading');
+    document.querySelector('html').classList.add('loaded');
+});
+```
+
+The pdf will now capture the `index.html` or the pages defined in `"pages"` in you `content.json` file. In general this still isn't enough to correctly capture the page. If you have animations and transitions in your app that happen on page load then these will need deactivating during the pdf process so the pdf doesn't capture the start state of them. This is done automatically by the pdf process by adding a query parameter to the url `?capture=true`. Although the query parameter is automatically added **you** will still need add the javascript to the project to handle it.
+
+> The pdf process automatically adds the `?capture=true` to the query string but there's nothing stopping you adding it in yourself during dev if you want instant page loads without waiting for the showbiz elements of the site to fire.
+
+#### Javascript
+```javascript
+import * as Utility from "./libs/utility";
+
+if (Utility.parse_query_string(window.location.search.substring(1)).capture === 'true') {
+    document.querySelector('html').classList.add('capture');
+    window.capture = true;
+}
+```
+
+This sets a global javascript flag and a class on the root html element. Using these in the javascript/css you can turn off anything you don't want to run during capture process.
+
+#### Javascript
+```javascript
+if(!window.capture){
+    TweenMax.to(...);
+}
+
+setTimeout(() => {
+    ...
+}, (window.capture) ? 0 : 2000);
+```
+
+#### Sass
+```scss
+.hero{
+    animation: 'fade' 0.2s;
+
+    .capture &{
+        animation: none;
+    }
+}
+```
+
+By adding in the following scss it'll disable *most* animations/transitions in your app, there may still be a few edge cases though.
+
+#### Sass
+```scss
+.capture {
+    *, *:after, *:before {
+        transition: none !important;
+        animation-duration: 0s !important;
+        animation-delay: 0s !important;
+    }
+}
+```
+
+### Custom capture
+
+You can inject your own custom capture code into the built in capture scripts. First create the file `_Node/capture.js` which should export one or both of the functions you'd like to inject into. This can be useful in Vue projects for injecting dynamic routes onto the pages array rather than hard coding them in the `content.json`.
+
+#### Node
+```javascript
+module.exports = {
+    // This is called right after the viewport has been resized before the pages are iterated over
+    size: function(capture){
+        var dynamicPages = require(...);
+        // Add dynamic demo pages to pages captured array
+        dynamicPages.forEach((d) => {
+            capture.page.array.push(d);
+        });
+    },
+    // This is called after the standard page capture has happened on each page
+    page: function(capture){
+        // Capture nav on homepage only
+        if(capture.page.index === 0){
+            it('Nav', function() {
+                browser.click('.js-menu');
+
+                // Passing true to the screenshot function captures just the visible viewport, ommitting true will cause the page to scroll and capture everything
+                capture.screenshot.call(true);
+            });
+        }
+    }
+};
+```
 
 ## Deploying
 
@@ -947,6 +1016,9 @@ You're all done, you should be able to populate your repo with the info provided
 ```
 
 ## Changelog
+
+### 4.3.0
+* Pdf generation overhauled to allow multiple sizes and multiple browsers
 
 ### 4.2.4
 * Bumped `grunt-svg-sprite` as it suddenly started throwin an error
