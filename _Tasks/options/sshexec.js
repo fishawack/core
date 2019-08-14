@@ -26,7 +26,12 @@ module.exports = {
 	},
 	root: {
 		command: [
-			'rm <%= deployLocation %>/app -rf',
+			'rm <%= deployLocation %>/app/controllers -rf',
+			'rm <%= deployLocation %>/app/views -rf',
+			'rm <%= deployLocation %>/app/app.php -rf',
+			'rm <%= deployLocation %>/app/autoload.php -rf',
+			'rm <%= deployLocation %>/app/CustomEnglish.php -rf',
+			'rm <%= deployLocation %>/app/Model.php -rf',
 			'rm <%= deployLocation %>/vendor -rf',
 			'rm <%= deployLocation %>/public_html/bootstrap -rf',
 			'rm <%= deployLocation %>/public_html/build -rf',
@@ -37,11 +42,16 @@ module.exports = {
 			'rm <%= deployLocation %>/public_html/.htaccess -rf',
 			'rm <%= deployLocation %>/public_html/favicon.ico -rf',
 			'rm <%= deployLocation %>/public_html/index.php -rf'
-		]
+		].concat([deployEnv.users ? 'rm <%= deployLocation %>/app/users.php -rf' : ''])
 	},
 	subDir: {
 		command: [
-			'rm <%= deployLocation %>/app -rf',
+			'rm <%= deployLocation %>/app/controllers -rf',
+			'rm <%= deployLocation %>/app/views -rf',
+			'rm <%= deployLocation %>/app/app.php -rf',
+			'rm <%= deployLocation %>/app/autoload.php -rf',
+			'rm <%= deployLocation %>/app/CustomEnglish.php -rf',
+			'rm <%= deployLocation %>/app/Model.php -rf',
 			'rm <%= deployLocation %>/vendor -rf',
 			'rm <%= deployLocation %>/bootstrap -rf',
 			'rm <%= deployLocation %>/build -rf',
@@ -52,6 +62,6 @@ module.exports = {
 			'rm <%= deployLocation %>/.htaccess -rf',
 			'rm <%= deployLocation %>/favicon.ico -rf',
 			'rm <%= deployLocation %>/index.php -rf'
-		]
+		].concat([deployEnv.users ? 'rm <%= deployLocation %>/app/users.php -rf' : ''])
 	}
 }
