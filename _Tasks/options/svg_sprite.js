@@ -16,7 +16,8 @@ module.exports = {
                     "id": "svgSprite"
                 },
                 xmlDeclaration : false,
-                doctypeDeclaration : false
+                doctypeDeclaration : false,
+                namespaceIDPrefix: 'svgo-'
             }
         }
     }

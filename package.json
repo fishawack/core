@@ -64,7 +64,7 @@
     "grunt-sass": "3.0.2",
     "grunt-shell": "3.0.1",
     "grunt-ssh": "0.12.9",
-    "grunt-svg-sprite": "1.5.0",
+    "grunt-svg-sprite": "https://github.com/mikemellor11/grunt-svg-sprite.git#master",
     "grunt-svgfit": "2.0.0",
     "grunt-svgmin": "5.0.0",
     "grunt-tv4": "2.0.0",
