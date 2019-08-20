@@ -30,13 +30,12 @@ var capture = {
         call: function(index){
             capture.size.init(index);
 
-            describe(`Size ${capture.size.array[index][0]}x${capture.size.array[index][1]}`, function () {
+            describe(`Size ${capture.size.width}x${capture.size.height}`, function () {
                 before(function(){
                     capture.size.init(index);
+                    capture.screenshot.init();
 
-                    capture.screenshot.index = 0;
-
-                    fs.mkdirpSync(`.tmp/screenshots/${capture.size.browser}/`);
+                    fs.mkdirpSync(`.tmp/screenshots/${capture.screenshot.path}/`);
 
                     browser.setViewportSize({
                         width: capture.size.width,
@@ -90,11 +89,16 @@ var capture = {
     },
     screenshot: {
         index: 0,
+        path: '',
+        init: function(){
+            capture.screenshot.path = `${capture.size.browser}/${capture.size.width}x${capture.size.height}`;
+            capture.screenshot.index = 0;
+        },
         call: function(viewportOnly){
             if(viewportOnly){
-                browser.saveScreenshot(`.tmp/screenshots/${capture.size.browser}/${capture.screenshot.index++}.png`);
+                browser.saveScreenshot(`.tmp/screenshots/${capture.screenshot.path}/${capture.screenshot.index++}.png`);
             } else {
-                browser.saveDocumentScreenshot(`.tmp/screenshots/${capture.size.browser}/${capture.screenshot.index++}.png`);
+                browser.saveDocumentScreenshot(`.tmp/screenshots/${capture.screenshot.path}/${capture.screenshot.index++}.png`);
             }
         }
     }
