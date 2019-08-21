@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 	var fs = require('fs-extra');
 	var exec = require('child_process').exec;
 
-	grunt.file.mkdir('.tmp/pdfs/');
+	fs.mkdirpSync('.tmp/pdfs/');
 
 	this.createPdfsAndZips = function(capture){
 		describe(`Archiving and packing`, function () {
