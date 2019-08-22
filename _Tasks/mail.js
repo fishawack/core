@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         if(deployBranch !== 'qc' && deployBranch !== 'development' && deployBranch !== 'master'){
             grunt.log.warn('Deployments from feature branches don\'t send emails');
         } else {
-            recipients.push('digital@f-grp.com');    
+            recipients.push('digital@f-grp.com');
         }
 
         nodemailer['deploy'] = {
@@ -54,6 +54,7 @@ module.exports = function(grunt) {
                         [
                             buildHtmlEmail('version'),
                             buildHtmlEmail('coverage'),
+                            (deployEnv.pdf) ? buildHtmlEmail('diff') : '',
                             buildHtmlEmail('status'),
                             (deployTarget === 'production' && contentJson.attributes.phonegap) ? buildHtmlEmail('phonegap') : '',,
                             buildHtmlEmail('instance'),

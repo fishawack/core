@@ -8,15 +8,15 @@ module.exports = function(grunt) {
         var sizes = deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]];
         var browsers = deployEnv.pdf && deployEnv.pdf.browsers || ['chrome'];
 
-        var write = true;
+        var write = false;
 
         var compare = {
-            size(size){
+            browser(browser){
                 return new Promise((resolve, reject) => {
-                    grunt.log.ok(size);
+                    grunt.log.ok(browser);
 
-                    var arr = browsers.map((d) => {
-                            return compare.browser(d, size);
+                    var arr = sizes.map((d) => {
+                            return compare.size(browser, `${d[0]}x${d[1]}`);
                         });
 
                     Promise.all(arr)
@@ -25,9 +25,9 @@ module.exports = function(grunt) {
                         });
                 });
             },
-            browser(browser, size){
+            size(browser, size){
                 return new Promise((resolve, reject) => {
-                    grunt.log.ok(browser);
+                    grunt.log.ok(size);
 
                     if(write){
                         fs.mkdirpSync(`.tmp/difference/`);
@@ -50,8 +50,6 @@ module.exports = function(grunt) {
             },
             images(browser, size, index){
                 return new Promise((resolve, reject) => {
-                    grunt.log.ok(index);
-
                     var image1 = fs.readFileSync(`.tmp/screenshots/${browsers[0]}/${size}/${index}.png`);
                     var image2 = fs.readFileSync(`.tmp/screenshots/${browser}/${size}/${index}.png`);
 
@@ -78,15 +76,45 @@ module.exports = function(grunt) {
             }
         }
 
-        var arr = sizes.map((d) => {
-                return compare.size(`${d[0]}x${d[1]}`);
+        var arr = browsers.map((d) => {
+                return compare.browser(d);
             });
 
         Promise.all(arr)
             .then((values) => {
-                console.log(values);
+                var badge = require('gh-badges');
+                var svg_to_png = require('svg-to-png');
 
-                done();
+                function buildBadge(text, value, file){
+                    return new Promise((resolve, reject) => {
+                        var color = 'green';
+
+                        if(value > 30){
+                            color = 'red';
+                        } else if(value > 15){
+                            color = 'yellow';
+                        }
+
+                        badge({ text: [text, value.toFixed(2) + '%'], colorscheme: color, template: "flat" }, function(svg, err) {
+                            grunt.file.write('_Build/media/generated/__' + file + '.svg', svg);
+                            resolve(process.cwd() + '/_Build/media/generated/__' + file + '.svg');
+                        });
+                    });
+                }
+
+                var arr = values.map((d, i) => {
+                        var max = d.reduce((a, b) => (a > b) ? a : b);
+                        var browser = browsers[i];
+
+                        return buildBadge(` ${browser} `, max, browser);
+                    });
+
+                Promise.all(arr)
+                    .then((values) => {
+                        svg_to_png.convert(values, '_Build/media/generated/').then(function(){
+                                done();
+                            });
+                    });
             });
     });
 };

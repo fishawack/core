@@ -1,0 +1,14 @@
+<li>
+	<strong>Browser diff</strong>:
+	<ul>
+		<%=
+			(deployEnv.pdf && deployEnv.pdf.browsers || ["chrome"]).map((d) => {
+				var browser = d;
+
+				return `<li>
+					<img src="http://${contentJson.attributes.repo.split('/')[0] }.pages-diggit01.fw.local/${contentJson.attributes.repo.split('/')[1] }/badges/__${browser}.png"/>
+				</li>`;
+			}).join('')
+		%>
+	</ul>
+</li>
