@@ -1017,6 +1017,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.3.3
+* Added first iteration of visual regression / browser difference testing
+
 ### 4.3.2
 * Fix for strange `svg-sprite` issue where if there are enough svg's and the `#ga` id is used the GTM would inconsistenly fail
 * Bumped `svg_sprite` to point at fork until it's merged into npm package.
