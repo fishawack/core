@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
     grunt.registerTask('writePhp', function(){
-        var watertightBridge = require('watertight');
+        var watertightBridge = require('@fishawack/watertight');
         
         grunt.file.write('_Login/app/controllers/securedsite.php', watertightBridge.buildHtmlRoutesPhp(grunt.file.expand({cwd: grunt.config.get("root")}, '*.html')));
 
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('watertight', function(){
         var path = require('path');
-        var watertightPath = path.dirname(require.resolve('watertight'));
+        var watertightPath = path.dirname(require.resolve('@fishawack/watertight'));
 
         var copy = grunt.config.get('copy');
 
