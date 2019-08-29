@@ -144,6 +144,21 @@ Bundles the app in production mode.
 npm run production
 ```
 
+## Lockfile
+
+npm's package.lock is currently broken...!
+
+```
+"@fishawack/watertight": {
+    "version": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#d214789986d98e037465cb00bb3ae3c4734344d4",
+    "from": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v5.0.4",
+    "optional": true,
+    "requires": {
+        "md5": "2.1.0"
+    }
+},
+```
+
 ### Deploy
 
 Transfers the build to a server based on which branch you're currently on.
@@ -1038,7 +1053,7 @@ You're all done, you should be able to populate your repo with the info provided
 * Pdf generation overhauled to allow multiple sizes and multiple browsers
 
 ### 4.2.4
-* Bumped `grunt-svg-sprite` as it suddenly started throwin an error
+* Bumped `grunt-svg-sprite` as it suddenly started throwin an error `Cannot read property 'distribute' of undefined`
 
 ### 4.2.3
 * Fixed lftp bug that occurred when running content pulls on linux machines
