@@ -4,7 +4,7 @@
   "description": "Grunt config building web application",
   "scripts": {
     "start": "grunt",
-    "setup": "npm install --no-save",
+    "setup": "npm ci",
     "deploy": "npm run deploy-s && grunt mail",
     "deploy-s": "npm run production && grunt deploy && grunt package",
     "production": "npm run content && grunt dist && npm test",
