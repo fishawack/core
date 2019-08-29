@@ -1035,6 +1035,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.3.5
+* `email` in `content.json` can now be applied to deploy target and will be merged with any top level emails
+
 ### 4.3.4
 * Bumped dependancies to support Node v12
 * Added `package-lock.json` file

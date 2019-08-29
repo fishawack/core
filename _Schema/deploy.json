@@ -101,7 +101,11 @@
 				"env": {
 		        	"type": "object",
 		        	"additionalProperties": true
-		        }
+		        },
+		        "email": {
+	            	"type": "array",
+					"items": { "type": "string" }
+	        	}
 			}
 		}
 	}

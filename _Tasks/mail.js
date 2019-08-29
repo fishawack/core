@@ -24,10 +24,12 @@ module.exports = function(grunt) {
 
         var recipients = contentJson.attributes.email || [];
 
+        recipients = recipients.concat(deployEnv.email || []);
+
         if(deployBranch !== 'qc' && deployBranch !== 'development' && deployBranch !== 'master'){
             grunt.log.warn('Deployments from feature branches don\'t send emails');
         } else {
-            recipients.push('digital@f-grp.com');
+            recipients.push('mike.mellor@f-grp.com');
         }
 
         nodemailer['deploy'] = {
