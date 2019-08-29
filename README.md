@@ -1035,6 +1035,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.3.6
+* Made default email point back to `digital@f-grp.com`
+
 ### 4.3.5
 * `email` in `content.json` can now be applied to deploy target and will be merged with any top level emails
 

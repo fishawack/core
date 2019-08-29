@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         if(deployBranch !== 'qc' && deployBranch !== 'development' && deployBranch !== 'master'){
             grunt.log.warn('Deployments from feature branches don\'t send emails');
         } else {
-            recipients.push('mike.mellor@f-grp.com');
+            recipients.push('digital@f-grp.com');
         }
 
         nodemailer['deploy'] = {
