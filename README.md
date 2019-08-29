@@ -16,7 +16,7 @@ As this code base is shared amongst most of our repos, these dependancies are li
 
 The following dependancies are needed to pull assets from the server and build the source code.
 
-* node (11.15.0 recommended)
+* node (10.0.0 recommended)
 * npm (5.7.1 or above)
 * node-gyp
 * grunt-cli
