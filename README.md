@@ -1035,6 +1035,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.3.7
+* Remove support for node v12 for now, causing knock on issues so rolled back some dependancies
+
 ### 4.3.6
 * Made default email point back to `digital@f-grp.com`
 
