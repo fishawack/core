@@ -1035,6 +1035,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.4.0
+* `npm run setup` now uses `npm ci` instead of `npm install --no-save`
+
 ### 4.3.7
 * Remove support for node v12 for now, causing knock on issues so rolled back some dependancies
 
