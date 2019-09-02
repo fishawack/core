@@ -101,6 +101,68 @@ npm install grunt-cli -g
 
 * Install composer [https://getcomposer.org/doc/00-intro.md#installation-windows](https://getcomposer.org/doc/00-intro.md#installation-windows)
 
+## Remotes
+
+We currently utilize two remotes for our git versioning. The externally facing bitbucket allows freelancers to contribute to our repositories whilst our internally facing gitlab allows our CI/CD to gain a bunch of security advantages just by the fact that it is inherently on the internal network.
+
+### Cloning
+
+Repo's **should only ever be cloned from Bitbucket**. 
+
+Gitlab should be viewed purely a supporting remote used primarily for the CI/CD and **should never be used for forking/cloning** under any circumstances. 
+
+**The single source of truth is Bitbucket.**
+
+After cloning a repo you have to run the `origin` command on the terminal which will correctly set the `origin` to point to both remotes. If you don't currently have the origin command you need to [add it](#config-grunt-remotes-origin).
+
+> The reason `origin` isn't part of the `npm run setup` command is because this would throw an error on any freelancers machine trying to connect to gitlab
+
+```bash
+git clone git@bitbucket.org:fishawackdigital/stream.git
+cd stream
+origin
+git remote -v
+# origin  git@bitbucket.org:fishawackdigital/stream (fetch)
+# origin  git@bitbucket.org:fishawackdigital/stream (push)
+# origin  git@diggit01.fw.local:stream/stream (push)
+```
+
+### Origin
+
+This command need's to be added to your `.bash_profile` so that it's available globally on the command line.
+
+```bash
+origin(){
+    if [ -f ~/targets/misc.json ]; then
+        name=$(basename `git rev-parse --show-toplevel`);
+        url=https://api.bitbucket.org/2.0/repositories/fishawackdigital/$name;
+        username=$(jq .bitbucket.username ~/targets/misc.json -r);
+        password=$(jq .bitbucket.password ~/targets/misc.json -r);
+
+        if [ $username = "null" ] || [ $password = "null" ] || [ -z $password ] || [ -z $password ] ; then
+            echo -e "\033[0;31m>>\033[0m Can't find bitbucket credentials in ~/targets/misc.json";
+        else
+            repo=$(echo $(curl -s -u $username:$password $url | jq .project.name -r)/$name | tr '[:upper:]' '[:lower:]');
+
+            bitbucket=git@bitbucket.org:fishawackdigital/$(echo $repo | cut -d '/' -f2);
+            gitlab=git@diggit01.fw.local:$repo;
+
+            git remote remove origin;
+            git remote add origin $bitbucket;
+            git remote set-url --add --push origin $bitbucket;
+            git remote set-url --add --push origin $gitlab;
+            git fetch origin;
+            git checkout master && git branch -u origin/master;
+            git checkout development && git branch -u origin/development;
+            git remote -v;
+            echo -e "\033[0;32mSuccess\033[0m"
+        fi
+    else 
+        echo -e "\033[0;31m>>\033[0m Can't find ~/targets/misc.json";
+    fi
+}
+```
+
 ## Commands
 
 Regardless of what the repo uses under the hood the following commands should be the only commands needed when interacting with a repo.
@@ -144,21 +206,6 @@ Bundles the app in production mode.
 npm run production
 ```
 
-## Lockfile
-
-npm's package.lock is currently broken...!
-
-```
-"@fishawack/watertight": {
-    "version": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#d214789986d98e037465cb00bb3ae3c4734344d4",
-    "from": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v5.0.4",
-    "optional": true,
-    "requires": {
-        "md5": "2.1.0"
-    }
-},
-```
-
 ### Deploy
 
 Transfers the build to a server based on which branch you're currently on.
@@ -167,9 +214,13 @@ Transfers the build to a server based on which branch you're currently on.
 npm run deploy
 ```
 
-If on the **development** branch this command will deploy to **staging**.
+This command is branch dependant. The following branches correspond to the following deploy targets.
 
-If on the **master** branch this command will deploy to **production**.
+```bash
+development     >>   staging
+qc              >>   qc
+master          >>   production
+```
 
 If on any other branch this command **won't** deploy anywhere but will still prepare the bundle in production mode.
 
@@ -274,6 +325,43 @@ When creating the file the name needs to match the server name, here are some ex
 ```
 
 > Make sure you've successfully ssh'd into each box before attempting to deploy manually as the machines ip needs adding to the authorized_keys file on the server itself
+
+## Config
+
+One of the most important files in any project is the `_Build/content.json` file. It contains the deploy targets, content locations and sometimes even the textual content for the project itself.
+
+This file can be constructed from multiple config files using a deep merge. This allows for instance specific configs to be merged with shared theme configs. 
+
+`content.json` file is required in either the `_Build/` folder or the `_Build/example/` folder and this is last to be merged meaning it's values have the highest importance.
+
+The other config files should be placed in `_Build/config/` and will be merged in alphabetical order.
+
+```json
+// _Build/config/base.json
+{
+    "attributes": {
+        "title": "Base",
+        "root": "_Output"
+    }
+}
+
+// _Build/content.json
+{
+    "attributes": {
+        "title": "Instance",
+        "googleTrackingID": "test"
+    }
+}
+
+// Final merged config
+{
+    "attributes": {
+        "title": "Instance",
+        "root": "_Output",
+        "googleTrackingID": "test"
+    }
+}
+```
 
 ## Assets
 
