@@ -328,28 +328,42 @@ When creating the file the name needs to match the server name, here are some ex
 
 ## Config
 
-One of the most important files in any project is the `_Build/content.json` file. It contains the deploy targets, content locations and sometimes even the textual content for the project itself.
+One of the most important files in any project is the config file. It contains the deploy targets, content locations and sometimes even the textual content for the project itself.
 
-This file can be constructed from multiple config files using a deep merge. This allows for instance specific configs to be merged with shared theme configs. 
+This file can be constructed from multiple config files using a deep merge. This allows for instance specific configs to be merged with shared theme configs and even base configs.
 
-`content.json` file is required in either the `_Build/` folder or the `_Build/example/` folder and this is last to be merged meaning it's values have the highest importance.
+The files are merged in order of the following locations, afterwhich they are merged alphabetically in the location itself.
 
-The other config files should be placed in `_Build/config/` and will be merged in alphabetical order.
+```bash
+'_Build/config/*.json',
+'_Build/config/example/*.json',
+'_Build/*.json'
+```
+
+Any json file found in `_Build/config/example/` will be used only if there isn't a file with the same name in `_Build/config/`.
+
+> For backwards compatability `_Build/content.json` and `_Build/example/content.json` work the same as they always did but these should be replaced with `_Build/instance.json` and `_Build/config/example/*.json` respectively.
 
 ```json
-// _Build/config/base.json
+// _Build/config/theme.json
 {
     "attributes": {
         "title": "Base",
-        "root": "_Output"
+        "root": "_Output",
+        "modernizr": [
+            "csscalc"
+        ]
     }
 }
 
-// _Build/content.json
+// _Build/instance.json
 {
     "attributes": {
         "title": "Instance",
-        "googleTrackingID": "test"
+        "googleTrackingID": "test",
+        "modernizr": [
+            "flex"
+        ]
     }
 }
 
@@ -358,7 +372,11 @@ The other config files should be placed in `_Build/config/` and will be merged i
     "attributes": {
         "title": "Instance",
         "root": "_Output",
-        "googleTrackingID": "test"
+        "googleTrackingID": "test",
+        "modernizr": [
+            "csscalc",
+            "flex"
+        ]
     }
 }
 ```
@@ -381,7 +399,7 @@ We currently keep our binary assets on our fishawack file sharing platform egnyt
 
 The `Auto-Content` folder contains folders with the same names as the repo names in bitbucket. Some products have a parent folder e.g. `Wave` that contains all waves as not to clutter up the `Auto-Content` folder with instances.
 
-The json that dictates which asset folders are pulled can be found in the `_Build/content.json`.
+The json that dictates which asset folders are pulled can be found in the [config files](#config-grunt-config).
 
 ```json
 {
@@ -504,7 +522,7 @@ process.env.NODE_TARGET === "staging" // when on any other branch
 
 #### Custom
 
-Custom enviroment varibles can be defined globally in the `content.json`.
+Custom enviroment varibles can be defined globally in the [config files](#config-grunt-config).
 
 ```json
 {
@@ -884,7 +902,7 @@ Whether the icons are custom or have come from fontello they should end up in th
 
 ## Modernizr
 
-To add a modernizr check into the build add the relevant property to the json object found in `_Build/content.json`. Modernizr will automatically apply the css rules to the root html element and the javascript `Modernizr` object will be avaiable globally on the window object.
+To add a modernizr check into the build add the relevant property to the json object found in the [config files](#config-grunt-config). Modernizr will automatically apply the css rules to the root html element and the javascript `Modernizr` object will be avaiable globally on the window object.
 
 #### Json
 ```json
@@ -993,7 +1011,7 @@ The pdf generation loads pages and takes screenshots as soon as the `.loaded` cl
 });
 ```
 
-The pdf will now capture the `index.html` or the pages defined in `"pages"` in you `content.json` file. In general this still isn't enough to correctly capture the page. If you have animations and transitions in your app that happen on page load then these will need deactivating during the pdf process so the pdf doesn't capture the start state of them. This is done automatically by the pdf process by adding a query parameter to the url `?capture=true`. Although the query parameter is automatically added **you** will still need add the javascript to the project to handle it.
+The pdf will now capture the `index.html` or the pages defined in `"pages"` in you the [config files](#config-grunt-config). In general this still isn't enough to correctly capture the page. If you have animations and transitions in your app that happen on page load then these will need deactivating during the pdf process so the pdf doesn't capture the start state of them. This is done automatically by the pdf process by adding a query parameter to the url `?capture=true`. Although the query parameter is automatically added **you** will still need add the javascript to the project to handle it.
 
 > The pdf process automatically adds the `?capture=true` to the query string but there's nothing stopping you adding it in yourself during dev if you want instant page loads without waiting for the showbiz elements of the site to fire.
 
@@ -1046,7 +1064,7 @@ By adding in the following scss it'll disable *most* animations/transitions in y
 
 ### Custom capture
 
-You can inject your own custom capture code into the built in capture scripts. First create the file `_Node/capture.js` which should export one or both of the functions you'd like to inject into. This can be useful in Vue projects for injecting dynamic routes onto the pages array rather than hard coding them in the `content.json`.
+You can inject your own custom capture code into the built in capture scripts. First create the file `_Node/capture.js` which should export one or both of the functions you'd like to inject into. This can be useful in Vue projects for injecting dynamic routes onto the pages array rather than hard coding them in the [config files](#config-grunt-config).
 
 #### Node
 ```javascript
@@ -1110,7 +1128,7 @@ You'll need to make sure you have a copy of the latest signed certificate! You'l
 5. Go back to the main Dashboard and Create new app by uploading a zip file
 6. In the App. you can now select your Key for iOS and trigger a build, you will need to unlock it first by clicking the pad lock
 
-You're all done, you should be able to populate your repo with the info provided on the page, add this to your content.json under the attributes object:
+You're all done, you should be able to populate your repo with the info provided on the page, add this to your [config files](#config-grunt-config) under the attributes object:
 
 ```json
 "phonegap": {
@@ -1122,6 +1140,10 @@ You're all done, you should be able to populate your repo with the info provided
 ```
 
 ## Changelog
+
+### 4.4.1
+* .githooks now packaged rather than being duplicated in each repo
+* The config merging has been overhauled
 
 ### 4.4.0
 * `npm run setup` now uses `npm ci` instead of `npm install --no-save`

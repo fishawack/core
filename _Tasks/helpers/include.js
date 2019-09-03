@@ -1,9 +1,10 @@
 module.exports = function(grunt, hasBase) {
 	this._ = require('lodash');
+	var fs = require('fs');
+	var path = require('path');
 	this.grunt = grunt;
 
 	this.loadTargets = function(config){
-		var fs = require('fs');
 		var os = require('os');
 
 	    var targets = [
@@ -359,17 +360,31 @@ module.exports = function(grunt, hasBase) {
 
     this.reload = function(){
     	var json = {};
+    	var loaded = [];
+
+    	grunt.log.writeln("Merging configs");
 
         grunt.file.expand([
 					'_Build/config/*.json',
-					contentPathTrue
+					'_Build/config/example/*.json',
+					'_Build/*.json',
+					'_Build/example/*.json'
 					
 				]).forEach(function(d){
-					_.mergeWith(json, grunt.file.readJSON(d), function(obj, src) {
-							if (_.isArray(obj)) {
-								return obj.concat(src);
-							}
-						});
+					// Only load config types once, lower configs override higher ones
+					if(loaded.indexOf(path.basename(d)) === -1){
+						grunt.log.ok(d, "loaded");
+
+						loaded.push(path.basename(d));
+
+						_.mergeWith(json, grunt.file.readJSON(d), function(obj, src) {
+								if (_.isArray(obj)) {
+									return obj.concat(src);
+								}
+							});
+					} else {
+						grunt.log.error(d, "ignored");
+					}
 		    });
 
 		grunt.file.write(contentPath, JSON.stringify(json, null, 4));
@@ -387,7 +402,6 @@ module.exports = function(grunt, hasBase) {
 
 	if(grunt){
 		this.contentPath = '.tmp/content.json';
-		this.contentPathTrue = (fileExists('content.json', '_Build/', grunt)) ? '_Build/content.json' : '_Build/example/content.json';
 
 		reload();
 		

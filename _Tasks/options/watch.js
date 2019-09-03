@@ -18,7 +18,7 @@ module.exports = {
         files: [
                 '_Build/*.json',
                 '_Build/example/content.json',
-                '_Build/config/*.json',
+                '_Build/config/**/*.json',
                 '_Build/*.html',
                 '_Build/html/**/*.html',
                 '_Build/handlebars/**/*',
