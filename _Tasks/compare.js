@@ -13,39 +13,45 @@ module.exports = function(grunt) {
         var compare = {
             browser(browser){
                 return new Promise((resolve, reject) => {
-                    grunt.log.ok(browser);
+                    grunt.log.writeln(browser);
 
-                    var arr = sizes.map((d) => {
-                            return compare.size(browser, `${d[0]}x${d[1]}`);
-                        });
+                    async function asyncCall () {
+                        var values = [];
 
-                    Promise.all(arr)
-                        .then((values) => {
-                            resolve(values);
-                        });
+                        await sizes.reduce(async (promise, d) => {
+                            await promise;
+                            values.push(await compare.size(browser, `${d[0]}x${d[1]}`));
+                        }, Promise.resolve());
+
+                        grunt.log.ok(browser);
+                        resolve(values);
+                    }
+
+                    asyncCall();
                 });
             },
             size(browser, size){
                 return new Promise((resolve, reject) => {
-                    grunt.log.ok(size);
-
                     if(write){
                         fs.mkdirpSync(`.tmp/difference/`);
                         fs.mkdirpSync(`.tmp/difference/${browser}/${size}/`);
                     }
 
-                    var arr = [];
+                    async function asyncCall () {
+                        var values = [];
 
-                    grunt.file.expand({cwd: `.tmp/screenshots/${browser}/${size}/`}, '*').forEach((element, index) => {
-                            arr.push(compare.images(browser, size, index));
-                        });
+                        await grunt.file.expand({cwd: `.tmp/screenshots/${browser}/${size}/`}, '*').reduce(async (promise, d, i) => {
+                            await promise;
+                            values.push(await compare.images(browser, size, i));
+                        }, Promise.resolve());
 
-                    Promise.all(arr)
-                        .then((values) => {
-                            resolve(values.reduce((a, b) => {
-                                    return (a > b.rawMisMatchPercentage) ? a : b.rawMisMatchPercentage;
-                                }, 0));
-                        });
+                        grunt.log.ok(size);
+                        resolve(values.reduce((a, b) => {
+                                return (a > b.rawMisMatchPercentage) ? a : b.rawMisMatchPercentage;
+                            }, 0));
+                    }
+
+                    asyncCall();
                 });
             },
             images(browser, size, index){
@@ -70,51 +76,63 @@ module.exports = function(grunt) {
                                 fs.writeFileSync(`.tmp/difference/${browser}/${size}/${index}.png`, data.getBuffer());
                             }
 
+                            grunt.log.ok(index);
                             resolve(data);
                         });
                 });
             }
         }
 
-        var arr = browsers.map((d) => {
-                return compare.browser(d);
-            });
+        async function asyncCall () {
+            var values = [];
 
-        Promise.all(arr)
-            .then((values) => {
-                var badge = require('gh-badges');
-                var svg_to_png = require('svg-to-png');
+            await browsers.reduce(async (promise, d) => {
+                await promise;
+                values.push(await compare.browser(d));
+            }, Promise.resolve());
 
-                function buildBadge(text, value, file){
-                    return new Promise((resolve, reject) => {
-                        var color = 'green';
+            var badge = require('gh-badges');
+            var svg_to_png = require('svg-to-png');
 
-                        if(value > 30){
-                            color = 'red';
-                        } else if(value > 15){
-                            color = 'yellow';
-                        }
+            function buildBadge(text, value, file){
+                return new Promise((resolve, reject) => {
+                    var color = 'green';
 
-                        badge({ text: [text, value.toFixed(2) + '%'], colorscheme: color, template: "flat" }, function(svg, err) {
-                            grunt.file.write('_Build/media/generated/__' + file + '.svg', svg);
-                            resolve(process.cwd() + '/_Build/media/generated/__' + file + '.svg');
+                    if(value > 30){
+                        color = 'red';
+                    } else if(value > 15){
+                        color = 'yellow';
+                    }
+
+                    badge({ text: [text, value.toFixed(2) + '%'], colorscheme: color, template: "flat" }, function(svg, err) {
+                        grunt.file.write('_Build/media/generated/__' + file + '.svg', svg);
+                        resolve(process.cwd() + '/_Build/media/generated/__' + file + '.svg');
+                    });
+                });
+            }
+
+            var arr = values.map((d, i) => {
+                    var max = d.reduce((a, b) => (a > b) ? a : b);
+                    var browser = browsers[i];
+
+                    return buildBadge(` ${browser} `, max, browser);
+                });
+
+            Promise.all(arr)
+                .then((values) => {
+                    svg_to_png.convert(values, '_Build/media/generated/')
+                        .then(function(){
+                            done();
+                        })
+                        .catch((err) => {
+                            grunt.log.error(err);
                         });
-                    });
-                }
+                })
+                .catch((err) => {
+                    grunt.log.error(err);
+                });
+        }
 
-                var arr = values.map((d, i) => {
-                        var max = d.reduce((a, b) => (a > b) ? a : b);
-                        var browser = browsers[i];
-
-                        return buildBadge(` ${browser} `, max, browser);
-                    });
-
-                Promise.all(arr)
-                    .then((values) => {
-                        svg_to_png.convert(values, '_Build/media/generated/').then(function(){
-                                done();
-                            });
-                    });
-            });
+        asyncCall();
     });
 };

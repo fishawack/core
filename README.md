@@ -1149,6 +1149,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.4.2
+* Changed `compare` task to run synchronously due to memory issues when trying to compare large sets of images
+
 ### 4.4.1
 * .githooks now packaged rather than being duplicated in each repo
 * The config merging has been overhauled
