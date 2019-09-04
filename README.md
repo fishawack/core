@@ -163,6 +163,14 @@ origin(){
 }
 ```
 
+### Githooks
+
+We need to update the githooks property in our global config to point to the hooks folder found in `config-grunt`. To do this run the following command.
+
+```bash
+git config --global core.hooksPath node_modules/@fishawack/config-grunt/.githooks
+```
+
 ## Commands
 
 Regardless of what the repo uses under the hood the following commands should be the only commands needed when interacting with a repo.
