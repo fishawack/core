@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         }
 
         grunt.file.write(`${envSave}.env`, watertightBridge.buildEnv(Object.assign(
-                contentJson.attributes.env,
+                contentJson.attributes.env || {},
                 contentJson.attributes[deployTarget] && contentJson.attributes[deployTarget].env || {}
             )));
 
