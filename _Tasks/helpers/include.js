@@ -409,7 +409,9 @@ module.exports = function(grunt, hasBase) {
 
 	    this.gitLogString = "";
 
-	    this.deployBranch = (!grunt.option("branch")) ? require('git-branch').sync() : grunt.option("branch");
+	    var branch = require('yargs').argv.branch;
+
+	    this.deployBranch = (!branch) ? require('git-branch').sync() : branch;
 
 	    switch(this.deployBranch){
 	    	case 'master':
