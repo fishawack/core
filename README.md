@@ -1149,6 +1149,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.4.4
+* Fixed bug in gitlog on generated email
+
 ### 4.4.3
 * Fixed bug where error was being thrown if the `env` object was missing from the root of the instance.json
 
