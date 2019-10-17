@@ -1149,6 +1149,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.4.5
+* Email task now checks for `staging` along with the other standard branches
+
 ### 4.4.4
 * Fixed bug in gitlog on generated email
 

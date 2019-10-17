@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 
         recipients = recipients.concat(deployEnv.email || []);
 
-        if(deployBranch !== 'qc' && deployBranch !== 'development' && deployBranch !== 'master'){
+        if(deployBranch !== 'qc' && deployBranch !== 'development' && deployBranch !== 'master' && deployBranch !== 'staging'){
             grunt.log.warn('Deployments from feature branches don\'t send emails');
         } else {
             recipients.push('digital@f-grp.com');
