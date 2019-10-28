@@ -62,6 +62,12 @@ var capture = {
         init: function(index){
             capture.page.index = index;
             capture.page.name = capture.page.array[index];
+
+            var full = capture.page.array[index].split('#')[0] || '';
+            capture.page.hash = capture.page.array[index].split('#')[1] || '/';
+
+            capture.page.route = full.split('?')[0] || 'index.html';
+            capture.page.query = full.split('?')[1] || '';
         },
         call: function(index){
             capture.page.init(index);
@@ -70,10 +76,7 @@ var capture = {
                 before(function(){
                     capture.page.init(index);
 
-                    var page = capture.page.array[index].split('#')[0] || 'index.html';
-                    var hash = capture.page.array[index].split('#')[1] || '/';
-
-                    browser.url(`http://localhost:9001/${page}?capture=true#${hash}`);
+                    browser.url(`http://localhost:9001/${capture.page.route}?capture=true&${capture.page.query}#${capture.page.hash}`);
                     browser.waitForExist('.loaded', 50000);
                 });
 
