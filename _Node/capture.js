@@ -107,8 +107,8 @@ var capture = {
     }
 };
 
-capture.size.array = deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]];
-capture.page.array = deployEnv.pdf && deployEnv.pdf.pages || ['index.html'];
+capture.size.array = captureEnv().sizes;
+capture.page.array = captureEnv().pages;
 
 for(var i = 0; i < capture.size.array.length; i++){
     capture.size.call(i);

@@ -5,8 +5,8 @@ module.exports = function(grunt) {
         var resemble = require('resemblejs');
         var fs = require('fs-extra');
 
-        var sizes = deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]];
-        var browsers = deployEnv.pdf && deployEnv.pdf.browsers || ['chrome'];
+        var sizes = captureEnv().sizes;
+        var browsers = captureEnv().browsers;
 
         var write = false;
 

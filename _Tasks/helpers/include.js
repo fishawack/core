@@ -4,6 +4,14 @@ module.exports = function(grunt, hasBase) {
 	var path = require('path');
 	this.grunt = grunt;
 
+	this.captureEnv = function(){
+		return {
+	        browsers: deployEnv.pdf && deployEnv.pdf.browsers || ['chrome'],
+	        pages: deployEnv.pdf && deployEnv.pdf.pages || ['index.html'],
+			sizes: deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]]
+		};
+	};
+
 	this.loadTargets = function(config){
 		var os = require('os');
 

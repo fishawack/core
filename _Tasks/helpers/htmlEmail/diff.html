@@ -2,7 +2,7 @@
 	<strong>Browser diff</strong>:
 	<ul>
 		<%=
-			(deployEnv.pdf && deployEnv.pdf.browsers || ["chrome"]).map((d) => {
+			captureEnv().browsers.map((d) => {
 				var browser = d;
 
 				return `<li>

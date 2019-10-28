@@ -4,7 +4,7 @@ module.exports = {
         specs: [
             '<%= configPath %>_Node/capture.js'
         ],
-        capabilities: (deployEnv.pdf && deployEnv.pdf.browsers || ['chrome']).map((d) => {
+        capabilities: captureEnv().browsers.map((d) => {
         	return {browserName: d};
         })
     }
