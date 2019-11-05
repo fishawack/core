@@ -1149,6 +1149,10 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.4.6
+* Bades now generate on `npm run validate`
+* Can now have query strings in pdf routes
+
 ### 4.4.5
 * Email task now checks for `staging` along with the other standard branches
 
