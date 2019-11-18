@@ -35,7 +35,7 @@ These dependancies are only needed if you're planning to build a pdf locally or 
 * ghostscript
 * wine
 * xquartz
-* java8
+* adoptopenjdk
 * python (windows only)
 * composer
 
@@ -55,7 +55,7 @@ brew install jq
 brew install lftp
 brew install tnftp tnftpd telnet telnetd
 brew install cask
-brew cask install java8
+brew cask install adoptopenjdk
 brew cask install xquartz
 ```
 
@@ -88,7 +88,7 @@ choco install ghostscript
 choco install wine
 choco install jq
 choco install lftp
-choco install java8
+choco install adoptopenjdk
 choco install xquartz
 ```
 
