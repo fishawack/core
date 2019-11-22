@@ -1149,6 +1149,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.4.7
+* Updated .githook to new `level-0` format
+
 ### 4.4.6
 * Bades now generate on `npm run validate`
 * Can now have query strings in pdf routes
