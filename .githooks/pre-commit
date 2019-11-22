@@ -1,57 +1,52 @@
 #!/bin/sh
 
-GC='\033[0;32m' # Green
 WC='\033[0;33m' # Orange
-BC='\033[0;31m' # Red
 EN='\033[0m' # No Color
 
-instance=false;
-theme=false;
-base=false;
+dirty=false;
+count=0;
+arr=();
+
+for i in {0..9}; do
+	arr+=(false);
+done
 
 while read st file; do
-	if [[ $file == *"sequences"* || $file == *"instance"* ]]; then
-		instance=true;
-	fi
+	for i in {0..9}; do
+		if [[ $file == *"level-${i}"* ]]; then
+			arr[$i]=true;
+		fi
+	done
 
-	if [[ $file == *"project"* || $file == *"theme"* ]]; then
-		theme=true;
-	fi
-
-	if [[ 
-		$file != *"project"* && 
-		$file != *"theme"* && 
-		$file != *"sequences"* && 
-		$file != *"instance"* 
-	]]; then
-		base=true;
+	if [[ $file != *"level-"* ]]; then
+		arr[0]=true;
 	fi
 done <<< "$(git diff --cached --name-status)"
 
-function format(){
-	if [[ $1 = true ]]; then
-		echo ${GC}${1}${EN};
-	else
-		echo ${WC}${1}${EN};
+for i in "${arr[@]}"; do
+	if [[ $i = true ]]; then
+		count=$((count + 1));
 	fi
-}
 
-if 
-	[[ $instance = true && $theme = true ]] || 
-	[[ $theme = true && $base = true ]] || 
-	[[ $base = true && $instance = true ]]; 
-then
-	echo "${WC}Dirty commmit${EN}";
+	if [[ $count > 1 ]]; then
+		dirty=true;
+	fi
+done
+
+if [[ $dirty = true ]]; then
 	echo "";
-
-	echo "Instance changed: $(format $instance)";
-	echo "Theme changed: $(format $theme)";
-	echo "Base changed: $(format $base)";
-	echo "";
-
-	echo "Please separate ${GC}instance${EN}, ${WC}theme${EN} and ${BC}base${EN} files before committing";
-	echo "If you're sure this commit is fine then you can bypass this check with the ${WC}--no-verify${EN} flag"
+	echo "${WC}Dirty commmit${EN} - detected changes to multiple levels";
 	echo "";
 	
+	for i in "${!arr[@]}"; do
+		if [[ ${arr[$i]} = true ]]; then
+			echo "Changes to \033[0;3$(($i + 1))mlevel-${i}${EN}";
+		fi
+	done
+
+	echo "";
+	echo "Please separate files from each level into separate commits";
+	echo "If you are sure this commit is fine then you can bypass this check with the ${WC}--no-verify${EN} flag"
+	echo "";
 	exit 1;
 fi
