@@ -1149,6 +1149,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.4.8
+* Added a .githook for edge case with stream folder structure
+
 ### 4.4.7
 * Updated .githook to new `level-0` format
 

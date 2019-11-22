@@ -18,7 +18,13 @@ while read st file; do
 		fi
 	done
 
-	if [[ $file != *"level-"* ]]; then
+	# Stream specific check, sequences changes should be considered level-1
+	if [[ $file == *"sequences"* ]]; then
+		arr[1]=true;
+	fi
+
+	# Any other file changed should be considered level-0
+	if [[ $file != *"level-"* && $file != *"sequences"* ]]; then
 		arr[0]=true;
 	fi
 done <<< "$(git diff --cached --name-status)"
