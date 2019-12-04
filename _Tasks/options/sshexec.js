@@ -8,7 +8,12 @@ module.exports = {
 	},
 	remove: {
 		command: [
-			'rm <%= deployLocation %> -rf'
+			'rm <%= deployLocation %>/*.html -rf',
+			'rm <%= deployLocation %>/css -rf',
+			'rm <%= deployLocation %>/js -rf',
+			'rm <%= deployLocation %>/media -rf',
+			'rm <%= deployLocation %>/.htaccess -rf',
+			'rm <%= deployLocation %>/favicon.ico -rf'
 		]
 	},
 	unpack: {
