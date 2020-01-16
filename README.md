@@ -1149,6 +1149,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.4.10
+* Uncss no longer runs on `development` branch
+
 ### 4.4.9
 * When deploying the folder is no longer completely wiped, it will only remove files it knows about
 

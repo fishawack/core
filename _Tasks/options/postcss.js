@@ -1,12 +1,15 @@
 function processors(){
-	return [
+	var arr = [
 		require('autoprefixer')({browsers: 'last 6 versions'}),
 		require('postcss-assets')({
 			basePath: config.root,
 			relativeTo: 'css/',
 			loadPaths: ['media/**/']
-		}),
-		require('postcss-uncss')({
+		})
+	];
+
+	if(this.deployBranch !== "development"){
+		arr.push(require('postcss-uncss')({
 			html: contentJson.attributes.uncss.map(function(d, i){
 				return grunt.template.process(d, grunt.config.get());
 			}),
@@ -39,8 +42,10 @@ function processors(){
 					});
 				}
 			}
-		})
-	];
+		}));
+	}
+
+	return arr;
 }
 
 module.exports = {
