@@ -8,7 +8,9 @@ module.exports = function(grunt, hasBase) {
 		return {
 	        browsers: deployEnv.pdf && deployEnv.pdf.browsers || ['chrome'],
 	        pages: deployEnv.pdf && deployEnv.pdf.pages || ['index.html'],
-			sizes: deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]]
+			sizes: deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]],
+			url: deployEnv.pdf && deployEnv.pdf.url || 'http://localhost:9001',
+			wait: deployEnv.pdf && deployEnv.pdf.wait || '.loaded'
 		};
 	};
 

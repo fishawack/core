@@ -968,7 +968,7 @@ if(window.Modernizr.flexbox){
 
 This will capture just the `index.html` in the `chrome` browser at `1080x608` 16:9 aspect ratio.
 
-To fine tune the pdf generation an object can be passed into the pdf property enabling more control over the pdf/pdf's that are generated.
+To fine tune the pdf generation an object can be passed into the pdf property enabling more control over the pdf/pdf's that are generated. Here are the defaults.
 
 #### JSON
 ```json
@@ -977,23 +977,16 @@ To fine tune the pdf generation an object can be passed into the pdf property en
         ...
         "pdf": {
             "browsers": [
-                "chrome",
-                "firefox",
-                "safari"
+                "chrome"
             ],
             "pages": [
-                "index.html",
-                "login.html",
-                "#/about",
-                "#/terms",
-                "#/privacy",
-                "#/404"
+                "index.html"
             ],
             "sizes": [
-                [1080, 608],
-                [1366, 1024],
-                [768, 1024]
-            ]
+                [1080, 608]
+            ],
+            "url": "http://localhost:9001",
+            "wait": ".loaded"
         }
     }
 }
@@ -1001,7 +994,55 @@ To fine tune the pdf generation an object can be passed into the pdf property en
 
 This will generate 3 sizes for 3 browsers (9 pdfs) capturing all the pages found in the pages array.
 
-> Hashbangs without `.html` in front of them will go to the default `index.html#/`. You can however pass in different html files if you have multiple vue entry points `newPage.html#/about`.
+### Browsers
+
+If the browsers specified here aren't on your machine and you try to generate a pdf then you'll recieve fatal errors. When pushed to gitlab to generate then gitlab will actually pass the pdf generation to capabile VM's so it's not an issues.
+
+#### JSON
+```json
+"browsers": [
+    "chrome",
+    "firefox",
+    "safari"
+]
+```
+
+### Pages
+
+Specify an array of pages that you wish to capture. Hashbangs without `.html` in front of them will go to the default `index.html#/`. You can however pass in different html files if you have multiple vue entry points `newPage.html#/about`.
+
+#### JSON
+```json
+"pages": [
+    "index.html",
+    "login.html",
+    "#/about",
+    "#/terms",
+    "#/privacy",
+    "#/404"
+]
+```
+
+### Sizes
+
+Specify an array of sizes width x height.
+
+#### JSON
+```json
+"sizes": [
+    [1080, 608],
+    [1366, 1024],
+    [768, 1024]
+]
+```
+
+### Url
+
+The base url for the pdf'ing process. All pages are appended to this to create the full canonical url.
+
+### Wait
+
+How long / which selector to wait for before the page is considered loaded. By default the pdf process waits for `.loaded` class to exist somewhere on the page. You can override this to be a different selector or set it to a millisecond numeral value in which case the pdf process will wait for the specific amount of time.
 
 ### Client side
 
@@ -1148,6 +1189,9 @@ You're all done, you should be able to populate your repo with the info provided
 ```
 
 ## Changelog
+
+### 4.4.11
+* Can now specific `url` and `wait` propertys on pdf
 
 ### 4.4.10
 * Uncss no longer runs on `development` branch

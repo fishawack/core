@@ -6,6 +6,7 @@ module.exports = {
         ],
         capabilities: captureEnv().browsers.map((d) => {
         	return {browserName: d};
-        })
+        }),
+        baseUrl: captureEnv().url
     }
 }

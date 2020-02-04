@@ -95,6 +95,12 @@
 									"type": "number"
 								}
 							}
+						},
+						"url": {
+							"type": "string"
+						},
+						"wait": {
+							"type": ["string", "number"]
 						}
 					}
 				},

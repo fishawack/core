@@ -15,6 +15,8 @@ if(fileExists('capture.js', '_Node', grunt)){
 }
 
 var capture = {
+    url: captureEnv().url,
+    wait: captureEnv().wait,
     size: {
         array: null,
         index: 0,
@@ -76,8 +78,13 @@ var capture = {
                 before(function(){
                     capture.page.init(index);
 
-                    browser.url(`http://localhost:9001/${capture.page.route}?capture=true&${capture.page.query}#${capture.page.hash}`);
-                    browser.waitForExist('.loaded', 50000);
+                    browser.url(`${capture.url}/${capture.page.route}?capture=true&${capture.page.query}#${capture.page.hash}`);
+
+                    if(isNaN(capture.wait)){
+                        browser.waitForExist(capture.wait, 50000);
+                    } else {
+                        browser.pause(capture.wait);
+                    }
                 });
 
                 it('Loaded', function() {
