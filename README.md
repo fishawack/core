@@ -1190,6 +1190,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.4.12
+* Bumped watertight to `v5.0.5`
+
 ### 4.4.11
 * Can now specific `url` and `wait` propertys on pdf
 
