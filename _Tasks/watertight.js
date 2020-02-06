@@ -57,12 +57,10 @@ module.exports = function(grunt) {
             );
         }
 
-        var login = grunt.file.expand({}, '_Build/**/login-form.{hbs,html}');
-
-        if(login.length){
+        if(fileExists('login-form.html', '_Output/', grunt)){
             grunt.file.write(
                 '_Login/app/views/forms/login.html',
-                grunt.file.read(login[0])
+                grunt.file.read('_Output/login-form.html')
             );
         }
     });

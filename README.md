@@ -1202,6 +1202,13 @@ By default the login is styled with a basic bootstrap styling. If you wish to cr
 </script>
 ```
 
+You also need to create a html file that simply imports this, this is primarily for uncss to know what not to strip but without this the form will default to the bootstrap. This is usally placed in `_Build/html/login-form.html`.
+
+#### Handlebars
+```handlebars
+{{> login-form}}
+```
+
 ### iOS packaging with PhoneGap
 
 You'll need to make sure you have a copy of the latest signed certificate! You'll then need to login to the Apple iOS developers portal to create a provisioning profile:
@@ -1246,6 +1253,9 @@ You're all done, you should be able to populate your repo with the info provided
 ```
 
 ## Changelog
+
+### 4.5.0
+* Fixed bug in `login-form`
 
 ### 4.4.13
 * Added docs for `login-form` implementation.
