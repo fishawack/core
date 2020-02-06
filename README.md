@@ -1145,6 +1145,63 @@ module.exports = {
 
 ### Servers
 
+## Watertight
+
+By adding users in a deploy target inside the config file watertight will automatically be wrapped around the project suppyling a basic php login system.
+
+### Styling
+
+By default the login is styled with a basic bootstrap styling. If you wish to create a custom login page you need to create a `login-form.hbs` inside your handlebars snippets. This file should contain the following php by default, you can then add you classes and/or custom elements around these.
+
+> Strangely there is a bug where the very first line of the login-form.hbs file needs to be an empty line.
+
+#### Handlebars
+```handlebars
+
+{{{{raw}}}}{{ errors }}{{{{/raw}}}}
+
+<form name="login" method="post" action="<?php echo $formPostUrl;?>">
+
+    <input type="hidden" name="returnUrl">
+    <input type="hidden" name="qs">
+
+    <label for="username">Username</label>
+
+    <input 
+        type="text"
+        name="username"
+        placeholder="Username"
+        autofocus="autofocus"
+        maxlength="200"
+        required="required"
+        id="userName"
+    >
+
+    <label for="password">Password</label>
+
+    <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        maxlength="100"
+        required="required"
+        id="password"
+    >
+
+    <button type="submit">Log-in</button>
+
+</form>
+
+<script>
+    window.onload = function() {
+        var hash = window.location.hash.slice(1);
+        var f = document.forms["login"];
+        var returnUrl = f.elements["returnUrl"].value;
+        if (hash) f.elements["returnUrl"].value = returnUrl + "#" + hash;
+    }
+</script>
+```
+
 ### iOS packaging with PhoneGap
 
 You'll need to make sure you have a copy of the latest signed certificate! You'll then need to login to the Apple iOS developers portal to create a provisioning profile:
