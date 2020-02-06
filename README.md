@@ -1247,6 +1247,11 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.4.13
+* Added docs for `login-form` implementation.
+* Updated `login-form` so the file can be pulled from anywhere not just `_Build`
+* Fixed bug in `compile-handlebars` where it wouldn't ignore any underscore template files found in the `html` folder
+
 ### 4.4.12
 * Bumped watertight to `v5.0.5`
 

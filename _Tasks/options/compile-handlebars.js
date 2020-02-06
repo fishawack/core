@@ -3,7 +3,7 @@ module.exports = {
         'files': [{
             expand: true,
             cwd: '_Build/',
-            src: ['*.html', 'html/*.html', '!_*.html'],
+            src: ['*.html', 'html/*.html', '!**/*_*.html'],
             dest: '.tmp/compiled/',
             flatten: true
         }],
@@ -11,8 +11,7 @@ module.exports = {
         'helpers': '_Build/handlebars/helpers/**/*.js',
         'partials': [
             '_Build/handlebars/partials/**/*.{hbs,svg,html}',
-            '_Build/handlebars/components/**/*.{hbs,svg,html}',
-            '_Build/login-form.html'
+            '_Build/handlebars/components/**/*.{hbs,svg,html}'
         ],
         'globals': [
             {
