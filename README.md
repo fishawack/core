@@ -1254,6 +1254,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.5.1
+* Fixed bug in schema for `toggle`
+
 ### 4.5.0
 * Fixed bug in `login-form`
 
