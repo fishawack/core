@@ -175,9 +175,7 @@
 		        },
 		        "toggle": {
 		        	"type": "object",
-		        	"patternProperties": {
-        				"additionalProperties": true
-        			}
+		        	"additionalProperties": true
 		        }
             },
             "required": ["title", "repo", "root", "googleTrackingID", "modernizr", "uncss", "template", "toggle"]
