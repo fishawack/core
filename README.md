@@ -1254,6 +1254,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.5.3
+* Bumped `modernizr` as old version now 404's on fresh `npm install`
+
 ### 4.5.2
 * Fix for `4.5.1` bad publish
 
