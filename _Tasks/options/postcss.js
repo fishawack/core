@@ -8,7 +8,11 @@ function processors(){
 		})
 	];
 
-	if(this.deployBranch !== "development"){
+	// Only run postcss uncss on qc/master branch, too slow for feature/dev branches
+	if(
+		this.deployBranch === "qc" ||
+		this.deployBranch === "master"
+	){
 		arr.push(require('postcss-uncss')({
 			html: contentJson.attributes.uncss.map(function(d, i){
 				return grunt.template.process(d, grunt.config.get());
