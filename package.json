@@ -93,6 +93,7 @@
     "phantomjs-prebuilt": "2.1.15",
     "postcss-assets": "4.1.0",
     "postcss-uncss": "0.16.1",
+    "prerender-spa-plugin": "3.4.0",
     "resemblejs": "3.2.0",
     "sinon": "1.17.2",
     "svg-to-png": "3.1.2",
