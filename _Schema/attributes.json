@@ -28,6 +28,9 @@
 	            "design": {
 		        	"type": "string"
 	            },
+	            "prerender": {
+	            	"type": "boolean"
+	            },
 	            "electron": {
 	            	"type": ["object", "boolean"],
 					"properties": {

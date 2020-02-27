@@ -52,8 +52,15 @@ module.exports = function(grunt) {
     templateCustom();        
 
     grunt.registerTask('default', ['clean:cache', 'env:dev', 'karma:unit:start', 'jshint', 'modernizr', 'tv4', 'webpack:dev', 'concat:dev', 'fontello_svg', 'svgfit', 'svgmin', 'svg_sprite', 'copy:content', 'copy:assets', 'copy:svg', 'copy:svgasis', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dev', 'clean:build', 'browserSync', 'watch']);
+
+    var arr = ['env:dist', 'clean:dist', 'jshint', 'modernizr', 'tv4', 'webpack:dist', 'concat:dist', 'uglify:dist', 'fontello_svg', 'svgfit', 'svgmin', 'svg_sprite', 'copy:content', 'copy:assets', 'copy:svg', 'copy:svgasis', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dist', 'cacheBust', 'imagemin', 'clean:build'];
+
+    /* PreRender */
+    if(contentJson.attributes.prerender){
+        arr.push('prerender');
+    }
     
-    grunt.registerTask('dist', ['env:dist', 'clean:dist', 'jshint', 'modernizr', 'tv4', 'webpack:dist', 'concat:dist', 'uglify:dist', 'fontello_svg', 'svgfit', 'svgmin', 'svg_sprite', 'copy:content', 'copy:assets', 'copy:svg', 'copy:svgasis', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dist', 'cacheBust', 'imagemin', 'clean:build']);
+    grunt.registerTask('dist', arr);
 
     grunt.registerTask('validate', ['jshint', 'tv4', 'connect', 'casperjs:local', 'karma:continuous', 'badges', 'coverage']);
 };
