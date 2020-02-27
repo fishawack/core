@@ -1256,6 +1256,8 @@ You're all done, you should be able to populate your repo with the info provided
 
 ### 4.6.0
 * Reversed `4.4.10` change so that uncss only runs on `qc` and `master` so that feature branches also benefit from the speed boost
+* Prerender now available as an option in `content.json`
+* `content-request` now also pulls media assets
 
 ### 4.5.3
 * Bumped `modernizr` as old version now 404's on fresh `npm install`
