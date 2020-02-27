@@ -55,60 +55,158 @@ module.exports = function(grunt) {
             return;
         }
 
-        var async = require('async');
-        var request = require('request');
+        var request = require('request-promise');
+        var fs = require('fs-extra');
+        var path = require('path');
+
         var requests = [];
 
         contentJson.attributes.content.forEach(function(d, i){
             if(d.url){
-                d.endpoints.forEach(function(dd){
-                    requests.push({
-                        name: dd,
-                        request: d.url.replace(/\/+$/, "") + '/' + dd,
-                        obj: d,
-                        i: i
-                    });
-                });
+                requests = requests.concat(d.endpoints.map((dd) => load({
+                        path: d.url,
+                        endpoint: dd,
+                        ext: d.ext,
+                        saveTo: d.saveTo || `_Build/content/content-${i}/`
+                    }, 1)
+                    .then(({options, data}) => {
+                        grunt.log.ok('Downloaded ' + options.endpoint);
+
+                        var file = options.saveTo + options.endpoint + ((options.ext) ? '.' + options.ext : '');
+
+                        fs.mkdirpSync(path.dirname(file));
+
+                        fs.writeFileSync(
+                            file,
+                            JSON.stringify(data)
+                        );
+                    })));
+
+                requests.push(download({
+                        path: d.url,
+                        saveTo: d.saveTo || `_Build/content/content-${i}/`,
+                        index: i
+                    }, 1)
+                    .then((res) => {
+                        update({
+                            path: d.url,
+                            saveTo: d.saveTo || `_Build/content/content-${i}/`,
+                            index: i
+                        });
+                    }));
             }
         });
 
         if(requests.length){
             var done = this.async();
 
-            async.forEach(requests, function(d, cb){
-                var saveTo = (d.obj.saveTo) ? d.obj.saveTo : `_Build/content/content-${d.i}/`;
+            Promise.all(requests)
+                .catch(err => grunt.log.warn(err.message))
+                .finally(() => done());
+        }
 
-                load(d.request + '?per_page=100', function(data){
-                    grunt.log.ok('Downloaded ' + d.name);
+        function load(options, index, arr){
+            return new Promise((resolve, reject) => {
+                request({
+                        uri: `${options.path}/wp-json/wp/v2/${options.endpoint}?per_page=100&page=${index}`,
+                        resolveWithFullResponse: true
+                    })
+                    .then(res => {
+                        var data = JSON.parse(res.body);
+                        var current = +res.headers['x-wp-totalpages'];
 
-                    grunt.file.write(saveTo + d.name + ((d.obj.ext) ? '.' + d.obj.ext : ''), JSON.stringify(data));
+                        if(!arr){
+                            arr = data || [];
+                        } else {
+                            arr = arr.concat(data);
+                        }
 
-                    cb();
-                });
-            }, function(err){
-                if(err){
-                    grunt.log.warn(err.message);
-                }
-
-                done();
+                        if(current !== index){
+                            load(options, ++index, arr)
+                                .then((res) => resolve(res));
+                        } else {
+                            resolve({options, data: arr});
+                        }
+                    })
+                    .catch(err => grunt.log.warn(err.statusCode, err.options.uri));
             });
         }
 
-        function load(path, cb, arr){
-            var offset = (arr) ? "&offset=" + arr.length : "";
+        function image(src, options){
+            var split = src.split(`${options.path}/wp-content/uploads/`);
+            var file = `${options.saveTo}media/content-${options.index}/${split[1]}`
 
-            request(path + offset, function (error, response, body) {
-                if(!arr){
-                    arr = JSON.parse(body);
-                } else {
-                    arr = arr.concat(JSON.parse(body));
-                }
+            fs.mkdirpSync(path.dirname(file));
 
-                if(arr.length < +response.headers["x-wp-total"]){
-                    load(path, cb, arr);
-                } else {
-                    cb(arr);
-                }
+            return request({uri: src, encoding: 'binary'})
+                .then(body => {
+                    grunt.log.ok(`Downloaded: ${split[1]}`);
+
+                    fs.writeFileSync(file, body, 'binary');
+                })
+                .catch(err => {
+                    if(err.statusCode){
+                        grunt.log.warn(err.statusCode, err.options.uri);
+                    } else {
+                        grunt.log.warn(err);
+                    }
+                });
+        }
+
+        function download(options, index){
+            return new Promise((resolve, reject) => {
+                request({
+                        uri: `${options.path}/wp-json/wp/v2/media?per_page=100&page=${index}`,
+                        resolveWithFullResponse: true
+                    })
+                    .then(res => {
+                        var data = JSON.parse(res.body);
+                        var current = +res.headers['x-wp-totalpages'];
+
+                        var arr = [];
+
+                        data.forEach(d => {
+                            if(d.media_details && d.media_details.sizes){
+                                for(var key in d.media_details.sizes){
+                                    if(d.media_details.sizes.hasOwnProperty(key)){
+                                        arr.push(image(d.media_details.sizes[key].source_url, options));
+                                    }
+                                }
+                            } else {
+                                arr.push(image(d.source_url, options));
+                            }
+                        });
+
+                        Promise.all(arr)
+                            .then(res => {
+                                if(current !== index){
+                                    download(options, ++index)
+                                        .then(() => resolve());
+                                } else {
+                                    resolve();
+                                }
+                            })
+                            .catch(err => reject());
+                    })
+                    .catch(err => grunt.log.warn(err.statusCode, err.options.uri));
+            });
+        }
+
+        function update(options){
+            return new Promise((resolve, reject) => {
+                grunt.log.ok(`Rewriting json to use local paths`);
+
+                var files = fs.readdirSync(options.saveTo).filter(d => d.indexOf('.json') > -1);
+
+                files.forEach(file => {
+                    var data = fs.readFileSync(`${options.saveTo}${file}`, {encoding: 'utf8'});
+                    
+                    data = data.replace(new RegExp(`${options.path}/wp-content/uploads/`, 'g'), `media/content/content-${options.index}/`);
+
+                    fs.writeFileSync(`${options.saveTo}${file}`, data);
+                });
+
+                resolve();
             });
         }
     });
