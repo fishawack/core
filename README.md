@@ -525,7 +525,8 @@ process.env.NODE_ENV === "production" // when running distribution build
 
 process.env.NODE_TARGET === "production" // when on master branch
 process.env.NODE_TARGET === "qc" // when on qc branch
-process.env.NODE_TARGET === "staging" // when on any other branch
+process.env.NODE_TARGET === "staging" // when on staging branch
+process.env.NODE_TARGET === "development" // when on any other branch
 ```
 
 #### Custom
@@ -1253,6 +1254,13 @@ You're all done, you should be able to populate your repo with the info provided
 ```
 
 ## Changelog
+
+### 4.7.0
+* `process.env.NODE_TARGET` now set to development when on any other branch rather than staging
+* Postcss runs on all branches apart from development/feature branches
+* Prerender now fails fatally if the loaded scenario doesn't fire
+* CMS no longer hangs when there's 0 media assets on the cms
+* Prerender can now be set per deploy target as well as globally 
 
 ### 4.6.0
 * Reversed `4.4.10` change so that uncss only runs on `qc` and `master` so that feature branches also benefit from the speed boost
