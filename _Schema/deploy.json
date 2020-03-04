@@ -111,7 +111,10 @@
 		        "email": {
 	            	"type": "array",
 					"items": { "type": "string" }
-	        	}
+	        	},
+	        	"prerender": {
+	            	"type": "boolean"
+	            }
 			}
 		}
 	}

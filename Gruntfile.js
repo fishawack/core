@@ -56,7 +56,7 @@ module.exports = function(grunt) {
     var arr = ['env:dist', 'clean:dist', 'jshint', 'modernizr', 'tv4', 'webpack:dist', 'concat:dist', 'uglify:dist', 'fontello_svg', 'svgfit', 'svgmin', 'svg_sprite', 'copy:content', 'copy:assets', 'copy:svg', 'copy:svgasis', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dist', 'cacheBust', 'imagemin', 'clean:build'];
 
     /* PreRender */
-    if(contentJson.attributes.prerender){
+    if(contentJson.attributes.prerender || deployEnv.prerender){
         arr.push('prerender');
     }
     
