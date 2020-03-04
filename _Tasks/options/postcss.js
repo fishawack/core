@@ -8,11 +8,8 @@ function processors(){
 		})
 	];
 
-	// Only run postcss uncss on qc/master branch, too slow for feature/dev branches
-	if(
-		this.deployBranch === "qc" ||
-		this.deployBranch === "master"
-	){
+	// Only run postcss uncss if not on development branch, too slow for feature/dev branches
+	if(this.deployBranch !== "development"){
 		arr.push(require('postcss-uncss')({
 			html: contentJson.attributes.uncss.map(function(d, i){
 				return grunt.template.process(d, grunt.config.get());
@@ -39,7 +36,7 @@ function processors(){
 				if(!contentJson.attributes.modernizr.length){
 					window.document.documentElement.classList.add('modern');
 				} else {
-					window.document.documentElement.classList.add('no-js', 'js', 'loading', 'staging', 'production', 'qc');
+					window.document.documentElement.classList.add('no-js', 'js', 'loading', 'staging', 'production', 'qc', 'development');
 
 					contentJson.attributes.modernizr.forEach(function(d){
 						window.document.documentElement.classList.add('no-' + d, d);
