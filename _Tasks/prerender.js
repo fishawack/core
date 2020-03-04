@@ -57,6 +57,7 @@ module.exports = (grunt) => {
                 prerenderer.destroy();
             })
             .catch(err => {
+                grunt.fatal(err);
                 // Shut down the server and renderer.
                 prerenderer.destroy();
                 // Handle errors.
