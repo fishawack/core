@@ -88,11 +88,13 @@ module.exports = function(grunt) {
                         index: i
                     }, 1)
                     .then((res) => {
-                        update({
-                            path: d.url,
-                            saveTo: d.saveTo || `_Build/content/content-${i}/`,
-                            index: i
-                        });
+                        if(res){
+                            update({
+                                path: d.url,
+                                saveTo: d.saveTo || `_Build/content/content-${i}/`,
+                                index: i
+                            });
+                        }
                     }));
             }
         });
@@ -128,7 +130,7 @@ module.exports = function(grunt) {
                             resolve({options, data: arr});
                         }
                     })
-                    .catch(err => grunt.log.warn(err.statusCode, err.options.uri));
+                    .catch(err => { reject(); grunt.log.warn(err.statusCode, err.options.uri); });
             });
         }
 
@@ -179,7 +181,7 @@ module.exports = function(grunt) {
 
                         Promise.all(arr)
                             .then(res => {
-                                if(current !== index){
+                                if(current && current !== index){
                                     download(options, ++index)
                                         .then(() => resolve());
                                 } else {
@@ -188,7 +190,7 @@ module.exports = function(grunt) {
                             })
                             .catch(err => reject());
                     })
-                    .catch(err => grunt.log.warn(err.statusCode, err.options.uri));
+                    .catch(err => { reject(); grunt.log.warn(err.statusCode, err.options.uri); });
             });
         }
 
