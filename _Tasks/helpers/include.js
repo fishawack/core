@@ -430,8 +430,11 @@ module.exports = function(grunt, hasBase) {
 			case 'qc':
 	    		this.deployTarget = 'qc';
 	    		break;
+			case 'staging':
+				this.deployTarget = 'staging';
+				break;
 			default:
-	    		this.deployTarget = 'staging';
+	    		this.deployTarget = 'development';
 	    }
 
 	    this.deployEnv = contentJson.attributes[deployTarget] || {};
