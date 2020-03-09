@@ -1255,6 +1255,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.7.1
+* Bumped watertight to `5.0.6`
+
 ### 4.7.0
 * `process.env.NODE_TARGET` now set to development when on any other branch rather than staging
 * Postcss runs on all branches apart from development/feature branches
