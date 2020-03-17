@@ -1255,6 +1255,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.7.2
+* Bumped watertight to `5.0.7`
+
 ### 4.7.1
 * Bumped watertight to `5.0.6`
 
