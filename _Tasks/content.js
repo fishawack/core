@@ -58,16 +58,18 @@ module.exports = function(grunt) {
         var request = require('request-promise');
         var fs = require('fs-extra');
         var path = require('path');
+        var pLimit = require('p-limit');
+        var limit = pLimit(5);
 
         var requests = [];
 
         contentJson.attributes.content.forEach(function(d, i){
             if(d.url){
-                requests = requests.concat(d.endpoints.map((dd) => load({
+                requests = requests.concat(d.endpoints.map((dd) => limit(() => load({
                         path: d.url,
                         endpoint: dd,
                         ext: d.ext,
-                        saveTo: d.saveTo || `_Build/content/content-${i}/`
+                        saveTo: (d.saveTo || `_Build/content/content-${i}/`) + (d.bundle ? 'media/' : '')
                     }, 1)
                     .then(({options, data}) => {
                         grunt.log.ok('Downloaded ' + options.endpoint);
@@ -80,22 +82,20 @@ module.exports = function(grunt) {
                             file,
                             JSON.stringify(data)
                         );
-                    })));
+                    }))));
 
-                requests.push(download({
+                requests.push(limit(() => download({
                         path: d.url,
                         saveTo: d.saveTo || `_Build/content/content-${i}/`,
                         index: i
                     }, 1)
                     .then((res) => {
-                        if(res){
-                            update({
-                                path: d.url,
-                                saveTo: d.saveTo || `_Build/content/content-${i}/`,
-                                index: i
-                            });
-                        }
-                    }));
+                        update({
+                            path: d.url,
+                            saveTo: d.saveTo || `_Build/content/content-${i}/` + (d.bundle ? 'media/' : ''),
+                            index: i
+                        });
+                    })));
             }
         });
 
@@ -123,20 +123,27 @@ module.exports = function(grunt) {
                             arr = arr.concat(data);
                         }
 
-                        if(current !== index){
+                        if(current && current !== index){
                             load(options, ++index, arr)
                                 .then((res) => resolve(res));
                         } else {
                             resolve({options, data: arr});
                         }
                     })
-                    .catch(err => { reject(); grunt.log.warn(err.statusCode, err.options.uri); });
+                    .catch(err => { 
+                        if(err.statusCode === 404){
+                            resolve();
+                        } else {
+                            reject();
+                        }
+                        grunt.log.warn(err.statusCode, err.options.uri); 
+                    });
             });
         }
 
         function image(src, options){
             var split = src.split(`${options.path}/wp-content/uploads/`);
-            var file = `${options.saveTo}media/content-${options.index}/${split[1]}`
+            var file = `${options.saveTo}media/${split[1]}`
 
             fs.mkdirpSync(path.dirname(file));
 
@@ -166,16 +173,17 @@ module.exports = function(grunt) {
                         var current = +res.headers['x-wp-totalpages'];
 
                         var arr = [];
+                        limit = pLimit(5);
 
                         data.forEach(d => {
-                            if(d.media_details && d.media_details.sizes){
+                            if(d.media_details && d.media_details.sizes && d.media_details.sizes.length){
                                 for(var key in d.media_details.sizes){
                                     if(d.media_details.sizes.hasOwnProperty(key)){
-                                        arr.push(image(d.media_details.sizes[key].source_url, options));
+                                        arr.push(limit(() => image(d.media_details.sizes[key].source_url, options)));
                                     }
                                 }
                             } else {
-                                arr.push(image(d.source_url, options));
+                                arr.push(limit(() => image(d.source_url, options)));
                             }
                         });
 
@@ -203,7 +211,7 @@ module.exports = function(grunt) {
                 files.forEach(file => {
                     var data = fs.readFileSync(`${options.saveTo}${file}`, {encoding: 'utf8'});
                     
-                    data = data.replace(new RegExp(`${options.path}/wp-content/uploads/`, 'g'), `media/content/content-${options.index}/`);
+                    data = data.replace(new RegExp(`${options.path}/wp-content/uploads/`, 'g'), `media/content/`);
 
                     fs.writeFileSync(`${options.saveTo}${file}`, data);
                 });
