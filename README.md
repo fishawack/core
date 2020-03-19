@@ -1255,6 +1255,10 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.7.3
+* Content request now pulls videos aswell as images
+* Content request no uses pLimit
+
 ### 4.7.2
 * Bumped watertight to `5.0.7`
 
