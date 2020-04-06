@@ -5,6 +5,8 @@ module.exports = function(grunt) {
             grunt.log.warn('No content to pull');
             return;
         }
+
+        var fs = require('fs-extra');
         
         var shell = {
             options: {
@@ -24,7 +26,7 @@ module.exports = function(grunt) {
         contentJson.attributes.content.forEach(function(d, i){
             var saveTo = (d.saveTo) ? d.saveTo : `_Build/content/content-${i}`;
 
-            shell.content.command.push(`rm -rf ${saveTo}`);
+            fs.removeSync(saveTo);
 
             if(d.ftp || d.ftps){
                 var protocol = (d.ftps) ? 'ftps' : 'ftp';
