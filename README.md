@@ -1255,6 +1255,10 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.7.5
+* Moved `fs-extra` remove call so as to not interfere with the mirror command of lftp
+* Changed order of requests so all requests run before rewrites start
+
 ### 4.7.4
 * Removed an `rm -rf` that was causing issues on windows, replaced for `fs-extra` remove
 
