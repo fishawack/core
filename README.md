@@ -1255,6 +1255,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.7.4
+* Removed an `rm -rf` that was causing issues on windows, replaced for `fs-extra` remove
+
 ### 4.7.3
 * Content request now pulls videos aswell as images
 * Content request no uses pLimit
