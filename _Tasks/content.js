@@ -26,19 +26,18 @@ module.exports = function(grunt) {
         contentJson.attributes.content.forEach(function(d, i){
             var saveTo = (d.saveTo) ? d.saveTo : `_Build/content/content-${i}`;
 
-            fs.removeSync(saveTo);
-
             if(d.ftp || d.ftps){
                 var protocol = (d.ftps) ? 'ftps' : 'ftp';
                 var ip = (d.ftps) ? d.ftps : d.ftp;
 
+                fs.removeSync(saveTo);
+
                 shell.content.command.push(`wget -r --user='<%= targets.ftp["${ip}"].username %>' --password='<%= targets.ftp["${ip}"].password %>' -P ${saveTo} -nH --cut=${d.location.split('/').length - 1} '${protocol}://${ip}/${d.location}'`);
             } else if(d.ssh) {
+                fs.removeSync(saveTo);
+
                 shell.content.command.push(`scp -r <%= targets["${d.ssh}"].username %>@<%= targets["${d.ssh}"].host %>:${d.location} ${saveTo}`);
             } else if(d.lftp){
-                // Remove the rm -rf command as lftp needs to mirror
-                shell.content.command.pop();
-
                 shell.content.command.push(`lftp -d -e 'set sftp:auto-confirm yes; mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>',<%= targets.ftp["${d.lftp}"].password %> sftp://${d.lftp}`);
             }
         });
@@ -64,6 +63,7 @@ module.exports = function(grunt) {
         var limit = pLimit(5);
 
         var requests = [];
+        var rewrites = [];
 
         contentJson.attributes.content.forEach(function(d, i){
             if(d.url){
@@ -90,14 +90,7 @@ module.exports = function(grunt) {
                         path: d.url,
                         saveTo: d.saveTo || `_Build/content/content-${i}/`,
                         index: i
-                    }, 1)
-                    .then((res) => {
-                        update({
-                            path: d.url,
-                            saveTo: d.saveTo || `_Build/content/content-${i}/` + (d.bundle ? 'media/' : ''),
-                            index: i
-                        });
-                    })));
+                    }, 1)));
             }
         });
 
@@ -105,8 +98,22 @@ module.exports = function(grunt) {
             var done = this.async();
 
             Promise.all(requests)
-                .catch(err => grunt.log.warn(err.message))
-                .finally(() => done());
+                .then(() => {
+                    contentJson.attributes.content.forEach(function(d, i){
+                        if(d.url){
+                            rewrites.push(limit(() => update({
+                                    path: d.url,
+                                    saveTo: d.saveTo || `_Build/content/content-${i}/` + (d.bundle ? 'media/' : ''),
+                                    index: i
+                                })));
+                        }
+                    });
+
+                    Promise.all(rewrites)
+                        .catch(err => grunt.log.warn(err.message))
+                        .finally(() => done());
+                })
+                .catch(err => grunt.log.warn(err.message));
         }
 
         function load(options, index, arr){
