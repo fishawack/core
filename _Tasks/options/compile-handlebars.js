@@ -17,7 +17,9 @@ module.exports = {
             {
                 dev: '<%= dev %>',
                 target: '<%= deployTarget %>',
-                version: '<%= pkg.version %>'
+                version: '<%= pkg.version %>',
+                env: process.env,
+                pkg: '<%= pkg %>'
             }
         ],
         handlebars: "<%= (pkg.devDependencies && pkg.devDependencies.handlebars) && 'node_modules/handlebars' %>"

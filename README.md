@@ -1255,6 +1255,11 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.7.6
+* Handlebars now has access to `env` properties
+* Handlebars now has access to `pkg` properties
+* Updated `_Tasks/options/env.js` to be the single source of env variables
+
 ### 4.7.5
 * Moved `fs-extra` remove call so as to not interfere with the mirror command of lftp
 * Changed order of requests so all requests run before rewrites start

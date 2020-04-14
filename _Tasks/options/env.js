@@ -1,14 +1,15 @@
 module.exports = {
 	options: {
-		add : contentJson.attributes.env
+		add : Object.assign(
+			{ NODE_TARGET : deployTarget },
+			contentJson.attributes.env,
+			contentJson.attributes[deployTarget] && contentJson.attributes[deployTarget].env || {}
+		)
 	},
 	dev : {
-		NODE_ENV : 'development',
-		NODE_IP : '<%= getIP() %>'
+		NODE_ENV : 'development'
     },
     dist : {
-		NODE_ENV : 'production',
-		NODE_TARGET : deployTarget,
-		concat : contentJson.attributes[deployTarget] && contentJson.attributes[deployTarget].env || {}
+		NODE_ENV : 'production'
     }
 }

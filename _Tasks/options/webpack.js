@@ -81,13 +81,7 @@ function setup(){
 		},
 		plugins: [
 	    	new VueLoaderPlugin(),
-	    	new webpack.EnvironmentPlugin(
-	    		Object.assign(
-	    			{ NODE_TARGET : deployTarget },
-	    			contentJson.attributes.env,
-	    			contentJson.attributes[deployTarget] && contentJson.attributes[deployTarget].env || {}
-    			)
-    		)
+	    	new webpack.EnvironmentPlugin(Object.keys(process.env))
 	    ],
 	    optimization: {
 			splitChunks: ((!contentJson.attributes.splitChunks) ? {} : {
