@@ -1,14 +1,23 @@
 module.exports = function(grunt) {
-    grunt.registerTask('compare', function(){
-        var done = this.async();
+    grunt.registerTask('compare', ['compare:previous', 'compare:browsers']);
 
+    grunt.registerTask('compare:previous', function(){
+        compare(this.async());
+    });
+    
+    grunt.registerTask('compare:browsers', function(){
+        compare(this.async(), true);
+    });
+
+    function compare(done, crossBrowser){
         var resemble = require('resemblejs');
         var fs = require('fs-extra');
 
         var sizes = captureEnv().sizes;
         var browsers = captureEnv().browsers;
 
-        var write = false;
+        // Only generate images for previous compares
+        var write = !crossBrowser;
 
         var compare = {
             browser(browser){
@@ -42,7 +51,12 @@ module.exports = function(grunt) {
 
                         await grunt.file.expand({cwd: `.tmp/screenshots/${browser}/${size}/`}, '*').reduce(async (promise, d, i) => {
                             await promise;
-                            values.push(await compare.images(browser, size, i));
+                            
+                            var data = await compare.images(browser, size, i).catch(err => console.log(err));
+
+                            if(data){
+                                values.push(data);
+                            }
                         }, Promise.resolve());
 
                         grunt.log.ok(size);
@@ -56,9 +70,19 @@ module.exports = function(grunt) {
             },
             images(browser, size, index){
                 return new Promise((resolve, reject) => {
-                    var image1 = fs.readFileSync(`.tmp/screenshots/${browsers[0]}/${size}/${index}.png`);
-                    var image2 = fs.readFileSync(`.tmp/screenshots/${browser}/${size}/${index}.png`);
-
+                    try{
+                        var image1;
+                        var image2 = fs.readFileSync(`.tmp/screenshots/${browser}/${size}/${index}.png`);
+                        
+                        if(crossBrowser){
+                            image1 = fs.readFileSync(`.tmp/screenshots/${browsers[0]}/${size}/${index}.png`);
+                        } else {
+                            image1 = fs.readFileSync(`.tmp/previous/${browser}/${size}/${index}.png`);
+                        }
+                    } catch(e){
+                        return reject(e);
+                    }
+                
                     var options = {
                         output: {
                             largeImageThreshold: 0,
@@ -115,6 +139,10 @@ module.exports = function(grunt) {
                     var max = d.reduce((a, b) => (a > b) ? a : b);
                     var browser = browsers[i];
 
+                    if(crossBrowser){
+                        browser = `${browsers[i]} - ${browsers[0]}`;
+                    }
+
                     return buildBadge(` ${browser} `, max, browser);
                 });
 
@@ -134,5 +162,5 @@ module.exports = function(grunt) {
         }
 
         asyncCall();
-    });
+    }
 };

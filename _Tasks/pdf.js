@@ -1,3 +1,3 @@
 module.exports = function(grunt) {
-	grunt.registerTask('pdf', ['clean:pdf', 'connect', 'webdriver:pdf', 'compare', 'clean:build']);
+	grunt.registerTask('pdf', ['clean:pdf', 'connect', 'webdriver:pdf', 'compare:browsers', 'shell:pullPrevious', 'compare:previous', 'shell:pushPrevious', 'clean:build']);
 };
