@@ -53,7 +53,16 @@ var capture = {
                     capture.page.call(i);
                 }
 
-                createPdfsAndZips(capture);
+                describe(`Archiving and packing`, function () {
+                    it(`Merging & optimizing pdfs`, function() {
+                        browser.call(() => {
+                            return createPdfsAndZips(
+                                    capture.screenshot.path,
+                                    `${contentJson.attributes.title}_${capture.size.width}x${capture.size.height}_${grunt.template.today('yyyy-mm-dd')}_${capture.size.browser}.pdf`
+                                );
+                        });
+                    });
+                });
             });
         }
     },
