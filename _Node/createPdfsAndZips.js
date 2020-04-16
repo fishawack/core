@@ -7,13 +7,13 @@ module.exports = function(grunt) {
 
 	fs.mkdirpSync('.tmp/pdfs/');
 
-	this.createPdfsAndZips = (path, pdf) => {
+	this.createPdfsAndZips = (path, folder, pdf) => {
 		return new Promise(async (resolve, reject) => {
 			fs.mkdirpSync(`.tmp/pdfs/${path}/`);
 
 			var arrayOfScreens = [];
 
-			grunt.file.expand({cwd: `.tmp/screenshots/${path}/`}, '*').forEach(function(element, index){
+			grunt.file.expand({cwd: `${folder}/${path}/`}, '*').forEach(function(element, index){
 				arrayOfScreens.push(element);
 			});
 
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 				pdfTasks.push((function(i){
 					return function(callback){
 						new PDFImagePack().output(
-							[`.tmp/screenshots/${path}/` + arrayOfScreens[i]], 
+							[`${folder}/${path}/` + arrayOfScreens[i]], 
 							((arrayOfScreens.length > 1) ? `.tmp/pdfs/${path}/${i}.pdf` : `.tmp/pdfs/${path}/raw.pdf`),
 							function(err){
 								if(err){

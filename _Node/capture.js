@@ -58,6 +58,7 @@ var capture = {
                         browser.call(() => {
                             return createPdfsAndZips(
                                     capture.screenshot.path,
+                                    '.tmp/screenshots',
                                     `${contentJson.attributes.title}_${capture.size.width}x${capture.size.height}_${grunt.template.today('yyyy-mm-dd')}_${capture.size.browser}.pdf`
                                 );
                         });
