@@ -22,10 +22,10 @@ module.exports = {
         command: "curl --create-dirs -o _Packages/iOS/app.ipa "
     },
     pushPrevious: {
-        command: `lftp -e 'set sftp:auto-confirm yes; mirror -R .tmp/screenshots/ Shared/FW/Knutsford/Digital/Auto-Regression/<%= pkg.name %>/<%= contentJson.attributes.title %> -p -e --parallel=10; exit;' -u '<%= targets.ftp["ftp-fishawack.egnyte.com"].username %>',<%= targets.ftp["ftp-fishawack.egnyte.com"].password %> sftp://ftp-fishawack.egnyte.com`
+        command: `lftp -d -e 'set sftp:auto-confirm yes; mirror -R .tmp/screenshots/ Shared/FW/Knutsford/Digital/Auto-Regression/<%= pkg.name %>/<%= contentJson.attributes.title %> -p -e --parallel=10; exit;' -u '<%= targets.ftp["ftp-fishawack.egnyte.com"].username %>',<%= targets.ftp["ftp-fishawack.egnyte.com"].password %> sftp://ftp-fishawack.egnyte.com`
     },
     pullPrevious: {
-        command: `lftp -e 'set sftp:auto-confirm yes; mirror Shared/FW/Knutsford/Digital/Auto-Regression/<%= pkg.name %>/<%= contentJson.attributes.title %> .tmp/previous -p -e --parallel=10 -c; exit;' -u '<%= targets.ftp["ftp-fishawack.egnyte.com"].username %>',<%= targets.ftp["ftp-fishawack.egnyte.com"].password %> sftp://ftp-fishawack.egnyte.com`,
+        command: `lftp -d -e 'set sftp:auto-confirm yes; mirror Shared/FW/Knutsford/Digital/Auto-Regression/<%= pkg.name %>/<%= contentJson.attributes.title %> .tmp/previous -p -e --parallel=10 -c; exit;' -u '<%= targets.ftp["ftp-fishawack.egnyte.com"].username %>',<%= targets.ftp["ftp-fishawack.egnyte.com"].password %> sftp://ftp-fishawack.egnyte.com`,
         options: {
             failOnError: false
         }

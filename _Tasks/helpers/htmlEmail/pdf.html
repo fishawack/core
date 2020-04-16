@@ -11,6 +11,7 @@
 							var width = d[0];
 							var height = d[1];
 							var file = `${contentJson.attributes.title}_${width}x${height}_${grunt.template.today('yyyy-mm-dd')}_${browser}.pdf`;
+							var compare = `${contentJson.attributes.title}_${width}x${height}_${grunt.template.today('yyyy-mm-dd')}_${browser}_compare.pdf`;
 							var url = `http://internal.fishawack.staging/Auto-Package/${pkg.name}/`;
 
 							return `<li>
@@ -24,6 +25,24 @@
 									<li>
 										<strong>Size</strong>: 
 										${getFilesizeInBytes(`_Pdfs/${file}`)}
+									</li>
+									<li>
+										<strong>Expires</strong>: 
+										${new Date(new Date().setMonth(new Date().getMonth() + 2)).toDateString()}
+									</li>
+								</ul>
+							</li>
+							<li>
+								<strong>${width}x${height} regression</strong>:
+								<ul>
+									<li>
+										<a href="${encodeURI(url + compare)}">
+											${compare}
+										</a>
+									</li>
+									<li>
+										<strong>Size</strong>: 
+										${getFilesizeInBytes(`_Pdfs/${compare}`)}
 									</li>
 									<li>
 										<strong>Expires</strong>: 
