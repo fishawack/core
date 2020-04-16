@@ -1255,6 +1255,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.8.0
+* Added regression testing
+
 ### 4.7.6
 * Handlebars now has access to `env` properties
 * Handlebars now has access to `pkg` properties
