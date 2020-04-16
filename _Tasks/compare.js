@@ -10,6 +10,8 @@ module.exports = function(grunt) {
     });
 
     function compare(done, crossBrowser){
+        require('../_Node/createPdfsAndZips.js')(grunt);
+
         var resemble = require('resemblejs');
         var fs = require('fs-extra');
 
@@ -29,7 +31,20 @@ module.exports = function(grunt) {
 
                         await sizes.reduce(async (promise, d) => {
                             await promise;
-                            values.push(await compare.size(browser, `${d[0]}x${d[1]}`));
+
+                            var data = await compare.size(browser, `${d[0]}x${d[1]}`).catch(() => {});
+
+                            if(data != null){
+                                values.push(data);
+
+                                if(!crossBrowser){
+                                    await createPdfsAndZips(
+                                            `${browser}/${d[0]}x${d[1]}`,
+                                            '.tmp/difference',
+                                            `${contentJson.attributes.title}_${d[0]}x${d[1]}_${grunt.template.today('yyyy-mm-dd')}_${browser}_compare.pdf`
+                                        );
+                                }
+                            }
                         }, Promise.resolve());
 
                         grunt.log.ok(browser);
@@ -59,7 +74,14 @@ module.exports = function(grunt) {
                             }
                         }, Promise.resolve());
 
+                        if(!values.length){
+                            grunt.log.error("No images to compare");
+                            
+                            return reject();
+                        }
+
                         grunt.log.ok(size);
+
                         resolve(values.reduce((a, b) => {
                                 return (a > b.rawMisMatchPercentage) ? a : b.rawMisMatchPercentage;
                             }, 0));
@@ -136,7 +158,12 @@ module.exports = function(grunt) {
             }
 
             var arr = values.map((d, i) => {
-                    var max = d.reduce((a, b) => (a > b) ? a : b);
+                    var max = 100;
+
+                    if(d.length){
+                        max = d.reduce((a, b) => (a > b) ? a : b);
+                    }
+
                     var browser = browsers[i];
 
                     if(crossBrowser){
