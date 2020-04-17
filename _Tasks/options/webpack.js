@@ -76,6 +76,10 @@ function setup(){
 							}
 						}
 					]
+				},
+				{
+					test: /\.svg$/,
+					loader: 'svg-inline-loader'
 				}
 			]
 		},

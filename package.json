@@ -100,6 +100,7 @@
     "request-promise": "4.2.5",
     "resemblejs": "3.2.0",
     "sinon": "1.17.2",
+    "svg-inline-loader": "0.8.2",
     "svg-to-png": "3.1.2",
     "time-grunt": "2.0.0",
     "uncss": "git+https://github.com/mikemellor11/uncss.git#master",
