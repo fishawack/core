@@ -1255,6 +1255,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.8.1
+* Point to svgs for badges
+
 ### 4.8.0
 * Added regression testing
 
