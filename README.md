@@ -1255,6 +1255,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.8.3
+* Moved svg tasks to after webpack
+
 ### 4.8.2
 * Added svg loader to webpack
 
