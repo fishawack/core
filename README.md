@@ -1270,6 +1270,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.8.5
+* Cachebust fix for new subfolder feature
+
 ### 4.8.4
 * Html folder can now contain subfolders which will translate correctly to the
 
