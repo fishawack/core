@@ -793,13 +793,13 @@ To include an svg from the sprite sheet do one of the following.
 #### Vue
 ```handlebars
 <!-- Full optimization -->
-<svg><use xlink:href="#menu"></use></svg>
+<GSvg name="menu"/>
 
 <!-- Minimal optimization -->
-<svg><use xlink:href="#--logo"></use></svg>
+<GSvg name="--logo"/>
 
 <!-- Error - not included in the sprite sheet -->
-<svg><use xlink:href="#__figure"></use></svg>
+<GSvg name="__figure"/>
 ```
 
 ### Embedding
@@ -830,7 +830,22 @@ If the optimization is still causing issues and you want the **original** svg ma
 
 #### Vue
 
-If you need to use an embedded svg in a dynamic templating language like vue then you'll need to grab the actual markup and insert it directly into your vue/html markup. The optimized files can be found in `_Build/handlebars/partials/generated/embed`.
+```handlebars
+<!-- Full optimization -->
+<GSvg name="menu" embed/>
+
+<!-- Minimal optimization -->
+<GSvg name="--logo" embed/>
+
+<!-- Minimal optimization -->
+<GSvg name="__figure" embed/>
+```
+
+If the optimization is still causing issues and you want the **original** svg markup embedding you can do the following
+
+```handlebars
+<GSvg name="menu" embed asis/>
+```
 
 ### External
 
@@ -1254,6 +1269,9 @@ You're all done, you should be able to populate your repo with the info provided
 ```
 
 ## Changelog
+
+### 4.8.4
+* Html folder can now contain subfolders which will translate correctly to the
 
 ### 4.8.3
 * Moved svg tasks to after webpack
