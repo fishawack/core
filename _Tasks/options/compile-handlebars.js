@@ -1,12 +1,20 @@
 module.exports = {
 	default: {
-        'files': [{
-            expand: true,
-            cwd: '_Build/',
-            src: ['*.html', 'html/*.html', '!**/*_*.html'],
-            dest: '.tmp/compiled/',
-            flatten: true
-        }],
+        'files': [
+            {
+                expand: true,
+                cwd: '_Build/',
+                src: ['*.html', '!**/*_*.html'],
+                dest: '.tmp/compiled/',
+                flatten: true
+            },
+            {
+                expand: true,
+                cwd: '_Build/html',
+                src: ['**/*.html', '!**/*_*.html'],
+                dest: '.tmp/compiled/'
+            }
+        ],
         'templateData': "<%= this.contentPath %>",
         'helpers': '_Build/handlebars/helpers/**/*.js',
         'partials': [

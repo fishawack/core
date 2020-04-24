@@ -10,7 +10,7 @@ module.exports = {
         files: [{
             expand: true,
             cwd: '.tmp/compiled',
-            src: '*.html',
+            src: '**/*.html',
             dest: '<%= root %>'
         }]
     }
