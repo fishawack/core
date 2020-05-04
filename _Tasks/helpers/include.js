@@ -4,6 +4,8 @@ module.exports = function(grunt, hasBase) {
 	var path = require('path');
 	this.grunt = grunt;
 
+	this.filename = () => `${config.repo.name}_${config.pkg.version}_${grunt.template.today("isoUtcDateTime")}`;
+
 	this.repoInfo = () => {
 		if(config.repo.name && config.repo.group && config.repo.path){ return; }
 
@@ -20,7 +22,7 @@ module.exports = function(grunt, hasBase) {
 				
 				if(info){
 					config.repo.group = JSON.parse(info).project.name.toLowerCase();
-					config.repo.path = `${config.repo.group}/${config.repo.name}`;	
+					config.repo.path = `${config.repo.group}/${config.repo.name}`;
 				} else {
 					grunt.log.warn("Failed to retrieve repo information, are the credentials store in ~/targets/misc.json correct?");
 				}
