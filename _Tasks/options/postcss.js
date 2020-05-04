@@ -9,7 +9,7 @@ function processors(){
 	];
 
 	// Only run postcss uncss if not on development branch, too slow for feature/dev branches
-	if(this.deployBranch !== "development"){
+	if(this.deployTarget !== "development"){
 		arr.push(require('postcss-uncss')({
 			html: contentJson.attributes.uncss.map(function(d, i){
 				return grunt.template.process(d, grunt.config.get());
