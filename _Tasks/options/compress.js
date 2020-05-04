@@ -19,7 +19,7 @@ module.exports = {
     },
     app: {
         "options": {
-            'archive': '_Zips/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("yyyy-mm-dd") %>_App.zip'
+            'archive': '_Zips/<%= filename %>_App.zip'
         },
         'cwd': '_Output/', 
         'src': ['**'],
@@ -28,18 +28,18 @@ module.exports = {
     },
     mac: {
         "options": {
-            'archive': '_Zips/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("yyyy-mm-dd") %>_Mac.zip'
+            'archive': '_Zips/<%= filename %>_Mac.zip'
         },
-        'cwd': '_Packages/Electron/<%= contentJson.attributes.title %>-darwin-x64/', 
+        'cwd': '_Packages/Electron/<%= repo.name %>-darwin-x64/', 
         'src': ['**'],
         'expand': true,
         'dot': true
     },
     win: {
         "options": {
-            'archive': '_Zips/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("yyyy-mm-dd") %>_Win.zip'
+            'archive': '_Zips/<%= filename %>_Win.zip'
         },
-        'cwd': '_Packages/Electron/<%= contentJson.attributes.title %>-win32-x64/', 
+        'cwd': '_Packages/Electron/<%= repo.name %>-win32-x64/', 
         'src': ['**'],
         'expand': true,
         'dot': true
@@ -55,7 +55,7 @@ module.exports = {
     },
     ios: {
         "options": {
-            'archive': '_Zips/<%= contentJson.attributes.title %>_<%= pkg.version %>_<%= grunt.template.today("yyyy-mm-dd") %>_iOS.zip'
+            'archive': '_Zips/<%= filename %>_iOS.zip'
         },
         'cwd': '_Packages/iOS/', 
         'src': ['app.ipa'],
