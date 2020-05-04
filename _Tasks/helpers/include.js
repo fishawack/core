@@ -7,12 +7,16 @@ module.exports = function(grunt, hasBase) {
 	this.filename = () => `${config.repo.name}_${config.pkg.version}_${grunt.template.today("isoUtcDateTime")}`;
 
 	this.repoInfo = () => {
-		if(config.repo.name && config.repo.group && config.repo.path){ return; }
-
+		var repo = {
+            name: '',
+            group: '',
+            path: ''
+		};
+	
 		if(config.targets.misc && config.targets.misc.bitbucket){
 			const execSync = require('child_process').execSync;
 		
-			var name = config.repo.name = path.basename(execSync('git rev-parse --show-toplevel', {encoding: 'utf8'})).trim();
+			var name = repo.name = path.basename(execSync('git rev-parse --show-toplevel', {encoding: 'utf8'})).trim();
 			var url = `https://api.bitbucket.org/2.0/repositories/fishawackdigital/${name}`;
 			var username = config.targets.misc.bitbucket.username;
 			var password = config.targets.misc.bitbucket.password;
@@ -21,8 +25,8 @@ module.exports = function(grunt, hasBase) {
 				var info = execSync(`curl -s -u ${username}:${password} ${url}`, {encoding: 'utf8'});
 				
 				if(info){
-					config.repo.group = JSON.parse(info).project.name.toLowerCase();
-					config.repo.path = `${config.repo.group}/${config.repo.name}`;
+					repo.group = JSON.parse(info).project.name.toLowerCase();
+					repo.path = `${repo.group}/${repo.name}`;
 				} else {
 					grunt.log.warn("Failed to retrieve repo information, are the credentials store in ~/targets/misc.json correct?");
 				}
@@ -32,6 +36,8 @@ module.exports = function(grunt, hasBase) {
 		} else {
 			grunt.log.warn("~/targets/misc.json not found, using fallback repo name 'unknown'");
 		}
+
+		return repo;
 	};
 
 	this.captureEnv = function(){
@@ -45,9 +51,11 @@ module.exports = function(grunt, hasBase) {
 	};
 
 	this.loadTargets = function(){
+		var targets = {};
+		
 		var os = require('os');
 
-	    var targets = [
+	    var files = [
 	    	{
 	    		file: 'id_rsa',
 	    		path: '/.ssh/',
@@ -65,25 +73,25 @@ module.exports = function(grunt, hasBase) {
 	    ];
 
 	    if(contentJson.attributes.staging && contentJson.attributes.staging.ssh){
-	    	targets.push({file: contentJson.attributes.staging.ssh, json: true});
+	    	files.push({file: contentJson.attributes.staging.ssh, json: true});
 	    }
 
 	    if(contentJson.attributes.qc && contentJson.attributes.qc.ssh){
-	    	targets.push({file: contentJson.attributes.qc.ssh, json: true});
+	    	files.push({file: contentJson.attributes.qc.ssh, json: true});
 	    }
 
 	    if(contentJson.attributes.production && contentJson.attributes.production.ssh){
-	    	targets.push({file: contentJson.attributes.production.ssh, json: true});
+	    	files.push({file: contentJson.attributes.production.ssh, json: true});
 	    }
 
 	    contentJson.attributes.content && contentJson.attributes.content.forEach(function(d){
 			if(d.ssh){
-		    	targets.push({file: d.ssh, json: true});
+		    	files.push({file: d.ssh, json: true});
 		    }	    	
 	    });
 
-	    targets.forEach(function(d){
-	    	if(config.targets[d.key || d.file]){
+	    files.forEach(function(d){
+	    	if(targets[d.key || d.file]){
 	    		return;
 	    	}
 
@@ -102,10 +110,12 @@ module.exports = function(grunt, hasBase) {
 				}
 		    }
 
-		    config.targets[d.key || d.file] = safeLoad(grunt, save, (d.json === false) ? false : true);
+		    targets[d.key || d.file] = safeLoad(grunt, save, (d.json === false) ? false : true);
 	    });
 
-	    this.deployCred = (deployEnv.ssh) ? config.targets[deployEnv.ssh] : {};
+		this.deployCred = (deployEnv.ssh) ? targets[deployEnv.ssh] : {};
+		
+		return targets;
 	};
 
 	this.truePath = function(path, env){
