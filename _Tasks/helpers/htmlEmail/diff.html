@@ -6,7 +6,7 @@
 				var browser = d;
 
 				return `<li>
-					<img src="http://${contentJson.attributes.repo.split('/')[0] }.pages-diggit01.fw.local/${contentJson.attributes.repo.split('/')[1] }/badges/__${browser}.svg"/>
+					<img src="http://${repo.group }.pages-diggit01.fw.local/${repo.name }/badges/__${browser}.svg"/>
 				</li>`;
 			}).join('')
 		%>
@@ -20,7 +20,7 @@
 				var browser = d;
 
 				return `<li>
-					<img src="http://${contentJson.attributes.repo.split('/')[0] }.pages-diggit01.fw.local/${contentJson.attributes.repo.split('/')[1] }/badges/__${browser} - ${captureEnv().browsers[0]}.svg"/>
+					<img src="http://${repo.group }.pages-diggit01.fw.local/${repo.name }/badges/__${browser} - ${captureEnv().browsers[0]}.svg"/>
 				</li>`;
 			}).join('')
 		%>

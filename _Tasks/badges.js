@@ -73,7 +73,7 @@ function issues(cb){
     var request = require('request');
 
     request({
-        url: "http://diggit01.fw.local/api/v4/projects/" + encodeURIComponent(contentJson.attributes.repo) + "/issues",
+        url: `http://diggit01.fw.local/api/v4/projects/${config.repo.path}/issues`,
         headers: {
             "PRIVATE-TOKEN": token
         }
