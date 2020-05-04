@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('write:electron', function(){
     	var package = {
-            "name": contentJson.attributes.title.toLowerCase().replace(/ /g,'-'),
+            "name": config.repo.name,
             "version": grunt.config.get('pkg').version,
             "main": "index.js"
         };

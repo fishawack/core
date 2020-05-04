@@ -41,7 +41,7 @@ module.exports = function(grunt) {
                                     await createPdfsAndZips(
                                             `${browser}/${d[0]}x${d[1]}`,
                                             '.tmp/difference',
-                                            `${contentJson.attributes.title}_${d[0]}x${d[1]}_${grunt.template.today('yyyy-mm-dd')}_${browser}_compare.pdf`
+                                            `${config.filename}_${d[0]}x${d[1]}_${browser}_compare.pdf`
                                         );
                                 }
                             }

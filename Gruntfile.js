@@ -2,30 +2,11 @@ module.exports = function(grunt) {
 
     require('./_Tasks/helpers/include.js')(grunt);
 
-    config = {
-        dev: grunt.cli.tasks.indexOf('dist') === -1,
-        pkg: grunt.file.readJSON('package.json'),
-        //CONTENT IN CONIFG SO IT CAN BE PASSED TO GRUNT TASKS
-        contentJson: contentJson,
-        configPath: configPath,
-        //ROOT OF SITE WHERE FILES
-        root: contentJson.attributes.root || '_Output',
-        targets: {},
-        //SET IN PHONEGAP TASK
-        pullApp: '',
-        //REPO INFORMATION
-        repo: {},
-        //FILENAME USED WHEN SAVING OUT ASSETS e.g PDF OF BUILD
-        filename: ''
-    };
+    initConfig();
 
     if(devProject){
         require('time-grunt')(grunt);
     }
-
-    config.targets = loadTargets();
-    config.repo = repoInfo();
-    config.filename = filename();
 
     grunt.util._.extend(config, loadConfig('./_Tasks/options/'));
 

@@ -10,8 +10,8 @@
 						${captureEnv().sizes.map((d) => {
 							var width = d[0];
 							var height = d[1];
-							var file = `${contentJson.attributes.title}_${width}x${height}_${grunt.template.today('yyyy-mm-dd')}_${browser}.pdf`;
-							var compare = `${contentJson.attributes.title}_${width}x${height}_${grunt.template.today('yyyy-mm-dd')}_${browser}_compare.pdf`;
+							var file = `${config.filename}_${width}x${height}_${browser}.pdf`;
+							var compare = `${config.filename}_${width}x${height}_${browser}_compare.pdf`;
 							var url = `http://internal.fishawack.staging/Auto-Package/${pkg.name}/`;
 
 							return `<li>

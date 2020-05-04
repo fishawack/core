@@ -56,7 +56,7 @@ module.exports = function(grunt) {
                         recipients: recipients,
                         message: {
                             from: "fishawack.auto.package@gmail.com",
-                            subject: 'Auto-package: - <%= contentJson.attributes.title %>',
+                            subject: 'Auto-package: - <%= repo.name %>',
                             html: String.format(buildHtmlEmail('base'), 
                                 [
                                     buildHtmlEmail('target'),

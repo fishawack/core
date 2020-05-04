@@ -5,6 +5,8 @@ var fs = require('fs-extra');
 require('../_Tasks/helpers/include.js')(grunt, true);
 require('./createPdfsAndZips.js')(grunt);
 
+initConfig();
+
 fs.mkdirpSync('_Pdfs');
 fs.mkdirpSync(`.tmp/screenshots/`);
 
@@ -59,7 +61,7 @@ var capture = {
                             return createPdfsAndZips(
                                     capture.screenshot.path,
                                     '.tmp/screenshots',
-                                    `${contentJson.attributes.title}_${capture.size.width}x${capture.size.height}_${grunt.template.today('yyyy-mm-dd')}_${capture.size.browser}.pdf`
+                                    `${config.filename}_${capture.size.width}x${capture.size.height}_${capture.size.browser}.pdf`
                                 );
                         });
                     });

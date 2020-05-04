@@ -1,6 +1,6 @@
 module.exports = {
     options: {
-        name: '<%= contentJson.attributes.title %>',
+        name: '<%= repo.name %>',
         dir: '_Packages/Electron/App',
         out: '_Packages/Electron/'
     },

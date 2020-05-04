@@ -3,21 +3,45 @@ module.exports = function(grunt, hasBase) {
 	var fs = require('fs');
 	var path = require('path');
 	this.grunt = grunt;
+	this.config = {};
 
-	this.filename = () => `${config.repo.name}_${config.pkg.version}_${grunt.template.today("UTC:yyyy-mm-dd'T'HH-MM-ss'Z'")}`;
+	this.initConfig = () => {
+		config = {
+			dev: grunt.cli.tasks.indexOf('dist') === -1,
+			pkg: grunt.file.readJSON('package.json'),
+			//CONTENT IN CONIFG SO IT CAN BE PASSED TO GRUNT TASKS
+			contentJson: contentJson,
+			configPath: configPath,
+			//ROOT OF SITE WHERE FILES
+			root: contentJson.attributes.root || '_Output',
+			targets: {},
+			//SET IN PHONEGAP TASK
+			pullApp: '',
+			//REPO INFORMATION
+			repo: {},
+			//FILENAME USED WHEN SAVING OUT ASSETS e.g PDF OF BUILD
+			filename: ''
+		};
+	
+		config.targets = loadTargets();
+		config.repo = repoInfo();
+		config.filename = filename();
+	};
+
+	this.filename = () => `${config.repo.name}_${config.pkg.version}_${grunt.template.today("UTC:yyyy-mm-dd")}_${config.repo.commit}`;
 
 	this.repoInfo = () => {
+		const execSync = require('child_process').execSync;
+		
 		var repo = {
-            name: '',
+            name: path.basename(execSync('git rev-parse --show-toplevel', {encoding: 'utf8'}).trim()),
             group: '',
-            path: ''
+			path: '',
+			commit: execSync('git rev-parse --short HEAD', {encoding: 'utf8'}).trim()
 		};
 	
 		if(config.targets.misc && config.targets.misc.bitbucket){
-			const execSync = require('child_process').execSync;
-		
-			var name = repo.name = path.basename(execSync('git rev-parse --show-toplevel', {encoding: 'utf8'})).trim();
-			var url = `https://api.bitbucket.org/2.0/repositories/fishawackdigital/${name}`;
+			var url = `https://api.bitbucket.org/2.0/repositories/fishawackdigital/${repo.name}`;
 			var username = config.targets.misc.bitbucket.username;
 			var password = config.targets.misc.bitbucket.password;
 			
@@ -445,8 +469,6 @@ module.exports = function(grunt, hasBase) {
 	if(grunt && !hasBase){
 		grunt.file.setBase('../' + (devProject || '../..') + '/');
 	}
-
-	this.config = null;
 
 	this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/@fishawack/config-grunt/';
 

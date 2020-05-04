@@ -185,7 +185,7 @@
 		        	"additionalProperties": true
 		        }
             },
-            "required": ["title", "repo", "root", "googleTrackingID", "modernizr", "uncss", "template", "toggle"]
+            "required": ["title", "root", "googleTrackingID", "modernizr", "uncss", "template", "toggle"]
 		}
 	}
 }

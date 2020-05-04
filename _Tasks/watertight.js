@@ -31,7 +31,7 @@ module.exports = function(grunt) {
 
         var indexPhp = grunt.file.read(indexPath);
         indexPhp = indexPhp.replace('<!-- appPath -->', appPath);
-        indexPhp = indexPhp.replace('<!-- appCookie -->', (deployEnv.cookie) ? deployEnv.cookie : contentJson.attributes.title);
+        indexPhp = indexPhp.replace('<!-- appCookie -->', (deployEnv.cookie) ? deployEnv.cookie : config.repo.name);
         indexPhp = indexPhp.replace('<!-- customLogin -->', customLogin);
         indexPhp = indexPhp.replace('<!-- envPath -->', envPath);
 
