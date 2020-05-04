@@ -16,8 +16,14 @@ module.exports = function(grunt, hasBase) {
 			var password = config.targets.misc.bitbucket.password;
 			
 			if(username && password){
-				config.repo.group = JSON.parse(execSync(`curl -s -u ${username}:${password} ${url}`, {encoding: 'utf8'})).project.name.toLowerCase();
-				config.repo.path = `${config.repo.group}/${config.repo.name}`;
+				var info = execSync(`curl -s -u ${username}:${password} ${url}`, {encoding: 'utf8'});
+				
+				if(info){
+					config.repo.group = JSON.parse(info).project.name.toLowerCase();
+					config.repo.path = `${config.repo.group}/${config.repo.name}`;	
+				} else {
+					grunt.log.warn("Failed to retrieve repo information, are the credentials store in ~/targets/misc.json correct?");
+				}
 			} else {
 				grunt.log.warn("Can't find bitbucket credentials in ~/targets/misc.json, using fallback repo name 'unknown'");
 			}
