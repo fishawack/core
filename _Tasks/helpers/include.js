@@ -4,6 +4,28 @@ module.exports = function(grunt, hasBase) {
 	var path = require('path');
 	this.grunt = grunt;
 
+	this.repoInfo = () => {
+		if(config.repo.name && config.repo.group && config.repo.path){ return; }
+
+		if(config.targets.misc && config.targets.misc.bitbucket){
+			const execSync = require('child_process').execSync;
+		
+			var name = config.repo.name = path.basename(execSync('git rev-parse --show-toplevel', {encoding: 'utf8'})).trim();
+			var url = `https://api.bitbucket.org/2.0/repositories/fishawackdigital/${name}`;
+			var username = config.targets.misc.bitbucket.username;
+			var password = config.targets.misc.bitbucket.password;
+			
+			if(username && password){
+				config.repo.group = JSON.parse(execSync(`curl -s -u ${username}:${password} ${url}`, {encoding: 'utf8'})).project.name.toLowerCase();
+				config.repo.path = `${config.repo.group}/${config.repo.name}`;
+			} else {
+				grunt.log.warn("Can't find bitbucket credentials in ~/targets/misc.json, using fallback repo name 'unknown'");
+			}
+		} else {
+			grunt.log.warn("~/targets/misc.json not found, using fallback repo name 'unknown'");
+		}
+	};
+
 	this.captureEnv = function(){
 		return {
 	        browsers: deployEnv.pdf && deployEnv.pdf.browsers || ['chrome'],
@@ -14,7 +36,7 @@ module.exports = function(grunt, hasBase) {
 		};
 	};
 
-	this.loadTargets = function(config){
+	this.loadTargets = function(){
 		var os = require('os');
 
 	    var targets = [

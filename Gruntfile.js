@@ -12,14 +12,22 @@ module.exports = function(grunt) {
         root: contentJson.attributes.root || '_Output',
         targets: {},
         //SET IN PHONEGAP TASK
-        pullApp: ''
+        pullApp: '',
+        //REPO INFORMATION
+        repo: {
+            name: '',
+            group: '',
+            path: ''
+        }
     };
 
     if(devProject){
         require('time-grunt')(grunt);
     }
 
-    loadTargets(config);
+    loadTargets();
+
+    repoInfo();
 
     grunt.util._.extend(config, loadConfig('./_Tasks/options/'));
 
