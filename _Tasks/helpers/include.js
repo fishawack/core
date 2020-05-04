@@ -4,7 +4,7 @@ module.exports = function(grunt, hasBase) {
 	var path = require('path');
 	this.grunt = grunt;
 
-	this.filename = () => `${config.repo.name}_${config.pkg.version}_${grunt.template.today("isoUtcDateTime")}`;
+	this.filename = () => `${config.repo.name}_${config.pkg.version}_${grunt.template.today("UTC:yyyy-mm-dd'T'HH-MM-ss'Z'")}`;
 
 	this.repoInfo = () => {
 		var repo = {
