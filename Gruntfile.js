@@ -14,20 +14,18 @@ module.exports = function(grunt) {
         //SET IN PHONEGAP TASK
         pullApp: '',
         //REPO INFORMATION
-        repo: {
-            name: '',
-            group: '',
-            path: ''
-        }
+        repo: {},
+        //FILENAME USED WHEN SAVING OUT ASSETS e.g PDF OF BUILD
+        filename: ''
     };
 
     if(devProject){
         require('time-grunt')(grunt);
     }
 
-    loadTargets();
-
-    repoInfo();
+    config.targets = loadTargets();
+    config.repo = repoInfo();
+    config.filename = filename();
 
     grunt.util._.extend(config, loadConfig('./_Tasks/options/'));
 
