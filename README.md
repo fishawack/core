@@ -1270,6 +1270,13 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.8.6
+* Fixed postcss only running on master/qc, deployBranch -> deployTarget
+* Repo info command now added to config
+* Commands now use repo.name rather than title, solves issues with special charts in titles breaking build processes
+* Some badges now pulled from internal server to solve gitlab pages not having a persist option
+* The `repo` property in contentJson is now completely unused, left it in the schema for now as to not break existing builds
+
 ### 4.8.5
 * Cachebust fix for new subfolder feature
 
