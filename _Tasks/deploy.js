@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             grunt.log.warn('Cannot deploy watertight over ftp');   
         }
 
-        var deploy = [];
+        var deploy = ['ftpscript:badges'];
 
         if(deployEnv.ftp){
             deploy.push('ftpscript:deploy');

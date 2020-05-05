@@ -6,7 +6,7 @@
 				var browser = d;
 
 				return `<li>
-					<img src="http://${repo.group }.pages-diggit01.fw.local/${repo.name }/badges/__${browser}.svg"/>
+					<img src="http://internal.fishawack.staging/Auto-Badges/${config.pkg.name}/${config.repo.name}/__${browser}.svg"/>
 				</li>`;
 			}).join('')
 		%>
@@ -20,7 +20,7 @@
 				var browser = d;
 
 				return `<li>
-					<img src="http://${repo.group }.pages-diggit01.fw.local/${repo.name }/badges/__${browser} - ${captureEnv().browsers[0]}.svg"/>
+					<img src="http://internal.fishawack.staging/Auto-Badges/${config.pkg.name}/${config.repo.name}/__${browser} - ${captureEnv().browsers[0]}.svg"/>
 				</li>`;
 			}).join('')
 		%>

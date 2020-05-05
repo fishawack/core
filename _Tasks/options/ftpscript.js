@@ -37,5 +37,18 @@ module.exports = {
             src: ['**/*', '!**/.DS_Store'],
             dest: './Auto-Package/<%= pkg.name %>' + '/'
         }]
+    },
+    badges: {
+        options: {
+            host: '10.1.8.4',
+            port: 21,
+            passive: true
+        },
+        files: [{
+            expand: true,
+            cwd: '_Build/media/generated/',
+            src: ['**/*', '!**/.DS_Store'],
+            dest: './Auto-Badges/<%= pkg.name %>/<%= repo.name %>/'
+        }]
     }
 }
