@@ -1281,7 +1281,7 @@ You're all done, you should be able to populate your repo with the info provided
 * Cachebust fix for new subfolder feature
 
 ### 4.8.4
-* Html folder can now contain subfolders which will translate correctly to the
+* Html folder can now contain subfolders which will pull through to the front end
 
 ### 4.8.3
 * Moved svg tasks to after webpack
