@@ -10,11 +10,12 @@ function processors(){
 
 	// Only run postcss uncss if not on development branch, too slow for feature/dev branches
 	if(this.deployTarget !== "development"){
-		arr.push(require('postcss-uncss')({
+		arr.push(require('uncss').postcssPlugin({
 			html: contentJson.attributes.uncss.map(function(d, i){
 				return grunt.template.process(d, grunt.config.get());
 			}),
 			userAgent: 'jsdom',
+			timeout: 100,
 			ignore: [
 				/.active/i,
 				/.deactive/i,
