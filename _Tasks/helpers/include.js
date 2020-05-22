@@ -46,7 +46,11 @@ module.exports = function(grunt, hasBase) {
 			var password = config.targets.misc.bitbucket.password;
 			
 			if(username && password){
-				var info = execSync(`curl -s -u ${username}:${password} ${url}`, {encoding: 'utf8'});
+				try{
+					var info = execSync(`curl -s -u "${username}":"${password}" ${url}`, {encoding: 'utf8', stdio: 'pipe'});
+				} catch (e){
+					return repo;
+				}
 				
 				if(info){
 					repo.group = JSON.parse(info).project.name.toLowerCase();
