@@ -42,7 +42,8 @@ module.exports = {
         options: {
             host: '10.1.8.4',
             port: 21,
-            passive: true
+            passive: true,
+            timeout: 5
         },
         files: [{
             expand: true,

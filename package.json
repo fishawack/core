@@ -59,7 +59,7 @@
     "grunt-electron": "9.0.1",
     "grunt-env": "0.4.4",
     "grunt-fontello-svg": "0.1.0",
-    "grunt-ftpscript": "0.1.7",
+    "grunt-ftpscript": "git+https://github.com/mikemellor11/grunt-ftpscript.git#master",
     "grunt-jsonlint": "1.0.7",
     "grunt-karma": "2.0.0",
     "grunt-modernizr": "2.1.1",
