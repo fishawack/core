@@ -1270,6 +1270,13 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.8.7
+* `uncss` bug fixed where it would only run against a single css file
+* Added timeout option to `grunt-ftpscript` so that the badges command doesn't hang if not connected to vpn
+* Added quotes around curl command so passwords with special characters don't fail
+* Added a try / catch / `stdio:pipe` to curl command so if it fails it doesn't print the users creds
+* Reordered the initial `contentJson` initialization so that contentJson can now handle `grunt.template.process` template strings
+
 ### 4.8.6
 * Fixed postcss only running on master/qc, deployBranch -> deployTarget
 * Repo info command now added to config
