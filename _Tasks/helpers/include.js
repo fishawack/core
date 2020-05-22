@@ -3,14 +3,14 @@ module.exports = function(grunt, hasBase) {
 	var fs = require('fs');
 	var path = require('path');
 	this.grunt = grunt;
-	this.config = {};
+	this.config = null;
 
-	this.initConfig = () => {
+	this.initConfig = (cb) => {
 		config = {
 			dev: grunt.cli.tasks.indexOf('dist') === -1,
 			pkg: grunt.file.readJSON('package.json'),
 			//CONTENT IN CONIFG SO IT CAN BE PASSED TO GRUNT TASKS
-			contentJson: contentJson,
+			contentJson: {},
 			configPath: configPath,
 			//ROOT OF SITE WHERE FILES
 			root: contentJson.attributes.root || '_Output',
@@ -22,11 +22,65 @@ module.exports = function(grunt, hasBase) {
 			//FILENAME USED WHEN SAVING OUT ASSETS e.g PDF OF BUILD
 			filename: ''
 		};
-	
+		
 		config.targets = loadTargets();
 		config.repo = repoInfo();
 		config.filename = filename();
+
+		this.reload();
+
+		config.contentJson = this.contentJson;
+
+		this.deployEnv = contentJson.attributes[deployTarget] || {};
+	    this.deployLocation = truePath((deployEnv.location || ''));
+		this.deployUrl = truePath((deployEnv.url || ''));
+		this.deployCred = (deployEnv.ssh) ? config.targets[deployEnv.ssh] : {};
+
+		cb();
 	};
+
+	// This function is called twice on startup, the first time is used to grab deploy targets and hard coded values, the second time and all subsequent watch reloads will process any grunt template tags that are found
+	this.reload = function(){
+    	var json = {};
+    	var loaded = [];
+
+    	grunt.log.writeln(`Merging ${config ? 'processed' : 'raw'} configs`);
+
+        grunt.file.expand([
+					'_Build/config/*.json',
+					'_Build/config/example/*.json',
+					'_Build/*.json',
+					'_Build/example/*.json'
+					
+				]).forEach(function(d){
+					// Only load config types once, lower configs override higher ones
+					if(loaded.indexOf(path.basename(d)) === -1){
+						grunt.log.ok(d, "loaded");
+
+						loaded.push(path.basename(d));
+
+						_.mergeWith(json, grunt.file.readJSON(d), function(obj, src) {
+								if (_.isArray(obj)) {
+									return obj.concat(src);
+								}
+							});
+					} else {
+						grunt.log.error(d, "ignored");
+					}
+			});
+
+		let raw = JSON.stringify(json, null, 4);
+
+		if(config){
+			config.contentJson = json;
+
+			raw = grunt.template.process(raw, {data: config});
+		}
+
+		grunt.file.write(contentPath, raw);
+
+		this.contentJson = JSON.parse(raw);
+    }
 
 	this.filename = () => `${config.repo.name}_${config.pkg.version}_${grunt.template.today("UTC:yyyy-mm-dd")}_${config.repo.commit}`;
 
@@ -140,8 +194,6 @@ module.exports = function(grunt, hasBase) {
 
 		    targets[d.key || d.file] = safeLoad(grunt, save, (d.json === false) ? false : true);
 	    });
-
-		this.deployCred = (deployEnv.ssh) ? targets[deployEnv.ssh] : {};
 		
 		return targets;
 	};
@@ -436,38 +488,6 @@ module.exports = function(grunt, hasBase) {
 	    this[z] = this[z].join("");
 	}
 
-    this.reload = function(){
-    	var json = {};
-    	var loaded = [];
-
-    	grunt.log.writeln("Merging configs");
-
-        grunt.file.expand([
-					'_Build/config/*.json',
-					'_Build/config/example/*.json',
-					'_Build/*.json',
-					'_Build/example/*.json'
-					
-				]).forEach(function(d){
-					// Only load config types once, lower configs override higher ones
-					if(loaded.indexOf(path.basename(d)) === -1){
-						grunt.log.ok(d, "loaded");
-
-						loaded.push(path.basename(d));
-
-						_.mergeWith(json, grunt.file.readJSON(d), function(obj, src) {
-								if (_.isArray(obj)) {
-									return obj.concat(src);
-								}
-							});
-					} else {
-						grunt.log.error(d, "ignored");
-					}
-		    });
-
-		grunt.file.write(contentPath, JSON.stringify(json, null, 4));
-    }
-
 	this.devProject = require('./dev.js');
 
 	if(grunt && !hasBase){
@@ -479,36 +499,36 @@ module.exports = function(grunt, hasBase) {
 	if(grunt){
 		this.contentPath = '.tmp/content.json';
 
-		reload();
-		
+		this.reload();
+
 		this.contentJson = grunt.file.readJSON(contentPath);
 
-	    this.gitLogString = "";
+		this.gitLogString = "";
 
-	    var branch = require('yargs').argv.branch;
+		var branch = require('yargs').argv.branch;
 
-	    this.deployBranch = (!branch) ? require('git-branch').sync() : branch;
+		this.deployBranch = (!branch) ? require('git-branch').sync() : branch;
+		
+		this.deployCred = {};
 
-	    switch(this.deployBranch){
-	    	case 'master':
-	    		this.deployTarget = 'production';
-	    		break;
+		this.deployEnv = '';
+
+		this.deployLocation = '';
+
+		this.deployUrl = '';
+
+		switch(this.deployBranch){
+			case 'master':
+				this.deployTarget = 'production';
+				break;
 			case 'qc':
-	    		this.deployTarget = 'qc';
-	    		break;
+				this.deployTarget = 'qc';
+				break;
 			case 'staging':
 				this.deployTarget = 'staging';
 				break;
 			default:
-	    		this.deployTarget = 'development';
-	    }
-
-	    this.deployEnv = contentJson.attributes[deployTarget] || {};
-
-	    this.deployCred = {};
-
-	    this.deployLocation = truePath((deployEnv.location || ''));
-
-	    this.deployUrl = truePath((deployEnv.url || ''));
+				this.deployTarget = 'development';
+		}
 	}
 }
