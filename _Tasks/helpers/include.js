@@ -5,7 +5,8 @@ module.exports = function(grunt, hasBase) {
 	this.grunt = grunt;
 	this.config = null;
 
-	this.initConfig = (cb) => {
+	// Sync init function
+	this.initConfig = () => {
 		config = {
 			dev: grunt.cli.tasks.indexOf('dist') === -1,
 			pkg: grunt.file.readJSON('package.json'),
@@ -35,8 +36,6 @@ module.exports = function(grunt, hasBase) {
 	    this.deployLocation = truePath((deployEnv.location || ''));
 		this.deployUrl = truePath((deployEnv.url || ''));
 		this.deployCred = (deployEnv.ssh) ? config.targets[deployEnv.ssh] : {};
-
-		cb();
 	};
 
 	// This function is called twice on startup, the first time is used to grab deploy targets and hard coded values, the second time and all subsequent watch reloads will process any grunt template tags that are found
