@@ -1,0 +1,21 @@
+{
+    "attributes": {
+	    "title": "<%= repo.name %>",
+	    "googleTrackingID": null,
+	    "root": "_Output",
+	    "modernizr": [
+	        "flexbox",
+	        "csscalc"
+	    ],
+	    "uncss": [
+	        "<%= root %>/*.html"
+	    ],
+	    "template": {},
+	    "toggle": {
+			"level-0": "test"
+		}
+	},
+	"content": {
+		"level-0": "test"
+	}
+}

@@ -9,7 +9,8 @@
     "deploy-s": "npm run production && grunt deploy && grunt package",
     "production": "npm run content && grunt dist && npm test",
     "content": "grunt content",
-    "test": "grunt validate"
+    "test": "grunt validate",
+    "mocha": "mocha _Test/*.js --timeout 120s --bail"
   },
   "license": "BSD-3-Clause",
   "author": {
@@ -101,7 +102,6 @@
     "sinon": "1.17.2",
     "svg-inline-loader": "0.8.2",
     "svg-to-png": "3.1.2",
-    "time-grunt": "2.0.0",
     "uncss": "git+https://github.com/mikemellor11/uncss.git#multiSourceBug",
     "vue-loader": "15.4.2",
     "vue-template-compiler": "2.5.17",
@@ -113,6 +113,9 @@
     "webdriverio": "4.9.8",
     "webpack": "4.27.1",
     "xmlbuilder": "8.2.2"
+  },
+  "devDependencies": {
+    "time-grunt": "2.0.0"
   },
   "optionalDependencies": {
     "@fishawack/watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v5.0.7"

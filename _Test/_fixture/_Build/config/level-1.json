@@ -1,0 +1,14 @@
+{
+	"attributes": {
+		"uncss": [
+			".tmp/*.vue"
+		],
+		"toggle": {
+			"level-1": "test"
+		}
+	},
+	"content": {
+		"level-0": "override",
+		"level-1": "test"
+	}
+}

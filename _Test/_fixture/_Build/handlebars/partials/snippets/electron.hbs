@@ -1,0 +1,12 @@
+<script type="text/javascript">
+    if(navigator.userAgent.toLowerCase().indexOf(' electron/') > -1) {
+        document.querySelector('html').classList.add('electron');
+
+        var _require = require('electron');
+        var ipcRenderer = window.ipcRenderer = _require.ipcRenderer;
+
+        window.isElectron = true;
+    } else {
+        document.querySelector('html').classList.add('no-electron');
+    }
+</script>

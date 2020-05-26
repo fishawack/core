@@ -1,0 +1,25 @@
+{
+    "attributes": {
+        "title": "config-grunt",
+        "googleTrackingID": null,
+        "root": "_Output",
+        "modernizr": [
+            "flexbox",
+            "csscalc"
+        ],
+        "uncss": [
+            "_Output/*.html",
+            ".tmp/*.vue"
+        ],
+        "template": {},
+        "toggle": {
+            "level-0": "test",
+            "level-1": "test"
+        }
+    },
+    "content": {
+        "level-0": "override",
+        "level-1": "test",
+        "example-level-2": "test"
+    }
+}

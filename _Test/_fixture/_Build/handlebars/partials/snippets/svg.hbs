@@ -1,0 +1,9 @@
+{{#if this.embed}}
+<div class="{{#if this.class}}{{this.class}}{{/if}}">
+	{{> (concat 'svg--' (ifCondHelpReturn asis "===" true 'asis--' '') (lookup this 'name'))}}
+</div>
+{{else}}
+<svg{{#if this.class}} class="{{this.class}}"{{/if}}>
+	<use xlink:href="{{file}}#{{this.name}}" />
+</svg>
+{{/if}}

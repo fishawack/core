@@ -1,0 +1,39 @@
+{{#if partial}}
+    {{{partial partial}}}
+{{else}}
+<h3>{{{title}}}</h3>
+<div class="grid ut-marginTop">
+	{{#if video}}
+    <div class="{{#if aspect}}grid__{{aspect.[0]}}{{else}}grid__half{{/if}} grid--center">
+        <video data-src="{{video}}" muted loop>
+    </div>
+    {{/if}}
+    {{#if image}}
+    <div class="{{#if aspect}}grid__{{aspect.[0]}}{{else}}grid__half{{/if}} grid--center">
+        <img src="{{image}}">
+    </div>
+    {{/if}}
+    <div class="
+        {{#if video}}
+            {{#if aspect}}
+                grid__{{aspect.[1]}}
+            {{else}}
+                grid__half
+            {{/if}}
+            grid--center
+        {{/if}}
+        {{#if image}}
+            {{#if aspect}}
+                grid__{{aspect.[1]}}
+            {{else}}
+                grid__half
+            {{/if}}
+            grid--center
+        {{/if}}
+        ">
+        <ul class="ut-clearList ut-marginNone">
+            {{~> @partial-block}}
+        </ul>
+    </div>
+</div>
+{{/if}}

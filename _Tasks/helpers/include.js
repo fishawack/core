@@ -4,6 +4,7 @@ module.exports = function(grunt, hasBase) {
 	var path = require('path');
 	this.grunt = grunt;
 	this.config = null;
+	var mocha = require('yargs').argv.mocha || false; // True when config-grunt mocha tests running
 
 	// Sync init function
 	this.initConfig = () => {
@@ -490,10 +491,18 @@ module.exports = function(grunt, hasBase) {
 	this.devProject = require('./dev.js');
 
 	if(grunt && !hasBase){
-		grunt.file.setBase('../' + (devProject || '../..') + '/');
+		if(mocha){
+			grunt.file.setBase('_Test/_fixture/');
+		} else {
+			grunt.file.setBase('../' + (devProject || '../..') + '/');
+		}
 	}
 
-	this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/@fishawack/config-grunt/';
+	if(mocha){
+		this.configPath = '../../';	
+	} else{
+		this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/@fishawack/config-grunt/';
+	}
 
 	if(grunt){
 		this.contentPath = '.tmp/content.json';

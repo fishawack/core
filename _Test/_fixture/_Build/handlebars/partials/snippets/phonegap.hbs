@@ -1,0 +1,14 @@
+<script type="text/javascript">
+    if (navigator.userAgent.match(/Phonegap/i)) {
+        document.querySelector('html').classList.add('phonegap');
+        
+        var script = document.createElement("script");
+        script.type = "application/javascript";
+        script.src = 'phonegap.js';
+        document.head.appendChild(script);
+
+        window.isPhonegap = true;
+    } else {
+        document.querySelector('html').classList.add('no-phonegap');
+    }
+</script>
