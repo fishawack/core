@@ -10,8 +10,19 @@
     "production": "npm run content && grunt dist && npm test",
     "content": "grunt content",
     "test": "grunt validate",
-    "mocha": "mocha _Test/*.js --timeout 120s --bail"
+    "mocha": "mocha _Test/*.js --timeout 120s --bail",
+    "prepublishOnly": "npm run mocha"
   },
+  "files": [
+    "_Node",
+    "_Schema",
+    "_Tasks",
+    ".githooks",
+    "Gruntfile.js",
+    "karma.config.js",
+    "phonegap.json",
+    "wdio.confi.js"
+  ],
   "license": "BSD-3-Clause",
   "author": {
     "name": "Fishawack",
