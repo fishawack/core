@@ -1270,6 +1270,10 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.8.8
+* Added test suite to `config-grunt`
+* Added prepublish and files array to `package.json`
+
 ### 4.8.7
 * `uncss` bug fixed where it would only run against a single css file
 * Added timeout option to `grunt-ftpscript` so that the badges command doesn't hang if not connected to vpn
