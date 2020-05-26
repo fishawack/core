@@ -1270,6 +1270,11 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.8.9
+* Change prepublish to preversion
+* Added postversion to automatically publish
+* Added missing test config files
+
 ### 4.8.8
 * Added test suite to `config-grunt`
 * Added prepublish and files array to `package.json`
