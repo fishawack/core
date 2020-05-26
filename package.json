@@ -11,7 +11,8 @@
     "content": "grunt content",
     "test": "grunt validate",
     "mocha": "mocha _Test/*.js --timeout 120s --bail",
-    "prepublishOnly": "npm run mocha"
+    "preversion": "npm run mocha",
+    "postversion": "git push && git push --tags && npm publish"
   },
   "files": [
     "_Node",
@@ -19,9 +20,9 @@
     "_Tasks",
     ".githooks",
     "Gruntfile.js",
-    "karma.config.js",
+    "karma.conf.js",
     "phonegap.json",
-    "wdio.confi.js"
+    "wdio.conf.js"
   ],
   "license": "BSD-3-Clause",
   "author": {
