@@ -49,30 +49,34 @@ These dependancies are only needed if you're planning to build a pdf locally or 
 brew install git
 brew install wget
 brew install imagemagick
-brew install ghostscript
-brew install wine
 brew install jq
 brew install lftp
 brew install tnftp tnftpd telnet telnetd
 brew install cask
 brew cask install adoptopenjdk
 brew cask install xquartz
+brew cask install wine-stable
 ```
+
+> Wine [isn't currently supported](https://wiki.winehq.org/MacOS) on macOS Catalina 10.15 so any electron builds will need to be run on the CI/CD runners instead of locally
 
 * Install Nvm - [https://github.com/creationix/nvm](https://github.com/creationix/nvm) - then run the following commands
 
 ```bash
-nvm install 11.15.0
+nvm install 10.0.0
 
+npm install npm@latest -g
 npm install grunt-cli -g
 npm install node-gyp -g
 ```
 
-* Install xCode via mac app store - then run the following command
+* Install *xCode* via mac app store - then run the following command
 
 ```bash
 xcode-select --install
 ```
+
+> Some users have issues with the `node-gyp` dependancy on macOS Catalina 10.15, if this is you the best advice is to [check here for solutions](https://github.com/nodejs/node-gyp/blob/master/macOS_Catalina.md)
 
 * Install composer [https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
 
@@ -96,6 +100,8 @@ choco install xquartz
 
 ```bash
 nvm install 10.0.0
+
+npm install npm@latest -g
 npm install grunt-cli -g
 ```
 
