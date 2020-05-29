@@ -1,5 +1,9 @@
 module.exports = function(grunt) {
+    // Pull in include
     require('./_Tasks/helpers/include.js')(grunt);
+
+    // Pull in include from build folder
+    try{ require(process.cwd() + '/_Tasks/helpers/include.js')(grunt); } catch(e){}
     
     if(devProject){
         require('time-grunt')(grunt);
@@ -7,7 +11,11 @@ module.exports = function(grunt) {
 
     initConfig();
 
-    grunt.util._.extend(config, loadConfig('./_Tasks/options/'));
+    // Load options
+    grunt.util._.extend(config, loadConfig(process.cwd() + '/' + configPath + '_Tasks/options/'));
+
+    // Load otions from build folder
+    grunt.util._.extend(config, loadConfig(process.cwd() + '/_Tasks/options/'));
 
     grunt.initConfig(config);
 
@@ -21,16 +29,15 @@ module.exports = function(grunt) {
     });
     
     // Load all grunt npm tasks with the prefix 'grunt-'
-    require('jit-grunt')(grunt, {
-        sshexec: 'grunt-ssh',
-        sftp: 'grunt-ssh',
-        postcss: '@lodder/grunt-postcss'
-    })({
+    require('jit-grunt')(grunt, jit)({
         cwd: configPath
     });
 
     // Load all custom tasks found in _Tasks
     grunt.loadTasks(configPath + '_Tasks');
+
+    // Load any custom tasks found in the build folder
+    grunt.loadTasks(process.cwd() + '/_Tasks');
 
     watchSmokeTests();
 
@@ -56,7 +63,7 @@ function loadConfig(path) {
     var object = {};
     var key;
 
-    glob.sync('*', {cwd: configPath + path}).forEach(function(option) {
+    glob.sync('*', {cwd: path}).forEach(function(option) {
         key = option.replace(/\.js$/,'');
         object[key] = require(path + option);
     });
