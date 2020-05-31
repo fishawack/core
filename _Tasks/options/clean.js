@@ -7,5 +7,8 @@ module.exports = {
     pdf: ["_Pdfs"],
     app: ['_App/**/*'],
     electron: ['_Packages/Electron/**/*'],
-    phonegap: ['_Packages/Phonegap/**/*']
+    phonegap: ['_Packages/Phonegap/**/*'],
+    veeva: ['_Packages/Veeva/**/*'],
+    vablet: ['_Packages/Vablet/**/*'],
+    cegedim: ['_Packages/Cegedim/**/*']
 }

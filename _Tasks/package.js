@@ -5,6 +5,15 @@ module.exports = function(grunt) {
         /* PDF */
         deployEnv.pdf ? package.push('pdf', 'ftpscript:pdf') : grunt.log.warn('No pdf generation for ' + deployTarget);
 
+        /* VABLET */
+        (contentJson.attributes.vablet) ? package.push('package:vablet', 'compress:vablet') : grunt.log.warn('No vablet packaging detected');
+
+        /* VEEVA */
+        (contentJson.attributes.veeva) ? package.push('package:veeva', 'compress:veeva') : grunt.log.warn('No veeva packaging detected');
+
+        /* CEGEDIM */
+        (contentJson.attributes.cegedim) ? package.push('package:cegedim', 'compress:cegedim') : grunt.log.warn('No cegedim packaging detected');
+
         /* APP */
         package.push('compress:app');
 
