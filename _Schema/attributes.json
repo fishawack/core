@@ -31,6 +31,9 @@
 	            "prerender": {
 	            	"type": "boolean"
 	            },
+				"cms": {
+					"type": "string"
+				},
 	            "electron": {
 	            	"type": ["object", "boolean"],
 					"properties": {
@@ -39,9 +42,6 @@
 							"additionalProperties": true
 						}
 					}
-	            },
-	            "cms": {
-	            	"type": "string"
 	            },
 	            "phonegap": {
                 	"type": "object",
@@ -74,7 +74,34 @@
 						}
 					},
 					"required": ["signingKey", "signingPassword", "badge", "appID", "phonegapVersion", "bundle"]
-		    	},
+				},
+				"cegedim": {
+					"type": "boolean"
+				},
+				"veeva": {
+					"type": "boolean"
+				},
+				"vablet": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"disableBounce": {
+							"type": "boolean"
+						},
+						"scaleToFitPage": {
+							"type": "boolean"
+						},
+						"hideToolBar": {
+							"type": "boolean"
+						},
+						"disableStatusBar": {
+							"type": "boolean"
+						},
+						"useTransparentBar": {
+							"type": "boolean"
+						}
+					}
+				},
 	            "email": {
 	            	"type": "array",
 					"items": { "type": "string" }
