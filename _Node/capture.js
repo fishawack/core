@@ -112,15 +112,18 @@ var capture = {
     screenshot: {
         index: 0,
         path: '',
+        template: '.tmp/screenshots/<%= capture.screenshot.path %>/<%= capture.screenshot.index++ %>',
         init: function(){
             capture.screenshot.path = `${capture.size.browser}/${capture.size.width}x${capture.size.height}`;
             capture.screenshot.index = 0;
         },
         call: function(viewportOnly){
+            let filename = grunt.template.process(capture.screenshot.template, {data: {capture}});
+            
             if(viewportOnly){
-                browser.saveScreenshot(`.tmp/screenshots/${capture.screenshot.path}/${capture.screenshot.index++}.png`);
+                browser.saveScreenshot(`${filename}.png`);
             } else {
-                browser.saveDocumentScreenshot(`.tmp/screenshots/${capture.screenshot.path}/${capture.screenshot.index++}.png`);
+                browser.saveDocumentScreenshot(`${filename}.png`);
             }
         }
     }

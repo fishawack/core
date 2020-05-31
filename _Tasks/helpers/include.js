@@ -492,7 +492,9 @@ module.exports = function(grunt, hasBase) {
 	  });
 
 	  for (var z = 0; z < this.length; z++)
-	    this[z] = this[z].join("");
+		this[z] = this[z].join("");
+		
+	  return this;
 	}
 
 	this.devProject = require('./dev.js');

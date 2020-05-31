@@ -64,15 +64,17 @@ module.exports = function(grunt) {
                     async function asyncCall () {
                         var values = [];
 
-                        await grunt.file.expand({cwd: `.tmp/screenshots/${browser}/${size}/`}, '*').reduce(async (promise, d, i) => {
-                            await promise;
-                            
-                            var data = await compare.images(browser, size, i).catch(err => console.log(err));
+                        await grunt.file.expand({cwd: `.tmp/screenshots/${browser}/${size}/`}, '*')
+                            .alphanumSort()
+                            .reduce(async (promise, d, i) => {
+                                await promise;
+                                
+                                var data = await compare.images(browser, size, d).catch(err => console.log(err));
 
-                            if(data){
-                                values.push(data);
-                            }
-                        }, Promise.resolve());
+                                if(data){
+                                    values.push(data);
+                                }
+                            }, Promise.resolve());
 
                         if(!values.length){
                             grunt.log.error("No images to compare");
@@ -90,16 +92,16 @@ module.exports = function(grunt) {
                     asyncCall();
                 });
             },
-            images(browser, size, index){
+            images(browser, size, filename){
                 return new Promise((resolve, reject) => {
                     try{
                         var image1;
-                        var image2 = fs.readFileSync(`.tmp/screenshots/${browser}/${size}/${index}.png`);
+                        var image2 = fs.readFileSync(`.tmp/screenshots/${browser}/${size}/${filename}`);
                         
                         if(crossBrowser){
-                            image1 = fs.readFileSync(`.tmp/screenshots/${browsers[0]}/${size}/${index}.png`);
+                            image1 = fs.readFileSync(`.tmp/screenshots/${browsers[0]}/${size}/${filename}`);
                         } else {
-                            image1 = fs.readFileSync(`.tmp/previous/${browser}/${size}/${index}.png`);
+                            image1 = fs.readFileSync(`.tmp/previous/${browser}/${size}/${filename}`);
                         }
                     } catch(e){
                         return reject(e);
@@ -119,10 +121,11 @@ module.exports = function(grunt) {
 
                     resemble.compare(image1, image2, options, (err, data) => {
                             if(write){
-                                fs.writeFileSync(`.tmp/difference/${browser}/${size}/${index}.png`, data.getBuffer());
+                                fs.writeFileSync(`.tmp/difference/${browser}/${size}/${filename}`, data.getBuffer());
                             }
 
-                            grunt.log.ok(index);
+                            grunt.log.ok(filename);
+
                             resolve(data);
                         });
                 });
