@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = grunt => {
     // Pull in include
     require('./_Tasks/helpers/include.js')(grunt);
 
@@ -42,20 +42,7 @@ module.exports = function(grunt) {
     watchSmokeTests();
 
     // Setup custom template handlebar code
-    templateCustom();        
-
-    grunt.registerTask('default', ['clean:cache', 'env:dev', 'karma:unit:start', 'jshint', 'modernizr', 'tv4', 'fontello_svg', 'svgfit', 'svgmin', 'svg_sprite', 'copy:content', 'copy:assets', 'copy:svg', 'copy:svgasis', 'webpack:dev', 'concat:dev', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dev', 'clean:build', 'browserSync', 'watch']);
-
-    var arr = ['env:dist', 'clean:dist', 'jshint', 'modernizr', 'tv4', 'fontello_svg', 'svgfit', 'svgmin', 'svg_sprite', 'copy:content', 'copy:assets', 'copy:svg', 'copy:svgasis', 'webpack:dist', 'concat:dist', 'uglify:dist', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dist', 'cacheBust', 'imagemin', 'clean:build'];
-
-    /* PreRender */
-    if(contentJson.attributes.prerender || deployEnv.prerender){
-        arr.push('prerender');
-    }
-    
-    grunt.registerTask('dist', arr);
-
-    grunt.registerTask('validate', ['jshint', 'tv4', 'connect', 'casperjs:local', 'karma:continuous', 'badges', 'coverage']);
+    templateCustom();
 };
 
 function loadConfig(path) {
