@@ -73,9 +73,11 @@ var capture = {
         array: null,
         index: 0,
         name: '',
+        slug: '',
         init: function(index){
             capture.page.index = index;
             capture.page.name = capture.page.array[index];
+            capture.page.slug = slugify(capture.page.name);
 
             var full = capture.page.array[index].split('#')[0] || '';
             capture.page.hash = capture.page.array[index].split('#')[1] || '/';
@@ -112,7 +114,7 @@ var capture = {
     screenshot: {
         index: 0,
         path: '',
-        template: '.tmp/screenshots/<%= capture.screenshot.path %>/<%= capture.screenshot.index++ %>',
+        template: '.tmp/screenshots/<%= capture.screenshot.path %>/<%= capture.screenshot.index++ %>_<%= capture.page.slug %>_',
         init: function(){
             capture.screenshot.path = `${capture.size.browser}/${capture.size.width}x${capture.size.height}`;
             capture.screenshot.index = 0;
