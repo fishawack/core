@@ -9,6 +9,13 @@
 		],
 		"veeva": true,
 		"cegedim": true,
+		"vablet": {
+			"disableBounce": true,
+			"scaleToFitPage": true,
+			"hideToolBar": true,
+			"disableStatusBar": true,
+			"useTransparentBar": true
+		},
 	    "uncss": [
 	        "<%= root %>/*.html"
 	    ],

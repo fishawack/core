@@ -78,5 +78,15 @@ module.exports = {
                 expand: true
             }
         ]
+    },
+    vablet: {
+        files: [
+            {
+                cwd: '<%= root %>/',
+                src: '**',
+                dest: '_Packages/Vablet/',
+                expand: true
+            }
+        ]
     }
 }

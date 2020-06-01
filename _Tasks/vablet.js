@@ -1,9 +1,11 @@
 module.exports = function(grunt) {
     grunt.registerTask('package:vablet', function() {
-        grunt.task.run('vablet', 'compress:app');
+        grunt.task.run('clean:vablet', 'vablet', 'clean:build');
     });
 
     grunt.registerTask('vablet', function(){
-        grunt.file.write('_App/VabletLoadSettings.json', JSON.stringify(contentJson.attributes.vablet, null, 4)); 
+        grunt.file.write('_Packages/Vablet/VabletLoadSettings.json', JSON.stringify(contentJson.attributes.vablet || {}, null, 4)); 
+        
+        grunt.task.run('copy:vablet');
     });
 };
