@@ -19,14 +19,15 @@ module.exports = {
 		    module: true,
 		    process: true,
 		    define: true,
-		    Modernizr: true
+			Modernizr: true,
+			$: true
 		},
 		esversion: 6
 	},
     files: [
     	'_Build/js/**/*.js',
     	'_Build/vue/**/*.js',
-    	'!_Build/js/generated/**/*.js',
-    	'!_Build/js/libs/**/*.js'
+    	'!_Build/js/**/generated/**/*.js',
+    	'!_Build/js/**/libs/**/*.js'
 	]
 }

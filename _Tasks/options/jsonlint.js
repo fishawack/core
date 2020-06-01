@@ -1,5 +1,10 @@
 module.exports = {
 	all: {
-        src: ['_Build/content.json', '_Build/icons/config.json']
+        src: [
+            '_Build/**/*.json',
+            '!_Build/content/**/*',
+            '!_Build/**/generated/**/*',
+            '!_Build/schemas/**/*'
+        ]
     }
 }
