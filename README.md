@@ -1276,6 +1276,17 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.9.0
+* Added vablet packaging
+* Added cegedim packaging
+* Added veeva packaging
+* Moved dist/default to stand alone tasks so they can be overridden
+* Added reset task
+* Slug now part of capture image file names
+* Added test suites for new packaging types
+* The `cwd` will now be checked for `_Tasks/`
+* The `cwd` will now be checked for `_Tasks/options`
+
 ### 4.8.9
 * Change prepublish to preversion
 * Added postversion to automatically publish
