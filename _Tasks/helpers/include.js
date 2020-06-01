@@ -4,6 +4,7 @@ module.exports = function(grunt, hasBase) {
 	this.path = require('path');
 	this.grunt = grunt;
 	this.config = null;
+	this.reset = null; // Used to reset config back to defaults after a task has overrideen them locally
 	var mocha = require('yargs').argv.mocha || false; // True when config-grunt mocha tests running
 
 	// Used in grunt JIT call to load plugins, can be overridden/added to in build folder include.js
