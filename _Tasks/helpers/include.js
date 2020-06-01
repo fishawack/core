@@ -501,14 +501,14 @@ module.exports = function(grunt, hasBase) {
 
 	if(grunt && !hasBase){
 		if(mocha){
-			grunt.file.setBase('_Test/_fixture/');
+			grunt.file.setBase(`_Test/_fixture/${mocha}/`);
 		} else {
 			grunt.file.setBase('../' + (devProject || '../..') + '/');
 		}
 	}
 
 	if(mocha){
-		this.configPath = '../../';	
+		this.configPath = '../../../';	
 	} else{
 		this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/@fishawack/config-grunt/';
 	}

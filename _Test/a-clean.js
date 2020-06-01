@@ -8,12 +8,12 @@ const path = require('path');
 
 describe('clean', () => {
     before(() => {
-        execSync('grunt clean --branch=master --mocha', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt clean --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
     });
     
     it('Should remove _Pdfs folder', () => {
         try{
-            fs.readdirSync(path.join(__dirname, '_fixture/_Pdfs'));
+            fs.readdirSync(path.join(__dirname, '_fixture/bundle/_Pdfs'));
         } catch(e){
             expect(e.message).to.contain('ENOENT');
         }

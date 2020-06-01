@@ -9,10 +9,10 @@ const glob = require('glob');
 
 describe('pdf', () => {
     before(() => {
-        execSync('grunt pdf --branch=master --mocha', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt pdf --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
     });
     
     it('Should generate a pdf file', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/_Pdfs/*.pdf'))).to.have.length;
+        expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Pdfs/*.pdf'))).to.have.length;
     });
 });

@@ -10,12 +10,12 @@ describe('reload', () => {
     let json;
 
     before(() => {
-        execSync('grunt reload --branch=master --mocha', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt reload --branch=master --mocha=reload', {encoding: 'utf8', stdio: 'pipe'});
     });
     
     it('Should generate a json file in the .tmp directory', () => {
         try{
-            json = fs.readFileSync(path.join(__dirname, '_fixture/.tmp/content.json'), {encoding: 'utf8'});
+            json = fs.readFileSync(path.join(__dirname, '_fixture/reload/.tmp/content.json'), {encoding: 'utf8'});
         } catch(e){
             expect(e.message).to.not.contain('ENOENT');
         }
