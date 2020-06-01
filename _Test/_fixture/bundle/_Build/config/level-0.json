@@ -6,7 +6,9 @@
 	    "modernizr": [
 	        "flexbox",
 	        "csscalc"
-	    ],
+		],
+		"veeva": true,
+		"cegedim": true,
 	    "uncss": [
 	        "<%= root %>/*.html"
 	    ],

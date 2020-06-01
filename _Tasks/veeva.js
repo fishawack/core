@@ -1,9 +1,16 @@
+keyMessages = [
+    {
+        zipName: `${config.repo.name}`,
+        seqName: contentJson.attributes.title,
+        screenshotName: '*',
+        root: config.root
+    }
+];
+
 module.exports = function(grunt) {
     grunt.registerTask('package:veeva', ['clean:veeva', 'connect', 'webdriver:pdf', 'veeva', 'ftpscript:veeva', 'clean:build']);
 
     grunt.registerTask('veeva', function() {
-        var flatBuild = getBuildTargets(grunt, {Nav:[{array:buildNavigation('_Build/sequences', grunt), level:"_Build/sequences"}]}.Nav, [], 0);
-
         var glob = require('glob');
         var jsdom = require("jsdom");
         var browsers = captureEnv().browsers;
@@ -36,23 +43,24 @@ module.exports = function(grunt) {
         };
 
         var compress = {};
-        var clean = {};
 
-        clean.veeva = {
-            src: []
+        var clean = {
+            veeva: {
+                src: []
+            }
         };
 
-        for(var index = 0; index < flatBuild.length; index++){
-			var element = flatBuild[index].target;
-            var getAttr = grunt.file.readJSON(flatBuild[index].level + '/' + element +'/content.json');
-            var zipName = (contentJson.attributes.title.replace(/[^a-zA-Z0-9 ]/g, "")).replace(/ /g,"-") + '-' + element;
-            var seqName = (getAttr.attributes.Name === undefined) ? element : getAttr.attributes.Name;
-            var screenshot = glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${element}_*.png`)
+        keyMessages.forEach(d => {
+            var zipName = d.zipName;
+            var seqName = d.seqName;
+            var screenshotName = d.screenshotName;
+
+            var screenshot = glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`)
                 .alphanumSort()[0];
 
         	copy.default.files.push(
                 {
-                    cwd: '_Output/' + element + '/',
+                    cwd: d.root,
                     src: '**',
                     dest: '_Packages/Veeva/' + zipName + '/',
                     expand: true
@@ -74,7 +82,7 @@ module.exports = function(grunt) {
                 }
             );
 
-            compress[element] = {
+            compress[zipName] = {
                 "options": {'archive': '_Packages/Veeva/'+ zipName +'.zip'}, 
                 'cwd': '_Packages/Veeva/'+ zipName +'/', 
                 'src': ['**'],
@@ -92,7 +100,7 @@ module.exports = function(grunt) {
                             "VExternal_Id_vod__c=" + zipName;
 
             grunt.file.write('_Packages/Veeva/ctlfile/' + zipName + '.ctl', multiStr);
-        }
+        });
 
         shell.default.command = shell.default.command.join(' && ');
 

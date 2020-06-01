@@ -523,6 +523,9 @@ module.exports = function(grunt, hasBase) {
 
 		this.gitLogString = "";
 
+		// Used in veeva task to define what exactly is a keymessage and what should be zipped as such
+		this.keyMessages = null;
+
 		var branch = require('yargs').argv.branch;
 
 		this.deployBranch = (!branch) ? require('git-branch').sync() : branch;
