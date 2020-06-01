@@ -61,5 +61,32 @@ module.exports = {
         'src': ['app.ipa'],
         'expand': true,
         'dot': true
+    },
+    veeva: {
+        "options": {
+            'archive': '_Zips/<%= filename %>_Veeva.zip'
+        },
+        'cwd': '_Packages/Veeva', 
+        'src': ['**', '!**/ctlfile/**/*', '!**/ctlfile'],
+        'expand': true,
+        'dot': true
+    },
+    vablet: {
+        "options": {
+            'archive': '_Zips/<%= filename %>_Vablet.zip'
+        },
+        'cwd': '_Packages/Vablet', 
+        'src': ['**'],
+        'expand': true,
+        'dot': true
+    },
+    cegedim: {
+        "options": {
+            'archive': '_Zips/<%= filename %>_Cegedim.zip'
+        },
+        'cwd': '_Packages/Cegedim', 
+        'src': ['**'],
+        'expand': true,
+        'dot': true
     }
 }

@@ -51,5 +51,18 @@ module.exports = {
             src: ['**/*', '!**/.DS_Store'],
             dest: './Auto-Badges/<%= pkg.name %>/<%= repo.name %>/'
         }]
+    },
+    veeva: {
+        options: {
+            host: 'crm-13-ftp-us.veevacrm.com',
+            port: 21,
+            passive: true
+        },
+        files: [{
+            expand: true,
+            cwd: '_Packages/Veeva/',
+            src: ['**/*', '!**/.DS_Store'],
+            dest: './'
+        }]
     }
 }

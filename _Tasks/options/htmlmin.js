@@ -1,12 +1,12 @@
 module.exports = {
+    options: {
+        removeComments: true,
+        collapseWhitespace: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        collapseInlineTagWhitespace: false
+    },
 	all: {
-        options: {
-            removeComments: true,
-            collapseWhitespace: true,
-            keepClosingSlash: true,
-            minifyJS: true,
-            collapseInlineTagWhitespace: false
-        },
         files: [{
             expand: true,
             cwd: '.tmp/compiled',
