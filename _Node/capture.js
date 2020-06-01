@@ -114,13 +114,12 @@ var capture = {
     screenshot: {
         index: 0,
         path: '',
-        template: '.tmp/screenshots/<%= capture.screenshot.path %>/<%= capture.screenshot.index++ %>_<%= capture.page.slug %>_',
         init: function(){
             capture.screenshot.path = `${capture.size.browser}/${capture.size.width}x${capture.size.height}`;
             capture.screenshot.index = 0;
         },
         call: function(viewportOnly){
-            let filename = grunt.template.process(capture.screenshot.template, {data: {capture}});
+            let filename = `.tmp/screenshots/${capture.screenshot.path}/${capture.screenshot.index++}_${capture.page.slug}_`;
             
             if(viewportOnly){
                 browser.saveScreenshot(`${filename}.png`);
