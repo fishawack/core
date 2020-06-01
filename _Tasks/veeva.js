@@ -68,6 +68,10 @@ module.exports = function(grunt) {
 	        	{
 	                src: screenshot,
 	                dest: '_Packages/Veeva/' + zipName + '/' + zipName + '-full.png'
+	            },
+	        	{
+	                src: screenshot,
+	                dest: '_Packages/Veeva/' + zipName + '/thumb.png'
 	            }
             );
 
