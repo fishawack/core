@@ -1,69 +1,113 @@
+keyMessages = [
+    {
+        zipName: `${config.repo.name}`,
+        seqName: contentJson.attributes.title,
+        screenshotName: '*',
+        root: config.root
+    }
+];
+
 module.exports = function(grunt) {
-    grunt.registerTask('package:cegedim', ['cegedim']/*function() {
-    	/* TODO - add back in thumbnail generation / write parameters */
+    grunt.registerTask('package:cegedim', ['clean:cegedim', 'connect', 'webdriver:pdf', 'cegedim', 'clean:build']);
 
-    	//grunt.file.write('_Output/'+ element +'/parameters/parameters.xml', '<Sequence Id="'+ element +'" xmlns="urn:param-schema"></Sequence>');
+    grunt.registerTask('cegedim', function() {
+        var glob = require('glob');
+        var browsers = captureEnv().browsers;
+		var sizes = captureEnv().sizes;
+		var fs = require('fs-extra');
 
-    	/* _Output/'+element+'/media/images/thumbnails/200x150.jpg */
-        //grunt.task.run();
-    /*}*/);
+        reset = {
+            compress: grunt.config.get('compress'),
+            clean: grunt.config.get('clean')
+        };
 
-    grunt.registerTask('cegedim', () => {
-    });
+        var copy = {
+        	default: {
+        		files: []
+        	}
+        };
 
-    grunt.registerTask('packImagesFlat', function() {
+        var shell = {
+        	default: {
+        		command: []
+        	}
+        };
 
-		var pdf_imagepack = grunt.config.get('pdf_imagepack') || {};
-		var shell = grunt.config.get('shell') || {};
+        var compress = {};
 
+        var clean = {
+            default: {
+                src: []
+            }
+        };
+
+        keyMessages.forEach(d => {
+            var zipName = d.zipName;
+            var seqName = d.seqName;
+            var screenshotName = d.screenshotName;
+
+            var screenshot = glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`)
+                .alphanumSort()[0];
+
+        	copy.default.files.push(
+                {
+                    cwd: d.root,
+                    src: '**',
+                    dest: '_Packages/Cegedim/' + zipName + '/',
+                    expand: true
+                }
+			);
+			
+			fs.mkdirpSync(`_Packages/Cegedim/${zipName}/media/images/thumbnails/`);
+
+            shell.default.command.push(
+            	`convert ${screenshot} -resize 200x150 _Packages/Cegedim/${zipName}/media/images/thumbnails/200x150.png`
+			);
+			
+			shell.default.command.push(`mkdir -p _Packages/Cegedim/${zipName}/export && gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile='_Packages/Cegedim/${zipName}/export/export.pdf' '.tmp/pdfs/cegedim/${zipName}.pdf'`)
+
+            compress[zipName] = {
+                "options": {'archive': '_Packages/Cegedim/'+ zipName +'.zip'}, 
+                'cwd': '_Packages/Cegedim/'+ zipName +'/', 
+                'src': ['**'],
+                'expand': true
+            };
+
+            clean.default.src.push('_Packages/Cegedim/' + zipName + '/');
+
+            var multiStr =  `<Sequence Id="fishawack-${zipName}" Orientation="Landscape" NumberOfSlides="${keyMessages.length}" xmlns="urn:param-schema"></Sequence>`;
+
+            grunt.file.write(`_Packages/Cegedim/${zipName}/parameters/parameters.xml`, multiStr);
+        });
+
+        shell.default.command = shell.default.command.join(' && ');
+
+        grunt.config.set('copy', copy);
+        grunt.config.set('shell', shell);
+        grunt.config.set('compress', compress);
+        grunt.config.set('clean', clean);
+
+        grunt.task.run('copy', 'packImagesFlat', 'shell', 'compress', 'clean', 'reset');
+	});
+	
+	grunt.registerTask('packImagesFlat', function() {
+
+		var pdf_imagepack = {};
+		var glob = require('glob');
         var browsers = captureEnv().browsers;
 		var sizes = captureEnv().sizes;
 
-		var captureFiles = grunt.file.expand({cwd: './'}, `.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*.png`);
+		keyMessages.forEach(d => {
+			var zipName = d.zipName;
+            var seqName = d.seqName;
+			var screenshotName = d.screenshotName;
 
-		var sequences = {};
-
-		captureFiles.forEach(function(d){
-			var split = d.substr(d.lastIndexOf('/') + 1);
-			var name = split.split('.')[1];
-
-			if(!sequences[name]){
-				sequences[name]= [];
-			};
-
-			sequences[name].push(d);
+			pdf_imagepack[zipName] = {files: {}};
+			pdf_imagepack[zipName].files[`.tmp/pdfs/cegedim/${zipName}.pdf`] = glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`).alphanumSort();
 		});
 
-		for(var key in sequences){
-			sequences[key].sort(function(a, b){
-				var splitA = a.substr(a.lastIndexOf('/') + 1);
-				var splitB = b.substr(b.lastIndexOf('/') + 1);
-
-				a = +splitA.split('.')[0];
-				b = +splitB.split('.')[0];
-
-				if(a > b){
-					return 1;
-				} else if(a < b){
-					return -1;
-				}
-				return 0;
-			});
-
-			pdf_imagepack[key] = {
-				files: {}
-			};
-
-			pdf_imagepack[key].files['.tmp/pdfs/' + key + '.pdf'] = sequences[key]
-
-			shell.pdf.command.push("mkdir -p _Output/" + key + "/export && gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile='_Output/" + key + "/export/export.pdf' '.tmp/pdfs/" + key + ".pdf'");
-		}
-
-		shell.pdf.command = shell.pdf.command.join(' && ');
-
-		grunt.config.set('shell', shell);
         grunt.config.set('pdf_imagepack', pdf_imagepack);
 
-        grunt.task.run('pdf_imagepack', 'shell:pdf');
+        grunt.task.run('pdf_imagepack');
     });
 };

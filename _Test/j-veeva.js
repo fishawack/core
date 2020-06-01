@@ -8,8 +8,6 @@ const path = require('path');
 const glob = require('glob');
 
 describe('veeva', () => {
-    let json;
-
     before(() => {
         execSync('grunt veeva --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
     });
