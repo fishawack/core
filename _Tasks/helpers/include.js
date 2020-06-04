@@ -109,7 +109,7 @@ module.exports = function(grunt, hasBase) {
 			
 			if(username && password){
 				try{
-					var info = execSync(`curl -s -u "${username}":"${password}" ${url}`, {encoding: 'utf8', stdio: 'pipe'});
+					var info = execSync(`curl --connect-timeout 5 -s -u "${username}":"${password}" ${url}`, {encoding: 'utf8', stdio: 'pipe'});
 				} catch (e){
 					return repo;
 				}
