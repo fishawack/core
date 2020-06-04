@@ -17,6 +17,11 @@ module.exports = function(grunt) {
 				arrayOfScreens.push(element);
 			});
 
+			if(!arrayOfScreens.length){
+				grunt.log.warn('No pages found');
+				return resolve();
+			}
+
 			arrayOfScreens.alphanumSort(false);
 
 			var pdfTasks = [];
@@ -39,14 +44,14 @@ module.exports = function(grunt) {
 			}
 
 			await new Promise(function(resolve, reject) {
-				async.series(pdfTasks, function(){
+				async.series(pdfTasks, () => {
 					if(arrayOfScreens.length > 1){
-						merge(arrayOfScreens.map(
-							function(d, i){return `.tmp/pdfs/${path}/${i}.pdf`;}), 
+						merge(
+							arrayOfScreens.map((d, i) => `.tmp/pdfs/${path}/${i}.pdf`),
 							`.tmp/pdfs/${path}/raw.pdf`,
-							function(err){
+							err => {
 								if(err)
-									return console.log(err);
+									return reject(err);
 
 								resolve();
 							});
@@ -54,21 +59,30 @@ module.exports = function(grunt) {
 						resolve();
 					}
 				});
+			})
+			.catch(err => {
+				reject(err);
 			});
 			
 			await new Promise(function(resolve, reject) {
 				var command = `gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile='_Pdfs/${pdf}' '.tmp/pdfs/${path}/raw.pdf'`;
 
-				exec(command, function(error, stdout, stderr) {
-					if(error){
-						reject();
+				exec(command, function(err, stdout, stderr) {
+					if(err){
+						return reject(err);
 					}
 
 					resolve();
 				});
+			})
+			.catch(err => {
+				reject(err);
 			});
 
 			resolve();
+		})
+		.catch(err => {
+			console.log(err);
 		});
 	}
 }
