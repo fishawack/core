@@ -1276,6 +1276,11 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.9.1
+* Moved `package` before `deploy`
+* Added catch blocks to pdf process
+* Added timeout to curl
+
 ### 4.9.0
 * Added vablet packaging
 * Added cegedim packaging
