@@ -6,7 +6,7 @@
     "start": "grunt",
     "setup": "npm ci",
     "deploy": "npm run deploy-s && grunt mail",
-    "deploy-s": "npm run production && grunt deploy && grunt package",
+    "deploy-s": "npm run production && grunt package && grunt deploy",
     "production": "npm run content && grunt dist && npm test",
     "content": "grunt content",
     "test": "grunt validate",
