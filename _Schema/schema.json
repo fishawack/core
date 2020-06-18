@@ -5,7 +5,7 @@
 	"required": ["attributes"],
 	"properties": {
 		"attributes": {
-			"$ref": "node_modules/@fishawack/config-grunt/_Schema/attributes.json#/definitions/attributes"
+			"$ref": "node_modules/@fishawack/core/_Schema/attributes.json#/definitions/attributes"
 		},
 		"content": {
 			"additionalProperties": true

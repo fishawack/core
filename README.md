@@ -174,7 +174,7 @@ origin(){
 We need to update the githooks property in our global config to point to the hooks folder found in `config-grunt`. To do this run the following command.
 
 ```bash
-git config --global core.hooksPath node_modules/@fishawack/config-grunt/.githooks
+git config --global core.hooksPath node_modules/@fishawack/core/.githooks
 ```
 
 ## Commands

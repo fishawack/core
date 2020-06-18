@@ -511,7 +511,7 @@ module.exports = function(grunt, hasBase) {
 	if(mocha){
 		this.configPath = '../../../';	
 	} else{
-		this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/@fishawack/config-grunt/';
+		this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/@fishawack/core/';
 	}
 
 	if(grunt){
