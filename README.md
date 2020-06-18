@@ -1276,6 +1276,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.9.2
+* Package renamed to `core`
+
 ### 4.9.1
 * Moved `package` before `deploy`
 * Added catch blocks to pdf process
