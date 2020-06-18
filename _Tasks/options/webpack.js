@@ -32,13 +32,13 @@ function setup(){
 		resolve: {
 			modules: [
 				'node_modules',
-				path.resolve(__dirname, "../../node_modules") // Used for config-grunt dev
+				path.resolve(__dirname, "../../node_modules") // Used for core dev
 			]
 		},
 		resolveLoader: {
 			modules: [
 				"node_modules",
-				path.resolve(__dirname, "../../node_modules") // Used for config-grunt dev
+				path.resolve(__dirname, "../../node_modules") // Used for core dev
 			]
 		},
 		module: {

@@ -5,7 +5,7 @@ module.exports = function(grunt, hasBase) {
 	this.grunt = grunt;
 	this.config = null;
 	this.reset = null; // Used to reset config back to defaults after a task has overrideen them locally
-	var mocha = require('yargs').argv.mocha || false; // True when config-grunt mocha tests running
+	var mocha = require('yargs').argv.mocha || false; // True when core mocha tests running
 
 	// Used in grunt JIT call to load plugins, can be overridden/added to in build folder include.js
 	this.jit = {
@@ -511,7 +511,7 @@ module.exports = function(grunt, hasBase) {
 	if(mocha){
 		this.configPath = '../../../';	
 	} else{
-		this.configPath = (devProject) ? '../config-grunt/' : 'node_modules/@fishawack/core/';
+		this.configPath = (devProject) ? '../core/' : 'node_modules/@fishawack/core/';
 	}
 
 	if(grunt){

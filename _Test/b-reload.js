@@ -30,7 +30,7 @@ describe('reload', () => {
     });
 
     it('Should correctly process grunt template strings', () => {
-        expect(json.attributes.title).to.equal('config-grunt');
+        expect(json.attributes.title).to.equal('core');
     });
 
     it('Should ignore example configs if they exist in the folder above', () => {

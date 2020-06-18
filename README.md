@@ -119,7 +119,7 @@ Gitlab should be viewed purely a supporting remote used primarily for the CI/CD 
 
 **The single source of truth is Bitbucket.**
 
-After cloning a repo you have to run the `origin` command on the terminal which will correctly set the `origin` to point to both remotes. If you don't currently have the origin command you need to [add it](#config-grunt-remotes-origin).
+After cloning a repo you have to run the `origin` command on the terminal which will correctly set the `origin` to point to both remotes. If you don't currently have the origin command you need to [add it](#core-remotes-origin).
 
 > The reason `origin` isn't part of the `npm run setup` command is because this would throw an error on any freelancers machine trying to connect to gitlab
 
@@ -171,7 +171,7 @@ origin(){
 
 ### Githooks
 
-We need to update the githooks property in our global config to point to the hooks folder found in `config-grunt`. To do this run the following command.
+We need to update the githooks property in our global config to point to the hooks folder found in `core`. To do this run the following command.
 
 ```bash
 git config --global core.hooksPath node_modules/@fishawack/core/.githooks
@@ -413,7 +413,7 @@ We currently keep our binary assets on our fishawack file sharing platform egnyt
 
 The `Auto-Content` folder contains folders with the same names as the repo names in bitbucket. Some products have a parent folder e.g. `Wave` that contains all waves as not to clutter up the `Auto-Content` folder with instances.
 
-The json that dictates which asset folders are pulled can be found in the [config files](#config-grunt-config).
+The json that dictates which asset folders are pulled can be found in the [config files](#core-config).
 
 ```json
 {
@@ -537,7 +537,7 @@ process.env.NODE_TARGET === "development" // when on any other branch
 
 #### Custom
 
-Custom enviroment varibles can be defined globally in the [config files](#config-grunt-config).
+Custom enviroment varibles can be defined globally in the [config files](#core-config).
 
 ```json
 {
@@ -759,7 +759,7 @@ Will have only non vital properties stripped but should retain it's appearance/c
 
 #### Double underscore
 
-Same as the double hyphen but these svg's **aren't** added to the global [sprite sheet](#config-grunt-svg-sprite-sheet)
+Same as the double hyphen but these svg's **aren't** added to the global [sprite sheet](#core-svg-sprite-sheet)
 
 ```bash
 __menu.svg
@@ -857,7 +857,7 @@ If the optimization is still causing issues and you want the **original** svg ma
 
 If the svg is a one off figure and/or doesn't need any styling applying or it's markup accessing then referencing an external file is the best way to go. Svg's can be dropped into `_Build/media` and referenced via image tags or css background images just like any other binary asset.
 
-> Svg's can be dropped directly into the media folder as they contain actual code and can therefore be properly versioned by git, [see above](#config-grunt-assets-non-binary)
+> Svg's can be dropped directly into the media folder as they contain actual code and can therefore be properly versioned by git, [see above](#core-assets-non-binary)
 
 #### Html
 ```html
@@ -889,13 +889,13 @@ Icons are automatically pulled from [http://fontello.com/](http://fontello.com/)
 
 ### Custom
 
-If a custom icon set has been created it can be used by dropping it into the `_Build/svg/'` folder. If the icon set already contains it's colors and final appearance then the svg files will need prefixing with a [double hyphen](#config-grunt-svg-optimization) `--`.
+If a custom icon set has been created it can be used by dropping it into the `_Build/svg/'` folder. If the icon set already contains it's colors and final appearance then the svg files will need prefixing with a [double hyphen](#core-svg-optimization) `--`.
 
-> If the icon is made up of strokes and [isn't* prefixed](#config-grunt-svg-optimization) then those strokes will need converting to paths by a designer
+> If the icon is made up of strokes and [isn't* prefixed](#core-svg-optimization) then those strokes will need converting to paths by a designer
 
 ### Importing
 
-Whether the icons are custom or have come from fontello they should end up in the global [spritesheet](#config-grunt-svg-optimization) and can be imported in one of the following ways.
+Whether the icons are custom or have come from fontello they should end up in the global [spritesheet](#core-svg-optimization) and can be imported in one of the following ways.
 
 > Make sure the Lab Ui ["icon.scss"](https://demo.fishawack.solutions/Lab/Ui/#Icons) component has been imported
 
@@ -932,7 +932,7 @@ Whether the icons are custom or have come from fontello they should end up in th
 
 ## Modernizr
 
-To add a modernizr check into the build add the relevant property to the json object found in the [config files](#config-grunt-config). Modernizr will automatically apply the css rules to the root html element and the javascript `Modernizr` object will be avaiable globally on the window object.
+To add a modernizr check into the build add the relevant property to the json object found in the [config files](#core-config). Modernizr will automatically apply the css rules to the root html element and the javascript `Modernizr` object will be avaiable globally on the window object.
 
 #### Json
 ```json
@@ -1082,7 +1082,7 @@ The pdf generation loads pages and takes screenshots as soon as the `.loaded` cl
 });
 ```
 
-The pdf will now capture the `index.html` or the pages defined in `"pages"` in you the [config files](#config-grunt-config). In general this still isn't enough to correctly capture the page. If you have animations and transitions in your app that happen on page load then these will need deactivating during the pdf process so the pdf doesn't capture the start state of them. This is done automatically by the pdf process by adding a query parameter to the url `?capture=true`. Although the query parameter is automatically added **you** will still need add the javascript to the project to handle it.
+The pdf will now capture the `index.html` or the pages defined in `"pages"` in you the [config files](#core-config). In general this still isn't enough to correctly capture the page. If you have animations and transitions in your app that happen on page load then these will need deactivating during the pdf process so the pdf doesn't capture the start state of them. This is done automatically by the pdf process by adding a query parameter to the url `?capture=true`. Although the query parameter is automatically added **you** will still need add the javascript to the project to handle it.
 
 > The pdf process automatically adds the `?capture=true` to the query string but there's nothing stopping you adding it in yourself during dev if you want instant page loads without waiting for the showbiz elements of the site to fire.
 
@@ -1135,7 +1135,7 @@ By adding in the following scss it'll disable *most* animations/transitions in y
 
 ### Custom capture
 
-You can inject your own custom capture code into the built in capture scripts. First create the file `_Node/capture.js` which should export one or both of the functions you'd like to inject into. This can be useful in Vue projects for injecting dynamic routes onto the pages array rather than hard coding them in the [config files](#config-grunt-config).
+You can inject your own custom capture code into the built in capture scripts. First create the file `_Node/capture.js` which should export one or both of the functions you'd like to inject into. This can be useful in Vue projects for injecting dynamic routes onto the pages array rather than hard coding them in the [config files](#core-config).
 
 #### Node
 ```javascript
@@ -1263,7 +1263,7 @@ You'll need to make sure you have a copy of the latest signed certificate! You'l
 5. Go back to the main Dashboard and Create new app by uploading a zip file
 6. In the App. you can now select your Key for iOS and trigger a build, you will need to unlock it first by clicking the pad lock
 
-You're all done, you should be able to populate your repo with the info provided on the page, add this to your [config files](#config-grunt-config) under the attributes object:
+You're all done, you should be able to populate your repo with the info provided on the page, add this to your [config files](#core-config) under the attributes object:
 
 ```json
 "phonegap": {
@@ -1298,7 +1298,7 @@ You're all done, you should be able to populate your repo with the info provided
 * Added missing test config files
 
 ### 4.8.8
-* Added test suite to `config-grunt`
+* Added test suite to `core`
 * Added prepublish and files array to `package.json`
 
 ### 4.8.7

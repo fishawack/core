@@ -51,13 +51,13 @@ module.exports = function(config) {
                 './node_modules/@fishawack/lab-d3/_Build/js/charts/',
                 './node_modules/@fishawack/lab-d3/_Build/js/data/',
                 'node_modules',
-                path.resolve(__dirname, "node_modules") // Used for config-grunt dev
+                path.resolve(__dirname, "node_modules") // Used for core dev
             ]
         },
         resolveLoader: {
             modules: [
                 "node_modules",
-                path.resolve(__dirname, "node_modules") // Used for config-grunt dev
+                path.resolve(__dirname, "node_modules") // Used for core dev
             ]
         },
         module: {
