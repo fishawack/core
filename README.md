@@ -1276,6 +1276,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.9.3
+* Updated Cegedim package to generate `.jpg`'s instead of `.png`'s
+
 ### 4.9.2
 * Package renamed to `core`
 

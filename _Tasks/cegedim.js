@@ -61,7 +61,7 @@ module.exports = function(grunt) {
 			fs.mkdirpSync(`_Packages/Cegedim/${zipName}/media/images/thumbnails/`);
 
             shell.default.command.push(
-            	`convert ${screenshot} -resize 200x150 _Packages/Cegedim/${zipName}/media/images/thumbnails/200x150.png`
+            	`convert ${screenshot} -resize 200x150 _Packages/Cegedim/${zipName}/media/images/thumbnails/200x150.jpg`
 			);
 			
 			shell.default.command.push(`mkdir -p _Packages/Cegedim/${zipName}/export && gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile='_Packages/Cegedim/${zipName}/export/export.pdf' '.tmp/pdfs/cegedim/${zipName}.pdf'`)
