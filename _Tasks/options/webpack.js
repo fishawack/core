@@ -67,7 +67,9 @@ function setup(){
 							loader: 'babel-loader',
 							options: {
 								presets: [
-									require.resolve('@babel/preset-env')
+									[require.resolve('@babel/preset-env'), {
+										"useBuiltIns": "usage"
+									}]
 								],
 								plugins: [
 									require.resolve('@babel/plugin-transform-object-assign'),
