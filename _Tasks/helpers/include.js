@@ -109,13 +109,13 @@ module.exports = function(grunt, hasBase) {
 			
 			if(username && password){
 				try{
-					var info = execSync(`curl --connect-timeout 5 -s -u "${username}":"${password}" ${url}`, {encoding: 'utf8', stdio: 'pipe'});
+					var info = JSON.parse(execSync(`curl --connect-timeout 5 -s -u "${username}":"${password}" ${url}`, {encoding: 'utf8', stdio: 'pipe'}));
 				} catch (e){
 					return repo;
 				}
 				
-				if(info){
-					repo.group = JSON.parse(info).project.name.toLowerCase();
+				if(info && !info.error){
+					repo.group = info.project.name.toLowerCase();
 					repo.path = `${repo.group}/${repo.name}`;
 				} else {
 					grunt.log.warn("Failed to retrieve repo information, are the credentials store in ~/targets/misc.json correct?");
