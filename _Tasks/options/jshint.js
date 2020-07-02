@@ -22,7 +22,7 @@ module.exports = {
 			Modernizr: true,
 			$: true
 		},
-		esversion: 6
+		esversion: 10
 	},
     files: [
     	'_Build/js/**/*.js',
