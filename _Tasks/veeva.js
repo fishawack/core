@@ -81,8 +81,11 @@ module.exports = function(grunt) {
 
             concat.default.files.push(
                 {
-                    src: ['_Build/generated/veeva.js'], 
-                    dest: '_Packages/Veeva/' + zipName + '/js/package.js'
+                    src: [
+                        `${configPath}_Resources/Veeva/*.js`,
+                        `_Packages/Veeva/${zipName}/js/script.js`
+                    ],
+                    dest: '_Packages/Veeva/' + zipName + '/js/script.js'
                 }
             );
 
