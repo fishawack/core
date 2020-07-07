@@ -38,7 +38,7 @@ module.exports = function(grunt) {
 
                 shell.content.command.push(`scp -r <%= targets["${d.ssh}"].username %>@<%= targets["${d.ssh}"].host %>:${d.location} ${saveTo}`);
             } else if(d.lftp){
-                shell.content.command.push(`lftp -d -e 'set sftp:auto-confirm yes; mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>',<%= targets.ftp["${d.lftp}"].password %> sftp://${d.lftp}`);
+                shell.content.command.push(`lftp -d -e 'set sftp:auto-confirm yes; mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>','<%= targets.ftp["${d.lftp}"].password %>' sftp://${d.lftp}`);
             }
         });
 
