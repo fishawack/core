@@ -1276,6 +1276,13 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.9.4
+* Fix for repoInfo so it doesn't fail if no remote exists
+* `useBuiltIns` option now set to `usage` in the webpack config
+* `.jshint` now set to `esversion: 10`
+* Veeva resources are now part of the core repo and get bundled in automatically
+* Single quotes around password in content pull to handle special characters
+
 ### 4.9.3
 * Updated Cegedim package to generate `.jpg`'s instead of `.png`'s
 
