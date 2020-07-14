@@ -1276,6 +1276,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.10.0
+* Refactored schema importing and linting
+
 ### 4.9.4
 * Fix for repoInfo so it doesn't fail if no remote exists
 * `useBuiltIns` option now set to `usage` in the webpack config
