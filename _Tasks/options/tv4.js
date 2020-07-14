@@ -1,15 +1,21 @@
 module.exports = {
 	options: {
-        root: function(){
-        	var grunt = require('grunt');
+        root: () => {
+			var fs = require('fs-extra');
 
-        	if(fileExists('content.json', '_Schema', grunt)){
-        		return grunt.file.readJSON(configPath + '_Schema/schema-custom.json');
-        	} else {
-        		return grunt.file.readJSON(configPath + '_Schema/schema.json');
-        	}
-        },
-        banUnknownProperties: true
+			fs.copySync(`${configPath}_Schema/`, `node_modules/.schema/`);
+			fs.copySync(`_Schema/`, `node_modules/.schema/`);
+			
+			return grunt.file.readJSON('node_modules/.schema/schema.json');
+		},
+		schemas: () => {
+			var obj = {};
+			grunt.file.expand({cwd: `node_modules/.schema/`}, '**/*.json').forEach(d => {
+				obj[d] = grunt.file.readJSON(`node_modules/.schema/${d}`);
+			});
+			return obj;
+		},
+		banUnknownProperties: true
     },
     all: {
     	"src": ["<%= this.contentPath %>"]

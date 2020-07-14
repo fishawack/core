@@ -5,10 +5,10 @@
 	"required": ["attributes"],
 	"properties": {
 		"attributes": {
-			"$ref": "node_modules/@fishawack/core/_Schema/attributes.json#/definitions/attributes"
+			"$ref": "attributes.json#/definitions/attributes"
 		},
 		"content": {
-			"additionalProperties": true
+			"$ref": "content.json#/definitions/content"
 		}
 	}
 }
