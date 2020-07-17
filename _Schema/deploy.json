@@ -104,6 +104,9 @@
 						}
 					}
 				},
+				"phonegap": {
+					"$ref": "phonegap.json#/definitions/phonegap"
+				},
 				"env": {
 		        	"type": "object",
 		        	"additionalProperties": true

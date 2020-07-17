@@ -44,52 +44,7 @@
 					}
 	            },
 	            "phonegap": {
-					"type": "object",
-					"description": "Config for phonegap build settings",
-					"additionalProperties": false,
-					"properties": {
-						"signingKey": {
-							"type": "string"
-						},
-						"signingPassword": {
-							"type": "string"
-						},
-						"badge": {
-							"type": "string"
-						},
-						"appID": {
-							"type": "string"
-						},
-						"phonegapVersion": {
-							"type": "string"
-						},
-						"bundle": {
-							"type": "string"
-						},
-						"version": {
-							"type": "string"
-						},
-						"orientation": {
-							"type": "string",
-							"enum": ["landscape", "portrait", "default"]
-						},
-						"platforms": {
-							"type": "array",
-							"minItems": 1,
-							"items": {
-								"type": "string",
-								"enum": ["ios", "android", "windows"]
-							}
-						}
-					},
-					"required": [
-						"signingKey",
-						"signingPassword",
-						"badge",
-						"appID",
-						"phonegapVersion",
-						"bundle"
-					]
+					"$ref": "phonegap.json#/definitions/phonegap"
 				},
 				"cegedim": {
 					"type": "boolean"
