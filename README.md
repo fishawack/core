@@ -1276,6 +1276,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.11.1
+* _Resources werent in the files array in package.json
+
 ### 4.11.0
 * Updated phonegap to allow platforms to be set
 * Added dot to all copy commands

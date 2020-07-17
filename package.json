@@ -16,6 +16,7 @@
   },
   "files": [
     "_Node",
+    "_Resources",
     "_Schema",
     "_Tasks",
     ".githooks",
