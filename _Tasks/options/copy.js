@@ -3,6 +3,7 @@ module.exports = {
         files: [
             {
                 expand: true,
+                dot: true,
                 cwd: '_Build/content/',
                 src: ['**/media/**/*'],
                 dest: '<%= root %>/media/content/',
@@ -18,6 +19,7 @@ module.exports = {
     assets: {
         files: [{
             expand: true,
+            dot: true,
             cwd: '_Build/media/',
             src: ['**/*'],
             dest: '<%= root %>/media/'
@@ -26,6 +28,7 @@ module.exports = {
     svg: {
         files: [{
             expand: true,
+            dot: true,
             cwd: '.tmp/icons-min/',
             src: ['**/*'],
             dest: '_Build/handlebars/partials/generated/embed/',
@@ -38,6 +41,7 @@ module.exports = {
     svgasis: {
         files: [{
             expand: true,
+            dot: true,
             cwd: '_Build/svg',
             src: ['**/__*'],
             dest: '_Build/handlebars/partials/generated/embed/',
@@ -50,6 +54,7 @@ module.exports = {
     app: {
         files: [{
             expand: true,
+            dot: true,
             cwd: '<%= root %>',
             src: ['**/*'],
             dest: '_App'
@@ -65,7 +70,8 @@ module.exports = {
                 cwd: '<%= root %>/',
                 src: '**',
                 dest: '_Packages/Electron/App/',
-                expand: true
+                expand: true,
+                dot: true
             }
         ]
     },
@@ -75,7 +81,8 @@ module.exports = {
                 cwd: '<%= root %>/',
                 src: '**',
                 dest: '_Packages/Phonegap/',
-                expand: true
+                expand: true,
+                dot: true
             }
         ]
     },
@@ -85,7 +92,8 @@ module.exports = {
                 cwd: '<%= root %>/',
                 src: '**',
                 dest: '_Packages/Vablet/',
-                expand: true
+                expand: true,
+                dot: true
             }
         ]
     }
