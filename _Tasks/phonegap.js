@@ -3,10 +3,14 @@ var exec = require('child_process').exec;
 module.exports = function(grunt) {
     grunt.registerTask('createConfigXml', function() {
         var xmlBuilder = require('xmlbuilder');
-        grunt.file.write('_Packages/Phonegap/config.xml', xmlBuilder.create(
-                JSON.parse(grunt.template.process(grunt.file.read(configPath + 'phonegap.json')))
-            ).end({ pretty: true})
-        )
+
+        var phonegap = JSON.parse(grunt.template.process(grunt.file.read(configPath + 'phonegap.json')));
+
+        (contentJson.attributes.phonegap.platforms || ['ios']).forEach((platform) => {
+            phonegap.widget.platform.push(JSON.parse(grunt.file.read(`${configPath}_Resources/Phonegap/${platform}.json`)));
+        });
+
+        grunt.file.write('_Packages/Phonegap/config.xml', xmlBuilder.create(phonegap).end({ pretty: true}));
     });
 
     grunt.registerTask('waitForAppBuild', function(){

@@ -3,8 +3,10 @@ module.exports = {
         root: () => {
 			var fs = require('fs-extra');
 
-			fs.copySync(`${configPath}_Schema/`, `node_modules/.schema/`);
-			fs.copySync(`_Schema/`, `node_modules/.schema/`);
+			try{
+				fs.copySync(`${configPath}_Schema/`, `node_modules/.schema/`);
+				fs.copySync(`_Schema/`, `node_modules/.schema/`);
+			} catch(e){}
 			
 			return grunt.file.readJSON('node_modules/.schema/schema.json');
 		},

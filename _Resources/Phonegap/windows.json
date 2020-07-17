@@ -1,0 +1,43 @@
+{
+    "@name": "windows",
+    "icon": [
+        {
+            "@src": "media/content/res/icon/windows/storelogo.png",
+            "@target": "StoreLogo"
+        },
+        {
+            "@src": "media/content/res/icon/windows/smalllogo.png",
+            "@target": "Square30x30Logo"
+        },
+        {
+            "@src": "media/content/res/icon/windows/Square44x44Logo.png",
+            "@target": "Square44x44Logo"
+        },
+        {
+            "@src": "media/content/res/icon/windows/Square70x70Logo.png",
+            "@target": "Square70x70Logo"
+        },
+        {
+            "@src": "media/content/res/icon/windows/Square71x71Logo.png",
+            "@target": "Square71x71Logo"
+        },
+        {
+            "@src": "media/content/res/icon/windows/Square150x150Logo.png",
+            "@target": "Square150x150Logo"
+        },
+        {
+            "@src": "media/content/res/icon/windows/Square310x310Logo.png",
+            "@target": "Square310x310Logo"
+        }
+    ],
+    "splash": [
+        {
+            "@src": "media/content/res/screen/windows/splashscreen.png",
+            "@target": "SplashScreen"
+        },
+        {
+            "@src": "media/content/res/screen/windows/splashscreenphone.png",
+            "@target": "SplashScreenPhone"
+        }
+    ]
+}
