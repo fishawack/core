@@ -1276,6 +1276,10 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.11.0
+* Updated phonegap to allow platforms to be set
+* Added dot to all copy commands
+
 ### 4.10.0
 * Refactored schema importing and linting
 
