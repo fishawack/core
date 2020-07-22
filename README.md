@@ -1276,6 +1276,10 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.11.2
+* Default content schema now correctly allows anything
+* Bumped watertight to now handle nested html folders
+
 ### 4.11.1
 * _Resources werent in the files array in package.json
 
