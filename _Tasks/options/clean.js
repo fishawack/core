@@ -4,6 +4,10 @@ module.exports = {
     dist: ["<%= root %>/**/*", "_Build/**/generated/**/*"],
     zip: ['_Zips/**/*'],
     deploy: ["_Login"],
+    login: {
+        src: ['_Login/**/*'],
+        filter: (fp) => grunt.file.isDir(fp) && require('fs').readdirSync(fp).length === 0
+    },
     pdf: ["_Pdfs"],
     app: ['_App/**/*'],
     electron: ['_Packages/Electron/**/*'],

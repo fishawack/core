@@ -2,7 +2,7 @@ module.exports = function(grunt) {
     grunt.registerTask('writePhp', function(){
         var watertightBridge = require('@fishawack/watertight');
         
-        grunt.file.write('_Login/app/controllers/securedsite.php', watertightBridge.buildHtmlRoutesPhp(grunt.file.expand({cwd: grunt.config.get("root")}, '*.html')));
+        grunt.file.write('_Login/app/controllers/securedsite.php', watertightBridge.buildHtmlRoutesPhp(grunt.file.expand({cwd: grunt.config.get("root")}, '**/*.html')));
 
         if(deployEnv.users){
             generateUserPasswords();
@@ -95,13 +95,13 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= root %>',
-                        src: ['*.html'],
+                        src: ['**/*.html'],
                         dest: '_Login/app/views/securedsite/'
                     },
                     {
                         expand: true,
                         cwd: '<%= root %>',
-                        src: ['**/*', '!*.html'],
+                        src: ['**/*', '!**/*.html'],
                         dest: '_Login/'
                     }
                 ]
@@ -122,13 +122,13 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= root %>',
-                        src: ['*.html'],
+                        src: ['**/*.html'],
                         dest: '_Login/app/views/securedsite/'
                     },
                     {
                         expand: true,
                         cwd: '<%= root %>',
-                        src: ['**/*', '!*.html'],
+                        src: ['**/*', '!**/*.html'],
                         dest: '_Login/public_html/'
                     }
                 ]
@@ -137,6 +137,6 @@ module.exports = function(grunt) {
 
         grunt.config.set('copy', copy);
 
-        grunt.task.run('clean:deploy', 'copy:login', 'writePhp', 'compress:watertight', 'sshexec:' + ((deployEnv.subDir) ? 'subDir' : 'root'), 'sftp:deploy', 'sshexec:unpack', 'sshexec:required');
+        grunt.task.run('clean:deploy', 'copy:login', 'clean:login', 'writePhp', 'compress:watertight', 'sshexec:' + ((deployEnv.subDir) ? 'subDir' : 'root'), 'sftp:deploy', 'sshexec:unpack', 'sshexec:required');
     });
 };
