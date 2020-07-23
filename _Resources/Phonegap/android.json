@@ -13,77 +13,77 @@
     "icon": [
         {
             "@density": "ldpi",
-            "@src": "media/content/res/icon/android/ldpi.png"
+            "@src": "www/media/content/res/icon/android/ldpi.png"
         },
         {
             "@density": "mdpi",
-            "@src": "media/content/res/icon/android/mdpi.png"
+            "@src": "www/media/content/res/icon/android/mdpi.png"
         },
         {
             "@density": "hdpi",
-            "@src": "media/content/res/icon/android/hdpi.png"
+            "@src": "www/media/content/res/icon/android/hdpi.png"
         },
         {
             "@density": "xhdpi",
-            "@src": "media/content/res/icon/android/xhdpi.png"
+            "@src": "www/media/content/res/icon/android/xhdpi.png"
         },
         {
             "@density": "xxhdpi",
-            "@src": "media/content/res/icon/android/xxhdpi.png"
+            "@src": "www/media/content/res/icon/android/xxhdpi.png"
         },
         {
             "@density": "xxxhdpi",
-            "@src": "media/content/res/icon/android/xxxhdpi.png"
+            "@src": "www/media/content/res/icon/android/xxxhdpi.png"
         }
     ],
     "splash": [
         {
             "@density": "port-ldpi",
-            "@src": "media/content/res/screen/android/splash-port-ldpi.png"
+            "@src": "www/media/content/res/screen/android/splash-port-ldpi.png"
         },
         {
             "@density": "port-mdpi",
-            "@src": "media/content/res/screen/android/splash-port-mdpi.png"
+            "@src": "www/media/content/res/screen/android/splash-port-mdpi.png"
         },
         {
             "@density": "port-hdpi",
-            "@src": "media/content/res/screen/android/splash-port-hdpi.png"
+            "@src": "www/media/content/res/screen/android/splash-port-hdpi.png"
         },
         {
             "@density": "port-xhdpi",
-            "@src": "media/content/res/screen/android/splash-port-xhdpi.png"
+            "@src": "www/media/content/res/screen/android/splash-port-xhdpi.png"
         },
         {
             "@density": "port-xxhdpi",
-            "@src": "media/content/res/screen/android/splash-port-xxhdpi.png"
+            "@src": "www/media/content/res/screen/android/splash-port-xxhdpi.png"
         },
         {
             "@density": "port-xxxhdpi",
-            "@src": "media/content/res/screen/android/splash-port-xxxhdpi.png"
+            "@src": "www/media/content/res/screen/android/splash-port-xxxhdpi.png"
         },
         {
             "@density": "land-ldpi",
-            "@src": "media/content/res/screen/android/splash-land-ldpi.png"
+            "@src": "www/media/content/res/screen/android/splash-land-ldpi.png"
         },
         {
             "@density": "land-mdpi",
-            "@src": "media/content/res/screen/android/splash-land-mdpi.png"
+            "@src": "www/media/content/res/screen/android/splash-land-mdpi.png"
         },
         {
             "@density": "land-hdpi",
-            "@src": "media/content/res/screen/android/splash-land-hdpi.png"
+            "@src": "www/media/content/res/screen/android/splash-land-hdpi.png"
         },
         {
             "@density": "land-xhdpi",
-            "@src": "media/content/res/screen/android/splash-land-xhdpi.png"
+            "@src": "www/media/content/res/screen/android/splash-land-xhdpi.png"
         },
         {
             "@density": "land-xxhdpi",
-            "@src": "media/content/res/screen/android/splash-land-xxhdpi.png"
+            "@src": "www/media/content/res/screen/android/splash-land-xxhdpi.png"
         },
         {
             "@density": "land-xxxhdpi",
-            "@src": "media/content/res/screen/android/splash-land-xxxhdpi.png"
+            "@src": "www/media/content/res/screen/android/splash-land-xxxhdpi.png"
         }
     ]
 }

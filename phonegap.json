@@ -10,30 +10,39 @@
             "@email": "digital@fishawack.com",
             "#text": "Fishawack"
         },
+        "description": {
+            "#text": "Fishawack"
+        },
+        "platform": [],
         "plugin": [
             {
+                "@name": "cordova-plugin-wkwebview-engine",
+                "@spec": "1.2.1",
+                "@source": "npm"
+            },
+            {
                 "@name": "cordova-plugin-device",
-                "@spec": "2.0.2",
+                "@spec": "2.0.3",
                 "@source": "npm"
             },
             {
                 "@name": "cordova-plugin-inappbrowser",
-                "@spec": "3.0.0",
+                "@spec": "4.0.0",
                 "@source": "npm"
             },
             {
                 "@name": "cordova-plugin-whitelist",
-                "@spec": "1.3.3",
+                "@spec": "1.3.4",
                 "@source": "npm"
             },
             {
                 "@name": "cordova-plugin-statusbar",
-                "@spec": "2.4.2",
+                "@spec": "2.4.3",
                 "@source": "npm"
             },
             {
                 "@name": "cordova-plugin-file",
-                "@spec": "6.0.1",
+                "@spec": "6.0.2",
                 "@source": "npm"
             },
             {
@@ -80,7 +89,6 @@
         },
         "access": {
             "@origin": "*"
-        },
-        "platform": []
+        }
     }
 }

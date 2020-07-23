@@ -80,7 +80,7 @@ module.exports = {
             {
                 cwd: '<%= root %>/',
                 src: '**',
-                dest: '_Packages/Phonegap/',
+                dest: '_Packages/Phonegap/www/',
                 expand: true,
                 dot: true
             }
