@@ -71,6 +71,7 @@ function setup(){
 										"useBuiltIns": "usage"
 									}]
 								],
+								sourceType: "unambiguous",
 								plugins: [
 									require.resolve('@babel/plugin-transform-object-assign'),
 									require.resolve('@babel/plugin-syntax-dynamic-import')

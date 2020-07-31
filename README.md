@@ -1276,6 +1276,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.11.4
+* Set sourceType in webpack to "unambiguous"
+
 ### 4.11.3
 * Phonegap now builds to newer folder structure in place of legacy structure
 * Bumped cordova plugins
