@@ -50,6 +50,11 @@ module.exports = function(grunt) {
             grunt.file.read('_Login/app/app.php').replace('<!-- siteTitle -->', contentJson.attributes.title)
         );
 
+        grunt.file.write(
+            '_Login/app/app.php',
+            grunt.file.read('_Login/app/app.php').replace('<!-- singleUserExpireTime -->', deployEnv.singleUserExpireTime || '1 hour')
+        );
+
         if(customLogin){
             grunt.file.write(
                 '_Login/app/views/login.php',
