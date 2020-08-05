@@ -1276,6 +1276,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.11.5
+* Bumped watertight to bring in new single login feature
+
 ### 4.11.4
 * Set sourceType in webpack to "unambiguous"
 
