@@ -133,6 +133,6 @@
     "time-grunt": "2.0.0"
   },
   "optionalDependencies": {
-    "@fishawack/watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v5.1.0"
+    "@fishawack/watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v5.1.1"
   }
 }
