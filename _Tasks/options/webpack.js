@@ -68,7 +68,8 @@ function setup(){
 							options: {
 								presets: [
 									[require.resolve('@babel/preset-env'), {
-										"useBuiltIns": "usage"
+										"useBuiltIns": "usage",
+										"corejs": { "version": 3, "proposals": true }
 									}]
 								],
 								sourceType: "unambiguous",
