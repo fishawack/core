@@ -14,5 +14,6 @@ module.exports = {
     phonegap: ['_Packages/Phonegap/**/*'],
     veeva: ['_Packages/Veeva/**/*'],
     vablet: ['_Packages/Vablet/**/*'],
-    cegedim: ['_Packages/Cegedim/**/*']
+    cegedim: ['_Packages/Cegedim/**/*'],
+    handover: ['_Packages/Handover/**/*']
 }

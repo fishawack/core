@@ -88,5 +88,14 @@ module.exports = {
         'src': ['**'],
         'expand': true,
         'dot': true
+    },
+    handover: {
+        "options": {
+            'archive': '_Zips/<%= filename %>_Handover.zip'
+        },
+        'cwd': '_Packages/Handover', 
+        'src': ['**'],
+        'expand': true,
+        'dot': true
     }
 }

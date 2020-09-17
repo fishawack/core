@@ -96,5 +96,22 @@ module.exports = {
                 dot: true
             }
         ]
+    },
+    handover: {
+        files: [
+            {
+                src: [
+                    '_Build/**/*',
+                    '_Node/**/*',
+                    '_Test/**/*',
+                    '.gitignore',
+                    'package.json',
+                    'README.md'
+                ],
+                dest: '_Packages/Handover/',
+                expand: true,
+                dot: true
+            }
+        ]
     }
 }
