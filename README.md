@@ -1276,6 +1276,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.12.0
+* New handover package type
+
 ### 4.11.7
 * Bumped watertight to fix chrome SameSite setting
 
