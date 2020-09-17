@@ -94,12 +94,23 @@ module.exports = function(grunt, hasBase) {
 
 	this.repoInfo = () => {
 		const execSync = require('child_process').execSync;
+
+		var commit;
+		var name;
+
+		try{
+			name = execSync('git rev-parse --show-toplevel', {encoding: 'utf8'});
+			commit = execSync('git rev-parse --short HEAD', {encoding: 'utf8'});
+		} catch(e){
+			name = process.cwd();
+			commit = require('password-generator')(7, false);
+		}
 		
 		var repo = {
-            name: path.basename(execSync('git rev-parse --show-toplevel', {encoding: 'utf8'}).trim()),
+            name: path.basename(name).trim(),
             group: '',
 			path: '',
-			commit: execSync('git rev-parse --short HEAD', {encoding: 'utf8'}).trim()
+			commit: commit.trim()
 		};
 	
 		if(config.targets.misc && config.targets.misc.bitbucket){
@@ -121,10 +132,10 @@ module.exports = function(grunt, hasBase) {
 					grunt.log.warn("Failed to retrieve repo information, are the credentials store in ~/targets/misc.json correct?");
 				}
 			} else {
-				grunt.log.warn("Can't find bitbucket credentials in ~/targets/misc.json, using fallback repo name 'unknown'");
+				grunt.log.warn("Can't find bitbucket credentials in ~/targets/misc.json");
 			}
 		} else {
-			grunt.log.warn("~/targets/misc.json not found, using fallback repo name 'unknown'");
+			grunt.log.warn("~/targets/misc.json not found");
 		}
 
 		return repo;
@@ -528,7 +539,13 @@ module.exports = function(grunt, hasBase) {
 
 		var branch = require('yargs').argv.branch;
 
-		this.deployBranch = (!branch) ? require('git-branch').sync() : branch;
+		// If no git initialized in the build repo this will fail fatally
+		this.deployBranch;
+		try{
+			this.deployBranch = (!branch) ? require('git-branch').sync() : branch;
+		} catch(e){
+			this.deployBranch = 'unknown';
+		}
 		
 		this.deployCred = {};
 
