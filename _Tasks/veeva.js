@@ -19,7 +19,8 @@ module.exports = function(grunt) {
         reset = {
             compress: grunt.config.get('compress'),
             clean: grunt.config.get('clean'),
-            concat: grunt.config.get('concat')
+            concat: grunt.config.get('concat'),
+            copy: grunt.config.get('copy')
         };
 
         var ftp = grunt.config.get('targets').ftp['crm-13-ftp-us.veevacrm.com'];

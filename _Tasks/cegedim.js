@@ -18,7 +18,8 @@ module.exports = function(grunt) {
 
         reset = {
             compress: grunt.config.get('compress'),
-            clean: grunt.config.get('clean')
+            clean: grunt.config.get('clean'),
+            copy: grunt.config.get('copy')
         };
 
         var copy = {

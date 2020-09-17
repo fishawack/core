@@ -1,5 +1,5 @@
 module.exports = (grunt) => {
-    grunt.registerTask('package:handover', ['clean:handover', 'content', 'copy:handover', 'handover']);
+    grunt.registerTask('package:handover', ['clean:handover', 'copy:handover', 'handover']);
 
     grunt.registerTask('handover', () => {
         const fs = require('fs-extra');

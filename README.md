@@ -1276,6 +1276,10 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 4.12.2
+* No longer pull content in on handover build to be consistent with other package types
+* Correctly reset copy task in cegedim/veeva tasks
+
 ### 4.12.1
 * Mail now correctly goes to the right account
 * Package task now automatically packages handover package type
