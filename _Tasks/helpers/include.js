@@ -103,7 +103,7 @@ module.exports = function(grunt, hasBase) {
 			commit = execSync('git rev-parse --short HEAD', {encoding: 'utf8'});
 		} catch(e){
 			name = process.cwd();
-			commit = require('password-generator')(7, false);
+			commit = require('password-generator')(7, false, /\d/);
 		}
 		
 		var repo = {

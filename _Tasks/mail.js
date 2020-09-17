@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         if(deployBranch !== 'qc' && deployBranch !== 'development' && deployBranch !== 'master' && deployBranch !== 'staging'){
             grunt.log.warn('Deployments from feature branches don\'t send emails');
         } else {
-            recipients.push(devProject ? 'mike.mellor@fishawack.com' : 'digital@f-grp.com');
+            recipients.push(devProject ? 'mike.mellor@fishawack.com' : 'mike.mellor@f-grp.com');
         }
 
         var colors = ['red', 'blue', 'green', 'purple', '#FF5516'];
