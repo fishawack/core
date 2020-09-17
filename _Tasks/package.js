@@ -17,6 +17,9 @@ module.exports = function(grunt) {
         /* APP */
         package.push('compress:app');
 
+        /* HANDOVER */
+        package.push('package:handover', 'compress:handover');
+
         if(deployTarget === 'production'){
             /* ELECTRON */
             (contentJson.attributes.electron) ? package.push('package:electron', 'compress:mac', 'compress:win') : grunt.log.warn('No electron packaging specified');
