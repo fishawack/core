@@ -41,7 +41,7 @@ module.exports = function(grunt, hasBase) {
 
 		config.contentJson = this.contentJson;
 
-		this.deployEnv = contentJson.attributes[deployTarget] || {};
+		this.deployEnv = contentJson.attributes.deploy && contentJson.attributes.deploy[deployTarget] || {};
 	    this.deployLocation = truePath((deployEnv.location || ''));
 		this.deployUrl = truePath((deployEnv.url || ''));
 		this.deployCred = (deployEnv.ssh) ? config.targets[deployEnv.ssh] : {};
@@ -171,19 +171,15 @@ module.exports = function(grunt, hasBase) {
 	    		file: 'misc.json',
 	    		key: 'misc'
 	    	}
-	    ];
-
-	    if(contentJson.attributes.staging && contentJson.attributes.staging.ssh){
-	    	files.push({file: contentJson.attributes.staging.ssh, json: true});
-	    }
-
-	    if(contentJson.attributes.qc && contentJson.attributes.qc.ssh){
-	    	files.push({file: contentJson.attributes.qc.ssh, json: true});
-	    }
-
-	    if(contentJson.attributes.production && contentJson.attributes.production.ssh){
-	    	files.push({file: contentJson.attributes.production.ssh, json: true});
-	    }
+		];
+		
+		for(var key in contentJson.attributes.deploy){
+			if(contentJson.attributes.deploy.hasOwnProperty(key)){
+				if(contentJson.attributes.deploy[key] && contentJson.attributes.deploy[key].ssh){
+					files.push({file: contentJson.attributes.deploy[key].ssh, json: true});
+				}
+			}
+		}
 
 	    contentJson.attributes.content && contentJson.attributes.content.forEach(function(d){
 			if(d.ssh){
@@ -555,18 +551,6 @@ module.exports = function(grunt, hasBase) {
 
 		this.deployUrl = '';
 
-		switch(this.deployBranch){
-			case 'master':
-				this.deployTarget = 'production';
-				break;
-			case 'qc':
-				this.deployTarget = 'qc';
-				break;
-			case 'staging':
-				this.deployTarget = 'staging';
-				break;
-			default:
-				this.deployTarget = 'development';
-		}
+		this.deployTarget = this.deployBranch;
 	}
 }
