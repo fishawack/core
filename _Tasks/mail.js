@@ -1,7 +1,12 @@
 module.exports = function(grunt) {
     grunt.registerTask('mail', function() {
+        if(!deployEnv){
+            grunt.log.warn(`No deploy target setup for ${deployBranch}`);
+            return;
+        }
+
         if(!deployEnv.url){
-            grunt.log.warn('No url for ' + deployTarget);
+            grunt.log.warn('No url for ' + deployBranch);
             return;
         }
 
@@ -23,14 +28,8 @@ module.exports = function(grunt) {
         };
 
         var recipients = contentJson.attributes.email || [];
-
         recipients = recipients.concat(deployEnv.email || []);
-
-        if(deployBranch !== 'qc' && deployBranch !== 'development' && deployBranch !== 'master' && deployBranch !== 'staging'){
-            grunt.log.warn('Deployments from feature branches don\'t send emails');
-        } else {
-            recipients.push(devProject ? 'mike.mellor@fishawack.com' : 'digital@f-grp.com');
-        }
+        recipients.push(devProject ? 'mike.mellor@fishawack.com' : 'digital@f-grp.com');
 
         var colors = ['red', 'blue', 'green', 'purple', '#FF5516'];
         var done = this.async();
@@ -70,14 +69,14 @@ module.exports = function(grunt) {
                                 ].join(''),
                                 [
                                     (deployEnv.pdf) ? buildHtmlEmail('pdf') : '',
-                                    (deployTarget === 'production') ? buildHtmlEmail('zips') : ''
+                                    buildHtmlEmail('zips')
                                 ].join(''),
                                 [
                                     buildHtmlEmail('version'),
                                     buildHtmlEmail('coverage'),
                                     (deployEnv.pdf) ? buildHtmlEmail('diff') : '',
                                     buildHtmlEmail('status'),
-                                    (deployTarget === 'production' && contentJson.attributes.phonegap) ? buildHtmlEmail('phonegap') : '',,
+                                    (contentJson.attributes.phonegap) ? buildHtmlEmail('phonegap') : '',
                                     buildHtmlEmail('instance'),
                                     (contentJson.attributes.googleTrackingID) ? buildHtmlEmail('google') : '',
                                     buildHtmlEmail('git')

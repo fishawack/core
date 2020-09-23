@@ -529,10 +529,10 @@ These variables are predefined and are automatically avaiable to use.
 process.env.NODE_ENV === "development" // when running development build
 process.env.NODE_ENV === "production" // when running distribution build
 
-process.env.NODE_TARGET === "production" // when on master branch
+process.env.NODE_TARGET === "production" // when on production branch
 process.env.NODE_TARGET === "qc" // when on qc branch
 process.env.NODE_TARGET === "staging" // when on staging branch
-process.env.NODE_TARGET === "development" // when on any other branch
+process.env.NODE_TARGET === "development" // when on development branch
 ```
 
 #### Custom

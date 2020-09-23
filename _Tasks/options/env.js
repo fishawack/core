@@ -1,9 +1,9 @@
 module.exports = {
 	options: {
 		add : Object.assign(
-			{ NODE_TARGET : deployTarget },
+			{ NODE_TARGET : deployBranch },
 			contentJson.attributes.env,
-			contentJson.attributes[deployTarget] && contentJson.attributes[deployTarget].env || {}
+			contentJson.attributes.deploy && contentJson.attributes.deploy[deployBranch] && contentJson.attributes.deploy[deployBranch].env || {}
 		)
 	},
 	dev : {

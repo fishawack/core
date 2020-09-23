@@ -77,14 +77,14 @@
 	            	"type": "array",
 					"items": { "type": "string" }
 	        	},
-				"staging": {
-		        	"$ref": "deploy.json#/definitions/deploy"
-				},
-				"qc": {
-		        	"$ref": "deploy.json#/definitions/deploy"
-				},
-				"production": {
-		        	"$ref": "deploy.json#/definitions/deploy"
+				"deploy": {
+					"type": "object",
+					"patternProperties": {
+						".*": {
+							"$ref": "deploy.json#/definitions/deploy"
+						}
+						
+					}
 				},
 				"content": {
 					"type": "array",

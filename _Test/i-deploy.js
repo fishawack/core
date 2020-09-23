@@ -7,9 +7,11 @@ const fetch = require('node-fetch');
 describe('deploy', () => {
     before(() => {
         execSync('grunt deploy --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
+
+        execSync('grunt tv4 --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
     });
     
-    it('Should generate a json file in the .tmp directory', async () => {
+    it('Should deploy the site to the server', async () => {
         expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy')).status).to.be.equal(200);
     });
 

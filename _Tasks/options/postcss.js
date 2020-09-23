@@ -8,8 +8,8 @@ function processors(){
 		})
 	];
 
-	// Only run postcss uncss if not on development branch, too slow for feature/dev branches
-	if(this.deployTarget !== "development"){
+	// Only run postcss uncss on branches with deploy targets, too slow for feature/dev branches
+	if(Object.keys(deployEnv).length){
 		arr.push(require('uncss').postcssPlugin({
 			html: contentJson.attributes.uncss,
 			userAgent: 'jsdom',
@@ -35,7 +35,13 @@ function processors(){
 				if(!contentJson.attributes.modernizr.length){
 					window.document.documentElement.classList.add('modern');
 				} else {
-					window.document.documentElement.classList.add('no-js', 'js', 'loading', 'staging', 'production', 'qc', 'development');
+					window.document.documentElement.classList.add('no-js', 'js', 'loading', 'development');
+
+					for(var key in contentJson.attributes.deploy){
+						if(contentJson.attributes.deploy.hasOwnProperty(key)){
+							window.document.documentElement.classList.add(key);
+						}
+					}
 
 					contentJson.attributes.modernizr.forEach(function(d){
 						window.document.documentElement.classList.add('no-' + d, d);

@@ -41,7 +41,7 @@ module.exports = function(grunt, hasBase) {
 
 		config.contentJson = this.contentJson;
 
-		this.deployEnv = contentJson.attributes.deploy && contentJson.attributes.deploy[deployTarget] || {};
+		this.deployEnv = contentJson.attributes.deploy && contentJson.attributes.deploy[deployBranch] || {};
 	    this.deployLocation = truePath((deployEnv.location || ''));
 		this.deployUrl = truePath((deployEnv.url || ''));
 		this.deployCred = (deployEnv.ssh) ? config.targets[deployEnv.ssh] : {};
@@ -550,7 +550,5 @@ module.exports = function(grunt, hasBase) {
 		this.deployLocation = '';
 
 		this.deployUrl = '';
-
-		this.deployTarget = this.deployBranch;
 	}
 }

@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
     grunt.registerTask('deploy', function(){
         if(!deployEnv.ssh && !deployEnv.ftp){
-            grunt.log.warn('No deployment configured for ' + deployTarget);
+            grunt.log.warn('No deployment configured for ' + deployBranch);
             return;
         }
 

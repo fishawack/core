@@ -13,9 +13,7 @@ module.exports = (grunt) => {
             .forEach(d => {
                 var config = fs.readJSONSync(d);
                 [
-                    'staging',
-                    'qc',
-                    'production',
+                    'deploy',
                     'content',
                     'phonegap',
                     'veeva',

@@ -24,7 +24,7 @@ module.exports = {
         'globals': [
             {
                 dev: '<%= dev %>',
-                target: '<%= deployTarget %>',
+                target: '<%= deployBranch %>',
                 version: '<%= pkg.version %>',
                 env: process.env,
                 pkg: '<%= pkg %>'
