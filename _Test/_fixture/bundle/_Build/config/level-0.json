@@ -16,6 +16,15 @@
 			"disableStatusBar": true,
 			"useTransparentBar": true
 		},
+		"production": {
+            "url": "https://demo.fishawack.solutions",
+            "location": "/home/fishawack/demo.fishawack.solutions/",
+			"ssh": "vidaHost-fishawack",
+			"subDir": "core-test-suite-deploy",
+            "env": {
+                "BASE_URL": "/"
+            }
+		},
 	    "uncss": [
 	        "<%= root %>/*.html"
 	    ],

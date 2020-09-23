@@ -1,19 +1,19 @@
 'use strict';
 
-const fs = require('fs');
 const expect = require('chai').expect;
-const grunt = require('grunt');
 const execSync = require('child_process').execSync;
-const path = require('path');
+const fetch = require('node-fetch');
 
-// describe('pdf', () => {
-//     let json;
-
-//     before(() => {
-//         // execSync('grunt deploy --branch=master --mocha', {encoding: 'utf8', stdio: 'pipe'});
-//     });
+describe('deploy', () => {
+    before(() => {
+        execSync('grunt deploy --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
+    });
     
-//     it('Should generate a json file in the .tmp directory', () => {
-//         expect(true).to.be.equal(true);
-//     });
-// });
+    it('Should generate a json file in the .tmp directory', async () => {
+        expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy')).status).to.be.equal(200);
+    });
+
+    after(() => {
+        execSync('grunt sshexec:remove --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'}); 
+    });
+});
