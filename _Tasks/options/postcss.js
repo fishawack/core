@@ -8,8 +8,8 @@ function processors(){
 		})
 	];
 
-	// Only run postcss uncss on branches with deploy targets, too slow for feature/dev branches
-	if(Object.keys(deployEnv).length){
+	// Only run postcss uncss on branches with deploy targets or on production builds, too slow for feature/dev branches on watch
+	if(process.env.NODE_ENV === 'production' || Object.keys(deployEnv).length){
 		arr.push(require('uncss').postcssPlugin({
 			html: contentJson.attributes.uncss,
 			userAgent: 'jsdom',
