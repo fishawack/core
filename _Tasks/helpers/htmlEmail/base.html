@@ -59,15 +59,11 @@
         <table cellpadding="0" cellspacing="0" border="0" align="center" style="width: 100%;">
           <tr>
             <td valign="top" style="vertical-align: top; padding: 10px; border-top: 10px solid <%= (function(){
-                switch(deployBranch){
-                  case 'production':
-                  case 'master':
-                    return '#9BC636';
-                  case 'qc':
-                    return '#2485C2';
-                  default:
-                    return '#F5834D';
+                if(deployBranch.includes('staging') || deployBranch.includes('dev') || deployBranch.includes('test')){
+                  return '#F5834D';
                 }
+                
+                return '#9BC636';
             }()) %>;">
                 <h2><%= repo.name %></h2>
                 <hr>
