@@ -12,7 +12,7 @@ module.exports = {
         "options": {
             'archive': '_Zips/Deploy.zip'
         },
-        'cwd': '_Login', 
+        'cwd': '_Packages/Watertight/', 
         'src': ['**/*', '**/.htaccess'],
         'expand': true,
         'dot': true

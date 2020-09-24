@@ -1,27 +1,29 @@
 module.exports = function(grunt) {
+    grunt.registerTask('package:watertight', ['watertight', 'writePhp']);
+    
     grunt.registerTask('writePhp', function(){
         var watertightBridge = require('@fishawack/watertight');
         
-        grunt.file.write('_Login/app/controllers/securedsite.php', watertightBridge.buildHtmlRoutesPhp(grunt.file.expand({cwd: grunt.config.get("root")}, '**/*.html')));
+        grunt.file.write('_Packages/Watertight/app/controllers/securedsite.php', watertightBridge.buildHtmlRoutesPhp(grunt.file.expand({cwd: grunt.config.get("root")}, '**/*.html')));
 
         if(deployEnv.users){
             generateUserPasswords();
 
-            grunt.file.write('_Login/app/users.php', watertightBridge.buildUserPhp(deployEnv.users));
+            grunt.file.write('_Packages/Watertight/app/users.php', watertightBridge.buildUserPhp(deployEnv.users));
         }
 
         var customLogin = fileExists('login.html', '_Output/', grunt);
         
-        var indexPath = '_Login/index.php';
+        var indexPath = '_Packages/Watertight/index.php';
         var appPath = '';
         var envPath = './app/views/securedsite/';
-        var envSave = '_Login/app/views/securedsite/';
+        var envSave = '_Packages/Watertight/app/views/securedsite/';
         
         if(!deployEnv.subDir){
-            indexPath = '_Login/public_html/index.php';
+            indexPath = '_Packages/Watertight/public_html/index.php';
             appPath = '../'
             envPath = '../';
-            envSave = '_Login/';
+            envSave = '_Packages/Watertight/';
         }
 
         grunt.file.write(`${envSave}.env`, watertightBridge.buildEnv(Object.assign(
@@ -41,30 +43,30 @@ module.exports = function(grunt) {
         );
 
         grunt.file.write(
-            '_Login/app/app.php',
-            grunt.file.read('_Login/app/app.php').replace('<!-- siteurl -->', deployUrl.replace(/\/+$/, ""))
+            '_Packages/Watertight/app/app.php',
+            grunt.file.read('_Packages/Watertight/app/app.php').replace('<!-- siteurl -->', deployUrl.replace(/\/+$/, ""))
         );
 
         grunt.file.write(
-            '_Login/app/app.php',
-            grunt.file.read('_Login/app/app.php').replace('<!-- siteTitle -->', contentJson.attributes.title)
+            '_Packages/Watertight/app/app.php',
+            grunt.file.read('_Packages/Watertight/app/app.php').replace('<!-- siteTitle -->', contentJson.attributes.title)
         );
 
         grunt.file.write(
-            '_Login/app/app.php',
-            grunt.file.read('_Login/app/app.php').replace('<!-- singleUserExpireTime -->', deployEnv.singleUserExpireTime || '1 hour')
+            '_Packages/Watertight/app/app.php',
+            grunt.file.read('_Packages/Watertight/app/app.php').replace('<!-- singleUserExpireTime -->', deployEnv.singleUserExpireTime || '1 hour')
         );
 
         if(customLogin){
             grunt.file.write(
-                '_Login/app/views/login.php',
+                '_Packages/Watertight/app/views/login.php',
                 grunt.file.read('_Output/login.html')
             );
         }
 
         if(fileExists('login-form.html', '_Output/', grunt)){
             grunt.file.write(
-                '_Login/app/views/forms/login.html',
+                '_Packages/Watertight/app/views/forms/login.html',
                 grunt.file.read('_Output/login-form.html')
             );
         }
@@ -85,29 +87,29 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: watertightPath + '/www/watertight/',
                         src: ['**/*', '!composer.*', '!**/public_html/**'],
-                        dest: '_Login/'
+                        dest: '_Packages/Watertight/'
                     },
                     {
                         expand: true,
                         cwd: watertightPath + '/www/watertight/public_html/',
                         src: ['**/*'],
-                        dest: '_Login/'
+                        dest: '_Packages/Watertight/'
                     },
                     {
                         src: watertightPath + '/www/watertight/public_html/' + ssl,
-                        dest: '_Login/.htaccess'
+                        dest: '_Packages/Watertight/.htaccess'
                     },
                     {
                         expand: true,
                         cwd: '<%= root %>',
                         src: ['**/*.html'],
-                        dest: '_Login/app/views/securedsite/'
+                        dest: '_Packages/Watertight/app/views/securedsite/'
                     },
                     {
                         expand: true,
                         cwd: '<%= root %>',
                         src: ['**/*', '!**/*.html'],
-                        dest: '_Login/'
+                        dest: '_Packages/Watertight/'
                     }
                 ]
             };
@@ -118,23 +120,23 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: watertightPath + '/www/watertight/',
                         src: ['**/*', '!composer.*'],
-                        dest: '_Login/'
+                        dest: '_Packages/Watertight/'
                     },
                     {
                         src: watertightPath + '/www/watertight/public_html/' + ssl,
-                        dest: '_Login/public_html/.htaccess'
+                        dest: '_Packages/Watertight/public_html/.htaccess'
                     },
                     {
                         expand: true,
                         cwd: '<%= root %>',
                         src: ['**/*.html'],
-                        dest: '_Login/app/views/securedsite/'
+                        dest: '_Packages/Watertight/app/views/securedsite/'
                     },
                     {
                         expand: true,
                         cwd: '<%= root %>',
                         src: ['**/*', '!**/*.html'],
-                        dest: '_Login/public_html/'
+                        dest: '_Packages/Watertight/public_html/'
                     }
                 ]
             };
@@ -142,6 +144,6 @@ module.exports = function(grunt) {
 
         grunt.config.set('copy', copy);
 
-        grunt.task.run('clean:deploy', 'copy:login', 'clean:login', 'writePhp', 'compress:watertight', 'sshexec:' + ((deployEnv.subDir) ? 'subDir' : 'root'), 'sftp:deploy', 'sshexec:unpack', 'sshexec:required');
+        grunt.task.run('clean:watertight', 'copy:login', 'clean:watertightEmptyDirs');
     });
 };

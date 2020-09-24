@@ -3,11 +3,6 @@ module.exports = {
 	build: [".tmp"],
     dist: ["<%= root %>/**/*", "_Build/**/generated/**/*"],
     zip: ['_Zips/**/*'],
-    deploy: ["_Login"],
-    login: {
-        src: ['_Login/**/*'],
-        filter: (fp) => grunt.file.isDir(fp) && require('fs').readdirSync(fp).length === 0
-    },
     pdf: ["_Pdfs"],
     app: ['_App/**/*'],
     electron: ['_Packages/Electron/**/*'],
@@ -15,5 +10,10 @@ module.exports = {
     veeva: ['_Packages/Veeva/**/*'],
     vablet: ['_Packages/Vablet/**/*'],
     cegedim: ['_Packages/Cegedim/**/*'],
-    handover: ['_Packages/Handover/**/*']
+    handover: ['_Packages/Handover/**/*'],
+    watertight: ['__Packages/Watertight/**/*'],
+    watertightEmptyDirs: {
+        src: ['__Packages/Watertight/**/*'],
+        filter: (fp) => grunt.file.isDir(fp) && require('fs').readdirSync(fp).length === 0
+    }
 }

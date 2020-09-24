@@ -1,0 +1,48 @@
+{
+    "attributes": {
+	    "title": "<%= repo.name %>",
+	    "googleTrackingID": null,
+	    "root": "_Output",
+	    "modernizr": [
+	        "flexbox",
+	        "csscalc"
+		],
+		"deploy": {
+			"master": {
+				"url": "https://demo.fishawack.solutions",
+				"location": "/home/fishawack/demo.fishawack.solutions/",
+				"ssh": "vidaHost-fishawack",
+				"subDir": "core-test-suite-deploy",
+				"env": {
+					"BASE_URL": "/"
+				}
+			},
+			"lftp": {
+				"url": "https://demo.fishawack.solutions",
+				"location": "/home/fishawack/demo.fishawack.solutions/",
+				"lftp": "vidaHost-fishawack",
+				"subDir": "core-test-suite-deploy"
+			},
+			"watertight": {
+				"url": "https://demo.fishawack.solutions",
+				"location": "/home/fishawack/demo.fishawack.solutions/",
+				"ssh": "vidaHost-fishawack",
+				"subDir": "core-test-suite-deploy",
+				"loginType": "bootstrap",
+                "users": [
+                    {
+                        "username": "<%= repo.name %>User",
+                        "group": "admin",
+                        "validTo": "",
+                        "password": "23Blue01"
+                    }
+                ]
+			}
+		},
+	    "uncss": [
+	        "<%= root %>/*.html"
+	    ],
+	    "template": {},
+	    "toggle": {}
+	}
+}

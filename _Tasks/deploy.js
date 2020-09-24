@@ -14,9 +14,9 @@ module.exports = function(grunt) {
         if(deployEnv.ftp){
             deploy.push('ftpscript:deploy');
         } else if(deployEnv.loginType){
-            deploy.push('watertight');
+            deploy.push('sftp:deploy', 'sshexec:unpack', 'sshexec:required');
         } else{
-            deploy.push('compress:deploy', 'sshexec:remove', 'sftp:deploy', 'sshexec:unpack');   
+            deploy.push('sftp:deploy', 'sshexec:unpack');   
         }
 
         if(!deployEnv.loginType){
