@@ -1,6 +1,6 @@
 module.exports = grunt => {
     grunt.registerTask('takedown', function(){
-        if(!deployEnv.ssh && !deployEnv.ftp){
+        if(!deployEnv){
             grunt.log.warn('No deployment configured for ' + deployBranch);
             return;
         }

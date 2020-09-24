@@ -44,7 +44,7 @@ module.exports = function(grunt, hasBase) {
 		this.deployEnv = contentJson.attributes.deploy && contentJson.attributes.deploy[deployBranch] || {};
 	    this.deployLocation = truePath((deployEnv.location || ''));
 		this.deployUrl = truePath((deployEnv.url || ''));
-		this.deployCred = (deployEnv.ssh) ? config.targets[deployEnv.ssh] : {};
+		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp] || {};
 	};
 
 	// This function is called twice on startup, the first time is used to grab deploy targets and hard coded values, the second time and all subsequent watch reloads will process any grunt template tags that are found
@@ -177,6 +177,10 @@ module.exports = function(grunt, hasBase) {
 			if(contentJson.attributes.deploy.hasOwnProperty(key)){
 				if(contentJson.attributes.deploy[key] && contentJson.attributes.deploy[key].ssh){
 					files.push({file: contentJson.attributes.deploy[key].ssh, json: true});
+				}
+
+				if(contentJson.attributes.deploy[key] && contentJson.attributes.deploy[key].lftp){
+					files.push({file: contentJson.attributes.deploy[key].lftp, json: true});
 				}
 			}
 		}

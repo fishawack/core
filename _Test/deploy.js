@@ -14,7 +14,7 @@ async function deploy(branch){
 describe('deploy', () => {
     it('Should deploy the master target to the server via sftp', () => deploy('master'));
     it('Should deploy a watertight wrapped site to the server', () => deploy('watertight'));
-    // it('Should deploy the lftp target to the server via lftp', () => deploy('lftp'));
+    it('Should deploy the lftp target to the server via lftp', () => deploy('lftp'));
     
     it('Deploying twice in a row should replace the files without hanging', async () => {
         execSync(`grunt package deploy --branch=watertight --mocha=output`, {encoding: 'utf8', stdio: 'pipe'});
