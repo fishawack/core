@@ -12,10 +12,7 @@
 				"url": "https://demo.fishawack.solutions",
 				"location": "/home/fishawack/demo.fishawack.solutions/",
 				"ssh": "vidaHost-fishawack",
-				"subDir": "core-test-suite-deploy",
-				"env": {
-					"BASE_URL": "/"
-				}
+				"subDir": "core-test-suite-deploy"
 			},
 			"lftp": {
 				"url": "https://demo.fishawack.solutions",
@@ -37,6 +34,25 @@
                         "password": "23Blue01"
                     }
                 ]
+			},
+			"root": {
+				"url": "https://demo.fishawack.solutions/core-test-suite-deploy/",
+				"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
+				"lftp": "vidaHost-fishawack",
+				"loginType": "bootstrap",
+                "users": [
+                    {
+                        "username": "<%= repo.name %>User",
+                        "group": "admin",
+                        "validTo": "",
+                        "password": "23Blue01"
+                    }
+                ]
+			},
+			"trailing": {
+				"url": "https://demo.fishawack.solutions/core-test-suite-deploy/",
+				"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
+				"lftp": "vidaHost-fishawack"
 			}
 		},
 	    "uncss": [

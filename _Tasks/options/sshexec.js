@@ -8,12 +8,7 @@ module.exports = {
 	},
 	remove: {
 		command: [
-			'rm <%= deployLocation %>/*.html -rf',
-			'rm <%= deployLocation %>/css -rf',
-			'rm <%= deployLocation %>/js -rf',
-			'rm <%= deployLocation %>/media -rf',
-			'rm <%= deployLocation %>/.htaccess -rf',
-			'rm <%= deployLocation %>/favicon.ico -rf'
+			'rm -rf <%= deployLocation %>/'
 		]
 	},
 	unpack: {
@@ -28,45 +23,5 @@ module.exports = {
 			'cd <%= deployLocation %>',
 			'mkdir -p logs'
 		].join(' && ')
-	},
-	root: {
-		command: [
-			'rm <%= deployLocation %>/app/controllers -rf',
-			'rm <%= deployLocation %>/app/views -rf',
-			'rm <%= deployLocation %>/app/app.php -rf',
-			'rm <%= deployLocation %>/app/autoload.php -rf',
-			'rm <%= deployLocation %>/app/CustomEnglish.php -rf',
-			'rm <%= deployLocation %>/app/Model.php -rf',
-			'rm <%= deployLocation %>/vendor -rf',
-			'rm <%= deployLocation %>/public_html/bootstrap -rf',
-			'rm <%= deployLocation %>/public_html/build -rf',
-			'rm <%= deployLocation %>/public_html/css -rf',
-			'rm <%= deployLocation %>/public_html/js -rf',
-			'rm <%= deployLocation %>/public_html/svg -rf',
-			'rm <%= deployLocation %>/public_html/media -rf',
-			'rm <%= deployLocation %>/public_html/.htaccess -rf',
-			'rm <%= deployLocation %>/public_html/favicon.ico -rf',
-			'rm <%= deployLocation %>/public_html/index.php -rf'
-		].concat([deployEnv.users ? 'rm <%= deployLocation %>/app/users.php -rf' : ''])
-	},
-	subDir: {
-		command: [
-			'rm <%= deployLocation %>/app/controllers -rf',
-			'rm <%= deployLocation %>/app/views -rf',
-			'rm <%= deployLocation %>/app/app.php -rf',
-			'rm <%= deployLocation %>/app/autoload.php -rf',
-			'rm <%= deployLocation %>/app/CustomEnglish.php -rf',
-			'rm <%= deployLocation %>/app/Model.php -rf',
-			'rm <%= deployLocation %>/vendor -rf',
-			'rm <%= deployLocation %>/bootstrap -rf',
-			'rm <%= deployLocation %>/build -rf',
-			'rm <%= deployLocation %>/css -rf',
-			'rm <%= deployLocation %>/js -rf',
-			'rm <%= deployLocation %>/svg -rf',
-			'rm <%= deployLocation %>/media -rf',
-			'rm <%= deployLocation %>/.htaccess -rf',
-			'rm <%= deployLocation %>/favicon.ico -rf',
-			'rm <%= deployLocation %>/index.php -rf'
-		].concat([deployEnv.users ? 'rm <%= deployLocation %>/app/users.php -rf' : ''])
 	}
 }
