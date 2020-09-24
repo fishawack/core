@@ -9,19 +9,25 @@ module.exports = function(grunt) {
             grunt.log.warn('Cannot deploy watertight over ftp');   
         }
 
+        const execSync = require('child_process').execSync;
+
         var deploy = ['ftpscript:badges'];
+
+        var path = deployEnv.loginType ? '_Packages/Watertight/' : config.root;
 
         if(deployEnv.ftp){
             deploy.push('ftpscript:deploy');
-        } else if(deployEnv.loginType){
-            deploy.push('sftp:deploy', 'sshexec:unpack', 'sshexec:required');
         } else if(deployEnv.ssh){
-            deploy.push('sftp:deploy', 'sshexec:unpack');   
+            execSync(`scp -r ${path} '${deployCred.username}'@'${deployCred.host}':${deployLocation}`);
         } else if(deployEnv.lftp){
-            require('child_process').execSync(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R ${config.root} ${deployLocation.slice(0, -1)} -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.passphrase}' sftp://${deployCred.host}`);
+            execSync(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R ${path} ${deployLocation} -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.passphrase}' sftp://${deployCred.host}`);
         }
 
-        if(!deployEnv.loginType){
+        if(deployEnv.loginType){
+            execSync(
+                `ssh -tt '${deployCred.username}'@'${deployCred.host}' 'mkdir -p ${deployLocation}/logs;'`
+            );
+        } else {
             deploy.push('casperjs:deploy');
         }
 

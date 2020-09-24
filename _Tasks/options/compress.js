@@ -1,22 +1,4 @@
 module.exports = {
-    deploy: {
-        "options": {
-            'archive': '_Zips/Deploy.zip'
-        },
-        'cwd': '<%= root %>', 
-        'src': ['**/*'],
-        'expand': true,
-        'dot': true
-    },
-    watertight: {
-        "options": {
-            'archive': '_Zips/Deploy.zip'
-        },
-        'cwd': '_Packages/Watertight/', 
-        'src': ['**/*', '**/.htaccess'],
-        'expand': true,
-        'dot': true
-    },
     app: {
         "options": {
             'archive': '_Zips/<%= filename %>_App.zip'

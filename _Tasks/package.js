@@ -29,8 +29,8 @@ module.exports = function(grunt) {
         /* AUTO-PACKAGE */
         package.push('ftpscript:package');
 
-        /* DEPLOY / WATERTIGHT */
-        deployEnv ? (deployEnv.loginType ? package.push('package:watertight', 'compress:watertight') : package.push('compress:deploy')) : grunt.log.warn('No deployment specified');
+        /* WATERTIGHT */
+        deployEnv.loginType ? package.push('package:watertight') : grunt.log.warn('No watertight specified');
 
         grunt.task.run(package);
     });

@@ -8,7 +8,7 @@ module.exports = grunt => {
         if(deployEnv.ftp){
             grunt.log.warn('Cannot takedown over ftp');
         } else{
-            require('child_process').execSync(`ssh '${deployCred.username}'@'${deployCred.host}' 'rm -rf ${deployLocation}'`);
+            require('child_process').execSync(`ssh -tt '${deployCred.username}'@'${deployCred.host}' 'rm -rf ${deployLocation}'`);
         }
     });
 };

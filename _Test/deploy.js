@@ -19,8 +19,8 @@ describe('deploy', () => {
     it('Should deploy the project as a root folder with a watertight wrapper', () => deploy('root'));
     
     it('Deploying twice in a row should replace the files without hanging', async () => {
-        execSync(`grunt package deploy --branch=watertight --mocha=output`, {encoding: 'utf8', stdio: 'pipe'});
-        execSync(`grunt package deploy --branch=watertight --mocha=output`, {encoding: 'utf8', stdio: 'pipe'});
+        execSync(`grunt deploy --branch=watertight --mocha=output`, {encoding: 'utf8', stdio: 'pipe'});
+        execSync(`grunt deploy --branch=watertight --mocha=output`, {encoding: 'utf8', stdio: 'pipe'});
         execSync(`grunt takedown --branch=watertight --mocha=output`, {encoding: 'utf8', stdio: 'pipe'});
     });
 });

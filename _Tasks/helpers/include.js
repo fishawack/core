@@ -9,8 +9,6 @@ module.exports = function(grunt, hasBase) {
 
 	// Used in grunt JIT call to load plugins, can be overridden/added to in build folder include.js
 	this.jit = {
-        sshexec: 'grunt-ssh',
-        sftp: 'grunt-ssh',
         postcss: '@lodder/grunt-postcss'
     };
 
@@ -42,9 +40,11 @@ module.exports = function(grunt, hasBase) {
 		config.contentJson = this.contentJson;
 
 		this.deployEnv = contentJson.attributes.deploy && contentJson.attributes.deploy[deployBranch] || {};
-	    this.deployLocation = truePath((deployEnv.location || ''));
-		this.deployUrl = truePath((deployEnv.url || ''));
+	    this.deployLocation = truePath(deployEnv.location || '');
+		this.deployUrl = truePath(deployEnv.url || '');
 		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp] || {};
+
+		console.log(this.deployLocation, deployEnv.location);
 	};
 
 	// This function is called twice on startup, the first time is used to grab deploy targets and hard coded values, the second time and all subsequent watch reloads will process any grunt template tags that are found
@@ -218,14 +218,11 @@ module.exports = function(grunt, hasBase) {
 	};
 
 	this.truePath = function(path, env){
-		var temp = path.replace(/\/+$/, "");
+		var temp = stripTrailingSlash(path);
 		var tempEnv = (env) ? (contentJson.attributes[env] || {}) : deployEnv;
 
-        temp += '/';
-
         if(tempEnv.subDir){
-            temp += tempEnv.subDir;
-            temp += '/';
+            temp += '/' + tempEnv.subDir;
         }
 
         return temp;
@@ -508,6 +505,12 @@ module.exports = function(grunt, hasBase) {
 		
 	  return this;
 	}
+
+	this.stripTrailingSlash = (str) => {
+		return str.endsWith('/') ?
+			str.slice(0, -1) :
+			str;
+	};
 
 	this.devProject = require('./dev.js');
 
