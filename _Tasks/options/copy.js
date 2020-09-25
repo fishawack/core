@@ -43,7 +43,7 @@ module.exports = {
             expand: true,
             dot: true,
             cwd: '_Build/svg',
-            src: ['**/__*'],
+            src: ['**/*'],
             dest: '_Build/handlebars/partials/generated/embed/',
             rename: function(dest, src){ // RENAMED SO DONT CLASH WITH HANDELBARS PARTIALS / HELPERS
                 return dest + 'svg--asis--' + src;
