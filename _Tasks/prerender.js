@@ -1,5 +1,5 @@
 module.exports = (grunt) => {
-    grunt.registerTask('prerender', function(){
+    grunt.registerTask('prerender', async function(){
         var done = this.async();
 
         const fs = require('fs');
@@ -13,7 +13,7 @@ module.exports = (grunt) => {
         var routes;
 
         try{
-            routes = require(path.join(process.cwd(), '/_Build/js/libs/routes.js'))(true).paths;
+            routes = await require(path.join(process.cwd(), '/_Node/prerender.js'))();
         } catch {
             routes = ['/'];
         }
