@@ -1278,6 +1278,19 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 5.0.0
+* Deploys are now an object rather than 3 top level production/staging/qc. Means can have as many targets as needed
+* Refactored deploy script
+* Can now deploy via lftp mirror
+* Postcss uncss now runs on production build regardless of branch
+* Capture now longer prepends slash, this is added manually via pages object to make capturing history mode SPA's easier
+* No longer remove from server on deploy, only ever a push
+* asis flag now runs on all svgs allowing the flag to be used at any time
+* Prerender no longer looks into the repo's client side javascript for array of pages, needs a file in _Node/prerender.js creating instead
+* Removed casperjs, outdated and soon to be replaced by webdriverio which is already in the build for pdf's
+* Cleaning _Output folder now does it from the root to take into account hidden files
+* BrowserSync/grunt-connect now have history mode api enabled to allow for routing through index.html if no matching url found
+
 ### 4.12.2
 * No longer pull content in on handover build to be consistent with other package types
 * Correctly reset copy task in cegedim/veeva tasks
