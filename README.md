@@ -1036,12 +1036,14 @@ Specify an array of pages that you wish to capture. Hashbangs without `.html` in
 #### JSON
 ```json
 "pages": [
-    "index.html",
-    "login.html",
+    "/index.html",
+    "/login.html",
     "#/about",
     "#/terms",
     "#/privacy",
-    "#/404"
+    "#/404",
+    "/about",
+    "/news"
 ]
 ```
 

@@ -82,7 +82,7 @@ var capture = {
             var full = capture.page.array[index].split('#')[0] || '';
             capture.page.hash = capture.page.array[index].split('#')[1] || '/';
 
-            capture.page.route = full.split('?')[0] || 'index.html';
+            capture.page.route = full.split('?')[0] || '/index.html';
             capture.page.query = full.split('?')[1] || '';
         },
         call: function(index){
@@ -92,7 +92,7 @@ var capture = {
                 before(function(){
                     capture.page.init(index);
 
-                    browser.url(`${capture.url}/${capture.page.route}?capture=true&${capture.page.query}#${capture.page.hash}`);
+                    browser.url(`${capture.url}${capture.page.route}?capture=true&${capture.page.query}#${capture.page.hash}`);
 
                     if(isNaN(capture.wait)){
                         browser.waitForExist(capture.wait, 50000);
