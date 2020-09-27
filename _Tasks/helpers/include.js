@@ -43,8 +43,6 @@ module.exports = function(grunt, hasBase) {
 	    this.deployLocation = truePath(deployEnv.location || '');
 		this.deployUrl = truePath(deployEnv.url || '');
 		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp] || {};
-
-		console.log(this.deployLocation, deployEnv.location);
 	};
 
 	// This function is called twice on startup, the first time is used to grab deploy targets and hard coded values, the second time and all subsequent watch reloads will process any grunt template tags that are found
@@ -144,7 +142,7 @@ module.exports = function(grunt, hasBase) {
 	this.captureEnv = function(){
 		return {
 	        browsers: deployEnv.pdf && deployEnv.pdf.browsers || ['chrome'],
-	        pages: deployEnv.pdf && deployEnv.pdf.pages || ['index.html'],
+	        pages: deployEnv.pdf && deployEnv.pdf.pages || ['/index.html'],
 			sizes: deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]],
 			url: deployEnv.pdf && deployEnv.pdf.url || 'http://localhost:9001',
 			wait: deployEnv.pdf && deployEnv.pdf.wait || '.loaded'
