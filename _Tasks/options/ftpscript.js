@@ -1,9 +1,13 @@
 module.exports = {
+    options: {
+        host: '10.1.8.4',
+        timeout: 5,
+        port: 21,
+        passive: true
+    },
     deploy: {
         options: {
-            host: '<%= deployEnv.ftp %>',
-            port: 21,
-            passive: true
+            host: '<%= deployEnv.ftp %>'
         },
         files: [{
             expand: true,
@@ -13,11 +17,6 @@ module.exports = {
         }]
     },
     pdf: {
-        options: {
-            host: '10.1.8.4',
-            port: 21,
-            passive: true
-        },
         files: [{
             expand: true,
             cwd: '_Pdfs/',
@@ -26,12 +25,6 @@ module.exports = {
         }]
     },
     package: {
-        options: {
-            host: '10.1.8.4',
-            port: 21,
-            passive: true,
-            timeout: 5
-        },
         files: [{
             expand: true,
             cwd: '_Zips/',
@@ -40,12 +33,6 @@ module.exports = {
         }]
     },
     badges: {
-        options: {
-            host: '10.1.8.4',
-            port: 21,
-            passive: true,
-            timeout: 5
-        },
         files: [{
             expand: true,
             cwd: '_Build/media/generated/',
@@ -55,9 +42,7 @@ module.exports = {
     },
     veeva: {
         options: {
-            host: 'crm-13-ftp-us.veevacrm.com',
-            port: 21,
-            passive: true
+            host: 'crm-13-ftp-us.veevacrm.com'
         },
         files: [{
             expand: true,
