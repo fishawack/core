@@ -63,7 +63,7 @@
     "grunt-contrib-clean": "1.0.0",
     "grunt-contrib-compress": "git+https://github.com/mikemellor11/grunt-contrib-compress.git#iltorb-update",
     "grunt-contrib-concat": "1.0.1",
-    "grunt-contrib-connect": "1.0.1",
+    "grunt-contrib-connect": "3.0.0",
     "grunt-contrib-copy": "0.8.0",
     "grunt-contrib-htmlmin": "2.0.0",
     "grunt-contrib-imagemin": "1.0.1",

@@ -15,6 +15,7 @@ module.exports = {
             open: false,
             reloadOnRestart: true,
             ghostMode: true,
+            single: true,
             server: {
                 baseDir: "<%= root %>"
             },
