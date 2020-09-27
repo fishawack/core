@@ -39,8 +39,6 @@ module.exports = grunt => {
     // Load any custom tasks found in the build folder
     grunt.loadTasks(process.cwd() + '/_Tasks');
 
-    watchSmokeTests();
-
     // Setup custom template handlebar code
     templateCustom();
 };

@@ -103,7 +103,7 @@ module.exports = function(grunt, hasBase) {
 			commit = execSync('git rev-parse --short HEAD', {encoding: 'utf8'});
 		} catch(e){
 			name = process.cwd();
-			commit = require('password-generator')(7, false, /\d/);
+			commit = Math.floor(Math.random()*90000) + 1000000;
 		}
 		
 		var repo = {
@@ -271,42 +271,6 @@ module.exports = function(grunt, hasBase) {
 	    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
 	    .replace(/^-+/, '')             // Trim - from start of text
 	    .replace(/-+$/, '');            // Trim - from end of text
-	}
-
-	this.generateUserPasswords = function(){
-        var generatePassword = require('password-generator');
-
-        deployEnv.users.forEach(function(d, i){
-            if(!d.password){
-                d.password = generatePassword(8, false);
-            }
-        });
-
-        grunt.file.write(contentPath, JSON.stringify(contentJson, null, 4));
-    }
-	
-	this.watchSmokeTests = function (){
-		// Create test watches so that updating a test file only runs tests for that file. All tests run on grunt dist and grunt deploy
-	    var watch = grunt.config.get('watch') || {};
-	    var casperjs = grunt.config.get('casperjs') || {};
-	    var casperPath = '_Test/casperjs/';
-
-	    grunt.file.expand({cwd: casperPath}, '*.js').forEach(function(d){
-	        watch['smokeTests-' + d] = {
-	            files: [casperPath + d],
-	            tasks: ['casperjs:' + d],
-	            options: {
-	                spawn: false,
-	            }
-	        };
-
-	        casperjs[d] = {
-	            src: [casperPath + d]
-	        };
-	    });
-
-	    grunt.config.set('watch', watch);
-	    grunt.config.set('casperjs', casperjs);
 	}
 
 	this.getIP = function () {

@@ -7,8 +7,6 @@ module.exports = function(grunt) {
         grunt.file.write('_Packages/Watertight/app/controllers/securedsite.php', watertightBridge.buildHtmlRoutesPhp(grunt.file.expand({cwd: grunt.config.get("root")}, '**/*.html')));
 
         if(deployEnv.users){
-            generateUserPasswords();
-
             grunt.file.write('_Packages/Watertight/app/users.php', watertightBridge.buildUserPhp(deployEnv.users));
         }
 

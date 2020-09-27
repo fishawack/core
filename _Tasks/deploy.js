@@ -27,8 +27,6 @@ module.exports = function(grunt) {
             execSync(
                 `ssh -tt '${deployCred.username}'@'${deployCred.host}' 'mkdir -p ${deployLocation}/logs;'`
             );
-        } else {
-            deploy.push('casperjs:deploy');
         }
 
         grunt.task.run(deploy);

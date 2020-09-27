@@ -1,3 +1,3 @@
 module.exports = grunt => { 
-    grunt.registerTask('validate', ['jshint', 'tv4', 'connect', 'casperjs:local', 'karma:continuous', 'badges', 'coverage']);
+    grunt.registerTask('validate', ['jshint', 'tv4', 'karma:continuous', 'badges', 'coverage']);
 };

@@ -30,10 +30,6 @@ module.exports = {
         files: ['_Build/media/**/*'],
         tasks: ['copy:assets']
     },
-    smokeTests: {
-        files: ['_Test/casperjs/modules/**/*.js'],
-        tasks: ['casperjs:local']
-    },
     unitTests: {
         files: ['_Test/karma/**/*'],
         tasks: ['karma:unit:run']

@@ -35,7 +35,7 @@
 				},
 				"loginType": {
 					"type": ["string", "null"],
-					"enum": ["bootstrap", "style-1", null]
+					"enum": ["bootstrap", "style-1", "htpasswd", null]
 				},
 				"singleUserExpireTime": {
 					"description": "Used for single time user passwords to dictate how long the user is valid for. Provide as plain english e.g 2 minutes. default: 1 hour",
