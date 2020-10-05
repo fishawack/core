@@ -1278,6 +1278,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 5.0.1
+* Build id now gets added to handlebars object
+
 ### 5.0.0
 * Deploys are now an object rather than 3 top level production/staging/qc. Means can have as many targets as needed
 * Refactored deploy script
