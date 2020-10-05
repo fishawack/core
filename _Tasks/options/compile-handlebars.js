@@ -27,7 +27,8 @@ module.exports = {
                 target: '<%= deployBranch %>',
                 version: '<%= pkg.version %>',
                 env: process.env,
-                pkg: '<%= pkg %>'
+                pkg: '<%= pkg %>',
+                build: Math.floor(Math.random()*90000) + 1000000
             }
         ],
         handlebars: "<%= (pkg.devDependencies && pkg.devDependencies.handlebars) && 'node_modules/handlebars' %>"
