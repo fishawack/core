@@ -13,7 +13,7 @@ async function deploy(branch){
 }
 
 describe('deploy', () => {
-    it('Should deploy the master target to the server via sftp', () => deploy('master'));
+    it('Should deploy the master target to the server via scp', () => deploy('master'));
     it('Should deploy a watertight wrapped site to the server', () => deploy('watertight'));
     it('Should deploy the lftp target to the server via lftp', () => deploy('lftp'));
     it('Should deploy the project even with a trailing slash', () => deploy('trailing'));

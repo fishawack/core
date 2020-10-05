@@ -23,7 +23,7 @@
 			"watertight": {
 				"url": "https://demo.fishawack.solutions",
 				"location": "/home/fishawack/demo.fishawack.solutions/",
-				"ssh": "vidaHost-fishawack",
+				"lftp": "vidaHost-fishawack",
 				"subDir": "core-test-suite-deploy",
 				"loginType": "bootstrap",
                 "users": [
