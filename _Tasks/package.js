@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         package.push('ftpscript:package');
 
         /* WATERTIGHT */
-        deployEnv.loginType ? package.push('package:watertight') : grunt.log.warn('No watertight specified');
+        deployEnv.loginType ? package.push('package:watertight', 'compress:watertight') : grunt.log.warn('No watertight specified');
 
         grunt.task.run(package);
     });

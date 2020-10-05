@@ -13,12 +13,12 @@ module.exports = function(grunt) {
 
         var deploy = ['ftpscript:badges'];
 
-        var path = deployEnv.loginType ? '_Packages/Watertight/' : config.root;
+        var path = deployEnv.loginType ? '_Packages/Watertight' : config.root;
 
         if(deployEnv.ftp){
             deploy.push('ftpscript:deploy');
         } else if(deployEnv.ssh){
-            execSync(`scp -r ${path} '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, {stdio: 'inherit'});
+            execSync(`scp -rp ${path}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, {stdio: 'inherit'});
         } else if(deployEnv.lftp){
             execSync(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R ${path} ${deployLocation} -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.passphrase}' sftp://${deployCred.host}`, {stdio: 'inherit'});
         }

@@ -79,5 +79,14 @@ module.exports = {
         'src': ['**'],
         'expand': true,
         'dot': true
+    },
+    watertight: {
+        "options": {
+            'archive': '_Zips/<%= filename %>_Watertight.zip'
+        },
+        'cwd': '_Packages/Watertight', 
+        'src': ['**'],
+        'expand': true,
+        'dot': true
     }
 }
