@@ -1278,6 +1278,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 5.0.2
+* Updated scp command to fix bug with duplicate deploys going into nested folders
+
 ### 5.0.1
 * Build id now gets added to handlebars object
 
