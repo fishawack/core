@@ -111,7 +111,7 @@ module.exports = function(grunt, hasBase) {
 		
 		grunt.log.writeln(`Merging ${config ? 'processed' : 'raw'} targets`);
 
-		_.mergeWith(json.attributes, json.attributes.targets[this.deployBranch], function(obj, src) {
+		_.mergeWith(json.attributes, json.attributes.targets && json.attributes.targets[this.deployBranch] || {}, function(obj, src) {
 				if (_.isArray(obj)) {
 					return obj.concat(src);
 				}
