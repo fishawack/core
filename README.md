@@ -1278,6 +1278,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 5.1.0
+* Moved config structure to targets -> deploy
+
 ### 5.0.2
 * Updated scp command to fix bug with duplicate deploys going into nested folders
 
