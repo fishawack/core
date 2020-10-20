@@ -12,7 +12,7 @@ function processors(){
 	// Checking keys length as if no deployEnv === {} which would still pass
 	if(process.env.NODE_ENV === 'production' || Object.keys(deployEnv).length){
 		arr.push(require('uncss').postcssPlugin({
-			html: contentJson.attributes.uncss,
+			html: contentJson.attributes.uncss || [],
 			userAgent: 'jsdom',
 			timeout: 100,
 			ignore: [
