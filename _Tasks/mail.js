@@ -1,12 +1,7 @@
 module.exports = function(grunt) {
-    grunt.registerTask('mail', function() {
-        if(!deployEnv){
-            grunt.log.warn(`No deploy target setup for ${deployBranch}`);
-            return;
-        }
-
-        if(!deployEnv.url){
-            grunt.log.warn('No url for ' + deployBranch);
+    grunt.registerTask('mail', function() {        
+        if(!contentJson.attributes.targets || !contentJson.attributes.targets[deployBranch]){
+            grunt.log.warn(`No target config for ${deployBranch} branch`);
             return;
         }
 
@@ -63,18 +58,17 @@ module.exports = function(grunt) {
                                     (contentJson.attributes.code) ? buildHtmlEmail('code') : '',
                                     (contentJson.attributes.design) ? buildHtmlEmail('design') : '',
                                     (contentJson.attributes.cms) ? buildHtmlEmail('cms') : '',
-                                    buildHtmlEmail('url'),
-                                    (deployEnv.users) ? buildHtmlEmail('users') : '',
-                                    buildHtmlEmail('issues')
+                                    (deployEnv.url) ? buildHtmlEmail('url') : '',
+                                    (deployEnv.users) ? buildHtmlEmail('users') : ''
                                 ].join(''),
                                 [
-                                    (deployEnv.pdf) ? buildHtmlEmail('pdf') : '',
+                                    (contentJson.attributes.pdf) ? buildHtmlEmail('pdf') : '',
                                     buildHtmlEmail('zips')
                                 ].join(''),
                                 [
                                     buildHtmlEmail('version'),
                                     buildHtmlEmail('coverage'),
-                                    (deployEnv.pdf) ? buildHtmlEmail('diff') : '',
+                                    (contentJson.attributes.pdf) ? buildHtmlEmail('diff') : '',
                                     buildHtmlEmail('status'),
                                     (contentJson.attributes.phonegap) ? buildHtmlEmail('phonegap') : '',
                                     buildHtmlEmail('instance'),
