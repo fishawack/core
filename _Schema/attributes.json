@@ -46,6 +46,9 @@
 	            "phonegap": {
 					"$ref": "phonegap.json#/definitions/phonegap"
 				},
+				"pdf": {
+					"$ref": "pdf.json#/definitions/pdf"
+				},
 				"cegedim": {
 					"type": "boolean"
 				},
@@ -78,13 +81,7 @@
 					"items": { "type": "string" }
 	        	},
 				"deploy": {
-					"type": "object",
-					"patternProperties": {
-						".*": {
-							"$ref": "deploy.json#/definitions/deploy"
-						}
-						
-					}
+					"$ref": "deploy.json#/definitions/deploy"
 				},
 				"content": {
 					"type": "array",
@@ -181,9 +178,17 @@
 		        "toggle": {
 		        	"type": "object",
 		        	"additionalProperties": true
-		        }
-            },
-            "required": ["title", "root", "googleTrackingID", "modernizr", "uncss", "template", "toggle"]
+				},
+				"targets": {
+					"type": "object",
+					"patternProperties": {
+						".*": {
+							"$ref": "attributes.json#/definitions/attributes"
+						}
+						
+					}
+				}
+            }
 		}
 	}
 }

@@ -71,57 +71,10 @@
 						"required": ["username", "group", "validTo"]
 					}
 				},
-				"pdf": {
-					"type": ["string", "boolean", "object"],
-					"properties": {
-						"browsers": {
-							"type": "array",
-							"items": {
-								"type": "string",
-								"enum": [
-									"chrome", 
-									"firefox",
-									"safari"
-								]
-							}
-						},
-						"pages": {
-							"type": "array",
-							"items": {
-								"type": "string"
-							}
-						},
-						"sizes": {
-							"type": "array",
-							"items": {
-								"type": "array",
-								"items": {
-									"type": "number"
-								}
-							}
-						},
-						"url": {
-							"type": "string"
-						},
-						"wait": {
-							"type": ["string", "number"]
-						}
-					}
-				},
-				"phonegap": {
-					"$ref": "phonegap.json#/definitions/phonegap"
-				},
-				"env": {
-		        	"type": "object",
-		        	"additionalProperties": true
-		        },
 		        "email": {
 	            	"type": "array",
 					"items": { "type": "string" }
-	        	},
-	        	"prerender": {
-	            	"type": "boolean"
-	            }
+	        	}
 			}
 		}
 	}
