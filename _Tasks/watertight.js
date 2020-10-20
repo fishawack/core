@@ -24,10 +24,7 @@ module.exports = function(grunt) {
             envSave = '_Packages/Watertight/';
         }
 
-        grunt.file.write(`${envSave}.env`, watertightBridge.buildEnv(Object.assign(
-                contentJson.attributes.env || {},
-                contentJson.attributes.deploy && contentJson.attributes.deploy[deployBranch] && contentJson.attributes.deploy[deployBranch].env || {}
-            )));
+        grunt.file.write(`${envSave}.env`, watertightBridge.buildEnv(contentJson.attributes.env));
 
         var indexPhp = grunt.file.read(indexPath);
         indexPhp = indexPhp.replace('<!-- appPath -->', appPath);

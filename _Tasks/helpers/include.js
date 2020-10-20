@@ -10,7 +10,41 @@ module.exports = function(grunt, hasBase) {
 	// Used in grunt JIT call to load plugins, can be overridden/added to in build folder include.js
 	this.jit = {
         postcss: '@lodder/grunt-postcss'
-    };
+	};
+
+	this.devProject = require('./dev.js');
+
+	if(grunt && !hasBase){
+		if(mocha){
+			grunt.file.setBase(`_Test/_fixture/${mocha}/`);
+		} else {
+			grunt.file.setBase('../' + (devProject || '../..') + '/');
+		}
+	}
+
+	if(mocha){
+		this.configPath = '../../../';	
+	} else{
+		this.configPath = (devProject) ? '../core/' : 'node_modules/@fishawack/core/';
+	}
+	
+	var branch = require('yargs').argv.branch;
+
+	// If no git initialized in the build repo this will fail fatally
+	this.deployBranch;
+	try{
+		this.deployBranch = (!branch) ? require('git-branch').sync() : branch;
+	} catch(e){
+		this.deployBranch = 'unknown';
+	}
+	
+	this.deployCred = {};
+
+	this.deployEnv = '';
+
+	this.deployLocation = '';
+
+	this.deployUrl = '';
 
 	// Sync init function
 	this.initConfig = () => {
@@ -39,7 +73,7 @@ module.exports = function(grunt, hasBase) {
 
 		config.contentJson = this.contentJson;
 
-		this.deployEnv = contentJson.attributes.deploy && contentJson.attributes.deploy[deployBranch] || {};
+		this.deployEnv = contentJson.attributes.targets && contentJson.attributes.targets[deployBranch] && contentJson.attributes.targets[deployBranch].deploy || {};
 	    this.deployLocation = truePath(deployEnv.location || '');
 		this.deployUrl = truePath(deployEnv.url || '');
 		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp] || {};
@@ -73,6 +107,14 @@ module.exports = function(grunt, hasBase) {
 					} else {
 						grunt.log.error(d, "ignored");
 					}
+			});
+		
+		grunt.log.writeln(`Merging ${config ? 'processed' : 'raw'} targets`);
+
+		_.mergeWith(json.attributes, json.attributes.targets[this.deployBranch], function(obj, src) {
+				if (_.isArray(obj)) {
+					return obj.concat(src);
+				}
 			});
 
 		let raw = JSON.stringify(json, null, 4);
@@ -141,11 +183,11 @@ module.exports = function(grunt, hasBase) {
 
 	this.captureEnv = function(){
 		return {
-	        browsers: deployEnv.pdf && deployEnv.pdf.browsers || ['chrome'],
-	        pages: deployEnv.pdf && deployEnv.pdf.pages || ['/index.html'],
-			sizes: deployEnv.pdf && deployEnv.pdf.sizes || [[1080, 608]],
-			url: deployEnv.pdf && deployEnv.pdf.url || 'http://localhost:9001',
-			wait: deployEnv.pdf && deployEnv.pdf.wait || '.loaded'
+	        browsers: contentJson.attributes.pdf && contentJson.attributes.pdf.browsers || ['chrome'],
+	        pages: contentJson.attributes.pdf && contentJson.attributes.pdf.pages || ['/index.html'],
+			sizes: contentJson.attributes.pdf && contentJson.attributes.pdf.sizes || [[1080, 608]],
+			url: contentJson.attributes.pdf && contentJson.attributes.pdf.url || 'http://localhost:9001',
+			wait: contentJson.attributes.pdf && contentJson.attributes.pdf.wait || '.loaded'
 		};
 	};
 
@@ -171,14 +213,14 @@ module.exports = function(grunt, hasBase) {
 	    	}
 		];
 		
-		for(var key in contentJson.attributes.deploy){
-			if(contentJson.attributes.deploy.hasOwnProperty(key)){
-				if(contentJson.attributes.deploy[key] && contentJson.attributes.deploy[key].ssh){
-					files.push({file: contentJson.attributes.deploy[key].ssh, json: true});
+		for(var key in contentJson.attributes.targets){
+			if(contentJson.attributes.targets.hasOwnProperty(key)){
+				if(contentJson.attributes.targets[key].deploy && contentJson.attributes.targets[key].deploy.ssh){
+					files.push({file: contentJson.attributes.targets[key].deploy.ssh, json: true});
 				}
 
-				if(contentJson.attributes.deploy[key] && contentJson.attributes.deploy[key].lftp){
-					files.push({file: contentJson.attributes.deploy[key].lftp, json: true});
+				if(contentJson.attributes.targets[key].deploy && contentJson.attributes.targets[key].deploy.lftp){
+					files.push({file: contentJson.attributes.targets[key].deploy.lftp, json: true});
 				}
 			}
 		}
@@ -474,22 +516,6 @@ module.exports = function(grunt, hasBase) {
 			str;
 	};
 
-	this.devProject = require('./dev.js');
-
-	if(grunt && !hasBase){
-		if(mocha){
-			grunt.file.setBase(`_Test/_fixture/${mocha}/`);
-		} else {
-			grunt.file.setBase('../' + (devProject || '../..') + '/');
-		}
-	}
-
-	if(mocha){
-		this.configPath = '../../../';	
-	} else{
-		this.configPath = (devProject) ? '../core/' : 'node_modules/@fishawack/core/';
-	}
-
 	if(grunt){
 		this.contentPath = '.tmp/content.json';
 
@@ -501,23 +527,5 @@ module.exports = function(grunt, hasBase) {
 
 		// Used in veeva task to define what exactly is a keymessage and what should be zipped as such
 		this.keyMessages = null;
-
-		var branch = require('yargs').argv.branch;
-
-		// If no git initialized in the build repo this will fail fatally
-		this.deployBranch;
-		try{
-			this.deployBranch = (!branch) ? require('git-branch').sync() : branch;
-		} catch(e){
-			this.deployBranch = 'unknown';
-		}
-		
-		this.deployCred = {};
-
-		this.deployEnv = '';
-
-		this.deployLocation = '';
-
-		this.deployUrl = '';
 	}
 }

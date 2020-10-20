@@ -9,6 +9,7 @@ function processors(){
 	];
 
 	// Only run postcss uncss on branches with deploy targets or on production builds, too slow for feature/dev branches on watch
+	// Checking keys length as if no deployEnv === {} which would still pass
 	if(process.env.NODE_ENV === 'production' || Object.keys(deployEnv).length){
 		arr.push(require('uncss').postcssPlugin({
 			html: contentJson.attributes.uncss,
@@ -37,8 +38,8 @@ function processors(){
 				} else {
 					window.document.documentElement.classList.add('no-js', 'js', 'loading', 'development');
 
-					for(var key in contentJson.attributes.deploy){
-						if(contentJson.attributes.deploy.hasOwnProperty(key)){
+					for(var key in contentJson.attributes.targets){
+						if(contentJson.attributes.targets.hasOwnProperty(key)){
 							window.document.documentElement.classList.add(key);
 						}
 					}

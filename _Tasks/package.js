@@ -3,7 +3,7 @@ module.exports = function(grunt) {
         var package = ['clean:zip'];
 
         /* PDF */
-        deployEnv.pdf ? package.push('pdf', 'ftpscript:pdf') : grunt.log.warn('No pdf generation for ' + deployBranch);
+        (contentJson.attributes.pdf) ? package.push('pdf', 'ftpscript:pdf') : grunt.log.warn('No pdf generation for ' + deployBranch);
 
         /* VABLET */
         (contentJson.attributes.vablet) ? package.push('package:vablet', 'compress:vablet') : grunt.log.warn('No vablet packaging detected');
