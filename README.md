@@ -1280,6 +1280,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ### 5.1.0
 * Moved config structure to targets -> deploy
+* SCP transfer limit raised
+* Modernizr / Toggle / Template / GoogleTrackingID no longer required
+* Email can now send even without a deploy target
 
 ### 5.0.2
 * Updated scp command to fix bug with duplicate deploys going into nested folders
