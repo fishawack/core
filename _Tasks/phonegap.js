@@ -7,7 +7,23 @@ module.exports = function(grunt) {
         var phonegap = JSON.parse(grunt.template.process(grunt.file.read(configPath + 'phonegap.json')));
 
         (contentJson.attributes.phonegap.platforms || ['ios']).forEach((platform) => {
-            phonegap.widget.platform.push(JSON.parse(grunt.file.read(`${configPath}_Resources/Phonegap/${platform}.json`)));
+            phonegap.widget.platform.push(
+                _.mergeWith(
+                    JSON.parse(grunt.file.read(`${configPath}_Resources/Phonegap/${platform}.json`)), 
+                    contentJson.attributes.phonegap[platform] || {}, 
+                    (obj, src) => {
+                        if (_.isArray(obj)) {
+                            return obj.concat(src);
+                        }
+                    }
+                )
+            );
+        });
+
+        phonegap = _.mergeWith(phonegap, contentJson.attributes.phonegap.config || {}, (obj, src) => {
+            if (_.isArray(obj)) {
+                return obj.concat(src);
+            }
         });
 
         grunt.file.write('_Packages/Phonegap/config.xml', xmlBuilder.create(phonegap).end({ pretty: true}));

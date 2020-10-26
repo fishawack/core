@@ -141,57 +141,6 @@
         },
         {
             "@src": "www/media/content/res/screen/ios/Default@2x~ipad~comany.png"
-        },
-        {
-            "@src": "www/media/content/res/screen/ios/Default@2x~iphone~comcom.png"
-        },
-        {
-            "@src": "www/media/content/res/screen/ios/Default@3x~iphone~anycom.png"
-        },
-        {
-            "@src": "www/media/content/res/screen/ios/Default~iphone.png",
-            "@width": "320",
-            "@height": "480"
-        },
-        {
-            "@src": "www/media/content/res/screen/ios/Default@2x~iphone.png",
-            "@width": "640",
-            "@height": "960"
-        },
-        {
-            "@src": "www/media/content/res/screen/ios/Default-Portrait~ipad.png",
-            "@width": "768",
-            "@height": "1024"
-        },
-        {
-            "@src": "www/media/content/res/screen/ios/Default-Portrait@2x~ipad.png",
-            "@width": "1536",
-            "@height": "2048"
-        },
-        {
-            "@src": "www/media/content/res/screen/ios/Default-568h@2x~iphone.png",
-            "@width": "640",
-            "@height": "1136"
-        },
-        {
-            "@src": "www/media/content/res/screen/ios/Default-667h.png",
-            "@width": "750",
-            "@height": "1334"
-        },
-        {
-            "@src": "www/media/content/res/screen/ios/Default-736h.png",
-            "@width": "1242",
-            "@height": "2208"
-        },
-        {
-            "@src": "www/media/content/res/screen/ios/Default-Landscape~ipad.png",
-            "@width": "1024",
-            "@height": "768"
-        },
-        {
-            "@src": "www/media/content/res/screen/ios/Default-Landscape@2x~ipad.png",
-            "@width": "2048",
-            "@height": "1536"
         }
     ]
 }

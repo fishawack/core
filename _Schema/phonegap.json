@@ -39,6 +39,22 @@
                         "type": "string",
                         "enum": ["ios", "android", "windows"]
                     }
+                },
+                "config": {
+                    "description": "Cordova config settings that will be merged with defaults",
+                    "additionalProperties": true
+                },
+                "ios": {
+                    "description": "Cordova iOS platform settings that will be merged with defaults",
+                    "additionalProperties": true
+                },
+                "android": {
+                    "description": "Cordova android platform settings that will be merged with defaults",
+                    "additionalProperties": true
+                },
+                "windows": {
+                    "description": "Cordova windows platform settings that will be merged with defaults",
+                    "additionalProperties": true
                 }
             },
             "required": [
