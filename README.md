@@ -1278,6 +1278,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 5.1.1
+* Can override/overwrite cordova config and/or platform settings
+
 ### 5.1.0
 * Moved config structure to targets -> deploy
 * SCP transfer limit raised
