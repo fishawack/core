@@ -24,7 +24,7 @@ module.exports = {
                 '_Build/handlebars/**/*',
                 '!_Build/handlebars/partials/generated/**/*'
             ],
-        tasks: ['reload', 'jsonlint', 'tv4', 'compile-handlebars', 'htmlmin', 'compile-vue', 'sass', 'postcss:dev', 'clean:build']
+        tasks: ['reload', 'jsonlint', 'tv4', 'compile-handlebars', 'htmlmin', 'webpack:dev', 'concat:dev', 'compile-vue', 'sass', 'postcss:dev', 'clean:build']
     },
     assets: {
         files: ['_Build/media/**/*'],

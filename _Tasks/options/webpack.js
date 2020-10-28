@@ -1,23 +1,21 @@
+const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const grunt = require('grunt');
+
 var config;
-var path;
+var path = require('path');
 
-function setup(){
-	const webpack = require('webpack');
-	const VueLoaderPlugin = require('vue-loader/lib/plugin');
-	path = require('path');
+// Javascript files in _Build/js that start with '--' will be treated as entry points and an output file will be generated with the same name minus the '--' prefix i.e _Build/js/libs/--test.js -> _Output/js/test.js
+var entryPoints = {};
+grunt.file.expand({
+	expand: true,
+	cwd: './_Build/js/'
+}, '**/--*.js').forEach(function(element, index){
+	entryPoints[element.split('--')[1].split('.js')[0]] = './_Build/js/' + element;
+});
 
-	const grunt = require('grunt');
-
-	// Javascript files in _Build/js that start with '--' will be treated as entry points and an output file will be generated with the same name minus the '--' prefix i.e _Build/js/libs/--test.js -> _Output/js/test.js
-	var entryPoints = {};
-	grunt.file.expand({
-		expand: true,
-		cwd: './_Build/js/'
-	}, '**/--*.js').forEach(function(element, index){
-		entryPoints[element.split('--')[1].split('.js')[0]] = './_Build/js/' + element;
-	});
-
-	config = {
+module.exports = {
+	options: {
 		watch: false,
 		cache: true,
 		entry: Object.assign(
@@ -89,7 +87,10 @@ function setup(){
 		},
 		plugins: [
 	    	new VueLoaderPlugin(),
-	    	new webpack.EnvironmentPlugin(Object.keys(process.env))
+			new webpack.DefinePlugin(Object.keys(process.env).reduce((a, b) => {
+				a[`process.env.${b}`] = webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[b]), ['./_Build/config/**/*.json']);
+				return a;
+			}, {}))
 	    ],
 	    optimization: {
 			splitChunks: ((!contentJson.attributes.splitChunks) ? {} : {
@@ -102,32 +103,17 @@ function setup(){
 				}
 			})
 		}
-	};
-}
-
-module.exports = {
-	dev: () => {
-		if(!config){
-			setup();
-		}
-
-		return Object.assign(config, {
-			mode: "development",
-			output: {
-				path: path.resolve(process.cwd(),'<%= root %>/js/')
-			}
-		});
 	},
-	dist: () => {
-		if(!config){
-			setup();
+	dev: {
+		mode: "development",
+		output: {
+			path: path.resolve(process.cwd(),'<%= root %>/js/')
 		}
-
-		return Object.assign(config, {
-			mode: "production",
-			output: {
-				path: path.resolve(process.cwd(), '.tmp/js/')
-			}
-		});
+	},
+	dist: {
+		mode: "production",
+		output: {
+			path: path.resolve(process.cwd(), '.tmp/js/')
+		}
 	}
 }

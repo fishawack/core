@@ -64,7 +64,7 @@ module.exports = function(grunt, hasBase) {
 			//FILENAME USED WHEN SAVING OUT ASSETS e.g PDF OF BUILD
 			filename: ''
 		};
-		
+
 		config.targets = loadTargets();
 		config.repo = repoInfo();
 		config.filename = filename();
@@ -128,6 +128,17 @@ module.exports = function(grunt, hasBase) {
 		grunt.file.write(contentPath, raw);
 
 		this.contentJson = JSON.parse(raw);
+
+		// Set Env variables
+		if(config){
+			process.env = Object.assign(process.env,
+				{ 
+					NODE_TARGET: deployBranch,
+					NODE_ENV: config.dev ? "development" : "production"
+				},
+				this.contentJson.attributes.env
+			);
+		}
     }
 
 	this.filename = () => `${config.repo.name}_${config.pkg.version}_${grunt.template.today("UTC:yyyy-mm-dd")}_${config.repo.commit}`;

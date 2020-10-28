@@ -1278,6 +1278,10 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 5.1.2
+* Env variables now update on watch
+* Made webpack structure flat
+
 ### 5.1.1
 * Can override/overwrite cordova config and/or platform settings
 
