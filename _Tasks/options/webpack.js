@@ -6,22 +6,19 @@ var config;
 var path = require('path');
 
 // Javascript files in _Build/js that start with '--' will be treated as entry points and an output file will be generated with the same name minus the '--' prefix i.e _Build/js/libs/--test.js -> _Output/js/test.js
-var entryPoints = {};
+var entry = {};
 grunt.file.expand({
 	expand: true,
 	cwd: './_Build/js/'
-}, '**/--*.js').forEach(function(element, index){
-	entryPoints[element.split('--')[1].split('.js')[0]] = './_Build/js/' + element;
+}, ['**/script.js', '**/--*.js']).forEach(function(element, index){
+	entry[(element.split('--')[1] || element.split('/')[element.split('/').length - 1]).split('.js')[0]] = './_Build/js/' + element;
 });
 
 module.exports = {
 	options: {
 		watch: false,
 		cache: true,
-		entry: Object.assign(
-			{ script: './_Build/js/script.js' },
-			entryPoints
-		),
+		entry,
 		output: {
 			filename: '[name].js',
 			chunkFilename: '[name].dynamic.js',
