@@ -16,10 +16,11 @@ module.exports = {
             }
         ],
         'templateData': "<%= this.contentPath %>",
-        'helpers': '_Build/handlebars/helpers/**/*.js',
+        'helpers': [
+            '_Build/handlebars/**/*.js'
+        ],
         'partials': [
-            '_Build/handlebars/partials/**/*.{hbs,svg,html}',
-            '_Build/handlebars/components/**/*.{hbs,svg,html}'
+            '_Build/handlebars/**/*.{hbs,svg,html}'
         ],
         'globals': [
             {
