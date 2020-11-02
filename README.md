@@ -1278,6 +1278,10 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 5.1.3
+* Can now have level overrides in handlebars
+* Can now have level overrides in javascript
+
 ### 5.1.2
 * Env variables now update on watch
 * Made webpack structure flat
