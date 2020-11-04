@@ -13,7 +13,7 @@ describe('svg', () => {
     
     it('Should generate svgSprite.svg', () => {
         try{
-            fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Build/handlebars/partials/generated/svgSprite.svg'), {encoding: 'utf8'});
+            fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Build/handlebars/generated/svgSprite.svg'), {encoding: 'utf8'});
         } catch(e){
             expect(e.message).to.not.contain('ENOENT');
         }
