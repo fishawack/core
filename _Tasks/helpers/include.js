@@ -154,7 +154,7 @@ module.exports = function(grunt, hasBase) {
 			commit = execSync('git rev-parse --short HEAD', {encoding: 'utf8'});
 		} catch(e){
 			name = process.cwd();
-			commit = Math.floor(Math.random()*90000) + 1000000;
+			commit = `${Math.floor(Math.random()*90000) + 1000000}`;
 		}
 		
 		var repo = {
