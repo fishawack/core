@@ -41,9 +41,8 @@ module.exports = {
     svgasis: {
         files: [{
             expand: true,
-            dot: true,
-            cwd: '_Build/svg',
-            src: ['**/*'],
+            cwd: '_Build',
+            src: ['svg/**/*.svg', 'icons/**/*.svg'],
             dest: '_Build/handlebars/generated/embed/',
             rename: function(dest, src){ // RENAMED SO DONT CLASH WITH HANDELBARS PARTIALS / HELPERS
                 return dest + 'svg--asis--' + src;
