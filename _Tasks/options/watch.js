@@ -22,7 +22,7 @@ module.exports = {
                 '_Build/*.html',
                 '_Build/html/**/*.html',
                 '_Build/handlebars/**/*',
-                '!_Build/handlebars/partials/generated/**/*'
+                '!_Build/handlebars/generated/**/*'
             ],
         tasks: ['reload', 'jsonlint', 'tv4', 'compile-handlebars', 'htmlmin', 'webpack:dev', 'concat:dev', 'compile-vue', 'sass', 'postcss:dev', 'clean:build']
     },

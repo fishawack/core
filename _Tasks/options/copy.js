@@ -31,7 +31,7 @@ module.exports = {
             dot: true,
             cwd: '.tmp/icons-min/',
             src: ['**/*'],
-            dest: '_Build/handlebars/partials/generated/embed/',
+            dest: '_Build/handlebars/generated/embed/',
             rename: function(dest, src){ // RENAMED SO DONT CLASH WITH HANDELBARS PARTIALS / HELPERS
                 return dest + 'svg--' + src;
             },
@@ -44,7 +44,7 @@ module.exports = {
             dot: true,
             cwd: '_Build/svg',
             src: ['**/*'],
-            dest: '_Build/handlebars/partials/generated/embed/',
+            dest: '_Build/handlebars/generated/embed/',
             rename: function(dest, src){ // RENAMED SO DONT CLASH WITH HANDELBARS PARTIALS / HELPERS
                 return dest + 'svg--asis--' + src;
             },

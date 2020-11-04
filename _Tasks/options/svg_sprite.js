@@ -3,7 +3,7 @@ module.exports = {
         expand: true,
         cwd: '.tmp/icons-min/',
         src: ['**/*.svg', '!**/__*.svg'],
-        dest: '_Build/handlebars/partials/generated/',
+        dest: '_Build/handlebars/generated/',
         options: {
             mode: {
                 symbol: {
