@@ -19,7 +19,7 @@ module.exports = {
 		},
 		banUnknownProperties: true
     },
-    all: {
+    default: {
     	"src": ["<%= this.contentPath %>"]
     }
 }

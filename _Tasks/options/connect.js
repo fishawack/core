@@ -1,5 +1,5 @@
 module.exports = {
-	server: {
+	default: {
         options: {
             port: 9001,
             base: '<%= root %>',

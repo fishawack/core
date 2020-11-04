@@ -1,5 +1,5 @@
 module.exports = {
-	all: {
+	default: {
         src: [
             '_Build/**/*.json',
             '!_Build/content/**/*',

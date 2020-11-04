@@ -1,5 +1,5 @@
 module.exports = {
-	default_options: {
+	default: {
         options: {
             css: false,
             skip: false,

@@ -6,7 +6,7 @@ module.exports = {
         minifyJS: true,
         collapseInlineTagWhitespace: false
     },
-	all: {
+	default: {
         files: [{
             expand: true,
             cwd: '.tmp/compiled',

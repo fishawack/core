@@ -1,5 +1,5 @@
 module.exports = {
-	dev: {
+	default: {
         bsFiles: {
             src : [
                 '<%= root %>/css/*.css',

@@ -1,5 +1,5 @@
 module.exports = {
-	all: {
+	default: {
         files: [{
             expand: true,
             cwd: '<%= root %>/media/',

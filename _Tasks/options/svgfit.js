@@ -1,5 +1,5 @@
 module.exports = {
-	dist: {
+	default: {
         files: [{
             expand: true,
             cwd: '_Build',

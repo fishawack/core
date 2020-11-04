@@ -1,5 +1,5 @@
 module.exports = {
-    global: {
+    default: {
         expand: true,
         cwd: '.tmp/icons-min/',
         src: ['**/*.svg', '!**/__*.svg'],
