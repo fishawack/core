@@ -50,15 +50,6 @@ module.exports = {
             flatten: true
         }]
     },
-    app: {
-        files: [{
-            expand: true,
-            dot: true,
-            cwd: '<%= root %>',
-            src: ['**/*'],
-            dest: '_App'
-        }]
-    },
     electron: {
         files: [
             {
