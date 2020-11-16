@@ -21,6 +21,7 @@ The following dependancies are needed to pull assets from the server and build t
 * node-gyp
 * grunt-cli
 * git
+* Dart Sass VM
 * wget
 * imagemagick
 * jq
@@ -47,6 +48,7 @@ These dependancies are only needed if you're planning to build a pdf locally or 
 
 ```bash
 brew install git
+brew install sass/sass/sass
 brew install wget
 brew install imagemagick
 brew install jq
@@ -86,6 +88,7 @@ xcode-select --install
 
 ```bash
 choco install git
+choco install sass/sass/sass
 choco install wget
 choco install imagemagick
 choco install ghostscript
@@ -1277,6 +1280,9 @@ You're all done, you should be able to populate your repo with the info provided
 ```
 
 ## Changelog
+
+### 5.1.5
+* Sass now uses Dart sass VM
 
 ### 5.1.4
 * Svg options and tasks cleanup
