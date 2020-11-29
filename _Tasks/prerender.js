@@ -5,6 +5,7 @@ module.exports = (grunt) => {
         const fs = require('fs');
         const path = require('path');
         const mkdirp = require('mkdirp');
+        const jsdom = require("jsdom");
 
         const Prerenderer = require('@prerenderer/prerenderer');
         const Renderer = require('@prerenderer/renderer-puppeteer');
@@ -30,7 +31,13 @@ module.exports = (grunt) => {
                 maxConcurrentRoutes: 10,
 
                 // Optional - Wait to render until the specified element is detected using `document.querySelector`
-                renderAfterElementExists: '.loaded'
+                renderAfterElementExists: '.loaded',
+
+                inject: {
+                    engine: 'puppeteer'
+                },
+
+                injectProperty: 'prerender'
             })
         });
 
@@ -47,8 +54,13 @@ module.exports = (grunt) => {
                     const outputDir = path.join(process.cwd(), dest, renderedRoute.route);
                     const outputFile = `${outputDir}/index.html`;
 
+                    var document = jsdom.jsdom(renderedRoute.html.trim());
+
+                    document.querySelector('html').classList.remove('loaded');
+                    document.querySelector('html').classList.add('loading');
+                    
                     mkdirp.sync(outputDir);
-                    fs.writeFileSync(outputFile, renderedRoute.html.trim());
+                    fs.writeFileSync(outputFile, jsdom.serializeDocument(document));
 
                     grunt.log.ok(renderedRoute.route);
                 });
