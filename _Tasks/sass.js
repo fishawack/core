@@ -4,8 +4,7 @@ module.exports = (grunt) => {
     var path = require('path');
 
     grunt.registerTask('sass', () => {
-        execSync(`
-            sass --update --no-source-map --style=expanded \
+        execSync(`sass --update --no-source-map --style=expanded \
             --load-path=node_modules/breakpoint-sass/stylesheets \
             --load-path=node_modules/normalize-scss/sass \
             --load-path=node_modules/@fishawack/lab-ui/_Build/sass \
