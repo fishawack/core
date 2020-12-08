@@ -1281,6 +1281,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 5.1.8
+* Sass task now has include path config
+
 ### 5.1.7
 * Set sass task up as a typical grunt multitask
 
