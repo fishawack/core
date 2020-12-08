@@ -1281,6 +1281,9 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Changelog
 
+### 5.1.7
+* Set sass task up as a typical grunt multitask
+
 ### 5.1.6
 * Prerender now has client side flag `window.prerender` which can be used to hydrate correctly
 * Fix for sass task on windows
