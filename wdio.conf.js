@@ -1,5 +1,13 @@
+// wdio.conf.js
+const drivers = {
+    chrome: { version: '85.0.4183.87' }, // https://chromedriver.chromium.org/
+    firefox: { version: 'latest' }, // https://github.com/mozilla/geckodriver/releases
+};
+
 exports.config = {
     services: ['selenium-standalone'],
+    // seleniumInstallArgs: { drivers }, // drivers to install
+    // seleniumArgs: { drivers }, // drivers to use
     //
     // ==================
     // Specify Test Files
