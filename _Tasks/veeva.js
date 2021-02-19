@@ -8,7 +8,90 @@ keyMessages = [
 ];
 
 module.exports = function(grunt) {
-    grunt.registerTask('package:veeva', ['clean:veeva', 'connect', 'webdriver:pdf', 'veeva', 'ftpscript:veeva', 'clean:build']);
+    grunt.registerTask('package:veeva', ['clean:veeva', 'connect', 'webdriver:pdf', 'veeva', 'veeva:mcl', 'ftpscript:veeva', 'clean:build']);
+
+    grunt.registerTask('veeva:mcl', function() {
+        const createCsvWriter = require('csv-writer').createArrayCsvWriter;
+
+        let options = contentJson.attributes.veeva;
+
+        if(typeof options !== "object"){
+            options =  {
+                id: config.repo.name
+            };
+        }
+
+        var done = this.async();
+
+        require("fs-extra").mkdirpSync(`_Packages/Veeva/`);
+
+        createCsvWriter({
+                path: `_Packages/Veeva/MCL${filename()}-${options.id}.csv`,
+                header: require('../_Resources/Veeva/mcl.json')
+            })
+            .writeRecords([[
+                    "",
+                    `${options.id}_P`,
+                    options.presentation || `${options.id}_${config.repo.name}`,
+                    "",
+                    options.presentation || `${options.id}_${config.repo.name}`,
+                    "FALSE",
+                    "Presentation",
+                    "Binder Lifecycle",
+                    "", "",
+                    "FALSE",
+                    "FALSE",
+                    options.product || "",
+                    options.country || "",
+                    options.start || "",
+                    options.end || "",
+                    "", "", "", "", "", "", "", "", "", "",
+                    "Yes",
+                    "",
+                    "English",
+                    "",
+                    "NO",
+                    "",
+                    "NO",
+                    `${options.id}_P`,
+                    "", ""
+                ]]
+                .concat(
+                    keyMessages.map((d, i) => {
+                        return [
+                            "",
+                            `${options.id}_S${i + 1}`,
+                            d.seqName,
+                            d.seqName,
+                            "",
+                            "FALSE",
+                            "Slide",
+                            "CRM Content Lifecycle",
+                            `${options.id}_P`,
+                            "FALSE",
+                            "", "", "", "", "", "", "", "",
+                            "HTML",
+                            "", "", "",
+                            options.product || "",
+                            options.country || "",
+                            `${d.zipName}.zip`,
+                            "NO",
+                            "",
+                            "Yes",
+                            "",
+                            "English",
+                            "",
+                            "NO",
+                            "", "",
+                            "WKWebView",
+                            "Scale To Fit"
+                        ]
+                    })
+                )
+            )
+            .catch(err => console.log(err))
+            .finally(() => done());
+    });
 
     grunt.registerTask('veeva', function() {
         var glob = require('glob');

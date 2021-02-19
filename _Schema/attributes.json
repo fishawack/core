@@ -53,7 +53,33 @@
 					"type": "boolean"
 				},
 				"veeva": {
-					"type": "boolean"
+					"type": ["object", "boolean"],
+					"properties": {
+						"id": {
+							"type": "string",
+							"description": "The id of the presentation"
+						},
+						"presentation": {
+							"type": "string",
+							"description": "The name of the presentation"
+						},
+						"start": {
+							"type": "string",
+							"description": "Optional start date that the presentation is available, format MM/DD/YY"
+						},
+						"end": {
+							"type": "string",
+							"description": "Optional end date that the presentation is available, format MM/DD/YY"
+						},
+						"product": {
+							"type": "string",
+							"description": "The name of the product"
+						},
+						"country": {
+							"type": "string",
+							"description": "The target country"
+						}
+					}
 				},
 				"vablet": {
 					"type": "object",
