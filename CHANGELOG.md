@@ -1,7 +1,9 @@
 ## Changelog
 
-### 6.0.0
-* Pinned firefox/chrome versions
+### 5.2.0 (2021-02-19)
+* [Change] Pinned firefox/chrome versions
+* [Change] Sass now uses grunt built in file globbing
+* [Docs] Changelog moved to standalone file
 
 ### 5.1.8
 * Sass task now has include path config
