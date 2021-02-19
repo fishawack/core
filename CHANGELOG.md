@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.2.1 (2021-02-19)
+* [Feature] Veeva builds now publish a Multichannel loader packaged inside the zip file
+
 ### 5.2.0 (2021-02-19)
 * [Change] Pinned firefox/chrome versions
 * [Change] Sass now uses grunt built in file globbing
