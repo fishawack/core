@@ -84,7 +84,7 @@ module.exports = function(grunt) {
                             "NO",
                             "", "",
                             "WKWebView",
-                            "Scale To Fit"
+                            "Default For Device"
                         ]
                     })
                 )

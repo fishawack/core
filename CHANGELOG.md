@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.2.2 (2021-02-20)
+* [Change] Veeva MCL iOS resolution changed from `Scale to Fit` to `Default For Device`
+
 ### 5.2.1 (2021-02-19)
 * [Feature] Veeva builds now publish a Multichannel loader packaged inside the zip file
 
