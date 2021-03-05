@@ -34,5 +34,6 @@
     "pres.cobrowse_content__v",
     "pres.crm_presentation_id__v",
     "slide.crm_ios_viewer__v",
-    "slide.ios_resolution__v"
+    "slide.ios_resolution__v",
+    "slide.crm_disable_actions__v"
 ]

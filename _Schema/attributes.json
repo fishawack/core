@@ -53,6 +53,7 @@
 					"type": "boolean"
 				},
 				"veeva": {
+					"description": "Veeva specific config",
 					"type": ["object", "boolean"],
 					"properties": {
 						"id": {
@@ -78,6 +79,17 @@
 						"country": {
 							"type": "string",
 							"description": "The target country"
+						},
+						"disable": {
+							"description": "Disables native functionality for all slides",
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"Swipe",
+									"Rotation Lock"
+								]
+							}
 						}
 					}
 				},

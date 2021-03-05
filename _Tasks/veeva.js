@@ -3,7 +3,8 @@ keyMessages = [
         zipName: `${config.repo.name}`,
         seqName: contentJson.attributes.title,
         screenshotName: '*',
-        root: config.root
+        root: config.root,
+        veeva: {}
     }
 ];
 
@@ -84,7 +85,8 @@ module.exports = function(grunt) {
                             "No",
                             "", "",
                             "WKWebView",
-                            "Default For Device"
+                            "Default For Device",
+                            (d.veeva.disable || options.disable || []).join(', ')
                         ]
                     })
                 )
