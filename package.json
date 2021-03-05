@@ -11,7 +11,7 @@
     "content": "grunt content",
     "test": "grunt validate",
     "mocha": "mocha _Test/*.js --timeout 120s --bail",
-    "preversion": "npm run mocha",
+    "preversion": "lab-env run -d mocha",
     "postversion": "git push && git push --tags && npm publish"
   },
   "files": [
