@@ -19,3 +19,4 @@ ssh-*
 .ftppass
 id_rsa
 misc.json
+.cache/
