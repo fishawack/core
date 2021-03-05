@@ -1,5 +1,9 @@
 ## Changelog
 
+### 5.3.0 (2021-03-05)
+* [Feature] Can now set the disabled actions in veeva MCL
+* [Change] Schema's now written to hidden `.cache` folder to fix issue with node_modules now being in docker volumes
+
 ### 5.2.2 (2021-02-20)
 * [Change] Veeva MCL iOS resolution changed from `Scale to Fit` to `Default For Device`
 
