@@ -68,7 +68,7 @@ module.exports = function(grunt) {
         contentJson.attributes.content.forEach(function(d, i){
             if(d.url){
                 requests = requests.concat(d.endpoints.map((dd) => limit(() => load({
-                        path: d.url,
+                        path: d.url.replace(/\/+$/, ""),
                         endpoint: dd,
                         ext: d.ext,
                         saveTo: (d.saveTo || `_Build/content/content-${i}/`) + (d.bundle ? 'media/' : '')
@@ -87,7 +87,7 @@ module.exports = function(grunt) {
                     }))));
 
                 requests.push(limit(() => download({
-                        path: d.url,
+                        path: d.url.replace(/\/+$/, ""),
                         saveTo: d.saveTo || `_Build/content/content-${i}/`,
                         index: i
                     }, 1)));
