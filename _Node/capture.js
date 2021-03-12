@@ -12,7 +12,11 @@ fs.mkdirpSync(`.tmp/screenshots/`);
 
 var custom = {};
 
-if(fileExists('capture.js', '_Node', grunt)){
+// Load custom capture code in level-0 folder if exists
+if(fileExists('capture.js', '_Node/level-0', grunt)){
+    custom = require(process.cwd() + '/_Node/level-0/capture.js');
+// Load custom capture code in root _Node folder
+} else if(fileExists('capture.js', '_Node', grunt)){
     custom = require(process.cwd() + '/_Node/capture.js');
 }
 
