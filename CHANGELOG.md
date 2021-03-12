@@ -1,5 +1,10 @@
 ## Changelog
 
+### 5.4.0 (2021-03-12)
+* [Feature] Can now have level specific capture code
+* [Bug] No longer fails to pull from CMS if there's a trailing slash in the url
+* [Bug] Correctly return promises in `content-request` to avoid runaway promise resolution
+
 ### 5.3.0 (2021-03-05)
 * [Feature] Can now set the disabled actions in veeva MCL
 * [Change] Schema's now written to hidden `.cache` folder to fix issue with node_modules now being in docker volumes
