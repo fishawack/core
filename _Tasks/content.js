@@ -109,7 +109,7 @@ module.exports = function(grunt) {
                         }
                     });
 
-                    Promise.all(rewrites)
+                    return Promise.all(rewrites)
                         .catch(err => grunt.log.warn(err.message))
                         .finally(() => done());
                 })
@@ -196,10 +196,10 @@ module.exports = function(grunt) {
                             }
                         });
 
-                        Promise.all(arr)
+                        return Promise.all(arr)
                             .then(res => {
                                 if(current && current !== index){
-                                    download(options, ++index)
+                                    return download(options, ++index)
                                         .then(() => resolve());
                                 } else {
                                     resolve();
