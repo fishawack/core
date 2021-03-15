@@ -72,7 +72,8 @@ module.exports = function(grunt) {
                             "No",
                             "", "", "", "", "", "", "", "",
                             "HTML",
-                            "", "", "",
+                            "", "",
+                            (d.veeva.disable || options.disable || []).join(', '),
                             options.product || "",
                             options.country || "",
                             `${d.zipName}.zip`,
@@ -85,8 +86,7 @@ module.exports = function(grunt) {
                             "No",
                             "", "",
                             "WKWebView",
-                            "Default For Device",
-                            (d.veeva.disable || options.disable || []).join(', ')
+                            "Default For Device"
                         ]
                     })
                 )
