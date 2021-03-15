@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.4.1 (2021-03-15)
+* [Bug] Removed duplicate multi channel loader column
+
 ### 5.4.0 (2021-03-12)
 * [Feature] Can now have level specific capture code
 * [Bug] No longer fails to pull from CMS if there's a trailing slash in the url
