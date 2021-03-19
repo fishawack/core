@@ -12,6 +12,7 @@ module.exports = function(grunt) {
     grunt.registerTask('package:veeva', ['clean:veeva', 'connect', 'webdriver:pdf', 'veeva', 'veeva:mcl', 'ftpscript:veeva', 'clean:build']);
 
     grunt.registerTask('veeva:mcl', function() {
+        var jsdom = require("jsdom");
         const createCsvWriter = require('csv-writer').createArrayCsvWriter;
 
         let options = contentJson.attributes.veeva;
@@ -59,11 +60,13 @@ module.exports = function(grunt) {
                 ]]
                 .concat(
                     keyMessages.map((d, i) => {
+                        var safeName = jsdom.jsdom(d.seqName).querySelector('body').textContent;
+
                         return [
                             "",
                             `${options.id}_S${i + 1}`,
-                            d.seqName,
-                            d.seqName,
+                            safeName,
+                            safeName,
                             "",
                             "No",
                             "Slide",
