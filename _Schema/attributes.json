@@ -66,11 +66,13 @@
 						},
 						"start": {
 							"type": "string",
-							"description": "Optional start date that the presentation is available, format MM/DD/YY"
+							"description": "Optional start date that the presentation is available, format MM/DD/YYYY",
+							"pattern": "^(((0)[0-9])|((1)[0-2]))(\/)([0-2][0-9]|(3)[0-1])(\/)\\d{4}$"
 						},
 						"end": {
 							"type": "string",
-							"description": "Optional end date that the presentation is available, format MM/DD/YY"
+							"description": "Optional end date that the presentation is available, format MM/DD/YYYY",
+							"pattern": "^(((0)[0-9])|((1)[0-2]))(\/)([0-2][0-9]|(3)[0-1])(\/)\\d{4}$"
 						},
 						"product": {
 							"type": "string",
