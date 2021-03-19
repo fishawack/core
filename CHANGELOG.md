@@ -1,5 +1,9 @@
 ## Changelog
 
+### 5.5.0 (2021-03-19)
+* [Change] Date on veeva end and start now validated
+* [Change] Make titles safe strings before adding to MCL
+
 ### 5.4.1 (2021-03-15)
 * [Bug] Removed duplicate multi channel loader column
 
