@@ -194,11 +194,11 @@ module.exports = function(grunt, hasBase) {
 
 	this.captureEnv = function(){
 		return {
-	        browsers: contentJson.attributes.pdf && contentJson.attributes.pdf.browsers || ['chrome'],
-	        pages: contentJson.attributes.pdf && contentJson.attributes.pdf.pages || ['/index.html'],
-			sizes: contentJson.attributes.pdf && contentJson.attributes.pdf.sizes || [[1080, 608]],
-			url: contentJson.attributes.pdf && contentJson.attributes.pdf.url || 'http://localhost:9001',
-			wait: contentJson.attributes.pdf && contentJson.attributes.pdf.wait || '.loaded'
+	        browsers: contentJson.attributes.capture && contentJson.attributes.capture.browsers || ['chrome'],
+	        pages: contentJson.attributes.capture && contentJson.attributes.capture.pages || ['/index.html'],
+			sizes: contentJson.attributes.capture && contentJson.attributes.capture.sizes || [[1080, 608]],
+			url: contentJson.attributes.capture && contentJson.attributes.capture.url || 'http://localhost:9001',
+			wait: contentJson.attributes.capture && contentJson.attributes.capture.wait || '.loaded'
 		};
 	};
 

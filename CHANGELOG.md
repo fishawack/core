@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.7.0 (2021-03-22)
+* [Change] Pdf options now moved to capture object, this allows for pdf specific code in capture.js
+
 ### 5.6.0 (2021-03-22)
 * [Change] Optimized pdf/capture process to only once
 

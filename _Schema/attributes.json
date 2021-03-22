@@ -46,6 +46,9 @@
 	            "phonegap": {
 					"$ref": "phonegap.json#/definitions/phonegap"
 				},
+				"capture": {
+					"$ref": "pdf.json#/definitions/capture"
+				},
 				"pdf": {
 					"$ref": "pdf.json#/definitions/pdf"
 				},
