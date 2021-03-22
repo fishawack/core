@@ -9,7 +9,7 @@ const glob = require('glob');
 
 describe('pdf', () => {
     before(() => {
-        execSync('grunt connect webdriver:pdf --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt capture pdf --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
     });
     
     it('Should generate a pdf file', () => {
