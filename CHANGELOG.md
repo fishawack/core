@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.6.0 (2021-03-22)
+* [Change] Optimized pdf/capture process to only once
+
 ### 5.5.0 (2021-03-19)
 * [Change] Date on veeva end and start now validated
 * [Change] Make titles safe strings before adding to MCL
