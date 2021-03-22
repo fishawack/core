@@ -2,8 +2,17 @@ module.exports = function(grunt) {
     grunt.registerTask('package', function(){
         var package = ['clean:zip'];
 
+        /* CAPTURE */
+        if( 
+            contentJson.attributes.pdf ||
+            contentJson.attributes.veeva ||
+            contentJson.attributes.cegedim
+        ){
+            package.push('capture');
+        }
+        
         /* PDF */
-        (contentJson.attributes.pdf) ? package.push('pdf', 'ftpscript:pdf') : grunt.log.warn('No pdf generation for ' + deployBranch);
+        (contentJson.attributes.pdf) ? package.push('package:pdf', 'ftpscript:pdf') : grunt.log.warn('No pdf packaging detected');
 
         /* VABLET */
         (contentJson.attributes.vablet) ? package.push('package:vablet', 'compress:vablet') : grunt.log.warn('No vablet packaging detected');

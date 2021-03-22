@@ -9,7 +9,7 @@ keyMessages = [
 ];
 
 module.exports = function(grunt) {
-    grunt.registerTask('package:veeva', ['clean:veeva', 'connect', 'webdriver:pdf', 'veeva', 'veeva:mcl', 'ftpscript:veeva', 'clean:build']);
+    grunt.registerTask('package:veeva', ['clean:veeva', 'veeva', 'veeva:mcl', 'ftpscript:veeva', 'clean:build']);
 
     grunt.registerTask('veeva:mcl', function() {
         var jsdom = require("jsdom");

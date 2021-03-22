@@ -8,7 +8,7 @@ keyMessages = [
 ];
 
 module.exports = function(grunt) {
-    grunt.registerTask('package:cegedim', ['clean:cegedim', 'connect', 'webdriver:pdf', 'cegedim', 'clean:build']);
+    grunt.registerTask('package:cegedim', ['clean:cegedim', 'cegedim', 'clean:build']);
 
     grunt.registerTask('cegedim', function() {
         var glob = require('glob');

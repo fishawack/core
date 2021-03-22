@@ -3,11 +3,9 @@
 var grunt = require('grunt');
 var fs = require('fs-extra');
 require('../_Tasks/helpers/include.js')(grunt, true);
-require('./createPdfsAndZips.js')(grunt);
 
 initConfig();
 
-fs.mkdirpSync('_Pdfs');
 fs.mkdirpSync(`.tmp/screenshots/`);
 
 var custom = {};
@@ -58,18 +56,6 @@ var capture = {
                 for(var i = 0; i < capture.page.array.length; i++){
                     capture.page.call(i);
                 }
-
-                describe(`Archiving and packing`, function () {
-                    it(`Merging & optimizing pdfs`, function() {
-                        browser.call(() => {
-                            return createPdfsAndZips(
-                                    capture.screenshot.path,
-                                    '.tmp/screenshots',
-                                    `${config.filename}_${capture.size.width}x${capture.size.height}_${capture.size.browser}.pdf`
-                                );
-                        });
-                    });
-                });
             });
         }
     },
