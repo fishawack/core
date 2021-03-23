@@ -2,6 +2,8 @@
 
 ### 5.8.0 (2021-03-23)
 * [Change] Put handover package type behind a handover property in the config
+* [Bug] Updated tests to correctly check for empty array
+* [Bug] Fixed issue in compare function that was throwing an error
 
 ### 5.7.0 (2021-03-22)
 * [Change] Pdf options now moved to capture object, this allows for pdf specific code in capture.js

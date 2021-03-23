@@ -4,6 +4,7 @@ module.exports = (path, folder, pdf) => {
 	var merge = require('easy-pdf-merge');
 	var fs = require('fs-extra');
 	var exec = require('child_process').exec;
+	const glob = require('glob');
 
 	fs.mkdirpSync('.tmp/pdfs/');
 	fs.mkdirpSync('_Pdfs');
@@ -13,12 +14,12 @@ module.exports = (path, folder, pdf) => {
 
 		var arrayOfScreens = [];
 
-		grunt.file.expand({cwd: `${folder}/${path}/`}, '*').forEach(function(element, index){
+		glob.sync('*', {cwd: `${folder}/${path}/`}).forEach(function(element, index){
 			arrayOfScreens.push(element);
 		});
 
 		if(!arrayOfScreens.length){
-			grunt.log.warn('No pages found');
+			console.log('No pages found');
 			return resolve();
 		}
 

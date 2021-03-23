@@ -13,10 +13,10 @@ describe('veeva', () => {
     });
     
     it('Should generate a veeva key message zip', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Packages/Veeva/*.zip'))).to.have.length;
+        expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Packages/Veeva/*.zip'))).to.be.an('array').that.is.not.empty;
     });
 
     it('Should generate a veeva key message ctl file', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Packages/Veeva/ctlfile/*.ctl'))).to.have.length;
+        expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Packages/Veeva/ctlfile/*.ctl'))).to.be.an('array').that.is.not.empty;
     });
 });

@@ -10,7 +10,7 @@ module.exports = function(grunt) {
     });
 
     function compare(done, crossBrowser){
-        require('../_Node/createPdfsAndZips.js')(grunt);
+        var createPdfsAndZips = require('../_Node/createPdfsAndZips');
 
         var resemble = require('resemblejs');
         var fs = require('fs-extra');

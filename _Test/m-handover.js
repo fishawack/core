@@ -13,6 +13,6 @@ describe('handover', () => {
     });
     
     it('Should pull in the build files', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Packages/Handover/_Build/**/*'))).to.have.length;
+        expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Packages/Handover/_Build/**/*'))).to.be.an('array').that.is.not.empty;
     });
 });

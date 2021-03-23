@@ -13,6 +13,6 @@ describe('cegedim', () => {
     });
     
     it('Should generate a cegedim key message zip', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Packages/Cegedim/*.zip'))).to.have.length;
+        expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Packages/Cegedim/*.zip'))).to.be.an('array').that.is.not.empty;
     });
 });
