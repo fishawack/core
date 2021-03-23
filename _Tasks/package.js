@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         package.push('compress:app');
 
         /* HANDOVER */
-        package.push('package:handover', 'compress:handover');
+        (contentJson.attributes.handover) ? package.push('package:handover', 'compress:handover') : grunt.log.warn('No handover packaging detected');
 
         /* ELECTRON */
         (contentJson.attributes.electron) ? package.push('package:electron', 'compress:mac', 'compress:win') : grunt.log.warn('No electron packaging specified');

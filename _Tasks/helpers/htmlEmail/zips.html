@@ -14,7 +14,10 @@
 				},
 				{
 					"name": "Handover",
-					"zip": "_Handover"
+					"zip": "_Handover",
+					"check": function(){
+						return contentJson.attributes.handover;
+					}
 				},
 				{
 					"name": "Veeva",

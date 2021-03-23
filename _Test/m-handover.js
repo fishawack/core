@@ -9,7 +9,7 @@ const glob = require('glob');
 
 describe('handover', () => {
     before(() => {
-        execSync('grunt cegedim --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt handover --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
     });
     
     it('Should pull in the build files', () => {

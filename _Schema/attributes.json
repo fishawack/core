@@ -52,6 +52,9 @@
 				"pdf": {
 					"$ref": "pdf.json#/definitions/pdf"
 				},
+				"handover": {
+					"type": "boolean"
+				},
 				"cegedim": {
 					"type": "boolean"
 				},
