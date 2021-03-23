@@ -9,7 +9,7 @@ const glob = require('glob');
 
 describe('handover', () => {
     before(() => {
-        execSync('grunt handover --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt package:handover --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'inherit'});
     });
     
     it('Should pull in the build files', () => {
