@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.8.1 (2021-03-24)
+* [Bug] Append the branch name to any generated files to stop files overwriting each other if the same package type specified for multiple branches
+
 ### 5.8.0 (2021-03-23)
 * [Change] Put handover package type behind a handover property in the config
 * [Bug] Updated tests to correctly check for empty array
