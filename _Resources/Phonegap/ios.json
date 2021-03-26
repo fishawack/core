@@ -1,26 +1,5 @@
 {
     "@name": "ios",
-    "preference": [
-        {
-            "@name": "WKWebViewOnly",
-            "@value": "true"
-        },
-        {
-            "@name": "CordovaWebViewEngine",
-            "@value": "CDVWKWebViewEngine"
-        }
-    ],
-    "feature": [
-        {
-            "@name": "CDVWKWebViewEngine",
-            "param": [
-                {
-                    "@name": "ios-package",
-                    "@value": "CDVWKWebViewEngine"
-                }
-            ]
-        }
-    ],
     "icon": [
         {
             "@src": "www/media/content/res/icon/ios/icon-1024.png",

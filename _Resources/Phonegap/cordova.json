@@ -16,11 +16,6 @@
         "platform": [],
         "plugin": [
             {
-                "@name": "cordova-plugin-wkwebview-engine",
-                "@spec": "1.2.1",
-                "@source": "npm"
-            },
-            {
                 "@name": "cordova-plugin-device",
                 "@spec": "2.0.3",
                 "@source": "npm"
