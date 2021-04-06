@@ -1278,3 +1278,54 @@ You're all done, you should be able to populate your repo with the info provided
         "bundle": "com.fishawack.AppNameGoesHere"
 }
 ```
+
+## Troubleshooting
+
+### Customizer 404
+
+```bash
+npm ERR! code E404
+npm ERR! 404 Not Found - GET https://codeload.github.com/Modernizr/customizr/legacy.tar.gz/develop
+```
+
+#### Problem
+
+This issue stems from a bad decision on the Customizr open source library to point a dev dependency directly to a file stored on a branch of a repo.
+
+[We did try](https://github.com/Modernizr/grunt-modernizr/issues/146) to convince the author to fix the issue on their side, and in fact they did fix it for a while, but ultimately the problem surfaced again a few months later.
+
+#### Solution
+
+We put a permanant fix inplace for this as of [core version 4.5.3](#core-changelog-453). Bump to at least this version and regenerate the `package-lock.json` file.
+
+## Migrating
+
+### 5.0.0
+
+Up until now, master branch always deployed the production target, qc branch deployed qc target and development  deployed staging. Now deploy targets are mapped directly to branch names, so a staging branch will need to be created to deploy the old staging deploy target. The config will also need updating to the following format.
+
+```json
+// Old way
+{
+    "attributes": {
+        "staging": {
+            "url": "...",
+            "location": "..."
+        }
+    }
+}
+
+// New way
+{
+    "attributes": {
+        "targets": {
+            "staging": {
+                "deploy": {
+                    "url": "...",
+                    "location": "..."
+                }
+            }
+        }
+    }
+}
+```
