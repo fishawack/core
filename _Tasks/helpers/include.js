@@ -77,6 +77,16 @@ module.exports = function(grunt, hasBase) {
 	    this.deployLocation = truePath(deployEnv.location || '');
 		this.deployUrl = truePath(deployEnv.url || '');
 		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp] || {};
+
+		keyMessages = [
+			{
+				zipName: `${config.repo.name}`,
+				seqName: contentJson.attributes.title,
+				screenshotName: '*',
+				root: config.root,
+				veeva: {}
+			}
+		];
 	};
 
 	// This function is called twice on startup, the first time is used to grab deploy targets and hard coded values, the second time and all subsequent watch reloads will process any grunt template tags that are found

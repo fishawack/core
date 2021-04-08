@@ -1,12 +1,3 @@
-keyMessages = [
-    {
-        zipName: `${config.repo.name}`,
-        seqName: contentJson.attributes.title,
-        screenshotName: '*',
-        root: config.root
-    }
-];
-
 module.exports = function(grunt) {
     grunt.registerTask('package:cegedim', ['clean:cegedim', 'cegedim', 'clean:build']);
 

@@ -1,15 +1,15 @@
 module.exports = grunt => {
     // Pull in include
     require('./_Tasks/helpers/include.js')(grunt);
-
-    // Pull in include from build folder
-    try{ require(process.cwd() + '/_Tasks/helpers/include.js')(grunt); } catch(e){}
     
     if(devProject){
         require('time-grunt')(grunt);
     }
 
     initConfig();
+
+    // Pull in include from build folder
+    try{ require(process.cwd() + '/_Tasks/helpers/include.js')(grunt); } catch(e){}
 
     // Load options
     grunt.util._.extend(config, loadConfig(process.cwd() + '/' + configPath + '_Tasks/options/'));
