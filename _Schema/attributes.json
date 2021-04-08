@@ -98,6 +98,31 @@
 									"Rotation Lock"
 								]
 							}
+						},
+						"state": {
+							"description": "Define the field and object to use in the salesforce database when storing state",
+							"type": "object",
+							"properties": {
+								"object": {
+									"description": "The object to store state against",
+									"type": "string",
+									"enum": [
+										"Account",
+										"TSF",
+										"User",
+										"Address",
+										"Call",
+										"Presentation",
+										"KeyMessage",
+										"CallObjective"
+									]
+								},
+								"field": {
+									"description": "The custom field to store state against. This field should be created as a Text Area (Long) with the maxium length of 131072",
+									"type": "string"
+								}
+							},
+							"required": ["object", "field"]
 						}
 					}
 				},
