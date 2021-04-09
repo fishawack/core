@@ -1,5 +1,11 @@
 ## Changelog
 
+### 5.9.0 (2021-04-09)
+* [Feature] Can now have veeva state field and object to specific which database fields to store state against
+* [Change] Bumped the veeva framework code and manually updated a few lines to stop it throwing errors if anything else uses postMessage function
+* [Change] Removed dupe key messages in the cegedim and veeva task and moved them to shared include.js
+* [Change] initConfig now comes before the external include call
+
 ### 5.8.1 (2021-03-24)
 * [Bug] Append the branch name to any generated files to stop files overwriting each other if the same package type specified for multiple branches
 
