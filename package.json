@@ -12,7 +12,8 @@
     "test": "grunt validate",
     "mocha": "mocha _Test/*.js --timeout 120s --bail",
     "preversion": "lab-env run -d mocha",
-    "postversion": "git push && git push --tags && npm publish"
+    "postversion": "git push && git push --tags && npm publish",
+    "postpublish": "git checkout development && git merge master && git push"
   },
   "files": [
     "_Node",
