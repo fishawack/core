@@ -1,5 +1,9 @@
 ## Changelog
 
+### 5.10.0 (2021-04-21)
+* [Feature] Can now have Ui tests that run via webdriverio
+* [Docs] Pdf documentation updates
+
 ### 5.9.0 (2021-04-09)
 * [Feature] Can now have veeva state field and object to specific which database fields to store state against
 * [Change] Bumped the veeva framework code and manually updated a few lines to stop it throwing errors if anything else uses postMessage function
