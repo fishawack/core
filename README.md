@@ -1005,7 +1005,7 @@ To fine tune the pdf generation an object can be passed into the pdf property en
                 "chrome"
             ],
             "pages": [
-                "index.html"
+                "/index.html"
             ],
             "sizes": [
                 [1080, 608]
@@ -1034,7 +1034,7 @@ If the browsers specified here aren't on your machine and you try to generate a 
 
 ### Pages
 
-Specify an array of pages that you wish to capture. Hashbangs without `.html` in front of them will go to the default `index.html#/`. You can however pass in different html files if you have multiple vue entry points `newPage.html#/about`.
+Specify an array of pages that you wish to capture. Hashbangs without `.html` in front of them will go to the default `/index.html#/`. You can however pass in different html files if you have multiple vue entry points `/newPage.html#/about`.
 
 #### JSON
 ```json
