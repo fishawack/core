@@ -629,7 +629,7 @@ Keeping all custom sass imports mixed with large vendor imports can result in ve
 This file should be used to import any large 3rd party libraries or code that doesn't often change, that way your compile speed on the code you modify frequently will remain fast.
 
 #### vendor.scss
-```sass
+```scss
 @import "breakpoint";
 
 @import "@fishawack/lab-ui/_mixins.scss";
@@ -657,7 +657,7 @@ This file should be used to import any large 3rd party libraries or code that do
 ```
 
 #### general.scss
-```sass
+```scss
 @import "breakpoint";
 
 @import "@fishawack/lab-ui/_mixins.scss";
