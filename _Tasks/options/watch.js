@@ -8,7 +8,7 @@ module.exports = {
     },
     scripts: {
         files: ['_Build/js/**/*.js', '!_Build/js/generated/**/*'],
-        tasks: ['jshint', 'webpack:dev', 'concat:dev', 'karma:unit:run']
+        tasks: ['jshint', 'webpack:dev', 'concat:dev']
     },
     styles: {
         files: ['_Build/vue/**/*.scss', '_Build/sass/**/*.scss'],
@@ -29,9 +29,5 @@ module.exports = {
     assets: {
         files: ['_Build/media/**/*'],
         tasks: ['copy:assets']
-    },
-    unitTests: {
-        files: ['_Test/karma/**/*'],
-        tasks: ['karma:unit:run']
     }
 }
