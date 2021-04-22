@@ -1,5 +1,5 @@
 module.exports = {
-	cache: ["_Output/css/*.cache.*.css", "_Output/js/*.cache.*.js"],
+	cache: ["_Output/css/*.cache.*.css", "_Output/js/*.cache.*.js", '.cache'],
 	build: [".tmp"],
     dist: ["<%= root %>", "_Build/**/generated/**/*"],
     zip: ['_Zips/**/*'],
