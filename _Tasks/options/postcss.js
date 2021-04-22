@@ -65,9 +65,9 @@ module.exports = {
 	dev: {
 		files: [{
 			expand: true,
-			cwd: '.tmp/css/',
+			cwd: '.cache/css/',
 			src: ['*.css'],
-			dest: '<%= root %>/css/'
+			dest: '.tmp/css/'
 		}]
 	},
 	dist: {
@@ -83,9 +83,9 @@ module.exports = {
 		},
 		files: [{
 			expand: true,
-			cwd: '.tmp/css/',
+			cwd: '.cache/css/',
 			src: ['*.css'],
-			dest: '<%= root %>/css/'
+			dest: '.tmp/css/'
 		}]
 	}
 

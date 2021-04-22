@@ -33,5 +33,21 @@ module.exports = {
                 return path + file.replace('++', '');
             }
         }]
+    },
+    sass: {
+        options: {
+            separator: '\n',
+        },
+        files: [
+            {
+                '<%= root %>/css/general.css': ['.tmp/css/vendor.css', '.tmp/css/general.css']
+            },
+            {
+                expand: true,
+                cwd: '.tmp/css',
+                src: ['*.css', '!general.css', '!vendor.css'],
+                dest: '<%= root %>/css/',
+            }
+        ]
     }
 }

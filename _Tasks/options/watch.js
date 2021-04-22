@@ -12,7 +12,7 @@ module.exports = {
     },
     styles: {
         files: ['_Build/vue/**/*.scss', '_Build/sass/**/*.scss'],
-        tasks: ['compile-vue', 'sass', 'postcss:dev', 'clean:build']
+        tasks: ['compile-vue', 'sass', 'postcss:dev', 'concat:sass', 'clean:build']
     },
     html: {
         files: [
