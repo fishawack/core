@@ -8,7 +8,7 @@ const path = require('path');
 
 describe('css', () => {
     before(() => {
-        execSync('grunt sass postcss:dev --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt sass postcss:dev concat:sass --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
     });
     
     it('Should generate a css bundle', () => {
