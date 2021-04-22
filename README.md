@@ -602,7 +602,7 @@ To create another entry point simply create a new sass file and exclude the stan
 _Build/sass/newEntry.scss   >>   _Output/css/newEntry.css
 ```
 
-### Prefixing
+### Auto-prefixing
 
 You **don't** need to prefix any css properties with browser prefixes as the bundler will automatically apply them based on the latest browser version.
 
@@ -620,6 +620,57 @@ You **don't** need to prefix any css properties with browser prefixes as the bun
     -moz-appearance: none;
     appearance: none;
 }
+```
+
+### Vendor imports
+
+Keeping all custom sass imports mixed with large vendor imports can result in very slow compile times. To combat this you can specify a special entry point named `vendor.scss` at the same location as the regular entrypoint `general.scss`. This file works like any other scss entry file aside from it automatically getting combined with `general.scss` during the build resulting in the same single css file `_Output/css/general.css` needing to be imported via html.
+
+This file should be used to import any large 3rd party libraries or code that doesn't often change, that way your compile speed on the code you modify frequently will remain fast.
+
+#### vendor.scss
+```sass
+@import "breakpoint";
+
+@import "@fishawack/lab-ui/_mixins.scss";
+@import "_mixins.scss";
+
+@import "@fishawack/lab-ui/_variables.scss";
+@import "_variables.scss";
+
+@import "@fishawack/lab-ui/_defaults.scss";
+@import "_defaults.scss";
+
+@import "normalize";
+@include normalize();
+
+#svgSprite{
+	position: absolute;
+	width: 0;
+	height: 0;
+	z-index: -1;
+}
+
+// Vendor imports / Lab-ui imports
+@import "@fishawack/lab-ui/_grid.scss;
+@import "@fishawack/lab-ui/_utilities.scss;
+```
+
+#### general.scss
+```sass
+@import "breakpoint";
+
+@import "@fishawack/lab-ui/_mixins.scss";
+@import "_mixins.scss";
+
+@import "@fishawack/lab-ui/_variables.scss";
+@import "_variables.scss";
+
+@import "@fishawack/lab-ui/_defaults.scss";
+@import "_defaults.scss";
+
+// Custom imports
+@import "./components/_button.scss;
 ```
 
 ### Uncss
