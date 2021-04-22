@@ -1,5 +1,13 @@
 ## Changelog
 
+### 5.11.0 (2021-04-22)
+* [Feature] Unit tests can now be placed in a _Test/unit folder
+* [Feature] Can now have a vendor.scss file that will automatically be combined with general.scss
+* [Change] Karma unit tests are no longer run as part of the main build commmand
+* [Change] Karma unit tests are no longer run on the watch
+* [Change] Clean the .cache folder on first build
+
+
 ### 5.10.0 (2021-04-21)
 * [Feature] Can now have Ui tests that run via webdriverio
 * [Docs] Pdf documentation updates
