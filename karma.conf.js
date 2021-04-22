@@ -19,7 +19,9 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         '_Test/karma/**/*.js',
-        '_Test/karma/fixtures/**/*'
+        '_Test/karma/fixtures/**/*',
+        '_Test/unit/**/*.js',
+        '_Test/unit/fixtures/**/*'
     ],
 
 
@@ -33,7 +35,10 @@ module.exports = function(config) {
     preprocessors: {
         '_Test/karma/fixtures/**/*.html'   : ['html2js'],
         '_Test/karma/fixtures/**/*.json'   : ['json_fixtures'],
-        '_Test/karma/**/*.js': ['webpack']
+        '_Test/karma/**/*.js': ['webpack'],
+        '_Test/unit/fixtures/**/*.html'   : ['html2js'],
+        '_Test/unit/fixtures/**/*.json'   : ['json_fixtures'],
+        '_Test/unit/**/*.js': ['webpack']
     },
 
     // SHOULD BE PULLED FROM _Tasks/options/webpack.js, NEED TO FIGURE OUT INCLUDE ISSUE OF GRUNT VARS NOT AVAILABLE ON KARMA:UNIT:START
