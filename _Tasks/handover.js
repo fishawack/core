@@ -25,14 +25,14 @@ module.exports = (grunt) => {
                 fs.writeFileSync(d, JSON.stringify(config, null, 4));
             });
 
-        var config = fs.readJSONSync(`${location}/package.json`);
+        let pkg = fs.readJSONSync(`${location}/package.json`);
         [
             'deploy',
             'deploy-s',
             'setup',
             'content'
-        ].forEach(d => delete config.scripts[d]);
+        ].forEach(d => delete pkg.scripts[d]);
 
-        fs.writeFileSync(`${location}/package.json`, JSON.stringify(config, null, 4));
+        fs.writeFileSync(`${location}/package.json`, JSON.stringify(pkg, null, 4));
     });
 };
