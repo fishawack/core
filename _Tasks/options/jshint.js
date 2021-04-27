@@ -25,9 +25,9 @@ module.exports = {
 		esversion: 10
 	},
     files: [
-    	'_Build/js/**/*.js',
-    	'_Build/vue/**/*.js',
-    	'!_Build/js/**/generated/**/*.js',
-    	'!_Build/js/**/libs/**/*.js'
+    	'<%= src %>/js/**/*.js',
+    	'<%= src %>/vue/**/*.js',
+    	'!<%= src %>/js/**/generated/**/*.js',
+    	'!<%= src %>/js/**/libs/**/*.js'
 	]
 }

@@ -4,7 +4,7 @@ module.exports = {
             {
                 expand: true,
                 dot: true,
-                cwd: '_Build/content/',
+                cwd: '<%= src %>/content/',
                 src: ['**/media/**/*'],
                 dest: '<%= root %>/media/content/',
                 rename: function(dest, src) {
@@ -20,7 +20,7 @@ module.exports = {
         files: [{
             expand: true,
             dot: true,
-            cwd: '_Build/media/',
+            cwd: '<%= src %>/media/',
             src: ['**/*'],
             dest: '<%= root %>/media/'
         }]
@@ -31,7 +31,7 @@ module.exports = {
             dot: true,
             cwd: '.tmp/icons-min/',
             src: ['**/*'],
-            dest: '_Build/handlebars/generated/embed/',
+            dest: '<%= src %>/handlebars/generated/embed/',
             rename: function(dest, src){ // RENAMED SO DONT CLASH WITH HANDELBARS PARTIALS / HELPERS
                 return dest + 'svg--' + src;
             },
@@ -41,9 +41,9 @@ module.exports = {
     svgasis: {
         files: [{
             expand: true,
-            cwd: '_Build',
+            cwd: '<%= src %>',
             src: ['svg/**/*.svg', 'icons/**/*.svg'],
-            dest: '_Build/handlebars/generated/embed/',
+            dest: '<%= src %>/handlebars/generated/embed/',
             rename: function(dest, src){ // RENAMED SO DONT CLASH WITH HANDELBARS PARTIALS / HELPERS
                 return dest + 'svg--asis--' + src;
             },
@@ -91,7 +91,7 @@ module.exports = {
         files: [
             {
                 src: [
-                    '_Build/**/*',
+                    '<%= src %>/**/*',
                     '_Node/**/*',
                     '_Test/**/*',
                     '.gitignore',

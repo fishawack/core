@@ -20,12 +20,12 @@ module.exports = grunt => {
     grunt.initConfig(config);
 
     // CONCAT/UGLIFY DYNAMIC
-    grunt.file.expand({cwd: '_Build/js/', flatten: true}, '**/++*.js').forEach(function(d){
+    grunt.file.expand({cwd: `${config.src}/js/`, flatten: true}, '**/++*.js').forEach(function(d){
         var file = d.slice(d.indexOf('++') + 2);
         var group = file.slice(0, file.indexOf('.'));
 
-        config.concat.dev.files[0][config.root + '/js/' + group + '.js'] = '_Build/js/**/++' + group + '*.js';
-        config.concat.dist.files[0]['.tmp/js/' + group + '.js'] = '_Build/js/**/++' + group + '*.js';
+        config.concat.dev.files[0][config.root + '/js/' + group + '.js'] = `${config.src}/js/**/++${group}*.js`;
+        config.concat.dist.files[0]['.tmp/js/' + group + '.js'] = `${config.src}/js/**/++${group}*.js`;
     });
     
     // Load all grunt npm tasks with the prefix 'grunt-'

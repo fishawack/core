@@ -3,24 +3,24 @@ module.exports = {
         'files': [
             {
                 expand: true,
-                cwd: '_Build/',
+                cwd: '<%= src %>/',
                 src: ['*.html', '!**/*_*.html'],
                 dest: '.tmp/compiled/',
                 flatten: true
             },
             {
                 expand: true,
-                cwd: '_Build/html',
+                cwd: '<%= src %>/html',
                 src: ['**/*.html', '!**/*_*.html'],
                 dest: '.tmp/compiled/'
             }
         ],
         'templateData': "<%= this.contentPath %>",
         'helpers': [
-            '_Build/handlebars/**/*.js'
+            '<%= src %>/handlebars/**/*.js'
         ],
         'partials': [
-            '_Build/handlebars/**/*.{hbs,svg,html}'
+            '<%= src %>/handlebars/**/*.{hbs,svg,html}'
         ],
         'globals': [
             {

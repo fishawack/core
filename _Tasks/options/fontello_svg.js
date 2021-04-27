@@ -5,7 +5,7 @@ module.exports = {
             skip: false,
             fileFormat: '{1}.svg'
         },
-        config: '_Build/icons/config.json',
-        dest: '_Build/icons/generated/'
+        config: '<%= src %>/icons/config.json',
+        dest: '<%= src %>/icons/generated/'
     }
 }

@@ -56,6 +56,8 @@ module.exports = function(grunt, hasBase) {
 			configPath: configPath,
 			//ROOT OF SITE WHERE FILES
 			root: contentJson.attributes.root || '_Output',
+			//SRC FILES
+			src: contentJson.attributes.src || '_Build',
 			targets: {},
 			//SET IN PHONEGAP TASK
 			pullApp: '',
@@ -97,26 +99,28 @@ module.exports = function(grunt, hasBase) {
     	grunt.log.writeln(`Merging ${config ? 'processed' : 'raw'} configs`);
 
         grunt.file.expand([
-					'_Build/config/*.json',
-					'_Build/config/example/*.json',
-					'_Build/*.json',
-					'_Build/example/*.json'
-					
-				]).forEach(function(d){
-					// Only load config types once, lower configs override higher ones
-					if(loaded.indexOf(path.basename(d)) === -1){
-						grunt.log.ok(d, "loaded");
+				'./fw.json',
+				'./content.json',
+				'./level-*.json',
+				'_Build/config/*.json',
+				'_Build/config/example/*.json',
+				'_Build/*.json',
+				'_Build/example/*.json'
+			]).forEach(function(d){
+				// Only load config types once, lower configs override higher ones
+				if(loaded.indexOf(path.basename(d)) === -1){
+					grunt.log.ok(d, "loaded");
 
-						loaded.push(path.basename(d));
+					loaded.push(path.basename(d));
 
-						_.mergeWith(json, grunt.file.readJSON(d), function(obj, src) {
-								if (_.isArray(obj)) {
-									return obj.concat(src);
-								}
-							});
-					} else {
-						grunt.log.error(d, "ignored");
-					}
+					_.mergeWith(json, grunt.file.readJSON(d), function(obj, src) {
+							if (_.isArray(obj)) {
+								return obj.concat(src);
+							}
+						});
+				} else {
+					grunt.log.error(d, "ignored");
+				}
 			});
 		
 		grunt.log.writeln(`Merging ${config ? 'processed' : 'raw'} targets`);
@@ -295,7 +299,7 @@ module.exports = function(grunt, hasBase) {
 		for(var key in contentJson.attributes.template){
 			var dynamic = contentJson.attributes.template[key];
 			var obj = {
-				src: '_Build/' + dynamic.partial + '.html',
+				src: `${config.src}/${dynamic.partial}.html`,
 				dest: []
 			};
 

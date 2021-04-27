@@ -9,7 +9,7 @@ module.exports = (grunt) => {
 
         fs.writeFileSync(`${location}/.gitignore`, fs.readFileSync(`${location}/.gitignore`, 'utf8').replace('\n_Build/content', ''));
 
-        glob.sync(`${location}/_Build/config/**/*.json`)
+        glob.sync(`${location}/${config.src}/config/**/*.json`)
             .forEach(d => {
                 var config = fs.readJSONSync(d);
                 [

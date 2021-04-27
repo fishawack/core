@@ -2,16 +2,16 @@ const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const grunt = require('grunt');
 
-var config;
+// var config;
 var path = require('path');
 
 // Javascript files in _Build/js that start with '--' will be treated as entry points and an output file will be generated with the same name minus the '--' prefix i.e _Build/js/libs/--test.js -> _Output/js/test.js
 var entry = {};
 grunt.file.expand({
 	expand: true,
-	cwd: './_Build/js/'
+	cwd: `./${config.src}/js/`
 }, ['**/script.js', '**/--*.js']).forEach(function(element, index){
-	entry[(element.split('--')[1] || element.split('/')[element.split('/').length - 1]).split('.js')[0]] = './_Build/js/' + element;
+	entry[(element.split('--')[1] || element.split('/')[element.split('/').length - 1]).split('.js')[0]] = `./${config.src}/js/${element}`;
 });
 
 module.exports = {
@@ -85,7 +85,7 @@ module.exports = {
 		plugins: [
 	    	new VueLoaderPlugin(),
 			new webpack.DefinePlugin(Object.keys(process.env).reduce((a, b) => {
-				a[`process.env.${b}`] = webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[b]), ['./_Build/config/**/*.json']);
+				a[`process.env.${b}`] = webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[b]), [`./${config.src}/config/**/*.json`]);
 				return a;
 			}, {}))
 	    ],

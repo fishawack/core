@@ -47,10 +47,10 @@ module.exports = function(config) {
         cache: true,
         resolve: {
             modules: [
-                './_Build/js/',
-                './_Build/js/libs/',
-                './_Build/js/charts/',
-                './_Build/js/data/',
+                `./${config.src}/js/`,
+                `./${config.src}/js/libs/`,
+                `./${config.src}/js/charts/`,
+                `./${config.src}/js/data/`,
                 './node_modules/@fishawack/lab-d3/_Build/js/',
                 './node_modules/@fishawack/lab-d3/_Build/js/libs',
                 './node_modules/@fishawack/lab-d3/_Build/js/charts/',
@@ -95,7 +95,7 @@ module.exports = function(config) {
                 },
                 {
                     test: /\.m?js$/,
-                    include: path.resolve('./_Build/js/'),
+                    include: path.resolve(`./${config.src}/js/`),
                     use: [
                         {
                             loader: 'istanbul-instrumenter-loader',

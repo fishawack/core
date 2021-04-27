@@ -5,11 +5,11 @@ module.exports = {
     dev: {
         files: [
         {
-            '<%= root %>/js/crucial.js': ['_Build/js/**/__*.js']
+            '<%= root %>/js/crucial.js': ['<%= src %>/js/**/__*.js']
         },
         {
             expand: true,
-            cwd: '_Build/js/',
+            cwd: '<%= src %>/js/',
             src: ['**/++*.js'],
             dest: '<%= root %>/js/',
             flatten: true,
@@ -21,11 +21,11 @@ module.exports = {
     dist: {
         files: [
         {
-            '.tmp/js/crucial.js': ['_Build/js/**/__*.js']
+            '.tmp/js/crucial.js': ['<%= src %>/js/**/__*.js']
         },
         {
             expand: true,
-            cwd: '_Build/js/',
+            cwd: '<%= src %>/js/',
             src: ['**/++*.js'],
             dest: '.tmp/js/',
             flatten: true,

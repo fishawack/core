@@ -25,8 +25,8 @@ module.exports = function(grunt) {
 
             function buildBadge(text, value, colorscheme, file, cb){
                 badge({ text: [text, value], colorscheme: colorscheme, template: "flat" }, function(svg, err) {
-                    grunt.file.write('_Build/media/generated/__' + file + '.svg', svg);
-                    cb(null, process.cwd() + '/_Build/media/generated/__' + file + '.svg');
+                    grunt.file.write(`${config.src}/media/generated/__${file}.svg`, svg);
+                    cb(null, `${process.cwd()}/${config.src}/media/generated/__${file}.svg`);
                 });
             }
 
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
                 if(process.env.NODE_ENV === 'development'){
                     done();
                 } else {
-                    svg_to_png.convert(results, '_Build/media/generated/').then(function(){
+                    svg_to_png.convert(results, `${config.src}/media/generated/`).then(function(){
                         done();
                     });
                 }

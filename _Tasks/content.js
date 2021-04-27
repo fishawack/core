@@ -24,7 +24,7 @@ module.exports = function(grunt) {
         var commands = ['shell:content', 'content-request', 'copy:content'];
 
         contentJson.attributes.content.forEach(function(d, i){
-            var saveTo = (d.saveTo) ? d.saveTo : `_Build/content/content-${i}`;
+            var saveTo = (d.saveTo) ? d.saveTo : `${config.src}/content/content-${i}`;
 
             if(d.ftp || d.ftps){
                 var protocol = (d.ftps) ? 'ftps' : 'ftp';
@@ -71,7 +71,7 @@ module.exports = function(grunt) {
                         path: d.url.replace(/\/+$/, ""),
                         endpoint: dd,
                         ext: d.ext,
-                        saveTo: (d.saveTo || `_Build/content/content-${i}/`) + (d.bundle ? 'media/' : '')
+                        saveTo: (d.saveTo || `${config.src}/content/content-${i}/`) + (d.bundle ? 'media/' : '')
                     }, 1)
                     .then(({options, data}) => {
                         grunt.log.ok('Downloaded ' + options.endpoint);
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
 
                 requests.push(limit(() => download({
                         path: d.url.replace(/\/+$/, ""),
-                        saveTo: d.saveTo || `_Build/content/content-${i}/`,
+                        saveTo: d.saveTo || `${config.src}/content/content-${i}/`,
                         index: i
                     }, 1)));
             }
@@ -103,7 +103,7 @@ module.exports = function(grunt) {
                         if(d.url){
                             rewrites.push(limit(() => update({
                                     path: d.url,
-                                    saveTo: d.saveTo || `_Build/content/content-${i}/` + (d.bundle ? 'media/' : ''),
+                                    saveTo: d.saveTo || `${config.src}/content/content-${i}/` + (d.bundle ? 'media/' : ''),
                                     index: i
                                 })));
                         }

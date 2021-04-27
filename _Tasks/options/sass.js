@@ -9,13 +9,13 @@ module.exports = {
 			'node_modules/breakpoint-sass/stylesheets',
 			'node_modules',
 			'node_modules/@fishawack/lab-ui/_Build/sass',
-			'_Build/vue'
+			'<%= src %>/vue'
 		]
 	},
     default: {
         files: [{
             expand: true,
-            cwd: '_Build/sass/',
+            cwd: '<%= src %>/sass/',
             src: ['**/*.scss', '!**/_*.scss'],
             dest: '.cache/css/',
             ext: '.css',

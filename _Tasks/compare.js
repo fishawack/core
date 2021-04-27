@@ -154,8 +154,8 @@ module.exports = function(grunt) {
                     }
 
                     badge({ text: [text, value.toFixed(2) + '%'], colorscheme: color, template: "flat" }, function(svg, err) {
-                        grunt.file.write('_Build/media/generated/__' + file + '.svg', svg);
-                        resolve(process.cwd() + '/_Build/media/generated/__' + file + '.svg');
+                        grunt.file.write(`${config.src}/media/generated/__${file}.svg`, svg);
+                        resolve(`${process.cwd()}/${config.src}/media/generated/__${file}.svg`);
                     });
                 });
             }
@@ -178,7 +178,7 @@ module.exports = function(grunt) {
 
             Promise.all(arr)
                 .then((values) => {
-                    svg_to_png.convert(values, '_Build/media/generated/')
+                    svg_to_png.convert(values, `${config.src}/media/generated/`)
                         .then(function(){
                             done();
                         })

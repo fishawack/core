@@ -13,6 +13,11 @@
 		        	"type": ["string", "null"]
 	            },
 	            "root": {
+					"description": "The folder where compiled files are placed",
+		        	"type": "string"
+	            },
+				"src": {
+					"description": "The folder where source files can be found",
 		        	"type": "string"
 	            },
 	            "repo": {

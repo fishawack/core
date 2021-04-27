@@ -35,7 +35,7 @@ module.exports = {
     badges: {
         files: [{
             expand: true,
-            cwd: '_Build/media/generated/',
+            cwd: '<%= src %>/media/generated/',
             src: ['**/*', '!**/.DS_Store'],
             dest: './Auto-Badges/<%= pkg.name %>/<%= repo.name %>/'
         }]
