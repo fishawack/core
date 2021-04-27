@@ -19,6 +19,10 @@ module.exports = {
             server: {
                 baseDir: "<%= root %>"
             },
+            port: process.env.PORT || 3000,
+            ui: {
+                port: +process.env.PORT_OPT || 3001
+            }
         }
     }
 }
