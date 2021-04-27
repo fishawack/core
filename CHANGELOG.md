@@ -1,5 +1,10 @@
 ## Changelog
 
+### 5.12.0 (2021-04-27)
+* [Feature] BrowserSync ports will now automatically map if any env ports are found
+* [Feature] Can now override the default source directory
+* [Docs] Update on scss code highlighting
+
 ### 5.11.0 (2021-04-22)
 * [Feature] Unit tests can now be placed in a _Test/unit folder
 * [Feature] Can now have a vendor.scss file that will automatically be combined with general.scss
