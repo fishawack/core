@@ -9,10 +9,10 @@ const glob = require('glob');
 
 describe('cegedim', () => {
     before(() => {
-        execSync('grunt cegedim --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt capture cegedim --branch=package --mocha=output', {encoding: 'utf8', stdio: 'pipe'});
     });
     
     it('Should generate a cegedim key message zip', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Packages/Cegedim/*.zip'))).to.be.an('array').that.is.not.empty;
+        expect(glob.sync(path.join(__dirname, '_fixture/output/_Packages/Cegedim/*.zip'))).to.be.an('array').that.is.not.empty;
     });
 });

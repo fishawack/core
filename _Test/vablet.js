@@ -9,12 +9,12 @@ const glob = require('glob');
 
 describe('vablet', () => {
     before(() => {
-        execSync('grunt vablet --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt vablet --branch=package --mocha=output', {encoding: 'utf8', stdio: 'pipe'});
     });
     
     it('Should generate a vablet settings file', () => {
         try{
-            fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Packages/Vablet/VabletLoadSettings.json'), {encoding: 'utf8'});
+            fs.readFileSync(path.join(__dirname, '_fixture/output/_Packages/Vablet/VabletLoadSettings.json'), {encoding: 'utf8'});
         } catch(e){
             expect(e.message).to.not.contain('ENOENT');
         }

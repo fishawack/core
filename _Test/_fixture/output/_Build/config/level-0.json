@@ -8,6 +8,18 @@
 	        "csscalc"
 		],
 		"targets": {
+			"package": {
+				"handover": true,
+				"veeva": true,
+				"cegedim": true,
+				"vablet": {
+					"disableBounce": true,
+					"scaleToFitPage": true,
+					"hideToolBar": true,
+					"disableStatusBar": true,
+					"useTransparentBar": true
+				}
+			},
 			"master": {
 				"deploy": {
 					"url": "https://demo.fishawack.solutions",

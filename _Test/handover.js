@@ -9,10 +9,10 @@ const glob = require('glob');
 
 describe('handover', () => {
     before(() => {
-        execSync('grunt package:handover --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt package:handover --branch=package --mocha=output', {encoding: 'utf8', stdio: 'pipe'});
     });
     
     it('Should pull in the build files', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Packages/Handover/_Build/**/*'))).to.be.an('array').that.is.not.empty;
+        expect(glob.sync(path.join(__dirname, '_fixture/output/_Packages/Handover/_Build/**/*'))).to.be.an('array').that.is.not.empty;
     });
 });
