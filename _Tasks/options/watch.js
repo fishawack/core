@@ -4,15 +4,11 @@ module.exports = {
     },
     vue: {
         files: ['<%= src %>/vue/**/*.{vue,js}'],
-        tasks: ['jshint', 'webpack:dev', 'concat:dev', 'compile-vue', 'newer:postcss:dev', 'clean:build']
+        tasks: ['jshint', 'webpack:dev', 'concat:dev', 'clean:cache:vue', 'compile-vue', 'clean:build']
     },
     scripts: {
         files: ['<%= src %>/js/**/*.js', '!<%= src %>/js/generated/**/*'],
         tasks: ['jshint', 'webpack:dev', 'concat:dev']
-    },
-    styles: {
-        files: ['<%= src %>/vue/**/*.scss', '.cache/css/*.css'],
-        tasks: ['compile-vue', 'newer:postcss:dev', 'concat:sass', 'clean:build']
     },
     html: {
         files: [
@@ -24,7 +20,7 @@ module.exports = {
                 '<%= src %>/handlebars/**/*',
                 '!<%= src %>/handlebars/generated/**/*'
             ],
-        tasks: ['reload', 'jsonlint', 'tv4', 'compile-handlebars', 'htmlmin', 'webpack:dev', 'concat:dev', 'compile-vue', 'newer:postcss:dev', 'clean:build']
+        tasks: ['reload', 'jsonlint', 'tv4', 'compile-handlebars', 'htmlmin', 'webpack:dev', 'concat:dev', 'clean:build']
     },
     assets: {
         files: ['<%= src %>/media/**/*'],

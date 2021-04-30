@@ -2,9 +2,9 @@ module.exports = {
 	default: {
         bsFiles: {
             src : [
-                '<%= root %>/css/*.css',
-                '<%= root %>/*.html',
-                '<%= root %>/js/*.js'
+                '<%= root %>/**/*.css',
+                '<%= root %>/**/*.html',
+                '<%= root %>/**/*.js'
             ]
         },
         options: {

@@ -10,14 +10,15 @@ module.exports = {
 			'node_modules',
 			'node_modules/@fishawack/lab-ui/_Build/sass',
 			'<%= src %>/vue'
-		]
+		],
+		postcss: require('./postcss.js')
 	},
     default: {
         files: [{
             expand: true,
             cwd: '<%= src %>/sass/',
             src: ['**/*.scss', '!**/_*.scss'],
-            dest: '.cache/css/',
+            dest: '<%= root %>/css/',
             ext: '.css',
             flatten: true
         }]

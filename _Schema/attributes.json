@@ -226,12 +226,6 @@
 		        	"type": "object",
 		        	"additionalProperties": true
 		        },
-		        "uncss": {
-		        	"type": "array",
-		        	"items": {
-		        		"type": "string"
-		        	}
-		        },
 		        "splitChunks": {
 		        	"description": "If true will pull out shared javascript librarys to a commons.js file",
 		        	"type": "boolean"

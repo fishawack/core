@@ -1351,6 +1351,10 @@ We put a permanant fix inplace for this as of [core version 4.5.3](#core-changel
 
 ## Migrating
 
+### 6.0.0
+
+Sass now manages its own watch. This generally doesn't effect stand alone repos, but will effect frameworks and projects that override the sass task. These frameworks will need to map their sass files to a single sass process so that the watch can handle reloading the files.
+
 ### 5.0.0
 
 Up until now, master branch always deployed the production target, qc branch deployed qc target and development  deployed staging. Now deploy targets are mapped directly to branch names, so a staging branch will need to be created to deploy the old staging deploy target. The config will also need updating to the following format.
