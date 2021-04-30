@@ -1,5 +1,9 @@
 ## Changelog
 
+### 6.0.0 (2021-04-30)
+* [Feature] Postcss now caches and only reloads whats changed
+* [Change] Sass now manages its own watch resulting in speed improvements
+
 ### 5.12.0 (2021-04-27)
 * [Feature] BrowserSync ports will now automatically map if any env ports are found
 * [Feature] Can now override the default source directory
