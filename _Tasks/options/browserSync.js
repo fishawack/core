@@ -4,16 +4,14 @@ module.exports = {
             src : [
                 '<%= root %>/css/*.css',
                 '<%= root %>/*.html',
-                '<%= root %>/js/*.js',
-                '<%= root %>/media/**/*.{png,jpg,jpeg,gif,JPG,JPEG,PNG,GIF,json}',
-                '<%= root %>/svg/**/*.{png,jpg,jpeg,gif,JPG,JPEG,PNG,GIF}'
+                '<%= root %>/js/*.js'
             ]
         },
         options: {
             watchTask: true,
             notify: false,
             open: false,
-            reloadOnRestart: true,
+            reloadOnRestart: false,
             ghostMode: true,
             single: true,
             server: {

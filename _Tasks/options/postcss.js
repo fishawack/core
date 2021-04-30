@@ -67,7 +67,7 @@ module.exports = {
 			expand: true,
 			cwd: '.cache/css/',
 			src: ['*.css'],
-			dest: '.tmp/css/'
+			dest: '.cache/postcss/'
 		}]
 	},
 	dist: {
@@ -85,7 +85,7 @@ module.exports = {
 			expand: true,
 			cwd: '.cache/css/',
 			src: ['*.css'],
-			dest: '.tmp/css/'
+			dest: '.cache/postcss/'
 		}]
 	}
 

@@ -40,11 +40,11 @@ module.exports = {
         },
         files: [
             {
-                '<%= root %>/css/general.css': ['.tmp/css/vendor.css', '.tmp/css/general.css']
+                '<%= root %>/css/general.css': ['.cache/postcss/vendor.css', '.cache/postcss/general.css']
             },
             {
                 expand: true,
-                cwd: '.tmp/css',
+                cwd: '.cache/postcss',
                 src: ['*.css', '!general.css', '!vendor.css'],
                 dest: '<%= root %>/css/',
             }
