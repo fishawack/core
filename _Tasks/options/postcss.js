@@ -4,7 +4,7 @@ function processors(){
 		require('postcss-assets')({
 			basePath: config.root,
 			relativeTo: 'css/',
-			loadPaths: ['media/**/']
+			loadPaths: ['**/*']
 		})
 	];
 
