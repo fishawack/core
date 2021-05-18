@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.1.0 (2021-05-18)
+* [Feature] Can now have a shared resources media folder which will be turned into a stand alone zip file if the corresponding flag is set on a veeva package
+
 ### 6.0.0 (2021-04-30)
 * [Feature] Postcss now caches and only reloads whats changed
 * [Change] Sass now manages its own watch resulting in speed improvements
