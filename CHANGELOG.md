@@ -2,6 +2,8 @@
 
 ### 6.1.0 (2021-05-18)
 * [Feature] Can now have a shared resources media folder which will be turned into a stand alone zip file if the corresponding flag is set on a veeva package
+* [Change] Resolve postcss assets from the root of the dist folder rather than the media folder
+* [Change] copy:content now no longer run as part of the content command as it runs anyway during build
 
 ### 6.0.0 (2021-04-30)
 * [Feature] Postcss now caches and only reloads whats changed
