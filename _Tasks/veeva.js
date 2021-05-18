@@ -61,7 +61,8 @@ module.exports = function(grunt) {
                             "No",
                             "", "", "", "", "", "", "", "",
                             "HTML",
-                            "", "",
+                            "",
+                            options.sharedResource ? `${options.id}_SR` : "",
                             (d.veeva.disable || options.disable || []).join(', '),
                             options.product || "",
                             options.country || "",
@@ -77,7 +78,36 @@ module.exports = function(grunt) {
                             "WKWebView",
                             "Default For Device"
                         ]
-                    })
+                    }),
+                    options.sharedResource ? [[
+                        "",
+                        `${options.id}_SR`,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "Shared",
+                        "",
+                        "",
+                        "",
+                        "", "", "", "", "", "", "", "",
+                        "",
+                        "", "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "Yes",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "", "",
+                        "",
+                        ""
+                    ]] : []
                 )
             )
             .catch(err => console.log(err))
