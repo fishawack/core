@@ -128,6 +128,13 @@
 								}
 							},
 							"required": ["object", "field"]
+						},
+						"sharedResource": {
+							"description": "When set to true, any files found in the _Output/shared will be removed from the final build and zipped into a standalone key message for upload to veeva.",
+							"type": "boolean",
+							"items": {
+								"type": "string"
+							}
 						}
 					}
 				},

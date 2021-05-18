@@ -94,6 +94,8 @@ module.exports = function(grunt) {
         var browsers = captureEnv().browsers;
 		var sizes = captureEnv().sizes;
 
+        let options = contentJson.attributes.veeva || {};
+
         reset = {
             compress: grunt.config.get('compress'),
             clean: grunt.config.get('clean'),
@@ -140,7 +142,7 @@ module.exports = function(grunt) {
         	copy.default.files.push(
                 {
                     cwd: d.root,
-                    src: '**',
+                    src: ['**', '!styleguide.html'].concat((options.sharedResource) ? ['!shared/**'] : []),
                     dest: '_Packages/Veeva/' + zipName + '/',
                     expand: true
                 },
@@ -187,6 +189,15 @@ module.exports = function(grunt) {
 
             grunt.file.write('_Packages/Veeva/ctlfile/' + zipName + '.ctl', multiStr);
         });
+
+        if(options.sharedResource){
+            compress['veeva_shared_resource'] = {
+                "options": {'archive': '_Packages/Veeva/veeva_shared_resource.zip'}, 
+                'cwd': '_Output/shared/', 
+                'src': ['**'],
+                'expand': true
+            };
+        }
 
         shell.default.command = shell.default.command.join(' && ');
 

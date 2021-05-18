@@ -16,6 +16,22 @@ module.exports = {
             }
         ].concat(contentJson.attributes.copy || [])
     },
+    shared: {
+        files: [
+            {
+                expand: true,
+                dot: true,
+                cwd: '<%= src %>/content/',
+                src: ['**/shared/**/*'],
+                dest: '<%= root %>/',
+                rename: function(dest, src) {
+                    var parts = src.split('/');
+                    parts.shift();// Remove content-${i}
+                    return dest + parts.join('/');
+                }
+            }
+        ]
+    },
     assets: {
         files: [{
             expand: true,
