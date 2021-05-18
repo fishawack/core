@@ -21,7 +21,7 @@ module.exports = function(grunt) {
             }
         };
 
-        var commands = ['shell:content', 'content-request', 'copy:content'];
+        var commands = ['shell:content', 'content-request'];
 
         contentJson.attributes.content.forEach(function(d, i){
             var saveTo = (d.saveTo) ? d.saveTo : `${config.src}/content/content-${i}`;
