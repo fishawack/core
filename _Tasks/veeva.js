@@ -2,18 +2,14 @@ module.exports = function(grunt) {
     grunt.registerTask('package:veeva', ['clean:veeva', 'veeva', 'veeva:mcl', 'ftpscript:veeva', 'clean:build']);
 
     grunt.registerTask('veeva:mcl', function() {
+        var done = this.async();
+
         var jsdom = require("jsdom");
         const createCsvWriter = require('csv-writer').createArrayCsvWriter;
 
-        let options = contentJson.attributes.veeva;
-
-        if(typeof options !== "object"){
-            options =  {
-                id: config.repo.name
-            };
-        }
-
-        var done = this.async();
+        let options = typeof contentJson.attributes.veeva === "object" ? contentJson.attributes.veeva : {};
+        options.id = options.id || config.repo.name;
+        options.presentation = options.presentation || `${options.id}_${config.repo.name}`;
 
         require("fs-extra").mkdirpSync(`_Packages/Veeva/`);
 
@@ -24,9 +20,9 @@ module.exports = function(grunt) {
             .writeRecords([[
                     "",
                     `${options.id}_P`,
-                    options.presentation || `${options.id}_${config.repo.name}`,
+                    options.presentation,
                     "",
-                    options.presentation || `${options.id}_${config.repo.name}`,
+                    options.presentation,
                     "No",
                     "Presentation",
                     "Binder Lifecycle",
@@ -94,7 +90,8 @@ module.exports = function(grunt) {
         var browsers = captureEnv().browsers;
 		var sizes = captureEnv().sizes;
 
-        let options = contentJson.attributes.veeva || {};
+        let options = typeof contentJson.attributes.veeva === "object" ? contentJson.attributes.veeva : {};
+        options.id = options.id || config.repo.name;
 
         reset = {
             compress: grunt.config.get('compress'),
