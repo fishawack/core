@@ -5,7 +5,8 @@
         "root": "_Output",
         "modernizr": [
             "flexbox",
-            "csscalc"
+            "csscalc",
+            "cssanimations"
         ],
         "template": {},
         "toggle": {
