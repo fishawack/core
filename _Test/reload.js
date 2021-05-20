@@ -50,9 +50,10 @@ describe('reload', () => {
     });
 
     it('Should merge arrays via concatanation', () => {
-        expect(json.attributes.uncss).to.deep.equal([
-            '_Output/*.html',
-            '.tmp/*.vue'
+        expect(json.attributes.modernizr).to.deep.equal([
+            "flexbox",
+	        "csscalc",
+            "cssanimations"
         ]);
     });
 
