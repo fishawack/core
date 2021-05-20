@@ -1,5 +1,10 @@
 ## Changelog
 
+### 6.2.0 (2021-05-20)
+* [Change] Postcss and concat now run as part of the full sass process rather than separate grunt tasks
+* [Change] Uncss in contentJson now redundant
+* [Change] Removed gruntpostcss dep and bumped base postcss dep
+
 ### 6.1.0 (2021-05-18)
 * [Feature] Can now have a shared resources media folder which will be turned into a stand alone zip file if the corresponding flag is set on a veeva package
 * [Change] Resolve postcss assets from the root of the dist folder rather than the media folder
