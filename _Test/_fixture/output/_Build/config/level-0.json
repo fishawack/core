@@ -77,9 +77,6 @@
 				}
 			}
 		},
-	    "uncss": [
-	        "<%= root %>/*.html"
-	    ],
 	    "template": {},
 	    "toggle": {}
 	}

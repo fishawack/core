@@ -7,9 +7,6 @@
 	        "flexbox",
 	        "csscalc"
 	    ],
-	    "uncss": [
-	        "<%= root %>/*.html"
-	    ],
 	    "template": {},
 	    "toggle": {
 			"level-0": "test"

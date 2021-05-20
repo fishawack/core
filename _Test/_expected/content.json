@@ -7,10 +7,6 @@
             "flexbox",
             "csscalc"
         ],
-        "uncss": [
-            "_Output/*.html",
-            ".tmp/*.vue"
-        ],
         "template": {},
         "toggle": {
             "level-0": "test",

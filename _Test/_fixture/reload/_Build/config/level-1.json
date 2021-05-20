@@ -1,8 +1,5 @@
 {
 	"attributes": {
-		"uncss": [
-			".tmp/*.vue"
-		],
 		"toggle": {
 			"level-1": "test"
 		}
