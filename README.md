@@ -1332,6 +1332,40 @@ You're all done, you should be able to populate your repo with the info provided
 
 ## Troubleshooting
 
+### Postcss static img
+
+```bash
+Fatal error: Cannot read property 'fetch' of null
+```
+
+#### Problem
+
+Postcss has a bug where including an img tag anywhere inside a nested template tag will throw an error if the src is static.
+
+```handlebars
+<template>
+    <div>
+        <template>
+            <img src="images/test.png"/>
+        </template>
+    </div>
+</template>
+```
+
+#### Solution
+
+Just make the src a dynamic property and bind the static src.
+
+```handlebars
+<template>
+    <div>
+        <template>
+            <img :src="'images/test.png'"/>
+        </template>
+    </div>
+</template>
+```
+
 ### Customizer 404
 
 ```bash
