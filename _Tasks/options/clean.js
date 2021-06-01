@@ -1,6 +1,6 @@
 module.exports = {
-	'cache': ["_Output/css/*.cache.*.css", "_Output/js/*.cache.*.js", '.cache'],
-    'cache:vue': ['.cache/vue'],
+	cache: ["_Output/css/*.cache.*.css", "_Output/js/*.cache.*.js", '.cache'],
+    cache_vue: ['.cache/vue'],
 	build: [".tmp"],
     dist: ["<%= root %>", "<%= src %>/**/generated/**/*"],
     zip: ['_Zips/**/*'],
