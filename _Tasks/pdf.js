@@ -7,13 +7,15 @@ module.exports = function(grunt) {
 		var createPdfsAndZips = require('../_Node/createPdfsAndZips');
 		var arr = [];
 
-		for(var i = 0; i < captureEnv().browsers.length; i++){			
-			arr.push(createPdfsAndZips(
-				`${captureEnv().browsers[i]}/${captureEnv().sizes[i][0]}x${captureEnv().sizes[i][1]}`,
-				'.tmp/screenshots',
-				`${config.filename}_${captureEnv().sizes[i][0]}x${captureEnv().sizes[i][1]}_${captureEnv().browsers[i]}.pdf`
-			));
-		}
+		captureEnv().browsers.forEach(browser => 
+			captureEnv().sizes.forEach(size => 
+				arr.push(createPdfsAndZips(
+					`${browser}/${size[0]}x${size[1]}`,
+					'.tmp/screenshots',
+					`${config.filename}_${size[0]}x${size[1]}_${browser}.pdf`
+				).then(res => console.log(`Pdf generated for: ${res}`)))
+			)
+		);
 
 		Promise.all(arr).then((res) => done());
 	});

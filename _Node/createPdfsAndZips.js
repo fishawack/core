@@ -80,7 +80,7 @@ module.exports = (path, folder, pdf) => {
 			reject(err);
 		});
 
-		resolve();
+		resolve(path);
 	})
 	.catch(err => {
 		console.log(err);
