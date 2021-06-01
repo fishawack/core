@@ -1,5 +1,9 @@
 ## Changelog
 
+### 6.2.1 (2021-06-01)
+* [Bug] Fixed issue where pdf generation was ignoring sizes
+* [Bug] Fixed vue cache clear and removed nested grunt task as unsupported in grunt
+
 ### 6.2.0 (2021-05-20)
 * [Change] Postcss and concat now run as part of the full sass process rather than separate grunt tasks
 * [Change] Uncss in contentJson now redundant
