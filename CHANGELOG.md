@@ -1,5 +1,10 @@
 ## Changelog
 
+### 7.0.0 (2021-06-02)
+* [Feature] Dist builds can now be triggered by the dist task or a dist options flag
+* [Change] Switched from uncss to purgecss
+* [Change] Removed compile-vue task from watch and build tasks
+
 ### 6.2.1 (2021-06-01)
 * [Bug] Fixed issue where pdf generation was ignoring sizes
 * [Bug] Fixed vue cache clear and removed nested grunt task as unsupported in grunt
