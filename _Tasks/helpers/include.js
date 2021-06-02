@@ -49,7 +49,7 @@ module.exports = function(grunt, hasBase) {
 	// Sync init function
 	this.initConfig = () => {
 		config = {
-			dev: grunt.cli.tasks.indexOf('dist') === -1,
+			dev: (grunt.cli.tasks.indexOf('dist') === -1) && (!grunt.option('dist')),
 			pkg: grunt.file.readJSON('package.json'),
 			//CONTENT IN CONIFG SO IT CAN BE PASSED TO GRUNT TASKS
 			contentJson: {},
