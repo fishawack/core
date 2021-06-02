@@ -10,7 +10,7 @@ describe('html', () => {
     before(() => {
         // svgSprite needed for html compile
         execSync('grunt fontello_svg svgfit svgmin svg_sprite --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
-        execSync('grunt compile-handlebars htmlmin compile-vue --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt compile-handlebars htmlmin --branch=master --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
     });
     
     it('Should generate a index.html file', () => {
