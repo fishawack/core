@@ -10,56 +10,60 @@ module.exports = (file, dir) => {
 		})
 	];
 	
-	// Only run postcss uncss on branches with deploy targets or on production builds, too slow for feature/dev branches on watch
+	// Only run purge on branches with deploy targets or on production builds, too slow for feature/dev branches on watch
 	// Checking keys length as if no deployEnv === {} which would still pass
 	if(process.env.NODE_ENV === 'production' || Object.keys(deployEnv).length){
-		arr.push(require('uncss').postcssPlugin({
-			html: [
+		arr.push(require('@fullhuman/postcss-purgecss')({
+			content: [
 				`${webRoot}/**/*.html`,
-				".cache/vue/**/*.vue"
+				`${config.src}/vue/**/*.vue`
 			],
-			userAgent: 'jsdom',
-			timeout: 100,
-			ignore: [
-				/.active/i,
-				/.deactive/i,
-				/.disabled/i,
-				/.capture/i,
-				/.icon/i,
-				/.labD3/i,
-				/\bspan\b/i,
-				/\bsup\b/i,
-				/\bsub\b/i,
-				/\bsmall\b/i,
-				/\bstrong\b/i,
-				/\bb\b/i,
-				/\bem\b/i,
-				/\bi\b/i,
-				/\ba\b/i
-			],
-			inject: function(window){
+			safelist: {
+				greedy: [
+					/active/i,
+					/deactive/i,
+					/disabled/i,
+					/capture/i,
+					/labD3/i
+				]
+			},
+			defaultExtractor: (content) => {
+				let modernizr = [];
+
 				if(!contentJson.attributes.modernizr.length){
-					window.document.documentElement.classList.add('modern');
+					modernizr.push('modern');
 				} else {
-					window.document.documentElement.classList.add('no-js', 'js', 'loading', 'development');
+					modernizr.push('no-js', 'js', 'loading', 'development');
 	
 					for(var key in contentJson.attributes.targets){
 						if(contentJson.attributes.targets.hasOwnProperty(key)){
-							window.document.documentElement.classList.add(key);
+							modernizr.push(key);
 						}
 					}
 	
 					contentJson.attributes.modernizr.forEach(function(d){
-						window.document.documentElement.classList.add('no-' + d, d);
+						modernizr.push('no-' + d, d);
 					});
 				}
+
+				// Capture as liberally as possible, including things like `h-(screen-1.5)`
+				const broadMatches = content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || []
+				const broadMatchesWithoutTrailingSlash = broadMatches.map((match) => _.trimEnd(match, '\\'))
+
+				// Capture classes within other delimiters like .block(class="w-1/2") in Pug
+				const innerMatches = content.match(/[^<>"'`\s.(){}[\]#=%]*[^<>"'`\s.(){}[\]#=%:]/g) || []
+
+				return modernizr.concat(broadMatches).concat(broadMatchesWithoutTrailingSlash).concat(innerMatches);
 			}
 		}));
 	}
 	
 	if(process.env.NODE_ENV === "production"){
 		arr.push(require('cssnano')({
-			preset: 'default',
+			preset: [
+				"default",
+				{"discardComments": {"removeAll": true}}
+			]
 		}));
 	}
 	
