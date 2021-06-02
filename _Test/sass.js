@@ -9,7 +9,7 @@ describe('sass', () => {
     let css;
 
     before(() => {
-        execSync('grunt clean:cache compile-handlebars:default htmlmin:default sass:default --dist --mocha=bundle', {encoding: 'utf8', stdio: 'inherit'});
+        execSync('grunt clean:cache compile-handlebars:default htmlmin:default sass:default --dist --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
     });
     
     it('Should generate a css file in the _Output directory', () => {
