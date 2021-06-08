@@ -5,8 +5,13 @@
 			deployEnv.users.reduce(function(prev, next){
 				var username = '<li><strong>Username</strong>: ' + next.username + '</li>';
 				var password = '<li><strong>Password</strong>: ' + next.password + '</li>';
-				var group = '<li><strong>Type</strong>: ' + next.group + '</li>';
-				var valid = '<li><strong>Valid Until</strong>: ' + ((next.validTo.length <= 0) ? '<span style="color:red;">permanently</span>' : next.validTo) + '</li>';
+				var group = '';
+				var valid = '';
+
+				if(next.group != null && next.validTo != null){
+					group = '<li><strong>Type</strong>: ' + next.group + '</li>';
+					valid = '<li><strong>Valid Until</strong>: ' + ((next.validTo.length <= 0) ? '<span style="color:red;">permanently</span>' : next.validTo) + '</li>';
+				}
 
 				var ext = deployEnv.url;
 				var subDir = deployEnv.subDir;
@@ -23,22 +28,24 @@
 				var html = '';
 				var ratio = contentJson.attributes.ratio;
 
-				if(ratio){
-					if(deployEnv.url.split(':')[0] === 'https'){
-						url = 'https://demo.fishawack.solutions/Lab/Ar/index.html';
+				if(deployEnv.loginType){
+					if(ratio){
+						if(deployEnv.url.split(':')[0] === 'https'){
+							url = 'https://demo.fishawack.solutions/Lab/Ar/index.html';
+						} else {
+							url = 'http://digital-internal.fishawack.staging/Lab/Ar/index.html';
+						}
+	
+						url += '?site=' + encodeURIComponent(ext);
+						url += '&ratio=' + ratio;
 					} else {
-						url = 'http://digital-internal.fishawack.staging/Lab/Ar/index.html';
+						url = site;
 					}
 
-					url += '?site=' + encodeURIComponent(ext);
-					url += '&ratio=' + ratio;
-				} else {
-					url = site;
+					html += '<li><strong>Auto-login url</strong>: <a href="' + url + '">' + url + '</a></li>';
 				}
 
-				html += '<li><strong>Auto-login url</strong>: <a href="' + url + '">' + url + '</a></li>';
-
-				return prev += '<li><strong>User</strong>:<ul>' + username + password + valid + html + '</ul></li>';
+				return prev += `<li><strong>User</strong>:<ul>${username}${password}${valid}${group}${html}</ul></li>`;
 			}, '')
 		%>
 	</ul>
