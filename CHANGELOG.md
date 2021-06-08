@@ -1,7 +1,10 @@
 ## Changelog
 
+### 7.1.0 (2021-06-08)
+* [Change] validTo/group no longer required for users in config
+
 ### 7.0.1 (2021-06-08)
-* [Bug] Passord used instead of passphrase in lftp command
+* [Bug] Password used instead of passphrase in lftp command
 * [Bug] Quotes around paths in lftp to fix issues with special chars and spaces
 
 ### 7.0.0 (2021-06-02)
