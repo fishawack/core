@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         } else if(deployEnv.ssh){
             execSync(`scp -rpl 10000 ${path}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, {stdio: 'inherit'});
         } else if(deployEnv.lftp){
-            execSync(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R ${path} ${deployLocation} -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.passphrase}' sftp://${deployCred.host}`, {stdio: 'inherit'});
+            execSync(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R "${path}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, {stdio: 'inherit'});
         }
 
         if(deployEnv.loginType){
