@@ -68,7 +68,7 @@
 								"type": "string"
 							}
 						},
-						"required": ["username", "group", "validTo"]
+						"required": ["username"]
 					}
 				},
 		        "email": {
