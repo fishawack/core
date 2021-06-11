@@ -78,6 +78,22 @@
 			}
 		},
 	    "template": {},
-	    "toggle": {}
+	    "toggle": {},
+		"capture": {
+			"browsers": [
+				"chrome",
+				"firefox"
+			],
+			"sizes": [
+				[1080, 608],
+				[1024, 768],
+				[375, 667],
+				[667, 375]
+			],
+			"pages": [
+				"/index.html",
+				"/about.html"
+			]
+		}
 	}
 }

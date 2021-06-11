@@ -1,44 +1,40 @@
 'use strict';
 
-var grunt = require('grunt');
 var fs = require('fs-extra');
-require('../_Tasks/helpers/include.js')(grunt, true);
-
-initConfig();
 
 fs.mkdirpSync(`.tmp/screenshots/`);
 
 var custom = {};
 
 // Load custom capture code in level-0 folder if exists
-if(fileExists('capture.js', '_Node/level-0', grunt)){
+if(fs.existsSync(process.cwd() + '/_Node/level-0/capture.js')){
     custom = require(process.cwd() + '/_Node/level-0/capture.js');
 // Load custom capture code in root _Node folder
-} else if(fileExists('capture.js', '_Node', grunt)){
+} else if(fs.existsSync(process.cwd() + '/_Node/capture.js')){
     custom = require(process.cwd() + '/_Node/capture.js');
 }
 
 var capture = {
-    url: captureEnv().url,
-    wait: captureEnv().wait,
+    url: browser.desiredCapabilities.url,
+    wait: browser.desiredCapabilities.wait,
     size: {
         array: null,
         index: 0,
         browser: '',
         width: 0,
         height: 0,
-        init: function(index){
-            capture.size.index = index;
-            capture.size.width = capture.size.array[index][0];
-            capture.size.height = capture.size.array[index][1];
+        init: function(){
+            capture.size.index = browser.desiredCapabilities.index;
+            capture.size.width = browser.desiredCapabilities.size[0];
+            capture.size.height = browser.desiredCapabilities.size[1];
             capture.size.browser = browser.desiredCapabilities.browserName;
         },
-        call: function(index){
-            capture.size.init(index);
+        call: function(){
+            capture.size.init();
 
             describe(`Size ${capture.size.width}x${capture.size.height}`, function () {
                 before(function(){
-                    capture.size.init(index);
+                    capture.size.init(capture.size.index);
                     capture.screenshot.init();
 
                     fs.mkdirpSync(`.tmp/screenshots/${capture.screenshot.path}/`);
@@ -120,9 +116,16 @@ var capture = {
     }
 };
 
-capture.size.array = captureEnv().sizes;
-capture.page.array = captureEnv().pages;
+capture.size.array = browser.desiredCapabilities.sizes;
+capture.page.array = browser.desiredCapabilities.pages;
 
-for(var i = 0; i < capture.size.array.length; i++){
-    capture.size.call(i);
+capture.size.call();
+
+function slugify(text) {
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');            // Trim - from end of text
 }
