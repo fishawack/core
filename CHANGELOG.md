@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.1.1 (2021-06-11)
+* [Bug] Capture size that matches 375x667 will now trigger mobileEmulation
+
 ### 7.1.0 (2021-06-08)
 * [Change] validTo/group no longer required for users in config
 
