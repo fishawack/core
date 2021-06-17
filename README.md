@@ -1044,26 +1044,23 @@ if(window.Modernizr.flexbox){
 
 This will capture just the `index.html` in the `chrome` browser at `1080x608` 16:9 aspect ratio.
 
-To fine tune the pdf generation an object can be passed into the pdf property enabling more control over the pdf/pdf's that are generated. Here are the defaults.
+To fine tune the pdf generation an object can be created called the capture object enabling more control over the pdf/pdf's that are generated. Here are the defaults.
 
 #### JSON
 ```json
 {
-    "staging": {
-        ...
-        "pdf": {
-            "browsers": [
-                "chrome"
-            ],
-            "pages": [
-                "/index.html"
-            ],
-            "sizes": [
-                [1080, 608]
-            ],
-            "url": "http://localhost:9001",
-            "wait": ".loaded"
-        }
+    "capture": {
+        "browsers": [
+            "chrome"
+        ],
+        "pages": [
+            "/index.html"
+        ],
+        "sizes": [
+            [1080, 608]
+        ],
+        "url": "http://localhost:9001",
+        "wait": ".loaded"
     }
 }
 ```
@@ -1113,6 +1110,8 @@ Specify an array of sizes width x height.
     [768, 1024]
 ]
 ```
+
+> There will be a minimum size allowed which differs depending on the browser used. When using iphone dimensions 375x667 mobileEmulation mode will be passed to webdriver to allow smaller than usual browser width
 
 ### Url
 
@@ -1187,6 +1186,12 @@ By adding in the following scss it'll disable *most* animations/transitions in y
         animation-delay: 0s !important;
     }
 }
+```
+
+This code can also be included from lab-ui directly
+
+```scss
+@import "@fishawack/lab-ui/_capture.scss";
 ```
 
 ### Custom capture
