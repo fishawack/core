@@ -1427,9 +1427,41 @@ $grunt pdf package:veeva
 
 ## Migrating
 
+### 7.0.0
+
+We switched from uncss to purgecss so any ignore tags will need switching to the following.
+
+```scss
+// Old way
+/* uncss:ignore start */
+.class1{
+    ...
+}
+/* uncss:ignore end */
+
+// New way
+/* purgecss start ignore */
+.class1{
+    ...
+}
+/* purgecss end ignore */
+```
+
+
 ### 6.0.0
 
 Sass now manages its own watch. This generally doesn't effect stand alone repos, but will effect frameworks and projects that override the sass task. These frameworks will need to map their sass files to a single sass process so that the watch can handle reloading the files.
+
+The uncss property in the config is no longer needed and will throw an error when the json schema runs. Simply remove the following lines from the config:
+
+```json
+{
+    "uncss": [
+        "<%= root %>/*.html",
+        ".tmp/vue/**/*.vue"
+    ]
+}
+```
 
 ### 5.0.0
 
