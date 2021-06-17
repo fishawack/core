@@ -1383,6 +1383,48 @@ This issue stems from a bad decision on the Customizr open source library to poi
 
 We put a permanant fix inplace for this as of [core version 4.5.3](#core-changelog-453). Bump to at least this version and regenerate the `package-lock.json` file.
 
+## Common commands
+
+The commands in this section are written out relative to the core library. In practice you will likely be running commands through lab-env in which case you need to prefix each command like so:
+
+```bash
+$grunt capture pdf
+
+# Would become
+
+lab-env exec -d "$grunt capture pdf"
+```
+
+> The -d flag here specifies a virtual frame buffer which is needed when trying to generate screenshots, it may not be needed for some commands but it doesn't hurt to always specify it just incase.
+
+### Generating a pdf
+
+The pdf command is two parts, the task that creates the screenshots and the task that generates a pdf file. The capture task will generate screenshots and place them in the .tmp folder and the pdf task will take those screenshots and stitch them together into an optimized pdf file.
+
+```bash
+$grunt capture pdf
+```
+
+Before core@5.7.0 the pdf command was a single command that captured screenshots and then generated pdf files.
+
+```bash
+$grunt pdf
+```
+
+### Generating a veeva package
+
+This command *DOES NOT* run a production build of your files, if you need a production build then run that before running the veeva package commands. The veeva package step requires screenshots to be generated for use as thumbnails - this was the main reason for splitting the capture/pdf step mentionede previously.
+
+```bash
+$grunt capture package:veeva
+```
+
+Before core@5.7.0 the screenshots had to be generated as part of the pdf process which took a little longer
+
+```bash
+$grunt pdf package:veeva
+```
+
 ## Migrating
 
 ### 6.0.0
