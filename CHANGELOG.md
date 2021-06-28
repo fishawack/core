@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.2.1 (2021-06-28)
+* [Bug] Removed fields from schema that no longer exist
+
 ### 7.2.0 (2021-06-28)
 * [Change] Now that phonegap build is discontinued, switched to cordova cli implementation for packaging
 
