@@ -63,10 +63,6 @@
                 }
             },
             "required": [
-                "signingKey",
-                "signingPassword",
-                "badge",
-                "appID",
                 "phonegapVersion",
                 "bundle"
             ]
