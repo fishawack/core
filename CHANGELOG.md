@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.2.0 (2021-06-28)
+* [Change] Now that phonegap build is discontinued, switched to cordova cli implementation for packaging
+
 ### 7.1.1 (2021-06-11)
 * [Bug] Capture size that matches 375x667 will now trigger mobileEmulation
 
