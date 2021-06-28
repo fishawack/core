@@ -3,22 +3,10 @@
 	"type": "object",
 	"definitions": {
         "phonegap": {
-            "type": "object",
+            "type": ["object", "null"],
             "description": "Config for phonegap build settings",
             "additionalProperties": false,
             "properties": {
-                "signingKey": {
-                    "type": "string"
-                },
-                "signingPassword": {
-                    "type": "string"
-                },
-                "badge": {
-                    "type": "string"
-                },
-                "appID": {
-                    "type": "string"
-                },
                 "phonegapVersion": {
                     "type": "string"
                 },
@@ -26,6 +14,14 @@
                     "type": "string"
                 },
                 "version": {
+                    "type": "string"
+                },
+                "keystore": {
+                    "description": "The name of the keystore filename exluding the extensions. A property of the same name should be inside the misc.json under android.keystore to store the password for the file",
+                    "type": "string"
+                },
+                "alias": {
+                    "description": "The name of the alias to sign the package with. A property of the same name should be inside the misc.json under android.alias to store the password for the alias",
                     "type": "string"
                 },
                 "orientation": {
@@ -37,8 +33,21 @@
                     "minItems": 1,
                     "items": {
                         "type": "string",
-                        "enum": ["ios", "android", "windows"]
+                        "enum": ["ios", "android"]
                     }
+                },
+                "packageType": {
+                    "type": "string",
+                    "enum": [
+                        "development",
+                        "enterprise",
+                        "ad-hoc",
+                        "app-store"
+                    ]
+                },
+                "provisioningProfile": {
+                    "description": "The filename of the provisioning profile found in ~/Library/MobileDevice/Provisioning Profiles/ exlucding the extension",
+                    "type": "string"
                 },
                 "config": {
                     "description": "Cordova config settings that will be merged with defaults",
@@ -50,10 +59,6 @@
                 },
                 "android": {
                     "description": "Cordova android platform settings that will be merged with defaults",
-                    "additionalProperties": true
-                },
-                "windows": {
-                    "description": "Cordova windows platform settings that will be merged with defaults",
                     "additionalProperties": true
                 }
             },
