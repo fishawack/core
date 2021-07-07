@@ -1,9 +1,8 @@
 module.exports = function(grunt) {
     grunt.registerTask('package:phonegap', ['clean:phonegap', 'createConfigXml', 'copy:phonegap', 'cordova:build', 'cordova:release']);
 
-    var platforms = contentJson.attributes.phonegap.platforms || ['ios'];
-    var options = contentJson.attributes.phonegap || {};
-    var os = require('os');
+    const options = contentJson.attributes.phonegap || {};
+    const platforms = options.platforms || ['ios'];
 
     grunt.registerTask('createConfigXml', function() {
         var xmlBuilder = require('xmlbuilder');
@@ -50,6 +49,8 @@ module.exports = function(grunt) {
     })));
 
     grunt.registerTask('cordova:release', () => {
+        const os = require('os');
+        
         cordova(platforms.map(platform => {
             if(platform === "ios"){
                 return `npx cordova build ios --device --release --packageType="${options.packageType}" --provisioningProfile="${options.provisioningProfile}"`;
