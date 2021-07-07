@@ -56,7 +56,7 @@ module.exports = {
 				},
 				{
 					test: /\.m?js$/,
-					exclude: /(node_modules|bower_components)/,
+					exclude: new RegExp(`/node_modules\/(?!(${(contentJson.attributes.transpile || []).join('|')})\/).*/`),
 					use: [
 						{
 							loader: 'babel-loader',

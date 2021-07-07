@@ -230,6 +230,13 @@
 		        	"description": "If true will pull out shared javascript librarys to a commons.js file",
 		        	"type": "boolean"
 		        },
+				"transpile": {
+					"description": "Specify any node_module libraries to force them to be transpiled by babel",
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
 		        "template": {
 		        	"type": "object",
 	    			"patternProperties": {
