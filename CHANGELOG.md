@@ -1,5 +1,9 @@
 ## Changelog
 
+### 7.3.0 (2021-07-07)
+* [Feature] Can now specify transpile option to force transpilation of defined node_modules
+* [Bug] Move phonegap consts so they don't throw errors if phonegap not defined
+
 ### 7.2.1 (2021-06-28)
 * [Bug] Removed fields from schema that no longer exist
 
