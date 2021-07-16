@@ -69,7 +69,7 @@ module.exports = function(grunt) {
                             .reduce(async (promise, d, i) => {
                                 await promise;
                                 
-                                var data = await compare.images(browser, size, d).catch(err => console.log(err));
+                                var data = await compare.images(browser, size, d).catch(grunt.log.warn);
 
                                 if(data){
                                     values.push(data);
@@ -120,13 +120,17 @@ module.exports = function(grunt) {
                     }
 
                     resemble.compare(image1, image2, options, (err, data) => {
-                            if(write){
-                                fs.writeFileSync(`.tmp/difference/${browser}/${size}/${filename}`, data.getBuffer());
+                            if(err){
+                                reject(`${filename}: ${err}`);
+                            } else {
+                                if(write){
+                                    fs.writeFileSync(`.tmp/difference/${browser}/${size}/${filename}`, data.getBuffer());
+                                }
+    
+                                grunt.log.ok(filename);
+    
+                                resolve(data);
                             }
-
-                            grunt.log.ok(filename);
-
-                            resolve(data);
                         });
                 });
             }
