@@ -74,7 +74,67 @@
 		        "email": {
 	            	"type": "array",
 					"items": { "type": "string" }
-	        	}
+	        	},
+				"commands": {
+					"description": "Commands to run locally and on the server both pre and post deploy",
+					"type": "object",
+					"properties": {
+						"local": {
+							"description": "Commands to run locally",
+							"type": "object",
+							"properties": {
+								"pre": {
+									"description": "Command that runs locally before the deployment",
+									"type": "array"
+								},
+								"post": {
+									"description": "Command that runs locally after the deployment",
+									"type": "array"
+								}
+							}
+						},
+						"server": {
+							"type": "object",
+							"properties": {
+								"pre": {
+									"description": "Command that runs on the server before the deployment",
+									"type": "array"
+								},
+								"post": {
+									"description": "Command that runs on the server before the deployment",
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"paths": {
+					"description": "Specify the files/folders to deploy from the root directory.",
+					"type": "array",
+					"items": {
+						"description": "An array of globbed strings or objects defining the files to deploy",
+						"type": ["string", "object"],
+						"properties": {
+							"src": {
+								"description": "The globbed path to the file/folder from the project root e.g public/*",
+								"type": "string"
+							},
+							"dest": {
+								"description": "An optional destination to the final location of the src file/folder",
+								"type": "string"
+							},
+							"ignore": {
+								"description": "An array of strings defining the files/folders to ignore",
+								"type": "array",
+								"items": {
+									"description": "The file/folder to ignore e.g. 'public/storage'",
+									"type": "string"
+								}
+							}
+						},
+						"required": ["src"]
+					}
+				}
 			}
 		}
 	}

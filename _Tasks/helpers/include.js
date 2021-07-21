@@ -75,7 +75,7 @@ module.exports = function(grunt, hasBase) {
 
 		config.contentJson = this.contentJson;
 
-		this.deployEnv = contentJson.attributes.targets && contentJson.attributes.targets[deployBranch] && contentJson.attributes.targets[deployBranch].deploy || {};
+		this.deployEnv = contentJson.attributes.deploy;
 	    this.deployLocation = truePath(deployEnv.location || '');
 		this.deployUrl = truePath(deployEnv.url || '');
 		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp] || {};
