@@ -41,6 +41,9 @@ module.exports = function(grunt) {
         /* WATERTIGHT */
         deployEnv.loginType ? package.push('package:watertight', 'compress:watertight') : grunt.log.warn('No watertight specified');
 
+        /* DEPLOY */
+        deployEnv ? package.push('package:deploy') : grunt.log.warn('No deploy packaging specified');
+
         grunt.task.run(package);
     });
 };
