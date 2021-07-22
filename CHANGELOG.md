@@ -1,5 +1,9 @@
 ## Changelog
 
+### 7.4.0 (2021-07-22)
+* [Feature] Can now specify deploy paths and commands to run both locally and on the server pre and post deploy
+* [Change] The deployEnv variable is now the merged variable instead of the direct one
+
 ### 7.3.1 (2021-07-16)
 * [Bug] Handle errors on compare step
 * [Bug] Clear cache on dist builds
