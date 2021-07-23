@@ -28,12 +28,8 @@ module.exports = function(grunt, hasBase) {
 		this.configPath = (devProject) ? '../core/' : 'node_modules/@fishawack/core/';
 	}
 	
-	var branch = require('yargs').argv.branch;
-
-	// If no git initialized in the build repo this will fail fatally
-	this.deployBranch;
 	try{
-		this.deployBranch = (!branch) ? require('git-branch').sync() : branch;
+		this.deployBranch = require('yargs').argv.branch || process.env.BRANCH || process.env.CI_COMMIT_REF_NAME || require('git-branch').sync();
 	} catch(e){
 		this.deployBranch = 'unknown';
 	}
