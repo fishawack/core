@@ -1,6 +1,6 @@
 {
   "name": "@fishawack/core",
-  "version": "7.5.0",
+  "version": "7.5.1",
   "description": "Grunt config building web application",
   "scripts": {
     "setup": "npm ci",
