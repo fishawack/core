@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     });
     
     grunt.registerTask('deploy', () => {
-        if(!deployEnv){
+        if(!deployEnv.location){
             grunt.log.warn('No deployment configured for ' + deployBranch);
             return;
         }

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.5.1 (2021-07-23)
+* [Change] npm commands now only run for a single purpose, commands will need chaining for full deployments
+
 ### 7.5.0 (2021-07-23)
 * [Change] npm commands now only run for a single purpose, commands will need chaining for full deployments
 * [Change] Branch now checks for environment variables before using the git package to determine branch
