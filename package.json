@@ -5,9 +5,10 @@
   "scripts": {
     "start": "grunt",
     "setup": "npm ci",
-    "deploy": "npm run deploy-s && grunt mail",
-    "deploy-s": "npm run production && grunt package && grunt deploy",
-    "production": "npm run content && grunt dist && npm test",
+    "package": "grunt package",
+    "deploy": "grunt deploy",
+    "mail": "grunt mail",
+    "production": "grunt dist",
     "content": "grunt content",
     "test": "grunt validate",
     "mocha": "mocha _Test/*.js --timeout 120s --bail",
