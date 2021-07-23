@@ -1,5 +1,9 @@
 ## Changelog
 
+### 7.5.0 (2021-07-23)
+* [Change] npm commands now only run for a single purpose, commands will need chaining for full deployments
+* [Change] Branch now checks for environment variables before using the git package to determine branch
+
 ### 7.4.0 (2021-07-22)
 * [Feature] Can now specify deploy paths and commands to run both locally and on the server pre and post deploy
 * [Change] The deployEnv variable is now the merged variable instead of the direct one
