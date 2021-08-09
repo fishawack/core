@@ -1226,13 +1226,74 @@ module.exports = {
 
 ## Deploying
 
+The majority of our deployments are "push" deployments where the website is fully built through CI/CD and then simply transferred to the server via a choice of different transfer protocols. Obviously if a site or client requires/prefers a git "pull" deployment approach then this is completely fine but would need to be configured on a per project basis. 
+
 ### Servers
 
-## Watertight
+We have quite a few servers that we use for both staging and production deployments, but we should be aiming to keep all of our sites on our two main server providers depending on the primary website target the site is aimed at. The server providers are TsoHost for EU sites and Liquid web for US.
 
-By adding users in a deploy target inside the config file watertight will automatically be wrapped around the project suppyling a basic php login system.
+#### EU - Tsohost
 
-### Styling
+For Tsohost we have two primary servers, Gandalf and Galadriel. Gandalf is fairly full at this point so we've purchased a second server that should be used for all new builds.
+
+#### US - Liquidweb
+
+For liquid web we currently have just a single server that is used for shared deployments and that is the Balrog server.
+
+### Configs
+
+Here are two simple configs that can be used to deploy to either the US or EU deployment locations.
+
+```json
+{
+    "attributes": {
+		"targets": {
+            "staging-eu": {
+                "deploy": {
+                    "url": "https://staging.fishawack.solutions/bespoke/",
+                    "location": "/home/fishawack/staging.fishawack.solutions/bespoke/",
+                    "lftp": "vidaHost-fishawack",
+                    "subDir": "<%= repo.name %>"
+                }
+            },
+            "staging-us": {
+                "deploy": {
+                    "url": "https://staging.us.fishawack.solutions/bespoke/",
+                    "location": "/home/fishawack_us/staging.us.fishawack.solutions/bespoke/",
+                    "lftp": "balrog-fishawack",
+                    "subDir": "<%= repo.name %>"
+                }
+            }
+        }
+    }
+}
+```
+
+### Watertight
+
+Watertight is a simple php wrapper that can be enabled on any frontend projects to wrap them in a fairly simple authentication layer.
+
+To enable watertight you need to add the property `loginType` to a deploy target that will trigger a regular deploy to wrap the watertight files around the build. The `loginType` property takes a few various style options but many of those are now deprecated so you should stick to setting this value to `bootstrap` for most/all projects.
+
+```json
+"deploy": {
+    "url": "https://staging.fishawack.solutions/bespoke/",
+    "location": "/home/fishawack/staging.fishawack.solutions/bespoke/",
+    "lftp": "vidaHost-fishawack",
+    "subDir": "<%= repo.name %>",
+    "loginType": "bootstrap",
+    "users": [
+        {
+            "username": "digital@fishawack.com",
+            "group": "admin",
+            "validTo": "",
+            "password": "<password here>"
+        }
+    ]
+}
+```
+
+#### Styling
 
 By default the login is styled with a basic bootstrap styling. If you wish to create a custom login page you need to create a `login-form.hbs` inside your handlebars snippets. This file should contain the following php by default, you can then add you classes and/or custom elements around these.
 
@@ -1292,48 +1353,15 @@ You also need to create a html file that simply imports this, this is primarily 
 {{> login-form}}
 ```
 
-### iOS packaging with PhoneGap
+## Packaging
+
+### iOS
 
 You'll need to make sure you have a copy of the latest signed certificate! You'll then need to login to the Apple iOS developers portal to create a provisioning profile:
 
 [Apple Developer Portal](developer.apple.com)
 
-#### Create App ID
-
-1. Go to Identifiers > App IDs, click "+" to create a new ID
-2. Fill in Name of your app (i.e SantenCubeApp)
-3. Use Explicit App ID, Bundle ID should follow this notation: com.fishawack.(lowercase of name filled above) i.e. com.fishawack.santencubeapp
-4. Check any services you require (normally none of them)
-5. Confirm and regster your app
-
-#### Create Provision Profile
-
-1. Go to Provisioning Profiles > All > click the "+" to create a new profile
-2. Select "In House", click "Continue"
-3. App ID select the one you just created in the last section, click "Continue"
-4. Select the Certificate with the longest expiry date and continue
-5. Profile name: use App name from previous section and continue
-6. Download provisioning profile!
-
-### Create App in PhoneGap Build
-
-1. Login via [PhoneGap Build]( https://build.phonegap.com/apps )
-2. Go to top right corner where the account icon is, in the drop down select "Edit Account"
-3. Under "Signing Keys", Add a key in the iOS section
-4. Use the name you've been using in these sections again and upload the certificate and keys
-5. Go back to the main Dashboard and Create new app by uploading a zip file
-6. In the App. you can now select your Key for iOS and trigger a build, you will need to unlock it first by clicking the pad lock
-
-You're all done, you should be able to populate your repo with the info provided on the page, add this to your [config files](#core-config) under the attributes object:
-
-```json
-"phonegap": {
-    "signingKey": "SigningKeyGoesHere",
-        "appID": "AppIDGoesHere",
-        "phonegapVersion": "cli-7.1.0",
-        "bundle": "com.fishawack.AppNameGoesHere"
-}
-```
+<< TODO: packaging options >>
 
 ## Troubleshooting
 
