@@ -10,22 +10,29 @@ As a company we do a lot of smaller short term builds rather than longer term co
 
 ## Dependancies
 
-As this code base is shared amongst most of our repos, these dependancies are likely the only ones you'll ever need to install to get project code up and running. They've been split into two groups, build and deploy dependancies.
+As this code base is shared amongst most of our repos, these dependancies are likely the only ones you'll ever need to install to get project code up and running. They've been split into three groups, content, build and deploy dependancies.
+
+### Content
+
+The following dependancies are needed to pull media assets from external file storage.
+
+> Repositories packaged for handover to external agencies won't need these dependencies as all media assets will be bundled into the handover package.
+
+* git
+* wget
+* jq
+* ftp (mac high sierra and above)
 
 ### Build
 
-The following dependancies are needed to pull assets from the server and build the source code.
+The following dependancies are needed to build the source code.
 
 * node (10.0.0 recommended)
 * npm (5.7.1 or above)
 * node-gyp
 * grunt-cli
-* git
 * Dart Sass VM
-* wget
 * imagemagick
-* jq
-* ftp (mac high sierra and above)
 * xCode
 * xCode command line tools
 
