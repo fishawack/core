@@ -1372,6 +1372,44 @@ You'll need to make sure you have a copy of the latest signed certificate! You'l
 
 ## Troubleshooting
 
+### Uglify failure
+
+#### Problem
+
+Babel and Webpack purposefully do not process node_module javacript files to keep things quick. This can cause problems if the library owner didn't provide an es5 friendly implementation of their code. When this happens you will often see the below error on production builds.
+
+```bash
+Running "uglify:dist" (uglify) task
+JS_Parse_Error {
+  message: 'SyntaxError: Unexpected token: name (n)',
+  filename: '../../.tmp/js/script.js',
+  line: 1,
+  col: 1019,
+  pos: 1019,
+  stack:
+   'Error\n  at new JS_Parse_Error (<anonymous>:1547:18)\n  at js_error (<anonymous>:1555:11)\n  at croak (<anonymous>:2094:9)\n  at token_error (<anonymous>:2102:9)\n  at unexpected (<anonymous>:2108:9)\n  at semicolon (<anonymous>:2128:56)\n  at simple_statement (<anonymous>:2319:73)\n  at eval (<anonymous>:2188:19)\n  at eval (<anonymous>:2141:24)\n  at ...' }
+>> Uglifying source .tmp/js/script.js failed.
+Warning: Uglification failed.
+SyntaxError: Unexpected token: name (n). 
+Line 1 in .tmp/js/script.js
+ Use --force to continue.
+```
+
+#### Solution
+
+Check the library source files for a .cjs extension of the main module, this is usually the es5 friendly version.
+
+As of [core version 7.4.0](#core-changelog-740) you can now specify a list of node_modules you would like to go through the regular transpiling step.
+
+```json
+"attributes": {
+    "transpile": [
+        "@fishawack/lab-d3"
+    ]
+}
+```
+
+
 ### Postcss static img
 
 ```bash
