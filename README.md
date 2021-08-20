@@ -1372,6 +1372,42 @@ You'll need to make sure you have a copy of the latest signed certificate! You'l
 
 ## Troubleshooting
 
+### npm ci failure
+
+#### Problem
+
+Sometimes when running `npm install` on a project that already has its package-lock file generated will cause the git dependiences to [switch their protocols](https://github.com/npm/cli/issues/2610) to ssh:// rather than https://. When the build tries to install through gitlab you'll run into errors like below:
+
+```bash
+> npm ci && npm run content
+npm WARN prepare removing existing node_modules/ before installation
+npm ERR! Error while executing:
+npm ERR! /usr/bin/git ls-remote -h -t ssh://git@github.com/mikemellor11/grunt-scorm-manifest.git
+npm ERR! 
+npm ERR! Warning: Permanently added 'github.com,140.82.121.3' (RSA) to the list of known hosts.
+npm ERR! git@github.com: Permission denied (publickey).
+npm ERR! fatal: Could not read from remote repository.
+npm ERR! 
+npm ERR! Please make sure you have the correct access rights
+npm ERR! and the repository exists.
+npm ERR! 
+npm ERR! exited with error code: 128
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2021-08-20T08_35_40_457Z-debug.log
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! @fishawack/stream@11.4.6 setup: `npm ci && npm run content`
+npm ERR! Exit status 1
+```
+
+#### Solution
+
+The real solution will come from npm when they patch the issue. For now though the fastest way around this is to simply regenerate the package-lock file locally and re-push.
+
+```bash
+lab-env regen
+```
+
 ### Uglify failure
 
 #### Problem
