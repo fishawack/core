@@ -1362,7 +1362,25 @@ You also need to create a html file that simply imports this, this is primarily 
 
 ## Packaging
 
-### iOS
+### Electron
+
+Electron builds are typically used to circumvent the need for a site to be loaded locally via a web server. A common use case for this is booth events where the site might be running on a large touch screen and the IT technicians who are overseeing the build may not have sufficient knowledge of installing and running web servers in local environments.
+
+Obviously there's a lot more you can do with Electron builds like running multiple screens in parallel and having them communicate locally over sockets for example.
+
+The simplest way of enabling the electron wrapper is to simply set the electron property to true against a target branch or globally.
+
+```json
+"attributes": {
+    "electron": true
+}
+```
+
+The build will produce both a Windows and a Mac Electron wrapper and attach them to the build emails for download.
+
+### Cordova
+
+#### iOS
 
 You'll need to make sure you have a copy of the latest signed certificate! You'll then need to login to the Apple iOS developers portal to create a provisioning profile:
 
