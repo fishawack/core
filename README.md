@@ -1515,6 +1515,25 @@ This issue stems from a bad decision on the Customizr open source library to poi
 
 We put a permanant fix inplace for this as of [core version 4.5.3](#core-changelog-453). Bump to at least this version and regenerate the `package-lock.json` file.
 
+### Svg asset path
+
+```bash
+ERROR in ./_Build/vue/globals/GSvg/GSvg.vue?vue&type=template&id=c839c296&functional=true& (./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./_Build/vue/globals/GSvg/GSvg.vue?vue&type=template&id=c839c296&functional=true&)
+Module not found: Error: Can't resolve '../../../handlebars/partials/generated/embed' in '/app/_Build/vue/globals/GSvg'
+ @ ./_Build/vue/globals/GSvg/GSvg.vue?vue&type=template&id=c839c296&functional=true& (./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./_Build/vue/globals/GSvg/GSvg.vue?vue&type=template&id=c839c296&functional=true&) 8:12-12:21
+ @ ./_Build/vue/globals/GSvg/GSvg.vue?vue&type=template&id=c839c296&functional=true&
+ @ ./_Build/vue/globals/GSvg/GSvg.vue
+ @ ./_Build/js/script.js
+```
+
+#### Problem
+
+Svg asset path is now set to the wrong location after [migrating core versions](#core-migrating-600).
+
+#### Solution
+
+[Update svg path](#core-migrating-600).
+
 ## Common commands
 
 The commands in this section are written out relative to the core library. In practice you will likely be running commands through lab-env in which case you need to prefix each command like so:
@@ -1593,6 +1612,26 @@ The uncss property in the config is no longer needed and will throw an error whe
         ".tmp/vue/**/*.vue"
     ]
 }
+```
+
+#### Svg embed path
+
+Svg files no longer build to `_Build/handlebars/partials/generated` instead building to `_Build/handlebars/generated`. This can impact Vue projects where GSvg tries to resolve paths to the aforementioned location. To fix simply update the paths as follows:
+
+```html
+// Old way
+<div
+    v-html="require(`../../../handlebars/partials/generated/embed/svg${props.asis ? '--asis' : ''}--${props.name}.svg`)"
+    :class="[data.class,data.staticClass]"
+    v-if="props.embed"
+/>
+
+// New way
+<div
+    v-html="require(`../../../handlebars/generated/embed/svg${props.asis ? '--asis' : ''}--${props.name}.svg`)"
+    :class="[data.class,data.staticClass]"
+    v-if="props.embed"
+/>
 ```
 
 ### 5.0.0
