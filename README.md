@@ -352,6 +352,8 @@ When creating the file the name needs to match the server name, here are some ex
 
 ## Config
 
+### Structure
+
 One of the most important files in any project is the config file. It contains the deploy targets, content locations and sometimes even the textual content for the project itself.
 
 This file can be constructed from multiple config files using a deep merge. This allows for instance specific configs to be merged with shared theme configs and even base configs.
@@ -403,6 +405,37 @@ Any json file found in `_Build/config/example/` will be used only if there isn't
         ]
     }
 }
+```
+
+### VSCode intellisense
+
+If using VSCode you can add the following snippet to your json schema settings to get full json intellisense for both the configs and STREAM projects.
+
+```bash
+Preferences > Settings > JSON:Schemas > Edit in settings.json
+```
+
+And add the following property and values;
+
+```json
+"json.schemas": [
+    {
+        "fileMatch": [
+            "/fw.json",
+            "/_Build/content.json",
+            "/_Build/config/*.json",
+            "/_Build/config/**.*.json"
+        ],
+        "url": "/.cache/schema/schema.json"
+    },
+    {
+        "fileMatch": [
+            "/_Build/sequences/*.json",
+            "/_Build/sequences/**/*.json"
+        ],
+        "url": "/.cache/schema/sequence/schema.json"
+    }
+]
 ```
 
 ## Assets
