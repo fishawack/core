@@ -12,6 +12,9 @@ module.exports = {
     },
     html: {
         files: [
+                './fw.json',
+                './content.json',
+                './level-*.json',
                 '<%= src %>/*.json',
                 '<%= src %>/example/content.json',
                 '<%= src %>/config/**/*.json',
