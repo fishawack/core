@@ -1393,6 +1393,50 @@ You also need to create a html file that simply imports this, this is primarily 
 {{> login-form}}
 ```
 
+### Cache busting
+
+Production builds will automatically cache bust css and javascript files by appending a random hash and the prefix 'cache' in the assets filename. Any html files and the assets filename itself will both automatically be re-written to point to the new filename.
+
+```html
+<html>
+    <head>
+        <!-- Before -->
+        <script src="/script.js"></script>
+        <link rel="stylesheet" href="general.css"/>
+
+        <!-- After -->
+        <script src="/script.cache.06bfbf5d35a264f2.js"></script>
+        <link rel="stylesheet" href="general.cache.06bfbf5d35a264f2.css"/>
+    </head>
+</html>
+```
+
+```bash
+# Before
+_Output/js/script.js
+_Output/css/general.css
+
+# After
+_Output/js/script.cache.06bfbf5d35a264f2.js
+_Output/css/general.cache.06bfbf5d35a264f2.css
+```
+
+#### Disabling
+
+If cache busting is causing issues, the easiest way to disable it is to override the default config by creating a file in the following location `_Tasks/options/cacheBust.js`.
+
+```javascript
+module.exports = {
+    options: {
+        assets: [
+        ]
+    },
+    default: {
+        src: []
+    }
+}
+```
+
 ## Packaging
 
 ### Electron
