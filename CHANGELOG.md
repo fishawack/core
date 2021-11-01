@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.5.2 (2021-11-01)
+* [Bug] String replace the loading/loaded class on prerender to avoid bug of jsdom step not having the prerender inject scripts that the prerender step has
+
 ### 7.5.1 (2021-07-23)
 * [Change] npm commands now only run for a single purpose, commands will need chaining for full deployments
 

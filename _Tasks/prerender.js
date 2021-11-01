@@ -53,14 +53,10 @@ module.exports = (grunt) => {
                 renderedRoutes.forEach(renderedRoute => {
                     const outputDir = path.join(process.cwd(), dest, renderedRoute.route);
                     const outputFile = `${outputDir}/index.html`;
-
-                    var document = jsdom.jsdom(renderedRoute.html.trim());
-
-                    document.querySelector('html').classList.remove('loaded');
-                    document.querySelector('html').classList.add('loading');
+                    let html = renderedRoute.html.trim().replace('loaded', 'loading');
                     
                     mkdirp.sync(outputDir);
-                    fs.writeFileSync(outputFile, jsdom.serializeDocument(document));
+                    fs.writeFileSync(outputFile, html);
 
                     grunt.log.ok(renderedRoute.route);
                 });
@@ -74,8 +70,6 @@ module.exports = (grunt) => {
                 prerenderer.destroy();
                 // Handle errors.
             })
-            .finally(() => {
-                done();
-            });
+            .finally(() => done());
     });
 };
