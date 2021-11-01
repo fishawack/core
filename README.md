@@ -1437,6 +1437,82 @@ module.exports = {
 }
 ```
 
+### Prerendering
+
+Most commonly found in SPA projects, prerendering is the process of rendering out the html pages as a build step so that when the page loads for the first time in the clients browser, the SPA framework can latch on to preexisting html markup rather than completely rendering out the entire page from scratch. Other benefits prerendering can give you are: 
+
+* The site will have something to display with javascript disabled
+* Search engines will be able to parse and collect information about the website easier
+* Time until first load will be faster as the page will be visible before the javascript has to load
+* History mode can work without any .htaccess rewriting or hash bang mode needed
+
+There are however instances where prerendering won't work well.
+
+* Lots of dynamic user curated views.
+* Sites that need are directly connected to a CMS or API and need live dynamic content
+* Sites with 1000's of views
+
+If you're site doesn't tick any of those boxes and you're using an SPA framework then to enable prerendering all you need to do is set the flag in the config.
+
+```json
+"attributes": {
+    "prerender": true
+}
+```
+
+This will by default only prerender the view found at '/'. To prerender more view's you'll need to create a javascript file at the location `_Node/prerender.js`. This file needs to export a function that returns an array the defines which views need to be prerendered. The logic for how this works is down to the developer, whether you want to pull from a CMS to define some dynamic routes, or just hardcode the array its down to whatever implementation the website needs.
+
+```javascript
+// Hard coded array example
+module.exports = () => ['/', '/about', '/contact'];
+
+// Pulling a local json file to determine the views
+module.exports = () => require('routes.json').map(route => route.path);
+```
+
+#### Client-side flag
+
+Often times when prerendering they'll be certain scenarios where you don't want something to run during the prerender step. An example of this is a GTM tag or a OneTrust code snippet that onload will do a bunch of changes to your page markup. If you run this code during the prerender step and then the code runs again when the page itself loads then you're going to hit a bunch of client side issues that may be difficult to debug.
+
+To combat this there is a client side global flag that you can use to prevent certain actions from happening during the prerender step.
+
+```javascript
+// During prerender
+window.prerender === {
+    engine: 'puppeteer'
+};
+
+// Regular page load
+window.prerender === undefined;
+```
+
+Using this script you can rewrite your include snippets to append to the head only during regular loads of the page and not during prerenders.
+
+```html
+<!-- Regular OneTrust snippet -->
+<script src="https://cdn.cookielaw.org/consent/{{@root.env.ONE_TRUST}}/OtAutoBlock.js" ></script>
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  data-domain-script="{{@root.env.ONE_TRUST}}" ></script>
+<script> function OptanonWrapper() { } </script>
+
+<!-- Rewritten dynamic OneTrust snippet -->
+<script>
+    if (!window.prerender) {
+        var script = document.createElement("script");
+        script.type = "application/javascript";
+        script.src = 'https://cdn.cookielaw.org/consent/{{@root.env.ONE_TRUST}}/OtAutoBlock.js';
+        document.head.appendChild(script);
+
+        script = document.createElement("script");
+        script.type = "application/javascript";
+        script.src = 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js';
+        script.setAttribute('data-domain-script', '{{@root.env.ONE_TRUST}}');
+        document.head.appendChild(script);
+
+        function OptanonWrapper() { }
+    }
+</script>
+```
+
 ## Packaging
 
 ### Electron
