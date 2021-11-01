@@ -1687,6 +1687,14 @@ Svg asset path is now set to the wrong location after [migrating core versions](
 
 [Update svg path](#core-migrating-600).
 
+### BrowserSync not reloading
+
+For some reason (and i've literally no idea why) if you install a local version of mocha on a project it will stop the browserSync from live reloading when saving local project files.
+
+#### Solution
+
+Mocha is already included as a `@fishawack/core` dev dependency so it shouldn't be needed as a project dependency as well. If this is the case then simply remove the dependency from the package.json file and regenerated the node_modules.
+
 ## Common commands
 
 The commands in this section are written out relative to the core library. In practice you will likely be running commands through lab-env in which case you need to prefix each command like so:
