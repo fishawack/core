@@ -171,7 +171,8 @@ module.exports = function(grunt) {
                     cwd: d.root,
                     src: ['**', '!styleguide.html'].concat((options.sharedResource) ? ['!shared/**'] : []),
                     dest: '_Packages/Veeva/' + zipName + '/',
-                    expand: true
+                    expand: true,
+                    follow: true
                 },
 	        	{
 	                src: screenshot,

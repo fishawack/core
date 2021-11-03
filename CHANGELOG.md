@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.5.3 (2021-11-03)
+* [Bug] Added follow:true on shared resource expand object so that files are correctly imported
+
 ### 7.5.2 (2021-11-01)
 * [Bug] String replace the loading/loaded class on prerender to avoid bug of jsdom step not having the prerender inject scripts that the prerender step has
 
