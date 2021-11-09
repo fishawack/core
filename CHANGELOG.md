@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.6.0 (2021-11-09)
+* [Change] Can now override all aspects of the capture code
+
 ### 7.5.3 (2021-11-03)
 * [Bug] Added follow:true on shared resource expand object so that files are correctly imported
 
