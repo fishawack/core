@@ -23,27 +23,17 @@ var capture = {
         browser: '',
         width: 0,
         height: 0,
-        init: function(){
+        init(){
             capture.size.index = browser.desiredCapabilities.index;
             capture.size.width = browser.desiredCapabilities.size[0];
             capture.size.height = browser.desiredCapabilities.size[1];
             capture.size.browser = browser.desiredCapabilities.browserName;
         },
-        call: function(){
+        call(){
             capture.size.init();
 
             describe(`Size ${capture.size.width}x${capture.size.height}`, function () {
-                before(function(){
-                    capture.size.init(capture.size.index);
-                    capture.screenshot.init();
-
-                    fs.mkdirpSync(`.tmp/screenshots/${capture.screenshot.path}/`);
-
-                    browser.setViewportSize({
-                        width: capture.size.width,
-                        height: capture.size.height
-                    });
-                });
+                before(() => capture.size.before());
 
                 if(custom.size){
                     custom.size(capture);
@@ -53,6 +43,17 @@ var capture = {
                     capture.page.call(i);
                 }
             });
+        },
+        before(){
+            capture.size.init(capture.size.index);
+            capture.screenshot.init();
+
+            fs.mkdirpSync(`.tmp/screenshots/${capture.screenshot.path}/`);
+
+            browser.setViewportSize({
+                width: capture.size.width,
+                height: capture.size.height
+            });
         }
     },
     page: {
@@ -60,7 +61,7 @@ var capture = {
         index: 0,
         name: '',
         slug: '',
-        init: function(index){
+        init(index){
             capture.page.index = index;
             capture.page.name = capture.page.array[index];
             capture.page.slug = slugify(capture.page.name);
@@ -71,40 +72,47 @@ var capture = {
             capture.page.route = full.split('?')[0] || '/index.html';
             capture.page.query = full.split('?')[1] || '';
         },
-        call: function(index){
+        call(index){
             capture.page.init(index);
 
             describe(`Page ${capture.page.array[index]}`, function () {
-                before(function(){
-                    capture.page.init(index);
+                before(() => capture.page.before(index));
 
-                    browser.url(`${capture.url}${capture.page.route}?capture=true&${capture.page.query}#${capture.page.hash}`);
-
-                    if(isNaN(capture.wait)){
-                        browser.waitForExist(capture.wait, 50000);
-                    } else {
-                        browser.pause(capture.wait);
-                    }
-                });
-
-                it('Loaded', function() {
-                    capture.screenshot.call();
-                });
+                capture.page.initial();
 
                 if(custom.page){
                     custom.page(capture);
                 }
+            });
+        },
+        wait() {
+            if(isNaN(capture.wait)){
+                browser.waitForExist(capture.wait, 50000);
+            } else {
+                browser.pause(capture.wait);
+            }
+        },
+        before(index){
+            capture.page.init(index);
+
+            browser.url(`${capture.url}${capture.page.route}?capture=true&${capture.page.query}#${capture.page.hash}`);
+
+            capture.page.wait()
+        },
+        initial(){
+            it('Loaded', function() {
+                capture.screenshot.call();
             });
         }
     },
     screenshot: {
         index: 0,
         path: '',
-        init: function(){
+        init(){
             capture.screenshot.path = `${capture.size.browser}/${capture.size.width}x${capture.size.height}`;
             capture.screenshot.index = 0;
         },
-        call: function(viewportOnly){
+        call(viewportOnly){
             let filename = `.tmp/screenshots/${capture.screenshot.path}/${capture.screenshot.index++}_${capture.page.slug}_`;
             
             if(viewportOnly){
