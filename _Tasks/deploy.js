@@ -63,12 +63,8 @@ module.exports = function(grunt) {
                 await new Promise((resolve, reject) => {
                     let spinner = ora(`Deploying to: ${deployLocation}`).start();
                     
-                    exec(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, (error, stdout, stderr) => {
+                    exec(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, {maxBuffer: 20000 * 1024}, (error, stdout, stderr) => {
                         if(error){
-                            // If lftp trim the command itself so no creds are shown and only grab the last 100 chars
-                            if(d.lftp){
-                                error.message = error.message.split('Running connect program')[1].slice(-500);
-                            }
                             spinner.fail();
                             reject(error);
                             return;

@@ -36,12 +36,8 @@ module.exports = (grunt) => {
                 new Promise((resolve, reject) => {
                     let spinner = ora(`Pulling content: ${d.location}`).start();
                     
-                    exec(grunt.template.process(protocol(d, i), {data:config}), (error, stdout, stderr) => {
+                    exec(grunt.template.process(protocol(d, i), {data:config}), {maxBuffer: 20000 * 1024}, (error, stdout, stderr) => {
                         if(error){
-                            // If lftp trim the command itself so no creds are shown and only grab the last 100 chars
-                            if(d.lftp){
-                                error.message = error.message.split('Running connect program')[1].slice(-500);
-                            }
                             spinner.fail();
                             reject(error);
                             return;
