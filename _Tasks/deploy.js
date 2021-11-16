@@ -59,24 +59,28 @@ module.exports = function(grunt) {
         } else if(deployEnv.ssh){
             execSync(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, {stdio: 'inherit'});
         } else if(deployEnv.lftp){
-            await new Promise((resolve, reject) => {
-                let spinner = ora(`Deploying to: ${deployLocation}`).start();
-                
-                exec(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, (error, stdout, stderr) => {
-                    if(error){
-                        // If lftp trim the command itself so no creds are shown and only grab the last 100 chars
-                        if(d.lftp){
-                            error.message = error.message.split('Running connect program')[1].slice(-500);
+            try {
+                await new Promise((resolve, reject) => {
+                    let spinner = ora(`Deploying to: ${deployLocation}`).start();
+                    
+                    exec(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, (error, stdout, stderr) => {
+                        if(error){
+                            // If lftp trim the command itself so no creds are shown and only grab the last 100 chars
+                            if(d.lftp){
+                                error.message = error.message.split('Running connect program')[1].slice(-500);
+                            }
+                            spinner.fail();
+                            reject(error);
+                            return;
                         }
-                        spinner.fail();
-                        reject(error);
-                        return;
-                    }
 
-                    spinner.succeed();
-                    resolve(stdout.trim());
+                        spinner.succeed();
+                        resolve(stdout.trim());
+                    });
                 });
-            })
+            } catch(e){
+                grunt.fatal(e.message);
+            }
         }
 
         if(deployEnv.loginType){

@@ -14,15 +14,15 @@ async function deploy(branch){
 }
 
 describe('deploy', () => {
-    // it('Should deploy the master target to the server via scp', () => deploy('master'));
-    // it('Should deploy a watertight wrapped site to the server', () => deploy('watertight'));
+    it('Should deploy the master target to the server via scp', () => deploy('master'));
+    it('Should deploy a watertight wrapped site to the server', () => deploy('watertight'));
     it('Should deploy the lftp target to the server via lftp', () => deploy('lftp'));
-    // it('Should deploy the project even with a trailing slash', () => deploy('trailing'));
-    // it('Should deploy the project as a root folder with a watertight wrapper', () => deploy('root'));
+    it('Should deploy the project even with a trailing slash', () => deploy('trailing'));
+    it('Should deploy the project as a root folder with a watertight wrapper', () => deploy('root'));
     
-    // it('Deploying twice in a row should replace the files without hanging', async () => {
-    //     execSync(`grunt deploy --branch=watertight --mocha=output`, opts);
-    //     execSync(`grunt deploy --branch=watertight --mocha=output`, opts);
-    //     execSync(`grunt takedown --branch=watertight --mocha=output`, opts);
-    // });
+    it('Deploying twice in a row should replace the files without hanging', async () => {
+        execSync(`grunt deploy --branch=watertight --mocha=output`, opts);
+        execSync(`grunt deploy --branch=watertight --mocha=output`, opts);
+        execSync(`grunt takedown --branch=watertight --mocha=output`, opts);
+    });
 });
