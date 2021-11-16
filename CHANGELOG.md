@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.7.0 (2021-11-16)
+* [Change] lftp commands now utilize a spinner as not to overwhelm CI/CD logs
+
 ### 7.6.0 (2021-11-09)
 * [Change] Can now override all aspects of the capture code
 
