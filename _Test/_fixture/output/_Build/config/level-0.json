@@ -7,6 +7,16 @@
 	        "flexbox",
 	        "csscalc"
 		],
+		"content": [
+			{
+                "lftp": "ftp-fishawack.egnyte.com",
+                "location": "Shared/FW/Knutsford/Digital/Auto-Content/test-shared/"
+            },
+			{
+                "ftps": "ftp-fishawack.egnyte.com",
+                "location": "Shared/FW/Knutsford/Digital/Auto-Content/test-shared/"
+            }
+		],
 		"targets": {
 			"package": {
 				"handover": true,

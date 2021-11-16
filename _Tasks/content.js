@@ -1,5 +1,6 @@
-module.exports = function(grunt) {
-    grunt.registerTask('content', function(){
+module.exports = (grunt) => {
+    grunt.registerTask('content', async function(){
+        let done = this.async();
 
         if(!contentJson.attributes.content || contentJson.attributes.content.length <= 0){
             grunt.log.warn('No content to pull');
@@ -7,23 +8,8 @@ module.exports = function(grunt) {
         }
 
         var fs = require('fs-extra');
-        
-        var shell = {
-            options: {
-                execOptions: {
-                    maxBuffer: 20000 * 2048
-                },
-                stderr: true,
-                stdout: true
-            },
-            content: {
-                command: []
-            }
-        };
 
-        var commands = ['shell:content', 'content-request'];
-
-        contentJson.attributes.content.forEach(function(d, i){
+        function protocol(d, i){
             var saveTo = (d.saveTo) ? d.saveTo : `${config.src}/content/content-${i}`;
 
             if(d.ftp || d.ftps){
@@ -32,25 +18,53 @@ module.exports = function(grunt) {
 
                 fs.removeSync(saveTo);
 
-                shell.content.command.push(`wget -r --user='<%= targets.ftp["${ip}"].username %>' --password='<%= targets.ftp["${ip}"].password %>' -P ${saveTo} -nH --cut=${d.location.split('/').length - 1} '${protocol}://${ip}/${d.location}'`);
+                return `wget -r --user='<%= targets.ftp["${ip}"].username %>' --password='<%= targets.ftp["${ip}"].password %>' -P ${saveTo} -nH --cut=${d.location.split('/').length - 1} '${protocol}://${ip}/${d.location}'`;
             } else if(d.ssh) {
                 fs.removeSync(saveTo);
 
-                shell.content.command.push(`scp -r <%= targets["${d.ssh}"].username %>@<%= targets["${d.ssh}"].host %>:${d.location} ${saveTo}`);
+                return `scp -r <%= targets["${d.ssh}"].username %>@<%= targets["${d.ssh}"].host %>:${d.location} ${saveTo}`;
             } else if(d.lftp){
-                shell.content.command.push(`lftp -d -e 'set sftp:auto-confirm yes; mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>','<%= targets.ftp["${d.lftp}"].password %>' sftp://${d.lftp}`);
+                return `lftp -d -e 'set sftp:auto-confirm yes; mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>','<%= targets.ftp["${d.lftp}"].password %>' sftp://${d.lftp}`;
             }
-        });
+        };
 
-        shell.content.command = shell.content.command.join(' && ');
+        const ora = require('ora');
+        const exec = require('child_process').exec;
 
-        grunt.config.set('shell', shell);
+        try{
+            await contentJson.attributes.content.map((d, i) => () => 
+                new Promise((resolve, reject) => {
+                    let spinner = ora(`Pulling content: ${d.location}`).start();
+                    
+                    exec(grunt.template.process(protocol(d, i), {data:config}), (error, stdout, stderr) => {
+                        if(error){
+                            // If lftp trim the command itself so no creds are shown and only grab the last 100 chars
+                            if(d.lftp){
+                                error.message = error.message.split('Running connect program')[1].slice(-500);
+                            }
+                            spinner.fail();
+                            reject(error);
+                            return;
+                        }
 
-        grunt.task.run(commands);
+                        spinner.succeed();
+                        resolve(stdout.trim());
+                    });
+                })
+            ).reduce(async (promise, d) => {
+                await promise;
+                return await d();
+            }, Promise.resolve());
+        } catch(e){
+            grunt.fatal(e.message);
+        }
+
+        grunt.task.run(['content-request']);
+
+        done();
     });
 
     grunt.registerTask('content-request', function(){
-
         if(!contentJson.attributes.content || contentJson.attributes.content.length <= 0){
             grunt.log.warn('No content to pull');
             return;
