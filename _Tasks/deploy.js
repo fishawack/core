@@ -28,7 +28,9 @@ module.exports = function(grunt) {
         });
     });
     
-    grunt.registerTask('deploy', () => {
+    grunt.registerTask('deploy', async function() {
+        let done = this.async();
+
         if(!deployEnv.location){
             grunt.log.warn('No deployment configured for ' + deployBranch);
             return;
@@ -39,6 +41,8 @@ module.exports = function(grunt) {
         }
 
         const execSync = require('child_process').execSync;
+        const ora = require('ora');
+        const exec = require('child_process').exec;
         
         const commands = deployEnv.commands || {};
         const local = commands.local || {};
@@ -55,7 +59,24 @@ module.exports = function(grunt) {
         } else if(deployEnv.ssh){
             execSync(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, {stdio: 'inherit'});
         } else if(deployEnv.lftp){
-            execSync(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, {stdio: 'inherit'});
+            await new Promise((resolve, reject) => {
+                let spinner = ora(`Deploying to: ${deployLocation}`).start();
+                
+                exec(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, (error, stdout, stderr) => {
+                    if(error){
+                        // If lftp trim the command itself so no creds are shown and only grab the last 100 chars
+                        if(d.lftp){
+                            error.message = error.message.split('Running connect program')[1].slice(-500);
+                        }
+                        spinner.fail();
+                        reject(error);
+                        return;
+                    }
+
+                    spinner.succeed();
+                    resolve(stdout.trim());
+                });
+            })
         }
 
         if(deployEnv.loginType){
@@ -68,5 +89,7 @@ module.exports = function(grunt) {
         server.post && execSync(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployEnv.location}`].concat(server.post).join(' && ')}'`, {encoding: 'utf8', stdio: 'inherit'});
 
         grunt.task.run(deploy);
+
+        done();
     });
 };
