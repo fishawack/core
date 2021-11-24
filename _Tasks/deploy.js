@@ -27,11 +27,83 @@ module.exports = function(grunt) {
             });
         });
     });
+
+    grunt.registerTask('deploy:local:pre', () => {
+        if(!deployLocation){
+            grunt.log.warn('No deployment configured for ' + deployBranch);
+            return;
+        }
+
+        if(deployEnv.ftp && deployEnv.loginType){
+            grunt.log.warn('Cannot deploy watertight over ftp');   
+        }
+
+        const execSync = require('child_process').execSync;
+
+        const commands = deployEnv.commands || {};
+        const local = commands.local || {};
+
+        local.pre && execSync(local.pre.join(' && '), {encoding: 'utf8', stdio: 'inherit'});
+    });
+
+    grunt.registerTask('deploy:local:post', () => {
+        if(!deployLocation){
+            grunt.log.warn('No deployment configured for ' + deployBranch);
+            return;
+        }
+
+        if(deployEnv.ftp && deployEnv.loginType){
+            grunt.log.warn('Cannot deploy watertight over ftp');   
+        }
+        
+        const execSync = require('child_process').execSync;
+
+        const commands = deployEnv.commands || {};
+        const local = commands.local || {};
+
+        local.post && execSync(local.post.join(' && '), {encoding: 'utf8', stdio: 'inherit'});
+    });
+
+    grunt.registerTask('deploy:server:pre', () => {
+        if(!deployLocation){
+            grunt.log.warn('No deployment configured for ' + deployBranch);
+            return;
+        }
+
+        if(deployEnv.ftp && deployEnv.loginType){
+            grunt.log.warn('Cannot deploy watertight over ftp');   
+        }
+
+        const execSync = require('child_process').execSync;
+
+        const commands = deployEnv.commands || {};
+        const server = commands.server || {};
+
+        server.pre && execSync(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployLocation}`].concat(server.pre).join(' && ')}'`, {encoding: 'utf8', stdio: 'inherit'});
+    });
+
+    grunt.registerTask('deploy:server:post', () => {
+        if(!deployLocation){
+            grunt.log.warn('No deployment configured for ' + deployBranch);
+            return;
+        }
+
+        if(deployEnv.ftp && deployEnv.loginType){
+            grunt.log.warn('Cannot deploy watertight over ftp');   
+        }
+        
+        const execSync = require('child_process').execSync;
+
+        const commands = deployEnv.commands || {};
+        const server = commands.server || {};
+
+        server.post && execSync(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployLocation}`].concat(server.post).join(' && ')}'`, {encoding: 'utf8', stdio: 'inherit'});
+    });
     
     grunt.registerTask('deploy', async function() {
         let done = this.async();
 
-        if(!deployEnv.location){
+        if(!deployLocation){
             grunt.log.warn('No deployment configured for ' + deployBranch);
             return;
         }
@@ -43,13 +115,6 @@ module.exports = function(grunt) {
         const execSync = require('child_process').execSync;
         const ora = require('ora');
         const exec = require('child_process').exec;
-        
-        const commands = deployEnv.commands || {};
-        const local = commands.local || {};
-        const server = commands.server || {};
-
-        local.pre && execSync(local.pre.join(' && '), {encoding: 'utf8', stdio: 'inherit'});
-        server.pre && execSync(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployEnv.location}`].concat(server.pre).join(' && ')}'`, {encoding: 'utf8', stdio: 'inherit'});
 
         let deploy = ['ftpscript:badges'];
         let dest = '_Packages/Deploy';
@@ -84,9 +149,6 @@ module.exports = function(grunt) {
                 `ssh -tt '${deployCred.username}'@'${deployCred.host}' 'mkdir -p ${deployLocation}/logs;'`
             );
         }
-
-        local.post && execSync(local.post.join(' && '), {encoding: 'utf8', stdio: 'inherit'});
-        server.post && execSync(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployEnv.location}`].concat(server.post).join(' && ')}'`, {encoding: 'utf8', stdio: 'inherit'});
 
         grunt.task.run(deploy);
 

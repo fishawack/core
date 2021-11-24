@@ -35,7 +35,25 @@
 					"url": "https://demo.fishawack.solutions",
 					"location": "/home/fishawack/demo.fishawack.solutions/",
 					"ssh": "vidaHost-fishawack",
-					"subDir": "core-test-suite-deploy"
+					"subDir": "core-test-suite-deploy",
+					"commands": {
+						"local": {
+							"pre": [
+								"touch core-test-suite-file.txt"
+							],
+							"post": [
+								"rm core-test-suite-file.txt"
+							]
+						},
+						"server": {
+							"pre": [
+								"touch core-test-suite-file.txt"
+							],
+							"post": [
+								"rm core-test-suite-file.txt"
+							]
+						}
+					}
 				}
 			},
 			"lftp": {
