@@ -8,12 +8,12 @@ const opts = {encoding: 'utf8', stdio: 'pipe'};
 
 describe('deploy:local', () => {
     it('deploy:local:pre command should create a local file', async () => {
-        execSync(`grunt deploy:local:pre --branch=master --mocha=output`, opts);
+        execSync(`grunt deploy:local:pre --branch=commands --mocha=output`, opts);
         expect(glob.sync(path.join(__dirname, '_fixture/output/core-test-suite-file.txt'))).to.be.an('array').that.is.not.empty;
     });
 
     it('deploy:local:post command should remove the local file', async () => {
-        execSync(`grunt deploy:local:post --branch=master --mocha=output`, opts);
+        execSync(`grunt deploy:local:post --branch=commands --mocha=output`, opts);
         expect(glob.sync(path.join(__dirname, '_fixture/output/core-test-suite-file.txt'))).to.be.an('array').that.is.empty;
     });
 });

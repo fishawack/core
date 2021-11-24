@@ -81,7 +81,7 @@ module.exports = function(grunt) {
         const commands = deployEnv.commands || {};
         const server = commands.server || {};
 
-        server.pre && execSync(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployLocation}`].concat(server.pre).join(' && ')}'`, {encoding: 'utf8', stdio: 'inherit'});
+        server.pre && execSync(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`mkdir -p ${deployLocation}`, `cd ${deployLocation}`].concat(server.pre).join(' && ')}'`, {encoding: 'utf8', stdio: 'inherit'});
     });
 
     grunt.registerTask('deploy:server:post', () => {
