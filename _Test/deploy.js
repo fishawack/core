@@ -8,7 +8,7 @@ const opts = {encoding: 'utf8', stdio: 'inherit'};
 async function deploy(branch){
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
     expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy')).status).to.not.equal(200);
-    execSync(`grunt package deploy --branch=${branch} --mocha=output`, opts);
+    execSync(`grunt package:deploy deploy --branch=${branch} --mocha=output`, opts);
     expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy')).status).to.be.equal(200);
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
 }
