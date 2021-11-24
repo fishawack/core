@@ -4,7 +4,7 @@ const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
 const path = require('path');
 const glob = require('glob');
-const opts = {encoding: 'utf8', stdio: 'inherit'};
+const opts = {encoding: 'utf8', stdio: 'pipe'};
 
 describe('deploy:local', () => {
     it('deploy:local:pre command should create a local file', async () => {

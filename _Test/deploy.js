@@ -3,7 +3,7 @@
 const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
 const fetch = require('node-fetch');
-const opts = {encoding: 'utf8', stdio: 'inherit'};
+const opts = {encoding: 'utf8', stdio: 'pipe'};
 
 async function deploy(branch){
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
