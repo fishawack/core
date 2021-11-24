@@ -28,6 +28,8 @@ module.exports = function(grunt) {
         });
     });
 
+    grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'deploy:files', 'deploy:local:post', 'deploy:server:post', 'ftpscript:badges']);
+
     grunt.registerTask('deploy:local:pre', () => {
         if(!deployLocation){
             grunt.log.warn('No deployment configured for ' + deployBranch);
@@ -100,7 +102,7 @@ module.exports = function(grunt) {
         server.post && execSync(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployLocation}`].concat(server.post).join(' && ')}'`, {encoding: 'utf8', stdio: 'inherit'});
     });
     
-    grunt.registerTask('deploy', async function() {
+    grunt.registerTask('deploy:files', async function() {
         let done = this.async();
 
         if(!deployLocation){
@@ -116,11 +118,10 @@ module.exports = function(grunt) {
         const ora = require('ora');
         const exec = require('child_process').exec;
 
-        let deploy = ['ftpscript:badges'];
         let dest = '_Packages/Deploy';
 
         if(deployEnv.ftp){
-            deploy.push('ftpscript:deploy');
+            grunt.task.run('ftpscript:deploy');
         } else if(deployEnv.ssh){
             execSync(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, {stdio: 'inherit'});
         } else if(deployEnv.lftp){
@@ -149,8 +150,6 @@ module.exports = function(grunt) {
                 `ssh -tt '${deployCred.username}'@'${deployCred.host}' 'mkdir -p ${deployLocation}/logs;'`
             );
         }
-
-        grunt.task.run(deploy);
 
         done();
     });
