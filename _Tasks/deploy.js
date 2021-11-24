@@ -30,77 +30,24 @@ module.exports = function(grunt) {
 
     grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'deploy:files', 'deploy:local:post', 'deploy:server:post', 'ftpscript:badges']);
 
-    grunt.registerTask('deploy:local:pre', () => {
+    function command(command){
         if(!deployLocation){
             grunt.log.warn('No deployment configured for ' + deployBranch);
             return;
         }
 
-        if(deployEnv.ftp && deployEnv.loginType){
-            grunt.log.warn('Cannot deploy watertight over ftp');   
-        }
-
         const execSync = require('child_process').execSync;
 
-        const commands = deployEnv.commands || {};
-        const local = commands.local || {};
+        execSync(command, {encoding: 'utf8', stdio: 'inherit'});
+    };
 
-        local.pre && execSync(local.pre.join(' && '), {encoding: 'utf8', stdio: 'inherit'});
-    });
+    grunt.registerTask('deploy:local:pre', () => command(deployEnv.commands && deployEnv.commands.local && deployEnv.commands.local.pre.join(' && ')));
 
-    grunt.registerTask('deploy:local:post', () => {
-        if(!deployLocation){
-            grunt.log.warn('No deployment configured for ' + deployBranch);
-            return;
-        }
+    grunt.registerTask('deploy:local:post', () => command(deployEnv.commands && deployEnv.commands.local && deployEnv.commands.local.post.join(' && ')));
 
-        if(deployEnv.ftp && deployEnv.loginType){
-            grunt.log.warn('Cannot deploy watertight over ftp');   
-        }
-        
-        const execSync = require('child_process').execSync;
+    grunt.registerTask('deploy:server:pre', () => command(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`mkdir -p ${deployLocation}`, `cd ${deployLocation}`].concat(deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.pre).join(' && ')}'`));
 
-        const commands = deployEnv.commands || {};
-        const local = commands.local || {};
-
-        local.post && execSync(local.post.join(' && '), {encoding: 'utf8', stdio: 'inherit'});
-    });
-
-    grunt.registerTask('deploy:server:pre', () => {
-        if(!deployLocation){
-            grunt.log.warn('No deployment configured for ' + deployBranch);
-            return;
-        }
-
-        if(deployEnv.ftp && deployEnv.loginType){
-            grunt.log.warn('Cannot deploy watertight over ftp');   
-        }
-
-        const execSync = require('child_process').execSync;
-
-        const commands = deployEnv.commands || {};
-        const server = commands.server || {};
-
-        server.pre && execSync(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`mkdir -p ${deployLocation}`, `cd ${deployLocation}`].concat(server.pre).join(' && ')}'`, {encoding: 'utf8', stdio: 'inherit'});
-    });
-
-    grunt.registerTask('deploy:server:post', () => {
-        if(!deployLocation){
-            grunt.log.warn('No deployment configured for ' + deployBranch);
-            return;
-        }
-
-        if(deployEnv.ftp && deployEnv.loginType){
-            grunt.log.warn('Cannot deploy watertight over ftp');   
-        }
-        
-        const execSync = require('child_process').execSync;
-
-        const commands = deployEnv.commands || {};
-        const server = commands.server || {};
-
-        server.post && execSync(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployLocation}`].concat(server.post).join(' && ')}'`, {encoding: 'utf8', stdio: 'inherit'});
-    });
+    grunt.registerTask('deploy:server:post', () => command(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployLocation}`].concat(deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.post).join(' && ')}'`));
     
     grunt.registerTask('deploy:files', async function() {
         let done = this.async();
