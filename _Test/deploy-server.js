@@ -20,6 +20,10 @@ describe('deploy:server', () => {
         expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy/core-test-suite-file.txt')).status).to.equal(404);
     });
 
+    it('deploy:server command if missing should skip over task', async () => {
+        execSync(`grunt deploy:server:pre --branch=master --mocha=output`, opts);
+    });
+
     after(() => {
         execSync(`grunt takedown --branch=commands --mocha=output`, opts);
     });

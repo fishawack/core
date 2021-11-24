@@ -16,4 +16,8 @@ describe('deploy:local', () => {
         execSync(`grunt deploy:local:post --branch=commands --mocha=output`, opts);
         expect(glob.sync(path.join(__dirname, '_fixture/output/core-test-suite-file.txt'))).to.be.an('array').that.is.empty;
     });
+
+    it('deploy:local command if missing should skip over task', async () => {
+        execSync(`grunt deploy:local:pre --branch=master --mocha=output`, opts);
+    });
 });

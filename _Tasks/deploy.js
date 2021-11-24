@@ -41,13 +41,13 @@ module.exports = function(grunt) {
         execSync(command, {encoding: 'utf8', stdio: 'inherit'});
     };
 
-    grunt.registerTask('deploy:local:pre', () => command(deployEnv.commands && deployEnv.commands.local && deployEnv.commands.local.pre.join(' && ')));
+    grunt.registerTask('deploy:local:pre', () => deployEnv.commands && deployEnv.commands.local && deployEnv.commands.local.pre && command(deployEnv.commands.local.pre.join(' && ')));
 
-    grunt.registerTask('deploy:local:post', () => command(deployEnv.commands && deployEnv.commands.local && deployEnv.commands.local.post.join(' && ')));
+    grunt.registerTask('deploy:local:post', () => deployEnv.commands && deployEnv.commands.local && deployEnv.commands.local.post && command(deployEnv.commands.local.post.join(' && ')));
 
-    grunt.registerTask('deploy:server:pre', () => command(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`mkdir -p ${deployLocation}`, `cd ${deployLocation}`].concat(deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.pre).join(' && ')}'`));
+    grunt.registerTask('deploy:server:pre', () => deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.pre && command(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`mkdir -p ${deployLocation}`, `cd ${deployLocation}`].concat(deployEnv.commands.server.pre).join(' && ')}'`));
 
-    grunt.registerTask('deploy:server:post', () => command(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployLocation}`].concat(deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.post).join(' && ')}'`));
+    grunt.registerTask('deploy:server:post', () => deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.post && command(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployLocation}`].concat(deployEnv.commands.server.post).join(' && ')}'`));
     
     grunt.registerTask('deploy:files', async function() {
         let done = this.async();
