@@ -60,7 +60,24 @@ module.exports = function(grunt) {
         if(deployEnv.ftp){
             grunt.task.run('ftpscript:deploy');
         } else if(deployEnv.ssh){
-            execSync(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, {stdio: 'inherit'});
+            try {
+                await new Promise((resolve, reject) => {
+                    let spinner = ora(`Deploying to: ${deployLocation}`).start();
+                    
+                    exec(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, {maxBuffer: 20000 * 1024}, (error, stdout, stderr) => {
+                        if(error){
+                            spinner.fail();
+                            reject(error);
+                            return;
+                        }
+
+                        spinner.succeed();
+                        resolve(stdout.trim());
+                    });
+                });
+            } catch(e){
+                grunt.fatal(e.message);
+            }
         } else if(deployEnv.lftp){
             try {
                 await new Promise((resolve, reject) => {
