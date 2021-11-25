@@ -51,52 +51,15 @@ module.exports = function(grunt) {
 
         let done = this.async();
 
-        const execSync = require('child_process').execSync;
-        const ora = require('ora');
-        const exec = require('child_process').exec;
-
         let dest = '_Packages/Deploy';
+        let message = `Deploying to: ${deployLocation}`;
 
         if(deployEnv.ftp){
             grunt.task.run('ftpscript:deploy');
         } else if(deployEnv.ssh){
-            try {
-                await new Promise((resolve, reject) => {
-                    let spinner = ora(`Deploying to: ${deployLocation}`).start();
-                    
-                    exec(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, {maxBuffer: 20000 * 1024}, (error, stdout, stderr) => {
-                        if(error){
-                            spinner.fail();
-                            reject(error);
-                            return;
-                        }
-
-                        spinner.succeed();
-                        resolve(stdout.trim());
-                    });
-                });
-            } catch(e){
-                grunt.fatal(e.message);
-            }
+            await spinner(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, message);
         } else if(deployEnv.lftp){
-            try {
-                await new Promise((resolve, reject) => {
-                    let spinner = ora(`Deploying to: ${deployLocation}`).start();
-                    
-                    exec(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, {maxBuffer: 20000 * 1024}, (error, stdout, stderr) => {
-                        if(error){
-                            spinner.fail();
-                            reject(error);
-                            return;
-                        }
-
-                        spinner.succeed();
-                        resolve(stdout.trim());
-                    });
-                });
-            } catch(e){
-                grunt.fatal(e.message);
-            }
+            await spinner(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, message);
         }
 
         done();

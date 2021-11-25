@@ -549,6 +549,30 @@ module.exports = function(grunt, hasBase) {
 			str;
 	};
 
+	this.spinner = async function(command, message){
+        const ora = require('ora');
+        const exec = require('child_process').exec;
+
+        try {
+            await new Promise((resolve, reject) => {
+                let spinner = ora(message || command).start();
+                
+                exec(command, {maxBuffer: 20000 * 1024}, (error, stdout, stderr) => {
+                    if(error){
+                        spinner.fail();
+                        reject(error);
+                        return;
+                    }
+
+                    spinner.succeed();
+                    resolve(stdout.trim());
+                });
+            });
+        } catch(e){
+            grunt.fatal(e.message);
+        }
+    };
+
 	if(grunt){
 		this.contentPath = '.tmp/content.json';
 
