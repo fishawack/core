@@ -79,7 +79,7 @@ module.exports = function(grunt, hasBase) {
 		this.deployValid = () => {
 			if(!deployLocation){
 				grunt.log.warn('No deployment location configured for ' + deployBranch);
-			} else if(!deployCred.username || !deployCred.password){
+			} else if(!deployCred.username || !deployCred.host){
 				grunt.fatal(new Error('No deployment credentials found for ' + deployBranch));
 			} else if(deployEnv.ftp && deployEnv.loginType){
 				grunt.fatal('Cannot deploy watertight over ftp for ' + deployBranch);   
