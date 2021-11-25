@@ -82,12 +82,6 @@ module.exports = function(grunt) {
             }
         }
 
-        if(deployEnv.loginType){
-            execSync(
-                `ssh -tt '${deployCred.username}'@'${deployCred.host}' 'mkdir -p ${deployLocation}/logs;'`
-            );
-        }
-
         done();
     });
 };
