@@ -10,7 +10,7 @@ const path = require('path');
 //     let json;
 
 //     before(() => {
-//         // execSync('grunt pdf --branch=master --mocha', {encoding: 'utf8', stdio: 'pipe'});
+//         // execSync('grunt pdf --branch=master --mocha', opts);
 //     });
     
 //     it('Should generate a json file in the .tmp directory', () => {

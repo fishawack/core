@@ -2,20 +2,20 @@
 
 const fs = require('fs');
 const expect = require('chai').expect;
-const grunt = require('grunt');
 const execSync = require('child_process').execSync;
 const path = require('path');
+const { opts } = require('./_helpers/globals.js');
 
 describe('reload', () => {
     let json;
 
     before(() => {
-        execSync('grunt reload --branch=master --mocha=reload', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt reload --branch=master --mocha=reload', opts);
     });
     
     it('Should generate a json file in the .tmp directory', () => {
         try{
-            json = fs.readFileSync(path.join(__dirname, '_fixture/reload/.tmp/content.json'), {encoding: 'utf8'});
+            json = fs.readFileSync(path.join(__dirname, '_fixture/reload/.tmp/content.json'), opts);
         } catch(e){
             expect(e.message).to.not.contain('ENOENT');
         }
@@ -66,7 +66,7 @@ describe('reload', () => {
 
     it('Should match expected json output', () => {
         expect(json).to.deep.equal(
-            JSON.parse(fs.readFileSync(path.join(__dirname, '_expected/content.json'), {encoding: 'utf8'}))
+            JSON.parse(fs.readFileSync(path.join(__dirname, '_expected/content.json'), opts))
         );
     });
 });

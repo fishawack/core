@@ -1,12 +1,10 @@
 'use strict';
 
-const fs = require('fs');
 const expect = require('chai').expect;
-const grunt = require('grunt');
 const execSync = require('child_process').execSync;
 const path = require('path');
 const glob = require('glob');
-const opts = {encoding: 'utf8', stdio: 'pipe'};
+const { opts } = require('./_helpers/globals.js');
 
 describe('content', () => {
     before(() => {

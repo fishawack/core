@@ -4,23 +4,24 @@ const fs = require('fs');
 const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
 const path = require('path');
+const { opts } = require('./_helpers/globals.js');
 
 describe('sass', () => {
     let css;
 
     before(() => {
-        execSync('grunt clean:cache compile-handlebars:default htmlmin:default sass:default --dist --mocha=bundle', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt clean:cache compile-handlebars:default htmlmin:default sass:default --dist --mocha=bundle', opts);
     });
     
     it('Should generate a css file in the _Output directory', () => {
         try{
-            css = fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Output/css/general.css'), {encoding: 'utf8'});
+            css = fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Output/css/general.css'), opts);
         } catch(e){
             expect(e.message).to.not.contain('ENOENT');
         }
     });
 
     it('Should match expected css output', () => {
-        expect(css).to.equal(fs.readFileSync(path.join(__dirname, '_expected/general.css'), {encoding: 'utf8'}));
+        expect(css).to.equal(fs.readFileSync(path.join(__dirname, '_expected/general.css'), opts));
     });
 });

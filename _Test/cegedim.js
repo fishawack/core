@@ -1,15 +1,14 @@
 'use strict';
 
-const fs = require('fs');
 const expect = require('chai').expect;
-const grunt = require('grunt');
 const execSync = require('child_process').execSync;
 const path = require('path');
 const glob = require('glob');
+const { opts } = require('./_helpers/globals.js');
 
 describe('cegedim', () => {
     before(() => {
-        execSync('grunt capture cegedim --branch=package --mocha=output', {encoding: 'utf8', stdio: 'pipe'});
+        execSync('grunt capture cegedim --branch=package --mocha=output', opts);
     });
     
     it('Should generate a cegedim key message zip', () => {
