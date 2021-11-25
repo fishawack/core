@@ -136,6 +136,13 @@
 						}
 					}
 				}
+			},
+			"server-doesnt-exist": {
+				"deploy": {
+					"url": "https://demo.fishawack.solutions/core-test-suite-deploy",
+					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
+					"ssh": "doesntexist"
+				}
 			}
 		},
 	    "template": {},

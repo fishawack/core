@@ -76,6 +76,18 @@ module.exports = function(grunt, hasBase) {
 		this.deployUrl = truePath(deployEnv.url || '');
 		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp] || {};
 
+		this.deployValid = () => {
+			if(!deployLocation){
+				grunt.log.warn('No deployment location configured for ' + deployBranch);
+			} else if(!deployCred.username || !deployCred.password){
+				grunt.fatal(new Error('No deployment credentials found for ' + deployBranch));
+			} else if(deployEnv.ftp && deployEnv.loginType){
+				grunt.fatal('Cannot deploy watertight over ftp for ' + deployBranch);   
+			} else {
+				return true;
+			}
+		};
+
 		keyMessages = [
 			{
 				zipName: `${config.repo.name}`,

@@ -25,4 +25,19 @@ describe('deploy:files', () => {
         execSync(`grunt deploy:files --branch=watertight --mocha=output`, opts);
         execSync(`grunt takedown --branch=watertight --mocha=output`, opts);
     });
+
+    it('Deploying to a branch that doesnt exist should skip deployment', () => {
+        let output = execSync(`grunt deploy:files --branch=doesnt-exist --mocha=output`, {encoding: 'utf8'});
+        expect(output).to.contain('No deployment location configured for doesnt-exist');
+    });
+
+    it('Deploying to a location without credentials should throw an error', () => {
+        let command = `grunt deploy:files --branch=server-doesnt-exist --mocha=output`;
+
+        try{
+            execSync(command, opts);
+        } catch(e){
+            expect(e.message).to.contain(`Command failed: ${command}`);
+        }
+    });
 });

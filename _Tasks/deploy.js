@@ -31,10 +31,7 @@ module.exports = function(grunt) {
     grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'deploy:files', 'deploy:local:post', 'deploy:server:post', 'ftpscript:badges']);
 
     function command(command){
-        if(!deployLocation){
-            grunt.log.warn('No deployment configured for ' + deployBranch);
-            return;
-        }
+        if(!deployValid()){return;}
 
         const execSync = require('child_process').execSync;
 
@@ -50,16 +47,9 @@ module.exports = function(grunt) {
     grunt.registerTask('deploy:server:post', () => deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.post && command(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployLocation}`].concat(deployEnv.commands.server.post).join(' && ')}'`));
     
     grunt.registerTask('deploy:files', async function() {
+        if(!deployValid()){return;}
+
         let done = this.async();
-
-        if(!deployLocation){
-            grunt.log.warn('No deployment configured for ' + deployBranch);
-            return;
-        }
-
-        if(deployEnv.ftp && deployEnv.loginType){
-            grunt.log.warn('Cannot deploy watertight over ftp');   
-        }
 
         const execSync = require('child_process').execSync;
         const ora = require('ora');
