@@ -8,7 +8,7 @@ const { opts } = require('./_helpers/globals.js');
 async function deploy(branch){
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
     expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy')).status).to.not.equal(200);
-    execSync(`grunt package:watertight package:deploy deploy:files --branch=${branch} --mocha=output`, opts);
+    execSync(`grunt package deploy:files --branch=${branch} --mocha=output`, opts); // Package command needed for deploys that need watertight files copying
     expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy')).status).to.be.equal(200);
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
 }
