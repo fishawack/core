@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.9.0 (2021-11-26)
+* [Change] Switch back to execSync's for lftp commands but now with -d flag removed for more concise output
+
 ### 7.8.0 (2021-11-26)
 * [Change] deploy task now a simple array that fires deploy:files and the post/pre commands
 * [Change] deploy:server:pre now runs mkdir -p incase the repo doesn't yet exist on the remote
