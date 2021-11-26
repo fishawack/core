@@ -1,5 +1,16 @@
 ## Changelog
 
+### 7.8.0 (2021-11-26)
+* [Change] deploy task now a simple array that fires deploy:files and the post/pre commands
+* [Change] deploy:server:pre now runs mkdir -p incase the repo doesn't yet exist on the remote
+* [Change] When deploying check if username and host also exist as well as location
+* [Change] takedown command also checks for valid deploy target
+* [Change] Bumped watertight to `5.1.2`
+* [Change] No longer run mkdir /logs on watertight deployments as thats now done by watertight itself
+* [Change] ssh/scp deploys now also use the spinner function
+* [Misc] Added tests for more deploys and deploy commands locally and on the server
+* [Misc] When mocha tests run manually all output is inherited, when run as part of the publish its piped
+
 ### 7.7.0 (2021-11-16)
 * [Change] lftp commands now utilize a spinner as not to overwhelm CI/CD logs
 
