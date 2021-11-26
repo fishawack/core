@@ -46,22 +46,23 @@ module.exports = function(grunt) {
 
     grunt.registerTask('deploy:server:post', () => deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.post && command(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployLocation}`].concat(deployEnv.commands.server.post).join(' && ')}'`));
     
-    grunt.registerTask('deploy:files', async function() {
+    grunt.registerTask('deploy:files', function() {
         if(!deployValid()){return;}
 
-        let done = this.async();
-
+        const execSync = require('child_process').execSync;
+        
         let dest = '_Packages/Deploy';
-        let message = `Deploying to: ${deployLocation}`;
+
+        grunt.log.warn(`Deploying to: ${deployLocation}`);
 
         if(deployEnv.ftp){
             grunt.task.run('ftpscript:deploy');
         } else if(deployEnv.ssh){
-            await spinner(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, message);
+            execSync(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, {encoding: 'utf8', stdio: 'inherit'});
         } else if(deployEnv.lftp){
-            await spinner(`lftp -d -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, message);
+            execSync(`lftp -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, {encoding: 'utf8', stdio: 'inherit'});
         }
 
-        done();
+        grunt.log.ok(`Deployed to: ${deployLocation}`);
     });
 };

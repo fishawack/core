@@ -1,7 +1,5 @@
 module.exports = (grunt) => {
-    grunt.registerTask('content', async function(){
-        let done = this.async();
-
+    grunt.registerTask('content', function(){
         if(!contentJson.attributes.content || contentJson.attributes.content.length <= 0){
             grunt.log.warn('No content to pull');
             return;
@@ -18,46 +16,27 @@ module.exports = (grunt) => {
 
                 fs.removeSync(saveTo);
 
-                return `wget -r --user='<%= targets.ftp["${ip}"].username %>' --password='<%= targets.ftp["${ip}"].password %>' -P ${saveTo} -nH --cut=${d.location.split('/').length - 1} '${protocol}://${ip}/${d.location}'`;
+                return `wget -q --show-progress -r --user='<%= targets.ftp["${ip}"].username %>' --password='<%= targets.ftp["${ip}"].password %>' -P ${saveTo} -nH --cut=${d.location.split('/').length - 1} '${protocol}://${ip}/${d.location}'`;
             } else if(d.ssh) {
                 fs.removeSync(saveTo);
 
                 return `scp -r <%= targets["${d.ssh}"].username %>@<%= targets["${d.ssh}"].host %>:${d.location} ${saveTo}`;
             } else if(d.lftp){
-                return `lftp -d -e 'set sftp:auto-confirm yes; mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>','<%= targets.ftp["${d.lftp}"].password %>' sftp://${d.lftp}`;
+                return `lftp -e 'set sftp:auto-confirm yes; mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>','<%= targets.ftp["${d.lftp}"].password %>' sftp://${d.lftp}`;
             }
         };
 
-        const ora = require('ora');
-        const exec = require('child_process').exec;
+        const execSync = require('child_process').execSync;
 
-        try{
-            await contentJson.attributes.content.map((d, i) => () => 
-                new Promise((resolve, reject) => {
-                    let spinner = ora(`Pulling content: ${d.location}`).start();
-                    
-                    exec(grunt.template.process(protocol(d, i), {data:config}), {maxBuffer: 20000 * 1024}, (error, stdout, stderr) => {
-                        if(error){
-                            spinner.fail();
-                            reject(error);
-                            return;
-                        }
+        contentJson.attributes.content.map((d, i) => {
+            grunt.log.warn(`Pulling content from: ${d.location}`);
+            
+            execSync(grunt.template.process(protocol(d, i), {data:config}), {encoding: 'utf8', stdio: 'inherit'});
 
-                        spinner.succeed();
-                        resolve(stdout.trim());
-                    });
-                })
-            ).reduce(async (promise, d) => {
-                await promise;
-                return await d();
-            }, Promise.resolve());
-        } catch(e){
-            grunt.fatal(e.message);
-        }
+            grunt.log.ok(`Content pulled from: ${d.location}`);
+        });
 
         grunt.task.run(['content-request']);
-
-        done();
     });
 
     grunt.registerTask('content-request', function(){
