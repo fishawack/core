@@ -26,15 +26,6 @@ module.exports = {
         'expand': true,
         'dot': true
     },
-    phonegap: {
-        "options": {
-            'archive': '_Zips/Deploy.zip'
-        }, 
-        'cwd': '_Packages/Phonegap', 
-        'src': ['**'],
-        'expand': true,
-        'dot': true
-    },
     ios: {
         "options": {
             'archive': '_Zips/<%= filename %>_iOS.zip'
@@ -85,6 +76,15 @@ module.exports = {
             'archive': '_Zips/<%= filename %>_Watertight.zip'
         },
         'cwd': '_Packages/Watertight', 
+        'src': ['**'],
+        'expand': true,
+        'dot': true
+    },
+    deploy: {
+        "options": {
+            'archive': '_Zips/Deploy.zip'
+        },
+        'cwd': '_Packages/Deploy', 
         'src': ['**'],
         'expand': true,
         'dot': true

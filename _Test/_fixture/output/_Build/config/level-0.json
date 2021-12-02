@@ -143,6 +143,13 @@
 					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
 					"ssh": "doesntexist"
 				}
+			},
+			"aws-eb": {
+				"deploy": {
+					"url": "http://sanoficongress-env.eba-fmswpn59.us-east-1.elasticbeanstalk.com",
+                    "aws-eb": "sanofi-congress_pre-production",
+					"commands": null
+				}
 			}
 		},
 	    "template": {},

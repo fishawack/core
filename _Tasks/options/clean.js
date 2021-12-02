@@ -11,9 +11,10 @@ module.exports = {
     vablet: ['_Packages/Vablet/**/*'],
     cegedim: ['_Packages/Cegedim/**/*'],
     handover: ['_Packages/Handover/**/*'],
-    watertight: ['__Packages/Watertight/**/*'],
+    deploy: ['_Packages/Deploy/**/*'],
+    watertight: ['_Packages/Watertight/**/*'],
     watertightEmptyDirs: {
-        src: ['__Packages/Watertight/**/*'],
+        src: ['_Packages/Watertight/**/*'],
         filter: (fp) => grunt.file.isDir(fp) && require('fs').readdirSync(fp).length === 0
     }
 }

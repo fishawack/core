@@ -1,5 +1,9 @@
 module.exports = function(grunt) {
-    grunt.registerTask('package:deploy', () => {
+    let opts = {encoding: 'utf8', stdio: 'inherit'};
+
+    grunt.registerTask('package:deploy', ['clean:deploy', 'copy:deploy']);
+
+    grunt.registerTask('copy:deploy', () => {
         const fs = require('fs-extra');
         const glob = require('glob');
 
@@ -28,14 +32,14 @@ module.exports = function(grunt) {
         });
     });
 
-    grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'deploy:files', 'deploy:local:post', 'deploy:server:post', 'ftpscript:badges']);
+    grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'compress:deploy', 'deploy:files', 'deploy:local:post', 'deploy:server:post', 'ftpscript:badges']);
 
     function command(command){
         if(!deployValid()){return;}
 
         const execSync = require('child_process').execSync;
 
-        execSync(command, {encoding: 'utf8', stdio: 'inherit'});
+        execSync(command, opts);
     };
 
     grunt.registerTask('deploy:local:pre', () => deployEnv.commands && deployEnv.commands.local && deployEnv.commands.local.pre && command(deployEnv.commands.local.pre.join(' && ')));
@@ -58,9 +62,11 @@ module.exports = function(grunt) {
         if(deployEnv.ftp){
             grunt.task.run('ftpscript:deploy');
         } else if(deployEnv.ssh){
-            execSync(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, {encoding: 'utf8', stdio: 'inherit'});
+            execSync(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, opts);
         } else if(deployEnv.lftp){
-            execSync(`lftp -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, {encoding: 'utf8', stdio: 'inherit'});
+            execSync(`lftp -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, opts);
+        } else if(deployEnv['aws-eb']){
+            execSync(`eb deploy`, opts)
         }
 
         grunt.log.ok(`Deployed to: ${deployLocation}`);

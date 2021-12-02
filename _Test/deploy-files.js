@@ -14,6 +14,10 @@ async function deploy(branch){
 }
 
 describe('deploy:files', () => {
+    // Disabled as theres no good target to use for consistent aws-eb tests
+    // it('Should deploy the master target to the server via aws-eb cli', () => {
+    //     execSync(`grunt package compress:deploy deploy:files --branch=aws-eb --mocha=output`, opts);
+    // });
     it('Should deploy the master target to the server via scp', () => deploy('master'));
     it('Should deploy a watertight wrapped site to the server', () => deploy('watertight'));
     it('Should deploy the lftp target to the server via lftp', () => deploy('lftp'));
