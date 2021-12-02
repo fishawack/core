@@ -77,10 +77,10 @@ module.exports = function(grunt, hasBase) {
 		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp] || {};
 
 		this.deployValid = () => {
-			if(deployEnv['aws-eb']){ // aws-eb has all its config in stand alone config files so need to check for aws-eb first and return true
-				return true;
-			} if(!deployLocation){
+			if(!deployLocation){
 				grunt.log.warn('No deployment location configured for ' + deployBranch);
+			} else if(deployEnv['aws-eb']){
+				return true; // aws-eb creds are configured elsewhere from the core
 			} else if(!deployCred.username || !deployCred.host){
 				grunt.fatal(new Error('No deployment credentials found for ' + deployBranch));
 			} else if(deployEnv.ftp && deployEnv.loginType){
