@@ -147,8 +147,15 @@
 			"aws-eb": {
 				"deploy": {
 					"url": "http://sanoficongress-env.eba-fmswpn59.us-east-1.elasticbeanstalk.com",
+					"location": "/var/www/html",
                     "aws-eb": "sanofi-congress_pre-production",
-					"commands": null
+					"commands": {
+						"server": {
+							"pre": [
+								"ls -la"
+							]
+						}
+					}
 				}
 			}
 		},
