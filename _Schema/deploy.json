@@ -29,6 +29,10 @@
 					"description": "The lftp IP, .ftppass with all ftp creds should be stored in ~/targets",
 					"type": ["string", "null"]
 				},
+				"aws-eb": {
+					"description": "The aws eb profile that matches the profile found in the .aws/config file",
+					"type": ["string", "null"]
+				},
 				"cookie": {
 					"description": "Set to override the cookie value, if not set then it will use the title of the instance",
 					"type": "string"
@@ -77,7 +81,7 @@
 	        	},
 				"commands": {
 					"description": "Commands to run locally and on the server both pre and post deploy",
-					"type": "object",
+					"type": ["object", "null"],
 					"properties": {
 						"local": {
 							"description": "Commands to run locally",
