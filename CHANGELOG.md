@@ -1,5 +1,12 @@
 ## Changelog
 
+### 7.10.0 (2021-12-03)
+* [Feature] Can now deploy via through eb cli
+* [Feature] Can now set null on commands to invalidate any globally set ones
+* [Feature] Server commands both pre and post can now be handled by eb ssh
+* [Change] A zip file of the _Deploy package folder is now generated
+* [Bug] Correctly remove the _Watertight package folder
+
 ### 7.9.0 (2021-11-26)
 * [Change] Switch back to execSync's for lftp commands but now with -d flag removed for more concise output
 
