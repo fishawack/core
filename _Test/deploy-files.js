@@ -5,11 +5,11 @@ const execSync = require('child_process').execSync;
 const fetch = require('node-fetch');
 const { opts } = require('./_helpers/globals.js');
 
-async function deploy(branch){
+async function deploy(branch, url = 'https://demo.fishawack.solutions/core-test-suite-deploy'){
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
-    expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy')).status).to.not.equal(200);
+    expect((await fetch(url)).status).to.not.equal(200);
     execSync(`grunt package deploy:files --branch=${branch} --mocha=output`, opts); // Package command needed for deploys that need watertight files copying
-    expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy')).status).to.be.equal(200);
+    expect((await fetch(url)).status).to.be.equal(200);
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
 }
 
@@ -22,7 +22,7 @@ describe('deploy:files', () => {
     it('Should deploy a watertight wrapped site to the server', () => deploy('watertight'));
     it('Should deploy the lftp target to the server via lftp', () => deploy('lftp'));
     it('Should deploy the project even with a trailing slash', () => deploy('trailing'));
-    it('Should deploy the project as a root folder with a watertight wrapper', () => deploy('root'));
+    it('Should deploy the project as a root folder with a watertight wrapper', () => deploy('root', 'https://core-test-suite-deploy.fishawack.solutions'));
     
     it('Deploying twice in a row should replace the files without hanging', async () => {
         execSync(`grunt deploy:files --branch=watertight --mocha=output`, opts);

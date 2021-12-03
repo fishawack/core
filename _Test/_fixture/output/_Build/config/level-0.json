@@ -65,8 +65,8 @@
 			},
 			"root": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions/core-test-suite-deploy/",
-					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "/home/fishawack/core-test-suite-deploy.fishawack.solutions",
 					"lftp": "vidaHost-fishawack",
 					"loginType": "bootstrap",
 					"users": [
