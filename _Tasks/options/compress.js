@@ -82,7 +82,8 @@ module.exports = {
     },
     deploy: {
         "options": {
-            'archive': '_Zips/Deploy.zip'
+            'archive': '_Zips/Deploy.zip',
+            'symlinks': true
         },
         'cwd': '_Packages/Deploy', 
         'src': ['**'],

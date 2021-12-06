@@ -3,26 +3,38 @@
 const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
 const path = require('path');
-const glob = require('glob');
 const fs = require('fs');
 const { opts } = require('./_helpers/globals.js');
 
 describe('compress', () => {
-    it('Should compress deploy folder to a file called Deploy.zip in the zips directory', () => {
-        execSync('grunt clean:zip clean:deploy package:deploy compress:deploy --mocha=output', opts);
-
-        expect(glob.sync(path.join(__dirname, '_fixture/output/_Zips/Deploy.zip'))).to.be.an('array').that.is.not.empty;
-    });
-
-    it('Should compress deploy folder to a file called Deploy.zip in the zips directory', () => {
+    before(() => {
         execSync('grunt clean:zip clean:deploy package:deploy compress:deploy --mocha=output', opts);
 
         execSync('unzip _Test/_fixture/output/_Zips/Deploy.zip -d _Test/_fixture/output/_Zips/Deploy');
+    });
 
-        expect(glob.sync(path.join(__dirname, '_fixture/output/_Zips/Deploy.zip'))).to.be.an('array').that.is.not.empty;
+    it('Should compress deploy folder to a file called Deploy.zip in the zips directory', () => {
+        let message = '';
+        try{ fs.readFileSync(path.join(__dirname, '_fixture/output/_Zips/Deploy.zip'), opts); } catch(e){ message = e.message; }
+        
+        expect(message).to.not.contain('ENOENT');
+    });
 
-        let stats = fs.lstatSync('_Test/_fixture/output/_Zips/Deploy/symlink.js');
+    it('Compressed folder should not contain the root folder structure that it was zipped with', () => {
+        let message = '';
+        try{ fs.readdirSync(path.join(__dirname, '_fixture/output/_Zips/Deploy/_Packages'), opts); } catch(e){ message = e.message; }
+        
+        expect(message).to.contain('ENOENT');
+    });
 
-        expect(stats.isSymbolicLink()).to.be.true;
+    it('Any compressed symlinks should remain links and not resolved files when symlinks flag set to true', () => {
+        expect((fs.lstatSync('_Test/_fixture/output/_Zips/Deploy/symlink.js')).isSymbolicLink()).to.be.true;
+    });
+
+    it('Hidden files and folders should be copied', () => {
+        let message = '';
+        try{ fs.readFileSync(path.join(__dirname, '_fixture/output/_Zips/Deploy/.env'), opts); } catch(e){ message = e.message; }
+        
+        expect(message).to.not.contain('ENOENT');
     });
 });
