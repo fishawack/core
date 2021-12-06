@@ -9,6 +9,10 @@ module.exports = function(grunt) {
 
         let dest = '_Packages/Deploy';
         let paths = deployEnv.paths || [deployEnv.loginType ? '_Packages/Watertight/*' : `${config.root}/*`];
+
+        let count = {
+            paths: 0
+        };
         
         fs.removeSync(dest);
         fs.mkdirSync(dest, {recursive: true});
@@ -27,9 +31,11 @@ module.exports = function(grunt) {
                     }
                 }
 
-                fs.copySync(src, path.join(dest, save), { filter });
+                fs.copySync(src, path.join(dest, save), { filter }); count.paths++;
             });
         });
+
+        grunt.log.ok(`${count.paths} paths copied`);
     });
 
     grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'compress:deploy', 'deploy:files', 'deploy:local:post', 'deploy:server:post', 'ftpscript:badges']);
