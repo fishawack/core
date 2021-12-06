@@ -8,6 +8,12 @@ module.exports = grunt => {
 
         fs.mkdirpSync(`.tmp/zip`);
 
+        let count = {
+            files: 0,
+            directories: 0,
+            symlinks: 0
+        };
+
         this.files.forEach(d => {
             let src = d.src[0];
             let dest = path.join('.tmp/zip', d.dest);
@@ -16,19 +22,21 @@ module.exports = grunt => {
                 let stats = fs.lstatSync(src);
 
                 if(stats.isDirectory()){
-                    fs.mkdirpSync(dest)
+                    fs.mkdirpSync(dest); count.directories++;
                 } else if(opts.symlinks && stats.isSymbolicLink()){
-                    fs.symlinkSync(fs.readlinkSync(src), dest);
+                    fs.symlinkSync(fs.readlinkSync(src), dest); count.symlinks++;
                 } else{
-                    fs.copyFileSync(src, dest)
+                    fs.copyFileSync(src, dest); count.files++;
                 }
             }
         });
 
         fs.mkdirpSync(`_Zips`);
 
-        execSync(`(cd .tmp/zip/ && zip -y -r - .) > ${opts.archive}`, {encoding: 'utf8', stdio: 'inherit'});
+        execSync(`(cd .tmp/zip/ && zip -y -q -r - .) > ${opts.archive}`, {encoding: 'utf8', stdio: 'inherit'});
 
         fs.removeSync(`.tmp/zip`);
+        
+        grunt.log.ok(`${count.files} files, ${count.directories} directories, ${count.symlinks} symlinks compressed`);
     });
 };
