@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.11.1 (2021-12-06)
+* [Bug] Compress command no longer attempts to zip when no files are globbed
+
 ### 7.11.0 (2021-12-06)
 * [Feature] New property `symlinks` on the compress task that maps to `zip -y` in bash to keep symlinks
 * [Change] Removed `grunt-contrib-compress` package
