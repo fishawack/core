@@ -44,4 +44,8 @@ describe('compress', () => {
         
         expect(message).to.not.contain('ENOENT');
     });
+
+    after(() => {
+        execSync('rm -rf _Test/_fixture/output/_Zips/Deploy');
+    });
 });
