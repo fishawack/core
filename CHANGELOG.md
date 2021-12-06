@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.12.0 (2021-12-06)
+* [Feature] Can now specify the environment that aws eb should deploy to in config
+
 ### 7.11.1 (2021-12-06)
 * [Bug] Compress command no longer attempts to zip when no files are globbed
 
