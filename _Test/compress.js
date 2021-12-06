@@ -20,7 +20,7 @@ describe('compress', () => {
         expect(message).to.not.contain('ENOENT');
     });
 
-    it('Compressed folder should not contain the root folder structure that it was zipped with', () => {
+    it('Should not contain the root folder structure that it was zipped with', () => {
         let message = '';
         try{ fs.readdirSync(path.join(__dirname, '_fixture/output/_Zips/Deploy/_Packages'), opts); } catch(e){ message = e.message; }
         
@@ -31,9 +31,16 @@ describe('compress', () => {
         expect((fs.lstatSync('_Test/_fixture/output/_Zips/Deploy/symlink.js')).isSymbolicLink()).to.be.true;
     });
 
-    it('Hidden files and folders should be copied', () => {
+    it('Should compress hidden folders', () => {
         let message = '';
-        try{ fs.readFileSync(path.join(__dirname, '_fixture/output/_Zips/Deploy/.env'), opts); } catch(e){ message = e.message; }
+        try{ fs.readFileSync(path.join(__dirname, '_fixture/output/_Zips/Deploy/.hidden'), opts); } catch(e){ message = e.message; }
+        
+        expect(message).to.not.contain('ENOENT');
+    });
+
+    it('Should compress hidden files', () => {
+        let message = '';
+        try{ fs.readFileSync(path.join(__dirname, '_fixture/output/_Zips/Deploy/.hidden/.env'), opts); } catch(e){ message = e.message; }
         
         expect(message).to.not.contain('ENOENT');
     });
