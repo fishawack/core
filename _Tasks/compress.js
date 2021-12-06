@@ -1,5 +1,10 @@
 module.exports = grunt => {
     grunt.registerMultiTask('compress', function() {
+        if(!this.files.length){
+            grunt.log.warn(`No files found`);
+            return;
+        }
+
         const execSync = require('child_process').execSync;
         const fs = require('fs-extra');
         const path = require('path');

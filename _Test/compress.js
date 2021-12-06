@@ -45,6 +45,10 @@ describe('compress', () => {
         expect(message).to.not.contain('ENOENT');
     });
 
+    it('Should not throw error when zipping an empty directory', () => {
+        expect(() => execSync('grunt compress:deploy --mocha=reload', opts)).to.not.throw();
+    });
+
     after(() => {
         execSync('rm -rf _Test/_fixture/output/_Zips/Deploy');
     });
