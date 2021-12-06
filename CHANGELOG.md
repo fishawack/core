@@ -1,5 +1,11 @@
 ## Changelog
 
+### 7.11.0 (2021-12-06)
+* [Feature] New property `symlinks` on the compress task that maps to `zip -y` in bash to keep symlinks
+* [Change] Removed `grunt-contrib-compress` package
+* [Change] Wrote a custom compress task that mirrors the previous task exactly
+* [Misc] New tests for compress task
+
 ### 7.10.0 (2021-12-03)
 * [Feature] Can now deploy via through eb cli
 * [Feature] Can now set null on commands to invalidate any globally set ones
