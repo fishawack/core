@@ -148,8 +148,7 @@
 				"deploy": {
 					"url": "http://sanoficongress-env.eba-fmswpn59.us-east-1.elasticbeanstalk.com",
 					"location": "/var/www/html",
-					"env": "Sanoficongress-env",
-                    "aws-eb": "sanofi-congress_pre-production",
+                    "aws-eb": "Sanoficongress-env",
 					"commands": {
 						"server": {
 							"pre": [
