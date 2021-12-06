@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.13.0 (2021-12-06)
+* [Change] Aws eb env property now removed in favor of a single aws-eb property for both profile and env
+
 ### 7.12.0 (2021-12-06)
 * [Feature] Can now specify the environment that aws eb should deploy to in config
 
