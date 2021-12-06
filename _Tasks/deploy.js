@@ -72,7 +72,7 @@ module.exports = function(grunt) {
         } else if(deployEnv.lftp){
             execSync(`lftp -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, opts);
         } else if(deployEnv['aws-eb']){
-            execSync(`eb deploy ${deployEnv.env || ''}`, opts)
+            execSync(`eb deploy ${deployEnv['aws-eb']}`, opts)
         }
 
         grunt.log.ok(`Deployed to: ${deployLocation}`);

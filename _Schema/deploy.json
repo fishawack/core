@@ -30,11 +30,7 @@
 					"type": ["string", "null"]
 				},
 				"aws-eb": {
-					"description": "The aws eb profile that matches the profile found in the .aws/config file",
-					"type": ["string", "null"]
-				},
-				"env": {
-					"description": "The aws eb environment that should be deploy to",
+					"description": "The aws eb environment that should be deployed to. The profile will be deduced from the .elasticbeanstalk/config file and located in the .aws folder",
 					"type": ["string", "null"]
 				},
 				"cookie": {
