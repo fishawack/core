@@ -39,6 +39,11 @@ describe('compress', () => {
         expect((fs.lstatSync('_Test/_fixture/output/_Zips/App/symlink.js')).isSymbolicLink()).to.be.false;
     });
 
+    it('Symlinks to files outside of the current package should always resolve regardless of symlinks setting', () => {
+        expect((fs.lstatSync('_Test/_fixture/output/_Zips/App/ext-symlink.js')).isSymbolicLink()).to.be.false;
+        expect((fs.lstatSync('_Test/_fixture/output/_Zips/Deploy/ext-symlink.js')).isSymbolicLink()).to.be.false;
+    });
+
     it('Should compress hidden folders', () => {
         let message = '';
         try{ fs.readFileSync(path.join(__dirname, '_fixture/output/_Zips/Deploy/.hidden'), opts); } catch(e){ message = e.message; }
