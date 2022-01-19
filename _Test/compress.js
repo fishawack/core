@@ -31,6 +31,14 @@ describe('compress', () => {
         expect((fs.lstatSync('_Test/_fixture/output/_Zips/Deploy/symlink.js')).isSymbolicLink()).to.be.true;
     });
 
+    it('Any compressed symlinks should resolve when symlinks flag set to false', () => {
+        execSync('grunt compress:app --mocha=output', opts);
+
+        execSync('unzip _Test/_fixture/output/_Zips/*_App.zip -d _Test/_fixture/output/_Zips/App');
+
+        expect((fs.lstatSync('_Test/_fixture/output/_Zips/App/symlink.js')).isSymbolicLink()).to.be.false;
+    });
+
     it('Should compress hidden folders', () => {
         let message = '';
         try{ fs.readFileSync(path.join(__dirname, '_fixture/output/_Zips/Deploy/.hidden'), opts); } catch(e){ message = e.message; }
@@ -50,6 +58,6 @@ describe('compress', () => {
     });
 
     after(() => {
-        execSync('rm -rf _Test/_fixture/output/_Zips/Deploy');
+        execSync('rm -rf _Test/_fixture/output/_Zips/Deploy _Test/_fixture/output/_Zips/App');
     });
 });
