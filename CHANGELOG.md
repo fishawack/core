@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.13.1 (2021-12-21)
+* [Bug] Fixed an issue with symlinks not resolving or copying correctly when found outside of the package location
+
 ### 7.13.0 (2021-12-06)
 * [Change] Aws eb env property now removed in favor of a single aws-eb property for both profile and env
 
