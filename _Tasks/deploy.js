@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = function(grunt) {
     let opts = {encoding: 'utf8', stdio: 'inherit'};
 
@@ -11,7 +13,8 @@ module.exports = function(grunt) {
         let paths = deployEnv.paths || [deployEnv.loginType ? '_Packages/Watertight/*' : `${config.root}/*`];
 
         let count = {
-            paths: 0
+            paths: 0,
+            symlinks: 0
         };
         
         fs.removeSync(dest);
@@ -33,9 +36,42 @@ module.exports = function(grunt) {
 
                 fs.copySync(src, path.join(dest, save), { filter }); count.paths++;
             });
+
+            checkSymlinks(path.dirname(copy), dest);
+
+            // Look through package files for any symlinks
+            function checkSymlinks(root, search){
+                glob.sync(`${search}/**/*`, {dot:true}).forEach(src => {
+                    let stats = fs.lstatSync(src);
+
+                    // If a symlink is found that links to an external path to the packaged files then we need to copy it into the bundle
+                    if(stats.isSymbolicLink() && !fs.existsSync(src)){
+                        checkResolve(src, src, root);
+                    }
+                });
+            }
+
+            function checkResolve(src, dest, cwd){
+                let symlink = fs.readlinkSync(src);
+                let resolve = path.resolve(cwd, symlink);
+                let stats = fs.lstatSync(resolve);
+
+                // If the found location is itself another symlink then need to recurse
+                if(stats.isSymbolicLink()){
+                    checkResolve(resolve, dest, path.dirname(resolve));
+                } else {
+                    fs.removeSync(dest);
+                    fs.copySync(resolve, dest); count.symlinks++;
+
+                    // If the copied in path was a directory then need to recurse and check the files in that for even more possible external symlinks
+                    if(stats.isDirectory()){
+                        checkSymlinks(resolve, dest);
+                    }
+                }
+            }
         });
 
-        grunt.log.ok(`${count.paths} paths copied`);
+        grunt.log.ok(`${count.paths} paths copied, ${count.symlinks} symlinks converted`);
     });
 
     grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'compress:deploy', 'deploy:files', 'deploy:local:post', 'deploy:server:post', 'ftpscript:badges']);
