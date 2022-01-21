@@ -8,33 +8,37 @@ module.exports = grunt => {
         const execSync = require('child_process').execSync;
         const fs = require('fs-extra');
         const path = require('path');
+        const symlinks = require('./helpers/symlinks.js');
 
         let opts = this.options();
 
-        fs.mkdirpSync(`.tmp/zip`);
+        let dest = '.tmp/zip';
+
+        fs.removeSync(dest);
+        fs.mkdirSync(dest, {recursive: true});
 
         let count = {
             files: 0,
             directories: 0,
-            symlinks: 0
+            symlinks: 0,
+            resolved: 0
         };
 
         this.files.forEach(d => {
             let src = d.src[0];
-            let dest = path.join('.tmp/zip', d.dest);
-            
-            if(fs.existsSync(src)){
-                let stats = fs.lstatSync(src);
 
-                if(stats.isDirectory()){
-                    fs.mkdirpSync(dest); count.directories++;
-                } else if(opts.symlinks && stats.isSymbolicLink()){
-                    fs.symlinkSync(fs.readlinkSync(src), dest); count.symlinks++;
-                } else{
-                    fs.copyFileSync(src, dest); count.files++;
-                }
+            let stats = fs.lstatSync(src);
+
+            if(stats.isSymbolicLink()) count.symlinks++;
+            if(stats.isDirectory()) count.directories++;
+            else count.files++;
+
+            if(!stats.isDirectory()){
+                fs.copySync(src, path.join(dest, d.dest)); count.paths++;
             }
         });
+
+        count.resolved = symlinks.resolve(this.data.cwd, dest, opts.symlinks);
 
         fs.mkdirpSync(`_Zips`);
 
@@ -42,6 +46,6 @@ module.exports = grunt => {
 
         fs.removeSync(`.tmp/zip`);
         
-        grunt.log.ok(`${count.files} files, ${count.directories} directories, ${count.symlinks} symlinks compressed`);
+        grunt.log.ok(`${count.files} files, ${count.directories} directories, ${count.symlinks} symlinks compressed. ${count.resolved} symlinks resolved`);
     });
 };

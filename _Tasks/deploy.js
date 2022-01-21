@@ -8,13 +8,16 @@ module.exports = function(grunt) {
     grunt.registerTask('copy:deploy', () => {
         const fs = require('fs-extra');
         const glob = require('glob');
+        const symlinks = require('./helpers/symlinks.js');
 
         let dest = '_Packages/Deploy';
         let paths = deployEnv.paths || [deployEnv.loginType ? '_Packages/Watertight/*' : `${config.root}/*`];
 
         let count = {
-            paths: 0,
-            symlinks: 0
+            files: 0,
+            directories: 0,
+            symlinks: 0,
+            resolved: 0
         };
         
         fs.removeSync(dest);
@@ -25,53 +28,27 @@ module.exports = function(grunt) {
                 let filter = copy.ignore ? src => copy.ignore.indexOf(src) === -1 : null;
 
                 let save = path.basename(src);
+                let stats = fs.lstatSync(src);
 
                 if(copy.dest){
-                    if(!fs.lstatSync(src).isDirectory()){
+                    if(!stats.isDirectory()){
                         save = path.join(copy.dest, save);
                     } else {
                         save = copy.dest;
                     }
                 }
 
+                if(stats.isSymbolicLink()) count.symlinks++;
+                if(stats.isDirectory()) count.directories++;
+                else count.files++;
+
                 fs.copySync(src, path.join(dest, save), { filter }); count.paths++;
             });
 
-            checkSymlinks(path.dirname(copy), dest);
-
-            // Look through package files for any symlinks
-            function checkSymlinks(root, search){
-                glob.sync(`${search}/**/*`, {dot:true}).forEach(src => {
-                    let stats = fs.lstatSync(src);
-
-                    // If a symlink is found that links to an external path to the packaged files then we need to copy it into the bundle
-                    if(stats.isSymbolicLink() && !fs.existsSync(src)){
-                        checkResolve(src, src, root);
-                    }
-                });
-            }
-
-            function checkResolve(src, dest, cwd){
-                let symlink = fs.readlinkSync(src);
-                let resolve = path.resolve(cwd, symlink);
-                let stats = fs.lstatSync(resolve);
-
-                // If the found location is itself another symlink then need to recurse
-                if(stats.isSymbolicLink()){
-                    checkResolve(resolve, dest, path.dirname(resolve));
-                } else {
-                    fs.removeSync(dest);
-                    fs.copySync(resolve, dest); count.symlinks++;
-
-                    // If the copied in path was a directory then need to recurse and check the files in that for even more possible external symlinks
-                    if(stats.isDirectory()){
-                        checkSymlinks(resolve, dest);
-                    }
-                }
-            }
+            count.resolved = symlinks.resolve(path.dirname(copy), dest);
         });
 
-        grunt.log.ok(`${count.paths} paths copied, ${count.symlinks} symlinks converted`);
+        grunt.log.ok(`${count.files} files, ${count.directories} directories, ${count.symlinks} symlinks copied. ${count.resolved} symlinks resolved`);
     });
 
     grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'compress:deploy', 'deploy:files', 'deploy:local:post', 'deploy:server:post', 'ftpscript:badges']);
