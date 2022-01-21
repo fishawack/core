@@ -9,9 +9,8 @@ module.exports = {
 
             // If a symlink is found that links to an external path to the current root files then we need to copy it into the bundle
             // If always is set to true then always resolve symlinks to actual files/folders they point to
-            console.log(src, stats.isSymbolicLink(), fs.existsSync(src), always);
             if(stats.isSymbolicLink() && (always || !fs.existsSync(src))){
-                count = this.checkResolve(src, src, root, always, count);
+                count = this.checkResolve(src, src, path.dirname(path.join(root, src.split(search)[1])), always, count);
             }
         });
 
@@ -24,7 +23,6 @@ module.exports = {
 
         let symlink = fs.readlinkSync(src);
         let resolve = path.resolve(cwd, symlink);
-
         let stats = fs.lstatSync(resolve);
 
         // If the found location is itself another symlink then need to recurse

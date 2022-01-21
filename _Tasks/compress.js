@@ -38,7 +38,7 @@ module.exports = grunt => {
             }
         });
 
-        count.resolved = symlinks.resolve(this.data.cwd, dest, opts.symlinks);
+        count.resolved = symlinks.resolve(this.data.cwd, dest, !opts.symlinks);
 
         fs.mkdirpSync(`_Zips`);
 
