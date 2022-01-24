@@ -92,7 +92,7 @@ module.exports = (grunt) => {
                         if(err.statusCode === 404){
                             resolve();
                         } else {
-                            reject();
+                            reject(err);
                         }
                         grunt.log.warn(err.statusCode, err.options.uri); 
                     });
@@ -154,9 +154,9 @@ module.exports = (grunt) => {
                                     resolve();
                                 }
                             })
-                            .catch(err => reject());
+                            .catch(err => reject(err));
                     })
-                    .catch(err => { reject(); grunt.log.warn(err.statusCode, err.options.uri); });
+                    .catch(err => { reject(err); grunt.log.warn(err.statusCode, err.options.uri); });
             });
         }
 
