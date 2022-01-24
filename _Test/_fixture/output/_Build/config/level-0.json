@@ -50,6 +50,13 @@
                     "chunk",
                     "media"
                 ]
+			},
+			{
+				"url": "https://staging.boilerplate-wordpress.fishawack.solutions",
+                "endpoints": [
+                    "posts",
+                    "media"
+                ]
 			}
 		],
 		"targets": {

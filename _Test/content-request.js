@@ -39,5 +39,11 @@ describe('content-request', () => {
             expect((fs.lstatSync('_Test/_fixture/output/_Build/content/custom/string.json')).isFile()).to.be.true;
             expect((fs.lstatSync('_Test/_fixture/output/_Build/content/custom/media/2020/04/Screenshot-2020-04-02-at-13.17.35.png')).isFile()).to.be.true;
         });
+
+        it('Should save to json files', () => {
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-6/posts.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-6/media.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-6/media/2022/01/922285.jpg')).isFile()).to.be.true;
+        });
     })
 });
