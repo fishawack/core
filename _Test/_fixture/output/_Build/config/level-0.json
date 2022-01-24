@@ -15,7 +15,42 @@
 			{
                 "ftps": "ftp-fishawack.egnyte.com",
                 "location": "Shared/FW/Knutsford/Digital/Auto-Content/test-shared/"
-            }
+            },
+			{
+                "url": "https://stream-api.fishawack.solutions",
+                "endpoints": [
+                    "string",
+                    "chunk",
+                    "media"
+                ]
+            },
+			{
+				"url": "https://stream-api.fishawack.solutions",
+                "ext": "txt",
+                "endpoints": [
+                    "string",
+                    "chunk",
+                    "media"
+                ]
+			},
+			{
+				"url": "https://stream-api.fishawack.solutions",
+				"bundle": true,
+                "endpoints": [
+                    "string",
+                    "chunk",
+                    "media"
+                ]
+			},
+			{
+				"url": "https://stream-api.fishawack.solutions",
+				"saveTo": "_Build/content/custom",
+                "endpoints": [
+                    "string",
+                    "chunk",
+                    "media"
+                ]
+			}
 		],
 		"targets": {
 			"package": {
