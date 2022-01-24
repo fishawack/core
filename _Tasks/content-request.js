@@ -1,5 +1,5 @@
 module.exports = (grunt) => {
-    grunt.registerTask('content-request', function(){
+    grunt.registerTask('content:request', function(){
         if(!contentJson.attributes.content || contentJson.attributes.content.length <= 0){
             grunt.log.warn('No content to pull');
             return;
@@ -23,7 +23,7 @@ module.exports = (grunt) => {
                         saveTo: (d.saveTo || path.join(config.src, `/content/content-${i}/`, (d.bundle ? 'media/' : '')))
                     }, 1)
                     .then(({options, data}) => {
-                        grunt.log.ok('Downloaded ' + options.endpoint);
+                        grunt.log.ok(`Downloaded: ${options.endpoint}`);
 
                         var file = path.join(options.saveTo, `${options.endpoint}.${options.ext}`);
 

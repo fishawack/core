@@ -8,7 +8,7 @@ const { opts } = require('./_helpers/globals.js');
 
 describe('content', () => {
     before(() => {
-        execSync('grunt content --mocha=output', opts);
+        execSync('grunt clean:content content:pull --mocha=output', opts);
     });
     
     it('Should pull down assets via lftp', () => {

@@ -1,5 +1,7 @@
 module.exports = (grunt) => {
-    grunt.registerTask('content', function(){
+    grunt.registerTask('content', ['content:pull', 'content:request']);
+
+    grunt.registerTask('content:pull', function(){
         if(!contentJson.attributes.content || contentJson.attributes.content.length <= 0){
             grunt.log.warn('No content to pull');
             return;
@@ -36,6 +38,6 @@ module.exports = (grunt) => {
             grunt.log.ok(`Content pulled from: ${d.location}`);
         });
 
-        grunt.task.run(['content-request']);
+        grunt.task.run(['content:request']);
     });
 };
