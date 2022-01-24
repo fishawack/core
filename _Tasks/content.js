@@ -37,7 +37,5 @@ module.exports = (grunt) => {
 
             grunt.log.ok(`Content pulled from: ${d.location}`);
         });
-
-        grunt.task.run(['content:request']);
     });
 };
