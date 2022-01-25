@@ -53,19 +53,34 @@ describe('content-request', () => {
         });
     });
 
-    // describe('craft', () => {
-    //     it('Should save to json files', () => {
-    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/statements.json')).isFile()).to.be.true;
-    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/search.json')).isFile()).to.be.true;
-    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/sitemap.json')).isFile()).to.be.true;
-    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/images.json')).isFile()).to.be.true;
-    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/imagelibrary.json')).isFile()).to.be.true;
-    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/coremessages.json')).isFile()).to.be.true;
-    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/comparisontables.json')).isFile()).to.be.true;
-    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/resources.json')).isFile()).to.be.true;
-    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/terminologyguide.json')).isFile()).to.be.true;
-    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/tags.json')).isFile()).to.be.true;
-    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/resourcetags.json')).isFile()).to.be.true;
-    //     });
-    // });
+    describe('craft', () => {
+        it('Should save to json files', () => {
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/statements.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/search.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/sitemap.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/images.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/imagelibrary.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/coremessages.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/comparisontables.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/resources.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/terminologyguide.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/tags.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/resourcetags.json')).isFile()).to.be.true;
+        });
+
+        it('Should not try and save media files when media set to null', () => {
+            expect((fs.existsSync('_Test/_fixture/output/_Build/content/content-8/media'))).to.be.false;
+        });
+
+        it('Should save to json files', () => {
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-9/publications.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-9/congresses.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-9/journals.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-9/studies.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-9/categories.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-9/tags.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-9/doc-types.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-9/global.json')).isFile()).to.be.true;
+        });
+    });
 });

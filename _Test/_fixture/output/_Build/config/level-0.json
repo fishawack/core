@@ -65,6 +65,39 @@
                     "posts",
                     "media"
                 ]
+			},
+			{
+				"url": "http://172.16.8.21:8887",
+				"api": "/sonja/json/",
+				"media": null,
+				"endpoints": [
+					"statements",
+					"search",
+					"sitemap",
+					"images",
+					"imagelibrary",
+					"coremessages",
+					"comparisontables",
+					"resources",
+					"terminologyguide",
+					"tags",
+					"resourcetags"
+				]
+			},
+			{
+				"url": "http://neptune-benlysta.fishawack.staging",
+				"api": "/json/",
+				"media": null,
+				"endpoints": [
+					"publications",
+					"congresses",
+					"journals",
+					"studies",
+					"categories",
+					"tags",
+					"doc-types",
+					"global"
+				]
 			}
 		],
 		"targets": {
