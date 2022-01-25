@@ -40,26 +40,26 @@ describe('content-request', () => {
             expect((fs.lstatSync('_Test/_fixture/output/_Build/content/custom/media/2020/04/Screenshot-2020-04-02-at-13.17.35.png')).isFile()).to.be.true;
         });
 
-        it('Should save to json files', () => {
+        it('Should save to json files without trailing slash', () => {
             expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-6/posts.json')).isFile()).to.be.true;
             expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-6/media.json')).isFile()).to.be.true;
             expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-6/media/2022/01/922285.jpg')).isFile()).to.be.true;
         });
     });
 
-    describe('craft', () => {
-        it('Should save to json files', () => {
-            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/statements.json')).isFile()).to.be.true;
-            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/search.json')).isFile()).to.be.true;
-            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/sitemap.json')).isFile()).to.be.true;
-            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/images.json')).isFile()).to.be.true;
-            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/imagelibrary.json')).isFile()).to.be.true;
-            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/coremessages.json')).isFile()).to.be.true;
-            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/comparisontables.json')).isFile()).to.be.true;
-            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/resources.json')).isFile()).to.be.true;
-            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/terminologyguide.json')).isFile()).to.be.true;
-            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/tags.json')).isFile()).to.be.true;
-            expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/resourcetags.json')).isFile()).to.be.true;
-        });
-    });
+    // describe('craft', () => {
+    //     it('Should save to json files', () => {
+    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/statements.json')).isFile()).to.be.true;
+    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/search.json')).isFile()).to.be.true;
+    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/sitemap.json')).isFile()).to.be.true;
+    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/images.json')).isFile()).to.be.true;
+    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/imagelibrary.json')).isFile()).to.be.true;
+    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/coremessages.json')).isFile()).to.be.true;
+    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/comparisontables.json')).isFile()).to.be.true;
+    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/resources.json')).isFile()).to.be.true;
+    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/terminologyguide.json')).isFile()).to.be.true;
+    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/tags.json')).isFile()).to.be.true;
+    //         expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/resourcetags.json')).isFile()).to.be.true;
+    //     });
+    // });
 });

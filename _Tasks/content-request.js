@@ -17,7 +17,8 @@ module.exports = (grunt) => {
         contentJson.attributes.content.forEach(function(d, i){
             if(d.url){
                 requests = requests.concat(d.endpoints.map((dd) => limit(() => load({
-                        path: d.url.replace(/\/+$/, ""),
+                        path: d.url,
+                        api: d.api || '/wp-json/wp/v2/',
                         endpoint: dd,
                         ext: d.ext || 'json',
                         saveTo: (d.saveTo || path.join(config.src, `/content/content-${i}/`, (d.bundle ? 'media/' : '')))
@@ -36,7 +37,8 @@ module.exports = (grunt) => {
                     }))));
 
                 requests.push(limit(() => download({
-                        path: d.url.replace(/\/+$/, ""),
+                        path: d.url,
+                        api: d.api || '/wp-json/wp/v2/',
                         saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`),
                         index: i
                     }, 1)));
@@ -68,7 +70,7 @@ module.exports = (grunt) => {
         function load(options, index, arr){
             return new Promise((resolve, reject) => {
                 request({
-                        uri: `${options.path}/wp-json/wp/v2/${options.endpoint}?per_page=100&page=${index}`,
+                        uri: url_join(options.path, options.api, options.endpoint, `?per_page=100&page=${index}`),
                         resolveWithFullResponse: true
                     })
                     .then(res => {
@@ -100,7 +102,7 @@ module.exports = (grunt) => {
         }
 
         function image(src, options){
-            var split = src.split(`${options.path}/wp-content/uploads/`);
+            var split = src.split(url_join(options.path, `/wp-content/uploads/`));
             var file = path.join(options.saveTo, 'media/', split[1]);
 
             fs.mkdirpSync(path.dirname(file));
@@ -123,7 +125,7 @@ module.exports = (grunt) => {
         function download(options, index){
             return new Promise((resolve, reject) => {
                 request({
-                        uri: `${options.path}/wp-json/wp/v2/media?per_page=100&page=${index}`,
+                        uri: url_join(options.path, options.api, `/media?per_page=100&page=${index}`),
                         resolveWithFullResponse: true
                     })
                     .then(res => {

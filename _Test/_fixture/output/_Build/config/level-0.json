@@ -52,29 +52,11 @@
                 ]
 			},
 			{
-				"url": "https://staging.boilerplate-wordpress.fishawack.solutions",
+				"url": "https://staging.boilerplate-wordpress.fishawack.solutions/",
                 "endpoints": [
                     "posts",
                     "media"
                 ]
-			},
-			{
-				"url": "http://172.16.8.21:8887/sonja/json/",
-				"ext": "json",
-				"bundle": true,
-				"endpoints": [
-					"statements",
-					"search",
-					"sitemap",
-					"images",
-					"imagelibrary",
-					"coremessages",
-					"comparisontables",
-					"resources",
-					"terminologyguide",
-					"tags",
-					"resourcetags"
-				]
 			}
 		],
 		"targets": {

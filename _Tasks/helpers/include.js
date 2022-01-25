@@ -551,6 +551,10 @@ module.exports = function(grunt, hasBase) {
 			str;
 	};
 
+	this.url_join = function () {
+		return new URL(require('path').join(...[].slice.call(arguments, 1)), arguments[0]).toString();
+	};
+
 	if(grunt){
 		this.contentPath = '.tmp/content.json';
 
