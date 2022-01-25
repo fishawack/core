@@ -57,6 +57,14 @@
                     "posts",
                     "media"
                 ]
+			},
+			{
+				"url": "https://staging.boilerplate-wordpress.fishawack.solutions",
+				"api": "wp-json/wp/v2",
+                "endpoints": [
+                    "posts",
+                    "media"
+                ]
 			}
 		],
 		"targets": {
