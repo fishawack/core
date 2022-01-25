@@ -169,7 +169,7 @@
 				"content": {
 					"type": "array",
 					"items": {
-						"type": ["object", null],
+						"type": ["object", "null"],
 						"allOf": [
 							{
 								"$ref": "deploy.json#/definitions/deploy"
@@ -177,18 +177,30 @@
 							{
 								"type": "object",
 								"properties": {
-									"ext": {"type": ["string", "null"]},
+									"ext": {
+										"type": ["string", "null"],
+										"description": "Which file extension to save the endpoints as. (default: json)",
+										"default": "json"
+									},
 									"bundle": {
 										"type": "boolean",
-										"description": "Setting this to true will save any endpoint files into a media folder thus bunding them into the front end files when the bundle process is run."
+										"description": "Setting this to true will save any endpoint files into a media folder thus bunding them into the front end files when the bundle process is run. (default: false)"
 									},
 									"endpoints": {
 										"type": "array",
 							        	"items": {
 							        		"type": "string"
-							        	}
+							        	},
+										"description": "Api endpoints to pull down and save locally. (default: [])"
 							        },
-							        "saveTo": {"type": ["string", "null"]}
+							        "saveTo": {
+										"type": ["string", "null"],
+										"description": "Where to save the pulled files. (default: <%= src %>/content/content-${i}/"
+									},
+									"api": {
+										"type": ["string", "null"],
+										"description": "The api endpoint url to point to. (default: /wp-json/wp/v2/)"
+									}
 								}
 							}
 						]
