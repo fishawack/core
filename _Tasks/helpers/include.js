@@ -551,9 +551,7 @@ module.exports = function(grunt, hasBase) {
 			str;
 	};
 
-	this.url_join = function () {
-		return new URL(require('path').join(...[].slice.call(arguments, 1)), arguments[0]).toString();
-	};
+	this.url_join = require('./misc.js').url_join;
 
 	if(grunt){
 		this.contentPath = '.tmp/content.json';

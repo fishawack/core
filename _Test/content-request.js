@@ -6,10 +6,19 @@ const path = require('path');
 const fs = require('fs');
 const { opts } = require('./_helpers/globals.js');
 
+const { download } = require('../_Tasks/helpers/requests.js');
+
 describe('content-request', () => {
     before(() => {
         execSync('grunt clean:content content:request --mocha=output', opts);
     });
+
+    // it('Should pull media assets from json files', async () => {
+    //     await download({
+    //         saveTo: `_Test/_fixture/output/_Build/content/content-2/`,
+    //         path: `https://stream-api.fishawack.solutions`
+    //     });
+    // });
     
     describe('wordpress', () => {
         it('Should save to json files', () => {

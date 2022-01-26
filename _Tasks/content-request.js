@@ -10,6 +10,7 @@ module.exports = (grunt) => {
         var path = require('path');
         var pLimit = require('p-limit');
         var limit = pLimit(5);
+        const { download } = require('./helpers/requests.js');
 
         var requests = [];
         var rewrites = [];
@@ -35,16 +36,6 @@ module.exports = (grunt) => {
                             JSON.stringify(data)
                         );
                     }))));
-
-                if(d.media !== null){
-                    requests.push(limit(() => download({
-                            path: d.url,
-                            api: d.api || '/wp-json/wp/v2/',
-                            media: d.media || 'media',
-                            saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`),
-                            index: i
-                        }, 1)));
-                }
             }
         });
 
@@ -53,19 +44,42 @@ module.exports = (grunt) => {
 
             Promise.all(requests)
                 .then(() => {
+                    let arr = [];
+
                     contentJson.attributes.content.forEach(function(d, i){
-                        if(d.url){
-                            rewrites.push(limit(() => update({
+                        if(d.url && d.media !== null){
+                            arr.push(limit(() => download({
                                     path: d.url,
+                                    api: d.api || '/wp-json/wp/v2/',
+                                    media: d.media || 'media',
+                                    ext: d.ext || 'json',
                                     saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`, (d.bundle ? 'media/' : '')),
                                     index: i
                                 })));
                         }
                     });
 
-                    return Promise.all(rewrites)
-                        .catch(err => grunt.log.warn(err.message))
-                        .finally(() => done());
+                    if(arr.length){
+                        Promise.all(arr)
+                            .then(() => {
+                                contentJson.attributes.content.forEach(function(d, i){
+                                    if(d.url){
+                                        rewrites.push(limit(() => update({
+                                                path: d.url,
+                                                saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`, (d.bundle ? 'media/' : '')),
+                                                index: i
+                                            })));
+                                    }
+                                });
+            
+                                Promise.all(rewrites)
+                                    .catch(err => grunt.log.warn(err.message))
+                                    .finally(() => done());
+                            })
+                            .catch(err => grunt.log.warn(err.message));
+                    } else {
+                        done();
+                    }
                 })
                 .catch(err => grunt.log.warn(err.message));
         }
@@ -101,67 +115,6 @@ module.exports = (grunt) => {
                         }
                         grunt.log.warn(err.statusCode, err.options.uri); 
                     });
-            });
-        }
-
-        function image(src, options){
-            var split = src.split(url_join(options.path, `/wp-content/uploads/`));
-            var file = path.join(options.saveTo, 'media/', split[1]);
-
-            fs.mkdirpSync(path.dirname(file));
-
-            return request({uri: src, encoding: 'binary'})
-                .then(body => {
-                    grunt.log.ok(`Downloaded: ${split[1]}`);
-
-                    fs.writeFileSync(file, body, 'binary');
-                })
-                .catch(err => {
-                    if(err.statusCode){
-                        grunt.log.warn(err.statusCode, err.options.uri);
-                    } else {
-                        grunt.log.warn(err);
-                    }
-                });
-        }
-
-        function download(options, index){
-            return new Promise((resolve, reject) => {
-                request({
-                        uri: url_join(options.path, options.api, `/media?per_page=100&page=${index}`),
-                        resolveWithFullResponse: true
-                    })
-                    .then(res => {
-                        var data = JSON.parse(res.body);
-                        var current = +res.headers['x-wp-totalpages'];
-
-                        var arr = [];
-                        limit = pLimit(5);
-
-                        data.forEach(d => {
-                            if(d.media_details && d.media_details.sizes && d.media_details.sizes.length){
-                                for(var key in d.media_details.sizes){
-                                    if(d.media_details.sizes.hasOwnProperty(key)){
-                                        arr.push(limit(() => image(d.media_details.sizes[key].source_url, options)));
-                                    }
-                                }
-                            } else {
-                                arr.push(limit(() => image(d.source_url, options)));
-                            }
-                        });
-
-                        return Promise.all(arr)
-                            .then(res => {
-                                if(current && current !== index){
-                                    return download(options, ++index)
-                                        .then(() => resolve());
-                                } else {
-                                    resolve();
-                                }
-                            })
-                            .catch(err => reject(err));
-                    })
-                    .catch(err => { reject(err); grunt.log.warn(err.statusCode, err.options.uri); });
             });
         }
 
