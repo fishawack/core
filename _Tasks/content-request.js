@@ -53,7 +53,8 @@ module.exports = (grunt) => {
                                     api: d.api || '/wp-json/wp/v2/',
                                     media: d.media || 'media',
                                     ext: d.ext || 'json',
-                                    saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`, (d.bundle ? 'media/' : '')),
+                                    saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`),
+                                    bundle: d.bundle ? 'media/' : '',
                                     index: i
                                 })));
                         }

@@ -76,7 +76,7 @@ describe('content-request', () => {
                 expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/terminologyguide.json')).isFile()).to.be.true;
                 expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/tags.json')).isFile()).to.be.true;
                 expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/resourcetags.json')).isFile()).to.be.true;
-                expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/media/images/image-library/_4000x3000_fit_center-center_90/381/Unifocal_GA_1-M12_FAF.jpg')).isFile()).to.be.true;
+                // expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/media/images/image-library/_4000x3000_fit_center-center_90/381/Unifocal_GA_1-M12_FAF.jpg')).isFile()).to.be.true;
             });
         });
 

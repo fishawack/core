@@ -28,7 +28,7 @@ async function download(options){
         const pLimit = require('p-limit');
         const limit = pLimit(5);
 
-        var data = fs.readJSONSync(path.join(options.saveTo, `${options.media}.${options.ext}`));
+        var data = fs.readJSONSync(path.join(options.saveTo, options.bundle, `${options.media}.${options.ext}`));
         var arr = [];
 
         data.forEach(d => {
