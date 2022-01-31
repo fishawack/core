@@ -6,7 +6,7 @@ module.exports = (grunt) => {
         }
 
         var done = this.async();
-        var fs = require('fs-extra');
+        
         var path = require('path');
         var pLimit = require('p-limit');
         var limit = pLimit(5);
@@ -20,18 +20,6 @@ module.exports = (grunt) => {
                         endpoint,
                         ext: d.ext || 'json',
                         saveTo: (d.saveTo || path.join(config.src, `/content/content-${i}/`, (d.bundle ? 'media/' : '')))
-                    })
-                    .then(({options, data}) => {
-                        grunt.log.ok(`Downloaded: ${options.endpoint}`);
-
-                        var file = path.join(options.saveTo, `${options.endpoint}.${options.ext}`);
-
-                        fs.mkdirpSync(path.dirname(file));
-
-                        fs.writeFileSync(
-                            file,
-                            JSON.stringify(data)
-                        );
                     }))));
             }
 

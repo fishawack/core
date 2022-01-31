@@ -97,40 +97,35 @@ if (!String.prototype.replaceAll) {
 	};
 }
 
-function load(options, index = 1, arr){
+async function load(options){
     var request = require('request-promise');
-    
-    return new Promise((resolve, reject) => {
-        request({
-                uri: url_join(options.path, options.api, `${options.endpoint}?per_page=100&page=${index}`),
+    var fs = require('fs-extra');
+
+    let data = [];
+    let index = 0;
+
+    do{
+        index++;
+
+        let res = await request({
+                uri: url_join(options.path, options.api, `${options.endpoint}?per_page=1&page=${index}`),
                 resolveWithFullResponse: true
-            })
-            .then(res => {
-                var data = JSON.parse(res.body);
-                var current = +res.headers['x-wp-totalpages'];
-
-                if(!arr){
-                    arr = data || [];
-                } else {
-                    arr = arr.concat(data);
-                }
-
-                if(current && current !== index){
-                    load(options, ++index, arr)
-                        .then((res) => resolve(res));
-                } else {
-                    resolve({options, data: arr});
-                }
-            })
-            .catch(err => { 
-                if(err.statusCode === 404){
-                    resolve();
-                } else {
-                    reject(err);
-                }
-                grunt.log.warn(err.statusCode, err.options.uri); 
             });
-    });
+
+        data = data.concat(JSON.parse(res.body));
+        current = +res.headers['x-wp-totalpages'];
+    } while(current && current !== index)
+
+    grunt.log.ok(`Downloaded: ${options.endpoint}`);
+
+    var file = path.join(options.saveTo, `${options.endpoint}.${options.ext}`);
+
+    fs.mkdirpSync(path.dirname(file));
+
+    fs.writeFileSync(
+        file,
+        JSON.stringify(data)
+    );
 }
 
 module.exports = {
