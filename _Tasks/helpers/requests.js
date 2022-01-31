@@ -118,7 +118,7 @@ async function load(options){
 
     grunt.log.ok(`Downloaded: ${options.endpoint}`);
 
-    var file = path.join(options.saveTo, `${options.endpoint}.${options.ext}`);
+    var file = path.join(options.saveTo, options.bundle, `${options.endpoint}.${options.ext}`);
 
     fs.mkdirpSync(path.dirname(file));
 

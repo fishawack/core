@@ -19,7 +19,8 @@ module.exports = (grunt) => {
                         api: d.api || '/wp-json/wp/v2/',
                         endpoint,
                         ext: d.ext || 'json',
-                        saveTo: (d.saveTo || path.join(config.src, `/content/content-${i}/`, (d.bundle ? 'media/' : '')))
+                        saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`),
+                        bundle: d.bundle ? 'media/' : '',
                     }))));
             }
 
@@ -31,7 +32,6 @@ module.exports = (grunt) => {
             if(d.url && d.find !== null){
                 return limit(() => download({
                         path: d.url,
-                        api: d.api || '/wp-json/wp/v2/',
                         ext: d.ext || 'json',
                         saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`),
                         bundle: d.bundle ? 'media/' : '',
@@ -44,8 +44,6 @@ module.exports = (grunt) => {
         await Promise.all(contentJson.attributes.content.map((d, i) => {
             if(d.url && d.find !== null){
                 return limit(() => rewrite({
-                        path: d.url,
-                        api: d.api || '/wp-json/wp/v2/',
                         ext: d.ext || 'json',
                         saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`),
                         bundle: d.bundle ? 'media/' : '',
