@@ -55,7 +55,8 @@ module.exports = (grunt) => {
                                     ext: d.ext || 'json',
                                     saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`),
                                     bundle: d.bundle ? 'media/' : '',
-                                    index: i
+                                    index: i,
+                                    find: d.find || `^https.*/wp-content/uploads`
                                 })));
                         }
                     });

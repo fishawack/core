@@ -15,8 +15,19 @@ describe('content-request', () => {
 
     // it('Should pull media assets from json files', async () => {
     //     await download({
+    //         path: `https://stream-api.fishawack.solutions`,
     //         saveTo: `_Test/_fixture/output/_Build/content/content-2/`,
-    //         path: `https://stream-api.fishawack.solutions`
+    //         ext: 'json',
+    //         bundle: '',
+    //         find: `^https.*/wp-content/uploads`
+    //     });
+
+    //     await download({
+    //         path: `http://172.16.8.21:8887`,
+    //         saveTo: `_Test/_fixture/output/_Build/content/content-8/`,
+    //         ext: 'json',
+    //         bundle: '',
+    //         find: `^/images/image-library`
     //     });
     // });
     
@@ -76,7 +87,7 @@ describe('content-request', () => {
                 expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/terminologyguide.json')).isFile()).to.be.true;
                 expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/tags.json')).isFile()).to.be.true;
                 expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/resourcetags.json')).isFile()).to.be.true;
-                // expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/media/images/image-library/_4000x3000_fit_center-center_90/381/Unifocal_GA_1-M12_FAF.jpg')).isFile()).to.be.true;
+                expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/media/_4000x3000_fit_center-center_90/381/Unifocal_GA_1-M12_FAF.jpg')).isFile()).to.be.true;
             });
         });
 

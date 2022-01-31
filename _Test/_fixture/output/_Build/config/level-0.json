@@ -69,7 +69,7 @@
 			{
 				"url": "http://172.16.8.21:8887",
 				"api": "/sonja/json/",
-				"media": null,
+				"find": "^/images/image-library",
 				"endpoints": [
 					"statements",
 					"search",

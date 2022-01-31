@@ -5,14 +5,20 @@ function image(src, options){
     const grunt = require('grunt');
     const { url_join } = require('./misc.js');
 
-    var split = src.split(url_join(options.path, `/wp-content/uploads/`));
-    var file = path.join(options.saveTo, 'media/', split[1]);
+    let file = path.join(options.saveTo, 'media', src.replace(new RegExp(options.find), ''));
+
+    // Check if valid string - if not then prepend the CMS path
+    try {
+        new URL(src);
+    } catch (e) {
+        src = url_join(options.path, src);
+    }
 
     fs.mkdirpSync(path.dirname(file));
 
     return request({uri: src, encoding: 'binary'})
         .then(body => {
-            grunt.log.ok(`Downloaded: ${split[1]}`);
+            grunt.log.ok(`Downloaded: ${path.basename(file)}`);
 
             fs.writeFileSync(file, body, 'binary');
         })
@@ -27,22 +33,26 @@ async function download(options){
         const fs = require('fs-extra');
         const pLimit = require('p-limit');
         const limit = pLimit(5);
+        const glob = require('glob');
 
-        var data = fs.readJSONSync(path.join(options.saveTo, options.bundle, `${options.media}.${options.ext}`));
         var arr = [];
 
-        data.forEach(d => {
-            if(d.media_details && d.media_details.sizes){
-                for(var key in d.media_details.sizes){
-                    if(d.media_details.sizes.hasOwnProperty(key)){
-                        arr.push(d.media_details.sizes[key].source_url);
-                    }
+        glob.sync(path.join(options.saveTo, options.bundle, `*.${options.ext}`)).forEach(endpoint => {
+            var data = fs.readFileSync(endpoint, {encoding: 'utf8'});
+
+            // Find all values between quotes
+            data.match(/(["'])(?:(?=(\\?))\2.)*?\1/g).forEach(d => {
+                let value = JSON.parse(d);
+                
+                if(new RegExp(options.find).test(value)){
+                    arr.push(value);
                 }
-            } else {
-                arr.push(d.source_url);
-            }
+            });
         });
 
+        // Make array of assets unqiue
+        arr = [...new Set(arr)];
+        
         await Promise.all(arr.map(d => limit(() => image(d, options))));
     } catch(e){
         console.log(e);
