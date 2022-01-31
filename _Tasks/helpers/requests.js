@@ -59,7 +59,46 @@ async function download(options){
     }
 }
 
+async function rewrite(options){
+    const grunt = require('grunt');
+    const fs = require('fs-extra');
+    const path = require('path');
+    const glob = require('glob');
+    
+    grunt.log.ok(`Rewriting json to use local paths`);
+
+    glob.sync(path.join(options.saveTo, options.bundle, `*.${options.ext}`)).forEach(endpoint => {
+        let data = fs.readFileSync(endpoint, {encoding: 'utf8'});
+
+        // Find all values between quotes
+        data = data.replaceAll(/(["'])(?:(?=(\\?))\2.)*?\1/g, d => {
+            let value = JSON.parse(d);
+            
+            if(new RegExp(options.find).test(value)){
+                return `"${path.join('media/content', value.replace(new RegExp(options.find), ''))}"`;
+            }
+
+            return d;
+        });
+
+        fs.writeFileSync(endpoint, data, {encoding: 'utf8'});
+    });
+}
+
+if (!String.prototype.replaceAll) {
+	String.prototype.replaceAll = function(str, newStr){
+        // If a regex pattern
+        if (Object.prototype.toString.call(str).toLowerCase() === '[object regexp]') {
+            return this.replace(str, newStr);
+        }
+
+        // If a string
+        return this.replace(new RegExp(str, 'g'), newStr);
+	};
+}
+
 module.exports = {
-    image,   
-    download
+    image,
+    download,
+    rewrite
 }

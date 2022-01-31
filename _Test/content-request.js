@@ -3,10 +3,10 @@
 const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs-extra');
 const { opts } = require('./_helpers/globals.js');
 
-const { download } = require('../_Tasks/helpers/requests.js');
+const { download, rewrite } = require('../_Tasks/helpers/requests.js');
 
 describe('content-request', () => {
     before(() => {
@@ -28,6 +28,16 @@ describe('content-request', () => {
     //         ext: 'json',
     //         bundle: '',
     //         find: `^/images/image-library`
+    //     });
+    // });
+
+    // it('Should rewrite json files to use local paths', () => {
+    //     rewrite({
+    //         path: `https://stream-api.fishawack.solutions`,
+    //         saveTo: `_Test/_fixture/output/_Build/content/content-2/`,
+    //         ext: 'json',
+    //         bundle: '',
+    //         find: `^https.*/wp-content/uploads`
     //     });
     // });
     
@@ -71,6 +81,10 @@ describe('content-request', () => {
             expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/media.json')).isFile()).to.be.true;
             expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-7/media/2022/01/922285.jpg')).isFile()).to.be.true;
         });
+
+        it('Should rewrite media assets to local paths', () => {
+            expect(fs.readJSONSync('_Test/_fixture/output/_Build/content/content-2/media.json')[0].source_url).to.include('media/content');
+        });
     });
 
     describe('craft', () => {
@@ -88,6 +102,11 @@ describe('content-request', () => {
                 expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/tags.json')).isFile()).to.be.true;
                 expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/resourcetags.json')).isFile()).to.be.true;
                 expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-8/media/_4000x3000_fit_center-center_90/381/Unifocal_GA_1-M12_FAF.jpg')).isFile()).to.be.true;
+            });
+
+            it('Should rewrite media assets to local paths', () => {                
+                expect(fs.readJSONSync('_Test/_fixture/output/_Build/content/content-8/coremessages.json')[0].images.thumbnail.url).to.include('media/content');
+                expect(fs.readJSONSync('_Test/_fixture/output/_Build/content/content-8/images.json')[0].url).to.include('media/content');
             });
         });
 

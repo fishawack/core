@@ -10,7 +10,7 @@ module.exports = (grunt) => {
         var path = require('path');
         var pLimit = require('p-limit');
         var limit = pLimit(5);
-        const { download } = require('./helpers/requests.js');
+        const { download, rewrite } = require('./helpers/requests.js');
 
         var requests = [];
         var rewrites = [];
@@ -63,11 +63,14 @@ module.exports = (grunt) => {
                         Promise.all(arr)
                             .then(() => {
                                 contentJson.attributes.content.forEach(function(d, i){
-                                    if(d.url){
-                                        rewrites.push(limit(() => update({
+                                    if(d.url && d.find !== null){
+                                        rewrites.push(limit(() => rewrite({
                                                 path: d.url,
-                                                saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`, (d.bundle ? 'media/' : '')),
-                                                index: i
+                                                api: d.api || '/wp-json/wp/v2/',
+                                                ext: d.ext || 'json',
+                                                saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`),
+                                                bundle: d.bundle ? 'media/' : '',
+                                                find: d.find || `^https.*/wp-content/uploads`
                                             })));
                                     }
                                 });
@@ -115,24 +118,6 @@ module.exports = (grunt) => {
                         }
                         grunt.log.warn(err.statusCode, err.options.uri); 
                     });
-            });
-        }
-
-        function update(options){
-            return new Promise((resolve, reject) => {
-                grunt.log.ok(`Rewriting json to use local paths`);
-
-                var files = fs.readdirSync(options.saveTo).filter(d => d.indexOf('.json') > -1);
-
-                files.forEach(file => {
-                    var data = fs.readFileSync(path.join(options.saveTo, file), {encoding: 'utf8'});
-                    
-                    data = data.replace(new RegExp(`${options.path}/wp-content/uploads/`, 'g'), `media/content/`);
-
-                    fs.writeFileSync(path.join(options.saveTo, file), data);
-                });
-
-                resolve();
             });
         }
     });
