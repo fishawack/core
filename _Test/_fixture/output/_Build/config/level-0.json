@@ -87,7 +87,7 @@
 			{
 				"url": "http://neptune-benlysta.fishawack.staging",
 				"api": "/json/",
-				"media": null,
+				"find": null,
 				"endpoints": [
 					"publications",
 					"congresses",

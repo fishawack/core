@@ -103,7 +103,7 @@ describe('content-request', () => {
                 expect((fs.lstatSync('_Test/_fixture/output/_Build/content/content-9/global.json')).isFile()).to.be.true;
             });
 
-            it('Should not try and save media files when media set to null', () => {
+            it('Should not try and save media files when find set to null', () => {
                 expect((fs.existsSync('_Test/_fixture/output/_Build/content/content-9/media'))).to.be.false;
             });
         });

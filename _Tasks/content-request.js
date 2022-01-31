@@ -47,15 +47,13 @@ module.exports = (grunt) => {
                     let arr = [];
 
                     contentJson.attributes.content.forEach(function(d, i){
-                        if(d.url && d.media !== null){
+                        if(d.url && d.find !== null){
                             arr.push(limit(() => download({
                                     path: d.url,
                                     api: d.api || '/wp-json/wp/v2/',
-                                    media: d.media || 'media',
                                     ext: d.ext || 'json',
                                     saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`),
                                     bundle: d.bundle ? 'media/' : '',
-                                    index: i,
                                     find: d.find || `^https.*/wp-content/uploads`
                                 })));
                         }

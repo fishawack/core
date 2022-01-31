@@ -201,9 +201,9 @@
 										"type": ["string", "null"],
 										"description": "The api endpoint url to point to. (default: /wp-json/wp/v2/)"
 									},
-									"media": {
+									"find": {
 										"type": ["string", "null"],
-										"description": "The json file/files that contains links to media files that need pulling locally. Set to null to disable. (default: media)"
+										"description": "Regex used to find media files that need pulling locally. Set to null to disable. (default: ^https.*/wp-content/uploads)"
 									}
 								}
 							}
