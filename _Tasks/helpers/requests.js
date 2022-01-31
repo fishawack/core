@@ -97,8 +97,45 @@ if (!String.prototype.replaceAll) {
 	};
 }
 
+function load(options, index = 1, arr){
+    var request = require('request-promise');
+    
+    return new Promise((resolve, reject) => {
+        request({
+                uri: url_join(options.path, options.api, `${options.endpoint}?per_page=100&page=${index}`),
+                resolveWithFullResponse: true
+            })
+            .then(res => {
+                var data = JSON.parse(res.body);
+                var current = +res.headers['x-wp-totalpages'];
+
+                if(!arr){
+                    arr = data || [];
+                } else {
+                    arr = arr.concat(data);
+                }
+
+                if(current && current !== index){
+                    load(options, ++index, arr)
+                        .then((res) => resolve(res));
+                } else {
+                    resolve({options, data: arr});
+                }
+            })
+            .catch(err => { 
+                if(err.statusCode === 404){
+                    resolve();
+                } else {
+                    reject(err);
+                }
+                grunt.log.warn(err.statusCode, err.options.uri); 
+            });
+    });
+}
+
 module.exports = {
     image,
     download,
-    rewrite
+    rewrite,
+    load
 }

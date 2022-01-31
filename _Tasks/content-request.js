@@ -6,12 +6,11 @@ module.exports = (grunt) => {
         }
 
         var done = this.async();
-        var request = require('request-promise');
         var fs = require('fs-extra');
         var path = require('path');
         var pLimit = require('p-limit');
         var limit = pLimit(5);
-        const { download, rewrite } = require('./helpers/requests.js');
+        const { download, rewrite, load } = require('./helpers/requests.js');
 
         await Promise.all(contentJson.attributes.content.reduce((arr, d, i) => {
             if(d.url){
@@ -21,7 +20,7 @@ module.exports = (grunt) => {
                         endpoint,
                         ext: d.ext || 'json',
                         saveTo: (d.saveTo || path.join(config.src, `/content/content-${i}/`, (d.bundle ? 'media/' : '')))
-                    }, 1)
+                    })
                     .then(({options, data}) => {
                         grunt.log.ok(`Downloaded: ${options.endpoint}`);
 
@@ -68,39 +67,5 @@ module.exports = (grunt) => {
         }));
 
         done();
-
-        function load(options, index, arr){
-            return new Promise((resolve, reject) => {
-                request({
-                        uri: url_join(options.path, options.api, `${options.endpoint}?per_page=100&page=${index}`),
-                        resolveWithFullResponse: true
-                    })
-                    .then(res => {
-                        var data = JSON.parse(res.body);
-                        var current = +res.headers['x-wp-totalpages'];
-
-                        if(!arr){
-                            arr = data || [];
-                        } else {
-                            arr = arr.concat(data);
-                        }
-
-                        if(current && current !== index){
-                            load(options, ++index, arr)
-                                .then((res) => resolve(res));
-                        } else {
-                            resolve({options, data: arr});
-                        }
-                    })
-                    .catch(err => { 
-                        if(err.statusCode === 404){
-                            resolve();
-                        } else {
-                            reject(err);
-                        }
-                        grunt.log.warn(err.statusCode, err.options.uri); 
-                    });
-            });
-        }
     });
 };
