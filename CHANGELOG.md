@@ -1,5 +1,14 @@
 ## Changelog
 
+### 7.14.0 (2021-12-31)
+* [Feature] Content requests can now be overridden for other CMS's but still defaults to wordpress properties
+* [Change] content task is now split into content:request and content:pull
+* [Change] Updated schema for now content-request properties (api, find)
+* [Change] Moved to async/await approach for content-request to simplify callbacks
+* [Change] Rewriting endpoints now done via regex
+* [Bug] Content request url joins are now all normalized so trailing slashes don't cause problems
+* [Misc] Test suite for content-request
+
 ### 7.13.1 (2021-12-21)
 * [Bug] Fixed an issue with symlinks not resolving or copying correctly when found outside of the package location
 
