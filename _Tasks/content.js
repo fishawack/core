@@ -31,11 +31,13 @@ module.exports = (grunt) => {
         const execSync = require('child_process').execSync;
 
         contentJson.attributes.content.map((d, i) => {
-            grunt.log.warn(`Pulling content from: ${d.location}`);
+            if(d.location){
+                grunt.log.warn(`Pulling content from: ${d.location}`);
             
-            execSync(grunt.template.process(protocol(d, i), {data:config}), {encoding: 'utf8', stdio: 'inherit'});
+                execSync(grunt.template.process(protocol(d, i), {data:config}), {encoding: 'utf8', stdio: 'inherit'});
 
-            grunt.log.ok(`Content pulled from: ${d.location}`);
+                grunt.log.ok(`Content pulled from: ${d.location}`);
+            }
         });
     });
 };
