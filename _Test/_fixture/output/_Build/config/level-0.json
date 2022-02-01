@@ -240,6 +240,62 @@
 						}
 					}
 				}
+			},
+			"deploy-custom-copy": {
+				"deploy": {
+					"paths": [
+						"_Node",
+						"package.json",
+						"_Build/config/level-0.json",
+						{
+							"src": "public",
+							"ignore": [
+								"public/ignore.html", 
+								"public/ignore"
+							]
+						},
+						{
+							"src": "public/ignore"
+						},
+						{
+							"src": "public",
+							"dest": "renamed"
+						},
+						{
+							"src": "public",
+							"dest": "nested/renamed"
+						},
+						{
+							"src": "public/ignore.html"
+						},
+						{
+							"src": "public/ignore.html",
+							"dest": "renamed.html"
+						},
+						{
+							"src": "public/ignore.html",
+							"dest": "nested/renamed.html"
+						},
+						{
+							"src": "public/ignore.html",
+							"dest": "assumed"
+						},
+						{
+							"src": "public",
+							"dest": "folder.html"
+						},
+						{
+							"src": "public/about.html",
+							"ignore": ["public/about.html"],
+							"dest": "test.html"
+						},
+						{
+							"src": "_Build",
+							"ignore": ["_Build"],
+							"dest": "test"
+						}
+					]
+				}
 			}
 		},
 	    "template": {},
