@@ -1,6 +1,10 @@
 ## Changelog
 
-### 7.14.0 (2021-12-31)
+### 7.14.1 (2022-02-01)
+* [Bug] Fixed bug in symlinks.resolve when using an array of paths
+* [Misc] Test suite for copy:deploy with paths array
+
+### 7.14.0 (2022-01-31)
 * [Feature] Content requests can now be overridden for other CMS's but still defaults to wordpress properties
 * [Change] content task is now split into content:request and content:pull
 * [Change] Updated schema for now content-request properties (api, find)
