@@ -31,7 +31,8 @@ module.exports = function(grunt) {
                 let stats = fs.lstatSync(src);
 
                 if(copy.dest){
-                    if(!stats.isDirectory()){
+                    // If src is a file and dest is a path to a directory i.e missing an extensions, then join the dest to the current src filename
+                    if(!stats.isDirectory() && !path.extname(copy.dest)){
                         save = path.join(copy.dest, save);
                     } else {
                         save = copy.dest;
@@ -45,7 +46,7 @@ module.exports = function(grunt) {
                 fs.copySync(src, path.join(dest, save), { filter }); count.paths++;
             });
 
-            count.resolved = symlinks.resolve(path.dirname(copy), dest);
+            count.resolved = symlinks.resolve(path.dirname(copy.src || copy), dest);
         });
 
         grunt.log.ok(`${count.files} files, ${count.directories} directories, ${count.symlinks} symlinks copied. ${count.resolved} symlinks resolved`);
