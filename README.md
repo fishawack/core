@@ -1737,6 +1737,18 @@ Before core@5.7.0 the screenshots had to be generated as part of the pdf process
 $grunt pdf package:veeva
 ```
 
+### Local deployments
+
+Since [core version 7.5.0](#core-changelog-750) the deploy command no longer runs the full deployment process, instead all commands are now split into single purpose tasks. To simulate the old `npm run deploy` command you'll now need to run all commands in sequence.
+
+```bash
+# Npm commands
+npm run content && npm run production && npm run package && npm run deploy && npm run mail
+
+# @fishawack/lab-env commands
+fw content && fw prod && fw run -d package && fw deploy && fw run mail
+```
+
 ## Migrating
 
 ### 7.0.0
