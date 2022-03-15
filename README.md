@@ -1695,6 +1695,20 @@ For some reason (and i've literally no idea why) if you install a local version 
 
 Mocha is already included as a `@fishawack/core` dev dependency so it shouldn't be needed as a project dependency as well. If this is the case then simply remove the dependency from the package.json file and regenerated the node_modules.
 
+### Yargs stopping commands
+
+```bash
+>> Error: yargs parser supports a minimum Node.js version of 12. Read our version support policy: https://github.com/yargs/yargs-parser#supported-nodejs-versions
+```
+
+#### Problem
+
+Yargs had a minor version publish which contained a breaking change that meant people running node versions before node 12 would now throw errors.
+
+#### Solution
+
+Bump to `core@7.14.2` or install `yargs@16.2.0` on the project itself. If you hit the issue of maximum call stack exceeded then manually add the dependency to the package.json and run `fw regen`
+
 ## Common commands
 
 The commands in this section are written out relative to the core library. In practice you will likely be running commands through lab-env in which case you need to prefix each command like so:
