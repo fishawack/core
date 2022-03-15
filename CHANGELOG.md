@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.14.2 (2022-03-15)
+* [Bug] Locked yargs version to fix issue with minor version bump of main package
+
 ### 7.14.1 (2022-02-01)
 * [Bug] Fixed bug in symlinks.resolve when using an array of paths
 * [Misc] Test suite for copy:deploy with paths array
