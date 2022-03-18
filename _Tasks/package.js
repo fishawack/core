@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         }
         
         /* PDF */
-        (contentJson.attributes.pdf) ? package.push('package:pdf', 'ftpscript:pdf') : grunt.log.warn('No pdf packaging detected');
+        (contentJson.attributes.pdf) ? package.push('package:pdf') : grunt.log.warn('No pdf packaging detected');
 
         /* VABLET */
         (contentJson.attributes.vablet) ? package.push('package:vablet', 'compress:vablet') : grunt.log.warn('No vablet packaging detected');
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         (contentJson.attributes.phonegap) ? package.push('package:phonegap', 'compress:ios') : grunt.log.warn('No phonegap packaging specified');
 
         /* AUTO-PACKAGE */
-        package.push('ftpscript:package');
+        package.push('artifacts');
 
         /* WATERTIGHT */
         deployEnv.loginType ? package.push('package:watertight', 'compress:watertight') : grunt.log.warn('No watertight specified');

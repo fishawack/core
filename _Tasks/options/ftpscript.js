@@ -16,22 +16,6 @@ module.exports = {
             dest: '<%= deployLocation %>'
         }]
     },
-    pdf: {
-        files: [{
-            expand: true,
-            cwd: '_Pdfs/',
-            src: ["*.pdf"],
-            dest: './Auto-Package/<%= pkg.name %>' + '/'
-        }]
-    },
-    package: {
-        files: [{
-            expand: true,
-            cwd: '_Zips/',
-            src: ['**/*', '!**/.DS_Store'],
-            dest: './Auto-Package/<%= pkg.name %>' + '/'
-        }]
-    },
     badges: {
         files: [{
             expand: true,
