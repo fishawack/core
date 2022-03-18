@@ -8,6 +8,7 @@
 	        "csscalc"
 		],
 	    "template": {},
-	    "toggle": {}
+	    "toggle": {},
+		"deploy": {"commands": {}}
 	}
 }
