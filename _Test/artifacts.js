@@ -25,6 +25,18 @@ describe('artifacts', () => {
             host
         );
     });
+
+    it('Should skip pushing the _Zips folder if it is not present', () => {
+        let message = execSync('grunt clean:build artifacts --mocha=reload', {encoding: 'utf8'});
+
+        expect(message).to.contain('No artifacts found in _Zips');
+    });
+
+    it('Should skip pushing the _Pdfs folder if it is not present', () => {
+        let message = execSync('grunt clean:build artifacts --mocha=reload', {encoding: 'utf8'});
+
+        expect(message).to.contain('No artifacts found in _Pdfs');
+    });
     
     it('Should transfer files found in _Zips egnyte', () => {
         expect((fs.existsSync(path.join(location, 'core-test-suite.zip')))).to.be.true;
