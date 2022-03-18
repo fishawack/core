@@ -32,4 +32,12 @@ describe('sass', () => {
         
         expect(css).to.equal(fs.readFileSync(path.join(__dirname, '_expected/general-no-dist.css'), opts));
     });
+
+    it('Should run postcss on branches that do have a deploy object on the target branch', () => {
+        execSync('grunt clean:cache compile-handlebars:default htmlmin:default sass:default --mocha=bundle --branch=postcss', opts);
+
+        let css = fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Output/css/general.css'), opts);
+        
+        expect(css).to.equal(fs.readFileSync(path.join(__dirname, '_expected/general-no-dist-purgecss.css'), opts));
+    });
 });
