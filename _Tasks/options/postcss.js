@@ -11,8 +11,8 @@ module.exports = (file, dir) => {
 	];
 	
 	// Only run purge on branches with deploy targets or on production builds, too slow for feature/dev branches on watch
-	// Checking keys length as if no deployEnv === {} which would still pass
-	if(process.env.NODE_ENV === 'production' || Object.keys(deployEnv).length){
+	// If deployEnv has a location then consider a full deploy so run purgecss
+	if(process.env.NODE_ENV === 'production' || deployEnv.location){
 		arr.push(require('@fullhuman/postcss-purgecss')({
 			content: [
 				`${webRoot}/**/*.html`,
