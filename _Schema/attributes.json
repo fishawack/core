@@ -54,6 +54,9 @@
 				"capture": {
 					"$ref": "pdf.json#/definitions/capture"
 				},
+				"app": {
+					"type": "boolean"
+				},
 				"pdf": {
 					"$ref": "pdf.json#/definitions/pdf"
 				},

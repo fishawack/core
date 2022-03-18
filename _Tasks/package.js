@@ -24,7 +24,7 @@ module.exports = function(grunt) {
         (contentJson.attributes.cegedim) ? package.push('package:cegedim', 'compress:cegedim') : grunt.log.warn('No cegedim packaging detected');
 
         /* APP */
-        package.push('compress:app');
+        (contentJson.attributes.app) ? package.push('compress:app') : grunt.log.warn('No app packaging detected');
 
         /* HANDOVER */
         (contentJson.attributes.handover) ? package.push('package:handover', 'compress:handover') : grunt.log.warn('No handover packaging detected');
