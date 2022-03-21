@@ -12,7 +12,7 @@ module.exports = function(grunt, hasBase) {
         postcss: '@lodder/grunt-postcss'
 	};
 
-	this.devProject = require('./dev.js');
+	this.devProject = require('./dev.js') || mocha;
 
 	if(grunt && !hasBase){
 		if(mocha){
