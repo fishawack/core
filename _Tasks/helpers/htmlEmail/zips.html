@@ -10,7 +10,10 @@
 			[
 				{
 					"name": "App",
-					"zip": "_App"
+					"zip": "_App",
+					"check": function(){
+						return contentJson.attributes.app;
+					}
 				},
 				{
 					"name": "Handover",
