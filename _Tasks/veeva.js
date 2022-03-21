@@ -163,8 +163,13 @@ module.exports = function(grunt) {
             var seqName = d.seqName;
             var screenshotName = d.screenshotName;
 
-            var screenshot = glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`)
-                .alphanumSort()[0];
+            var screenshot = glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`);
+
+            if(!screenshot.length){
+                grunt.fatal(`No screenshots detected in .tmp/, do you need to run the capture task?`);
+            }
+            
+            screenshot = screenshot.alphanumSort()[0];
 
         	copy.default.files.push(
                 {
