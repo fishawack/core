@@ -1,19 +1,21 @@
 'use strict';
 
-const fs = require('fs');
+const glob = require('glob');
 const expect = require('chai').expect;
-const grunt = require('grunt');
 const execSync = require('child_process').execSync;
 const path = require('path');
+const { opts } = require('./_helpers/globals.js');
 
-// describe('pdf', () => {
-//     let json;
+describe('package', () => {    
+    it('Should not generate an app zip if app flag not preset on branch', () => {
+        execSync('grunt clean:zip clean:pdf package --mocha=package', opts);
 
-//     before(() => {
-//         // execSync('grunt pdf --branch=master --mocha', opts);
-//     });
-    
-//     it('Should generate a json file in the .tmp directory', () => {
-//         expect(true).to.be.equal(true);
-//     });
-// });
+        expect(glob.sync(path.join(__dirname, '_fixture/output/_Zips/*_App.zip'))).to.be.an('array').that.is.empty;
+    });
+
+    it('Should generate an app zip if app flag not preset on branch', () => {
+        execSync('grunt clean:zip package --mocha=package --branch=package', opts);
+
+        expect(glob.sync(path.join(__dirname, '_fixture/output/_Zips/*_App.zip'))).to.be.an('array').that.is.not.empty;
+    });
+});

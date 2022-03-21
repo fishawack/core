@@ -1,0 +1,20 @@
+{
+    "attributes": {
+	    "title": "<%= repo.name %>",
+		"targets": {
+			"package": {
+				"app": true,
+				"handover": true,
+				"veeva": true,
+				"cegedim": true,
+				"vablet": {
+					"disableBounce": true,
+					"scaleToFitPage": true,
+					"hideToolBar": true,
+					"disableStatusBar": true,
+					"useTransparentBar": true
+				}
+			}
+		}
+	}
+}
