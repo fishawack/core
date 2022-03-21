@@ -31,7 +31,7 @@ module.exports = (grunt) => {
             'deploy-s',
             'setup',
             'content'
-        ].forEach(d => delete pkg.scripts[d]);
+        ].forEach(d => pkg.scripts && delete pkg.scripts[d]);
 
         fs.writeFileSync(`${location}/package.json`, JSON.stringify(pkg, null, 4));
     });
