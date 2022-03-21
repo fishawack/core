@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-    grunt.registerTask('package:cegedim', ['clean:cegedim', 'cegedim', 'clean:build']);
+    grunt.registerTask('package:cegedim', ['clean:cegedim', 'cegedim']);
 
     grunt.registerTask('cegedim', function() {
         var glob = require('glob');

@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
     grunt.registerTask('package:vablet', function() {
-        grunt.task.run('clean:vablet', 'vablet', 'clean:build');
+        grunt.task.run('clean:vablet', 'vablet');
     });
 
     grunt.registerTask('vablet', function(){

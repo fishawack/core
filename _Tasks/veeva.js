@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-    grunt.registerTask('package:veeva', ['clean:veeva', 'veeva', 'veeva:mcl', 'ftpscript:veeva', 'clean:build']);
+    grunt.registerTask('package:veeva', ['clean:veeva', 'veeva', 'veeva:mcl', 'ftpscript:veeva']);
 
     grunt.registerTask('veeva:mcl', function() {
         var done = this.async();

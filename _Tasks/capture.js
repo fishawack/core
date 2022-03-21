@@ -1,3 +1,3 @@
 module.exports = grunt => {
-    grunt.registerTask('capture', ['connect:default', 'webdriver:default']);
+    grunt.registerTask('capture', ['clean:build', 'connect:default', 'webdriver:default']);
 };

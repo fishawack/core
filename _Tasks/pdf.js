@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-	grunt.registerTask('package:pdf', ['clean:pdf', 'pdf', 'compare:browsers', 'shell:pullPrevious', 'compare:previous', 'shell:pushPrevious', 'clean:build']);
+	grunt.registerTask('package:pdf', ['clean:pdf', 'pdf', 'compare:browsers', 'shell:pullPrevious', 'compare:previous', 'shell:pushPrevious']);
 
 	grunt.registerTask('pdf', function() {
 		var done = this.async();
