@@ -45,44 +45,54 @@ module.exports = function(grunt) {
                     gitLogString += '</ul></li>';
                 }
 
+                let html = String.format(buildHtmlEmail('base'), 
+                    [
+                        buildHtmlEmail('target'),
+                        buildHtmlEmail('date'),
+                        (contentJson.attributes.code) ? buildHtmlEmail('code') : '',
+                        (contentJson.attributes.design) ? buildHtmlEmail('design') : '',
+                        (contentJson.attributes.cms) ? buildHtmlEmail('cms') : '',
+                        (deployEnv.url) ? buildHtmlEmail('url') : '',
+                        (deployEnv.users) ? buildHtmlEmail('users') : ''
+                    ].join(''),
+                    [
+                        (contentJson.attributes.pdf) ? buildHtmlEmail('pdf') : '',
+                        buildHtmlEmail('zips')
+                    ].join(''),
+                    [
+                        buildHtmlEmail('version'),
+                        buildHtmlEmail('coverage'),
+                        (contentJson.attributes.pdf) ? buildHtmlEmail('diff') : '',
+                        buildHtmlEmail('status'),
+                        (contentJson.attributes.phonegap) ? buildHtmlEmail('phonegap') : '',
+                        buildHtmlEmail('instance'),
+                        (contentJson.attributes.googleTrackingID) ? buildHtmlEmail('google') : '',
+                        buildHtmlEmail('git')
+                    ].join('')
+                );
+
                 nodemailer['deploy'] = {
                     options: {
                         recipients: recipients,
                         message: {
                             from: "fishawack.auto.package@gmail.com",
                             subject: 'Auto-package: - <%= repo.name %>',
-                            html: String.format(buildHtmlEmail('base'), 
-                                [
-                                    buildHtmlEmail('target'),
-                                    buildHtmlEmail('date'),
-                                    (contentJson.attributes.code) ? buildHtmlEmail('code') : '',
-                                    (contentJson.attributes.design) ? buildHtmlEmail('design') : '',
-                                    (contentJson.attributes.cms) ? buildHtmlEmail('cms') : '',
-                                    (deployEnv.url) ? buildHtmlEmail('url') : '',
-                                    (deployEnv.users) ? buildHtmlEmail('users') : ''
-                                ].join(''),
-                                [
-                                    (contentJson.attributes.pdf) ? buildHtmlEmail('pdf') : '',
-                                    buildHtmlEmail('zips')
-                                ].join(''),
-                                [
-                                    buildHtmlEmail('version'),
-                                    buildHtmlEmail('coverage'),
-                                    (contentJson.attributes.pdf) ? buildHtmlEmail('diff') : '',
-                                    buildHtmlEmail('status'),
-                                    (contentJson.attributes.phonegap) ? buildHtmlEmail('phonegap') : '',
-                                    buildHtmlEmail('instance'),
-                                    (contentJson.attributes.googleTrackingID) ? buildHtmlEmail('google') : '',
-                                    buildHtmlEmail('git')
-                                ].join('')
-                            )
+                            html
                         }
                     }
                 };
 
                 grunt.config.set('nodemailer', nodemailer);
 
-                grunt.task.run('nodemailer');
+                if(devProject){
+                    const fs = require('fs-extra');
+                    let logPath = path.join(process.cwd(), '.tmp/email/', 'log.html');
+                    console.log(`Logging mail to ${logPath}`);
+                    fs.mkdirpSync(path.dirname(logPath));
+                    fs.writeFileSync(logPath, html);
+                } else {
+                    grunt.task.run('nodemailer');
+                }
 
                 done();
             }
