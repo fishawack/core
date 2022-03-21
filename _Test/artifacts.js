@@ -3,16 +3,12 @@
 const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
 const path = require('path');
-const glob = require('glob');
-const { opts } = require('./_helpers/globals.js');
+const { opts, host, creds } = require('./_helpers/globals.js');
 const lftp = require('../_Tasks/helpers/lftp.js');
-const os = require('os');
 const fs = require('fs');
 
 describe('artifacts', () => {
     const location = path.join(__dirname, "_fixture/artifacts/.tmp/core-test-suite");
-    const host = "ftp-fishawack.egnyte.com";
-    const creds = JSON.parse(fs.readFileSync(`${os.homedir()}/targets/.ftppass`))[host];
 
     before(() => {
         execSync('grunt clean:build artifacts --mocha=artifacts', opts);
