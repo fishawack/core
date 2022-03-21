@@ -70,7 +70,7 @@
 				}
 
 				var filename = config.filename + next.zip + '.zip'; 
-				var ext = encodeURI('https://fishawack.egnyte.com/app/index.do#storage/files/1/Shared/FW/Knutsford/Digital/Auto-Package/' + pkg.name + '/' + filename);
+				var ext = encodeURI(`https://fishawack.egnyte.com/app/index.do#storage/files/1/Shared/FW/Knutsford/Digital/Auto-Package/${pkg.name}`);
 				var raw = getFilesizeInBytes("_Zips/" + filename);
 
 				var name = '<strong>' + next.name + '</strong>:';

@@ -101,5 +101,13 @@ describe('mail', () => {
         it('Should not contain links to internal server', () => {
             expect(html).to.not.contain('<a href="http://internal.fishawack.staging/Auto-Package/core-test-suite-mail')
         });
+
+        it('Should not contain links to zip files', () => {
+            expect(html).to.not.contain('_App.zip"')
+        });
+
+        it('Should not contain links to pdf files', () => {
+            expect(html).to.not.contain('_chrome.pdf"')
+        });
     });
 });
