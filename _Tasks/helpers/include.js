@@ -165,7 +165,7 @@ module.exports = function(grunt, hasBase) {
 		}
     }
 
-	this.filename = () => `${config.repo.name}_${config.pkg.version}_${grunt.template.today("UTC:yyyy-mm-dd")}_${deployBranch}_${config.repo.commit}`;
+	this.filename = () => `${config.repo.name}_${config.pkg.version || 'unversioned'}_${grunt.template.today("UTC:yyyy-mm-dd")}_${deployBranch}_${config.repo.commit}`;
 
 	this.repoInfo = () => {
 		const execSync = require('child_process').execSync;
