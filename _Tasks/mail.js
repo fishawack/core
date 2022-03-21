@@ -8,9 +8,9 @@ module.exports = function(grunt) {
         var username = '';
         var password = '';
 
-        if(config.targets.misc && config.targets.misc.nodemailer){
-            username = config.targets.misc.nodemailer.username;
-            password = config.targets.misc.nodemailer.password; 
+        if(config.targets.misc && config.targets.misc.nodemailer && config.targets.misc.nodemailer.office365){
+            username = config.targets.misc.nodemailer.office365.username;
+            password = config.targets.misc.nodemailer.office365.password; 
         } else {
             grunt.log.warn('Cannot find nodemailer credentials in ~/targets/misc.json');
             return;
@@ -18,7 +18,18 @@ module.exports = function(grunt) {
 
         var nodemailer = {
             options: {
-                transport: require('nodemailer').createTransport('smtps://' + username + ':' + password + '@smtp.gmail.com').transporter
+                transport: require('nodemailer').createTransport({
+                    host: 'smtp.office365.com',
+                    port: 587,
+                    requireTLS: true,
+                    auth: {
+                        user: username,
+                        pass: password
+                    },
+                    tls: {
+                        ciphers: 'SSLv3'
+                    }
+                }).transporter
             }
         };
 
@@ -75,7 +86,7 @@ module.exports = function(grunt) {
                     options: {
                         recipients: recipients,
                         message: {
-                            from: "fishawack.auto.package@gmail.com",
+                            from: "digitalautomation@fishawack.com",
                             subject: 'Auto-package: - <%= repo.name %>',
                             html
                         }
