@@ -1,5 +1,26 @@
 ## Changelog
 
+### 7.15.0 (2022-03-21)
+* [Change] Office365 credentials are now used instead of gmail for auto deployment emails
+* [Change] Artifacts attached to emails are now uploaded to egynte rather than the internal eSource server
+* [Change] Artifacts attached to emails no longer link directly to the file but rather to the containing folder on egnyte
+* [Change] Package tasks no longer clean the .tmp location after running
+* [Change] Mail checks for app flag before adding app zip package to html email
+* [Change] Clean zips task now cleans from root
+* [Change] Artifacts now split into a dedicated task
+* [Change] Regular app packages are now behind an app flag rather than being default on with no option to turn off
+* [Bug] Show unversioned when creating filepaths with no version present in package.json
+* [Bug] Veeva task now checks for empty screenshot and shows an appropriate error message
+* [Bug] Handover task now checks if package.json scripts exist before trying to remove them
+* [Bug] Purgecss now runs again on branches that have deploy properties but not a deploy location itself
+* [Misc] Migration guide for gitlab-ci.yml versions
+* [Misc] Migration guide for package.json script update in core@7.5.0 which breaks manually ran scripts
+* [Misc] Mail task logs html email to file when running tests
+* [Misc] Test suite for mail
+* [Misc] Test suite for package
+* [Misc] Test suite for purgecss
+* [Misc] Test suite for artifacts
+
 ### 7.14.2 (2022-03-15)
 * [Bug] Locked yargs version to fix issue with minor version bump of main package
 
