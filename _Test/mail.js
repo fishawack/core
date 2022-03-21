@@ -67,7 +67,7 @@ describe('mail', () => {
         });
 
         it('Should not contain any deployment url', () => {
-            expect(html).not.to.contain('<strong>Url</strong>:')
+            expect(html).to.not.contain('<strong>Url</strong>:')
         });
 
         it('Should contain any deployment pdf', () => {
@@ -92,6 +92,14 @@ describe('mail', () => {
 
         it('Should contain any deployment vablet', () => {
             expect(html).to.contain('<strong>Vablet</strong>:')
+        });
+
+        it('Should contain links to egnyte folder', () => {
+            expect(html).to.contain('<a href="https://fishawack.egnyte.com/app/index.do#storage/files/1/Shared/FW/Knutsford/Digital/Auto-Package/core-test-suite-mail')
+        });
+
+        it('Should not contain links to internal server', () => {
+            expect(html).to.not.contain('<a href="http://internal.fishawack.staging/Auto-Package/core-test-suite-mail')
         });
     });
 });
