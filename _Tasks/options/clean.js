@@ -2,7 +2,7 @@ module.exports = {
 	cache: ["_Output/css/*.cache.*.css", "_Output/js/*.cache.*.js", '.cache'],
 	build: [".tmp"],
     dist: ["<%= root %>", "<%= src %>/**/generated/**/*"],
-    zip: ['_Zips/**/*'],
+    zip: ['_Zips'],
     pdf: ["_Pdfs"],
     app: ['_App/**/*'],
     electron: ['_Packages/Electron/**/*'],
