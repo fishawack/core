@@ -1765,6 +1765,50 @@ fw content && fw prod && fw run -d package && fw deploy && fw run mail
 
 ## Migrating
 
+### 7.5.0
+
+Although not a breaking change when running things through CI/CD, `core@7.5.0` did introduce a breaking change when running certain commands locally due to some npm scripts being split into smaller more focused tasks. This means the package.json scripts will need updating to the following.
+
+```json
+// Old way
+{
+    "scripts": {
+        "start": "npm start --prefix node_modules/@fishawack/core/",
+        "setup": "npm ci || npm i && npm run content",
+        "deploy": "npm run deploy --prefix node_modules/@fishawack/core/",
+        "deploy-s": "npm run deploy-s --prefix node_modules/@fishawack/core/",
+        "production": "npm run production --prefix node_modules/@fishawack/core/",
+        "content": "npm run content --prefix node_modules/@fishawack/core/",
+        "test": "npm test --prefix node_modules/@fishawack/core/"
+    }
+}
+
+// New way
+{
+    "scripts": {
+        "setup": "npm ci || npm i && npm run content",
+        "content": "npm run content --prefix node_modules/@fishawack/core/",
+        "start": "npm start --prefix node_modules/@fishawack/core/",
+        "production": "npm run production --prefix node_modules/@fishawack/core/",
+        "test": "npm test --prefix node_modules/@fishawack/core/",
+        "package": "npm run package --prefix node_modules/@fishawack/core/",
+        "deploy": "npm run deploy --prefix node_modules/@fishawack/core/",
+        "mail": "npm run mail --prefix node_modules/@fishawack/core/"
+    },
+}
+```
+
+#### gitlab-ci.yml
+
+Ensure to bump the `gitlab-ci.yml` to a minimum of `2.0.0`.
+
+```yml
+include:
+  - project: 'configs/gitlab-ci'
+    ref: v2.0.0
+    file: '.gitlab-ci.yml'
+```
+
 ### 7.0.0
 
 We switched from uncss to purgecss so any ignore tags will need switching to the following.
@@ -1857,4 +1901,15 @@ Up until now, master branch always deployed the production target, qc branch dep
         }
     }
 }
+```
+
+#### gitlab-ci.yml
+
+Ensure to bump the `gitlab-ci.yml` to a minimum of `1.0.5`.
+
+```yml
+include:
+  - project: 'configs/gitlab-ci'
+    ref: v1.0.5
+    file: '.gitlab-ci.yml'
 ```
