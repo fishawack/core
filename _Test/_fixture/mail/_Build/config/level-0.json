@@ -1,0 +1,28 @@
+{
+    "attributes": {
+	    "title": "<%= repo.name %>",
+		"targets": {
+			"empty": {
+			},
+			"package": {
+				"app": true,
+				"handover": true,
+				"veeva": true,
+				"cegedim": true,
+				"vablet": {
+					"disableBounce": true,
+					"scaleToFitPage": true,
+					"hideToolBar": true,
+					"disableStatusBar": true,
+					"useTransparentBar": true
+				},
+				"pdf": true
+			},
+			"deploy": {
+				"deploy": {
+					"url": "https://google.com"
+				}
+			}
+		}
+	}
+}

@@ -86,7 +86,7 @@ module.exports = function(grunt) {
 
                 if(devProject){
                     const fs = require('fs-extra');
-                    let logPath = path.join(process.cwd(), '.tmp/email/', 'log.html');
+                    let logPath = path.join(process.cwd(), '.tmp/mail/', 'log.html');
                     console.log(`Logging mail to ${logPath}`);
                     fs.mkdirpSync(path.dirname(logPath));
                     fs.writeFileSync(logPath, html);
