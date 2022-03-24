@@ -1769,6 +1769,8 @@ fw content && fw prod && fw run -d package && fw deploy && fw run mail
 
 Although not a breaking change when running things through CI/CD, `core@7.5.0` did introduce a breaking change when running certain commands locally due to some npm scripts being split into smaller more focused tasks. This means the package.json scripts will need updating to the following.
 
+> Before replacing the scripts below ensure there are no custom commands that have been added to your npm scripts. If there are make sure to incorporate them in the new script layout
+
 ```json
 // Old way
 {
