@@ -16,6 +16,7 @@ module.exports = (file, dir) => {
 		arr.push(require('@fullhuman/postcss-purgecss')({
 			content: [
 				`${webRoot}/**/*.html`,
+				`${webRoot}/**/*.php`,
 				`${config.src}/vue/**/*.vue`
 			],
 			safelist: {

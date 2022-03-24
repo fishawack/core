@@ -18,4 +18,13 @@ describe('css', () => {
             expect(e.message).to.not.contain('ENOENT');
         }
     });
+    
+    it('Should run purgecss on php files', () => {
+        execSync('grunt clean:cache sass:default --branch=testing --mocha=purgecss', opts);
+
+        const compiledcss = fs.readFileSync(path.join(__dirname, '_fixture/purgecss/_Output/css/general.css'), opts);
+        const expectedcss = fs.readFileSync(path.join(__dirname, '_expected/general-no-dist-purgecss.css'), opts);
+
+        expect(compiledcss).to.equal(expectedcss);
+    });
 });

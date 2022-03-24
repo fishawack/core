@@ -1,0 +1,23 @@
+{
+    "attributes": {
+	    "title": "<%= repo.name %>",
+	    "googleTrackingID": null,
+	    "root": "_Output",
+	    "modernizr": [
+	        "flexbox",
+	        "csscalc"
+		],
+	    "template": {},
+	    "toggle": {},
+		"targets": {
+			"testing": {
+				"deploy": {
+					"url": "https://demo.fishawack.solutions",
+					"location": "/home/fishawack/demo.fishawack.solutions/",
+					"lftp": "vidaHost-fishawack",
+					"subDir": "core-test-suite-deploy"
+				}
+			}
+		}
+	}
+}
