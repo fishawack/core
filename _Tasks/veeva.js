@@ -224,6 +224,11 @@ module.exports = function(grunt) {
         });
 
         if(options.sharedResource){
+            const fs = require('fs');
+            var location = './_Packages/Veeva';
+            fs.writeFileSync(`${location}/index.html`, "<html><title>Placeholder</title><body><h1>Placeholder - Replace Me!</h1></body></html>");
+            fs.writeFileSync(`${location}/thumb.png`, "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==", { encoding: "base64" });
+
             compress['veeva_shared_resource'] = {
                 "options": {'archive': '_Packages/Veeva/veeva_shared_resource.zip'}, 
                 'cwd': '_Output/shared/', 
