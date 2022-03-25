@@ -1875,6 +1875,14 @@ There's a new .cache folder where temporary build files are placed. This simply 
 .cache
 ```
 
+#### SvgSprite moved
+
+SvgSprite.svg now builds to `_Build/handlebars/partials`. Because of this you'll have to remove the previous locations file or that'll take precedence over the new file during build. Remove the following folder.
+
+```bash
+_Build/handlebars/partials/generated
+```
+
 ### 5.0.0
 
 Up until now, master branch always deployed the production target, qc branch deployed qc target and development  deployed staging. Now deploy targets are mapped directly to branch names, so a staging branch will need to be created to deploy the old staging deploy target. The config will also need updating to the following format.
