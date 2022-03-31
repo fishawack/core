@@ -24,6 +24,11 @@ describe('package', () => {
         expect(glob.sync(path.join(__dirname, '_fixture/package/_Zips/*_App.zip'))).to.be.an('array').that.is.not.empty;
     });
 
+    it('If sharedResource is true, it should create dummy thumb.png and index.html files', () => {
+        expect(glob.sync(path.join(__dirname, '_fixture/output/_Packages/Veeva/thumb.png'))).to.be.an('array').that.is.not.empty;
+        expect(glob.sync(path.join(__dirname, '_fixture/output/_Packages/Veeva/index.html'))).to.be.an('array').that.is.not.empty;
+    });
+
     after(() => {
         lftp.remove(
             'Shared/FW/Knutsford/Digital/Auto-Package/core-test-suite-package',

@@ -104,7 +104,9 @@
 			"package": {
 				"app": true,
 				"handover": true,
-				"veeva": true,
+				"veeva": {
+					"sharedResource": true
+				},
 				"cegedim": true,
 				"vablet": {
 					"disableBounce": true,
