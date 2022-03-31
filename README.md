@@ -1543,6 +1543,15 @@ You'll need to make sure you have a copy of the latest signed certificate! You'l
 
 ## Troubleshooting
 
+### Docker compose v2
+
+Some developers are reporting the docker option of "Use Docker Compose V2" is being enabled on their machines without them knowing. This flag currently isn't compatible with lab-env and throws the following error:
+
+```bash
+Warning: No resource found to remove                                                                                                        0.0s
+Command failed: docker-compose --env-file /Users/ctiley/Sites/fide.net/.env -f /Users/ctiley/.nvm/versions/node/v10.19.0/lib/node_modules/@fishawack/lab-env/laravel/8/docker-compose.yml -f /Users/ctiley/.nvm/versions/node/v10.19.0/lib/node_modules/@fishawack/lab-env/core/docker-compose.yml -p 
+```
+
 ### npm ci failure
 
 #### Problem
