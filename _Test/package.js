@@ -18,15 +18,10 @@ describe('package', () => {
         expect(fs.existsSync(path.join(__dirname, '_fixture/package/_Pdfs'))).to.be.false;
     });
 
-    it('Should generate an app zip if app flag not preset on branch', () => {
+    it('Should generate an app zip if app flag preset on branch', () => {
         execSync('grunt clean:zip package --mocha=package --branch=package', opts);
 
         expect(glob.sync(path.join(__dirname, '_fixture/package/_Zips/*_App.zip'))).to.be.an('array').that.is.not.empty;
-    });
-
-    it('If sharedResource is true, it should create dummy thumb.png and index.html files', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/output/_Packages/Veeva/thumb.png'))).to.be.an('array').that.is.not.empty;
-        expect(glob.sync(path.join(__dirname, '_fixture/output/_Packages/Veeva/index.html'))).to.be.an('array').that.is.not.empty;
     });
 
     after(() => {

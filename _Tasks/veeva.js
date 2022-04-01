@@ -4,14 +4,16 @@ module.exports = function(grunt) {
     grunt.registerTask('veeva:mcl', function() {
         var done = this.async();
 
-        var jsdom = require("jsdom");
+        const jsdom = require("jsdom");
+        const fs = require("fs-extra");
+
         const createCsvWriter = require('csv-writer').createArrayCsvWriter;
 
         let options = typeof contentJson.attributes.veeva === "object" ? contentJson.attributes.veeva : {};
         options.id = options.id || config.repo.name;
         options.presentation = options.presentation || `${options.id}_${config.repo.name}`;
-
-        require("fs-extra").mkdirpSync(`_Packages/Veeva/`);
+        
+        fs.mkdirpSync(`_Packages/Veeva/`);
 
         createCsvWriter({
                 path: `_Packages/Veeva/MCL${filename()}-${options.id}.csv`,
@@ -115,8 +117,9 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('veeva', function() {
-        var glob = require('glob');
-        var jsdom = require("jsdom");
+        const fs = require("fs-extra");
+        const glob = require('glob');
+        const jsdom = require("jsdom");
         var browsers = captureEnv().browsers;
 		var sizes = captureEnv().sizes;
 
@@ -224,14 +227,14 @@ module.exports = function(grunt) {
         });
 
         if(options.sharedResource){
-            const fs = require('fs');
-            var location = './_Packages/Veeva';
-            fs.writeFileSync(`${location}/index.html`, "<html><title>Placeholder</title><body><h1>Placeholder - Replace Me!</h1></body></html>");
-            fs.writeFileSync(`${location}/thumb.png`, "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==", { encoding: "base64" });
+            if(fs.existsSync(`${config.root}/shared/`)){
+                fs.writeFileSync(`${config.root}/shared/index.html`, "<html><title>Placeholder</title><body><h1>Placeholder!</h1></body></html>");
+                fs.writeFileSync(`${config.root}/shared/thumb.png`, "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==", { encoding: "base64" });
+            }
 
             compress['veeva_shared_resource'] = {
                 "options": {'archive': '_Packages/Veeva/veeva_shared_resource.zip'}, 
-                'cwd': '_Output/shared/', 
+                'cwd': '<%= root %>/shared/', 
                 'src': ['**'],
                 'expand': true
             };
