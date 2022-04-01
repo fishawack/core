@@ -110,15 +110,25 @@ module.exports = function(grunt, hasBase) {
 
         grunt.file.expand([
 				'./fw.json',
+				'!./fw*example.json',
+				'./fw*example.json',
 				'./content.json',
+				'!./content*example.json',
+				'./content*example.json',
 				'./level-*.json',
+				'!./level-*example.json',
+				'./level-*example.json',
 				'_Build/config/*.json',
+				'!_Build/config/*example.json',
+				'_Build/config/*example.json',
 				'_Build/config/example/*.json',
 				'_Build/*.json',
+				'!_Build/*example.json',
+				'_Build/*example.json',
 				'_Build/example/*.json'
 			]).forEach(function(d){
 				// Only load config types once, lower configs override higher ones
-				if(loaded.indexOf(path.basename(d)) === -1){
+				if(loaded.indexOf(path.basename(d.replace('.example', ''))) === -1){
 					grunt.log.ok(d, "loaded");
 
 					loaded.push(path.basename(d));

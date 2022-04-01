@@ -15,8 +15,13 @@
         }
     },
     "content": {
+        "root-fw": "test",
+        "root-level-3": "test",
+        "root-level-4": "test",
+        "root-level-5": "test",
         "level-0": "override",
         "level-1": "test",
+        "level-6": "test",
         "example-level-2": "test"
     }
 }
