@@ -1,6 +1,7 @@
 ## Changelog
 
-### 7.15.1 (2022-04-01)
+### 7.16.0 (2022-04-01)
+* [Feature] Example configs can now be defined as level-0.example.config and work the same as examples in /example folder
 * [Bug] Veeva shared resources now generate a dummy index.html & thumb.png
 * [Misc] Test suite for veeva shared resources
 * [Docs] Added svgSprite migration guide
