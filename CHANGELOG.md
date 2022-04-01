@@ -1,5 +1,11 @@
 ## Changelog
 
+### 7.15.1 (2022-04-01)
+* [Bug] Veeva shared resources now generate a dummy index.html & thumb.png
+* [Misc] Test suite for veeva shared resources
+* [Docs] Added svgSprite migration guide
+* [Docs] Added troubleshooting for Docker Composer v2
+
 ### 7.15.0 (2022-03-21)
 * [Change] Office365 credentials are now used instead of gmail for auto deployment emails
 * [Change] Artifacts attached to emails are now uploaded to egynte rather than the internal eSource server
