@@ -361,12 +361,28 @@ This file can be constructed from multiple config files using a deep merge. This
 The files are merged in order of the following locations, afterwhich they are merged alphabetically in the location itself.
 
 ```bash
+'*.json',
 '_Build/config/*.json',
-'_Build/config/example/*.json',
 '_Build/*.json'
 ```
 
-Any json file found in `_Build/config/example/` will be used only if there isn't a file with the same name in `_Build/config/`.
+Example configs found in either the _Build/config/example folder or specified in the filename i.e. fw.example.json will only be used if the config with the same name doesn't exist.
+
+```bash
+# Example 1
+fw.json
+fw.example.json # will be ignored
+
+# Example 2
+level-0.json
+level-0.example.json # will be ignored
+level-1.example.json # will be loaded
+
+# Example 3
+_Build/config/level-0.json
+_Build/config/example/level-0.json # will be ignored
+_Build/config/example/level-1.json # will be loaded
+```
 
 > For backwards compatability `_Build/content.json` and `_Build/example/content.json` work the same as they always did but these should be replaced with `_Build/instance.json` and `_Build/config/example/*.json` respectively.
 
