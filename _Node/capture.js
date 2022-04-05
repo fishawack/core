@@ -1,10 +1,12 @@
 'use strict';
 
 var fs = require('fs-extra');
+const path = require('path');
 
 fs.mkdirpSync(`.tmp/screenshots/`);
 
 var custom = {};
+var ignoreDirs = ['.hidden','css','js','media'];
 
 // Load custom capture code in level-0 folder if exists
 if(fs.existsSync(process.cwd() + '/_Node/level-0/capture.js')){
@@ -38,7 +40,6 @@ var capture = {
                 if(custom.size){
                     custom.size(capture);
                 }
-
                 for(var i = 0; i < capture.page.array.length; i++){
                     capture.page.call(i);
                 }
@@ -65,7 +66,6 @@ var capture = {
             capture.page.index = index;
             capture.page.name = capture.page.array[index];
             capture.page.slug = slugify(capture.page.name);
-
             var full = capture.page.array[index].split('#')[0] || '';
             capture.page.hash = capture.page.array[index].split('#')[1] || '/';
 
@@ -127,6 +127,10 @@ var capture = {
 capture.size.array = browser.desiredCapabilities.sizes;
 capture.page.array = browser.desiredCapabilities.pages;
 
+if(capture.page.array.length === 0){
+    capture.page.array = findHTML('./_Output');
+}
+
 capture.size.call();
 
 function slugify(text) {
@@ -136,4 +140,21 @@ function slugify(text) {
         .replace(/\-\-+/g, '-')         // Replace multiple - with single -
         .replace(/^-+/, '')             // Trim - from start of text
         .replace(/-+$/, '');            // Trim - from end of text
+}
+
+function findHTML(dir, parent = '/') {
+    var html = [];
+    var pages = fs.readdirSync(dir, {withFileTypes: true});
+    pages.forEach(file => {
+        if(ignoreDirs.indexOf(file.name) === -1)
+        {
+            if(path.extname(file.name) === '.html' && !file.isSymbolicLink()){
+                html.push(parent + file.name);
+            } else if(path.extname(file.name) === '')
+            {
+                html = html.concat(findHTML(dir+parent+file.name,parent+file.name+'/'));
+            }
+        }
+    });
+    return html;
 }

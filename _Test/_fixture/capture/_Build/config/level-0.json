@@ -1,0 +1,323 @@
+{
+    "attributes": {
+	    "title": "<%= repo.name %>",
+	    "googleTrackingID": null,
+	    "root": "_Output",
+	    "modernizr": [
+	        "flexbox",
+	        "csscalc"
+		],
+		"content": [
+			{
+                "lftp": "ftp-fishawack.egnyte.com",
+                "location": "Shared/FW/Knutsford/Digital/Auto-Content/test-shared/"
+            },
+			{
+                "ftps": "ftp-fishawack.egnyte.com",
+                "location": "Shared/FW/Knutsford/Digital/Auto-Content/test-shared/"
+            },
+			{
+                "url": "https://stream-api.fishawack.solutions",
+                "endpoints": [
+                    "string",
+                    "chunk",
+                    "media"
+                ]
+            },
+			{
+				"url": "https://stream-api.fishawack.solutions",
+                "ext": "txt",
+                "endpoints": [
+                    "string",
+                    "chunk",
+                    "media"
+                ]
+			},
+			{
+				"url": "https://stream-api.fishawack.solutions",
+				"bundle": true,
+                "endpoints": [
+                    "string",
+                    "chunk",
+                    "media"
+                ]
+			},
+			{
+				"url": "https://stream-api.fishawack.solutions",
+				"saveTo": "_Build/content/custom",
+                "endpoints": [
+                    "string",
+                    "chunk",
+                    "media"
+                ]
+			},
+			{
+				"url": "https://staging.boilerplate-wordpress.fishawack.solutions/",
+                "endpoints": [
+                    "posts",
+                    "media"
+                ]
+			},
+			{
+				"url": "https://staging.boilerplate-wordpress.fishawack.solutions",
+				"api": "wp-json/wp/v2",
+                "endpoints": [
+                    "posts",
+                    "media"
+                ]
+			},
+			{
+				"url": "http://172.16.8.21:8887",
+				"api": "/sonja/json/",
+				"find": "^/images/image-library",
+				"endpoints": [
+					"statements",
+					"search",
+					"sitemap",
+					"images",
+					"imagelibrary",
+					"coremessages",
+					"comparisontables",
+					"resources",
+					"terminologyguide",
+					"tags",
+					"resourcetags"
+				]
+			},
+			{
+				"url": "http://neptune-benlysta.fishawack.staging",
+				"api": "/json/",
+				"find": null,
+				"endpoints": [
+					"publications",
+					"congresses",
+					"journals",
+					"studies",
+					"categories",
+					"tags",
+					"doc-types",
+					"global"
+				]
+			}
+		],
+		"targets": {
+			"package": {
+				"app": true,
+				"handover": true,
+				"veeva": {
+					"sharedResource": true
+				},
+				"cegedim": true,
+				"vablet": {
+					"disableBounce": true,
+					"scaleToFitPage": true,
+					"hideToolBar": true,
+					"disableStatusBar": true,
+					"useTransparentBar": true
+				}
+			},
+			"master": {
+				"deploy": {
+					"url": "https://demo.fishawack.solutions",
+					"location": "/home/fishawack/demo.fishawack.solutions/",
+					"ssh": "vidaHost-fishawack",
+					"subDir": "core-test-suite-deploy"
+				}
+			},
+			"lftp": {
+				"deploy": {
+					"url": "https://demo.fishawack.solutions",
+					"location": "/home/fishawack/demo.fishawack.solutions/",
+					"lftp": "vidaHost-fishawack",
+					"subDir": "core-test-suite-deploy"
+				}
+			},
+			"watertight": {
+				"deploy": {
+					"url": "https://demo.fishawack.solutions",
+					"location": "/home/fishawack/demo.fishawack.solutions/",
+					"lftp": "vidaHost-fishawack",
+					"subDir": "core-test-suite-deploy",
+					"loginType": "bootstrap",
+					"users": [
+						{
+							"username": "<%= repo.name %>User",
+							"group": "admin",
+							"validTo": "",
+							"password": "23Blue01"
+						}
+					]
+				}
+			},
+			"root": {
+				"deploy": {
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "/home/fishawack/core-test-suite-deploy.fishawack.solutions",
+					"lftp": "vidaHost-fishawack",
+					"loginType": "bootstrap",
+					"users": [
+						{
+							"username": "<%= repo.name %>User",
+							"group": "admin",
+							"validTo": "",
+							"password": "23Blue01"
+						}
+					]
+				}
+			},
+			"trailing": {
+				"deploy": {
+					"url": "https://demo.fishawack.solutions/core-test-suite-deploy/",
+					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
+					"lftp": "vidaHost-fishawack"
+				}
+			},
+			"commands": {
+				"deploy": {
+					"url": "https://demo.fishawack.solutions/core-test-suite-deploy",
+					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
+					"ssh": "vidaHost-fishawack",
+					"commands": {
+						"local": {
+							"pre": [
+								"touch core-test-suite-file.txt"
+							],
+							"post": [
+								"rm core-test-suite-file.txt"
+							]
+						},
+						"server": {
+							"pre": [
+								"touch core-test-suite-file.txt"
+							],
+							"post": [
+								"rm core-test-suite-file.txt"
+							]
+						}
+					}
+				}
+			},
+			"commands-subdir": {
+				"deploy": {
+					"url": "https://demo.fishawack.solutions",
+					"location": "/home/fishawack/demo.fishawack.solutions/",
+					"ssh": "vidaHost-fishawack",
+					"subDir": "core-test-suite-deploy",
+					"commands": {
+						"local": {
+							"pre": [
+								"touch core-test-suite-file.txt"
+							],
+							"post": [
+								"rm core-test-suite-file.txt"
+							]
+						},
+						"server": {
+							"pre": [
+								"touch core-test-suite-file.txt"
+							],
+							"post": [
+								"rm core-test-suite-file.txt"
+							]
+						}
+					}
+				}
+			},
+			"server-doesnt-exist": {
+				"deploy": {
+					"url": "https://demo.fishawack.solutions/core-test-suite-deploy",
+					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
+					"ssh": "doesntexist"
+				}
+			},
+			"aws-eb": {
+				"deploy": {
+					"url": "http://sanoficongress-env.eba-fmswpn59.us-east-1.elasticbeanstalk.com",
+					"location": "/var/www/html",
+                    "aws-eb": "Sanoficongress-env",
+					"commands": {
+						"server": {
+							"pre": [
+								"ls -la"
+							]
+						}
+					}
+				}
+			},
+			"deploy-custom-copy": {
+				"deploy": {
+					"paths": [
+						"_Node",
+						"package.json",
+						"_Build/config/level-0.json",
+						{
+							"src": "public",
+							"ignore": [
+								"public/ignore.html", 
+								"public/ignore"
+							]
+						},
+						{
+							"src": "public/ignore"
+						},
+						{
+							"src": "public",
+							"dest": "renamed"
+						},
+						{
+							"src": "public",
+							"dest": "nested/renamed"
+						},
+						{
+							"src": "public/ignore.html"
+						},
+						{
+							"src": "public/ignore.html",
+							"dest": "renamed.html"
+						},
+						{
+							"src": "public/ignore.html",
+							"dest": "nested/renamed.html"
+						},
+						{
+							"src": "public/ignore.html",
+							"dest": "assumed"
+						},
+						{
+							"src": "public",
+							"dest": "folder.html"
+						},
+						{
+							"src": "public/about.html",
+							"ignore": ["public/about.html"],
+							"dest": "test.html"
+						},
+						{
+							"src": "_Build",
+							"ignore": ["_Build"],
+							"dest": "test"
+						}
+					]
+				}
+			}
+		},
+	    "template": {},
+	    "toggle": {},
+		"capture": {
+			"browsers": [
+				"chrome",
+				"firefox"
+			],
+			"sizes": [
+				[1080, 608],
+				[1024, 768],
+				[375, 667],
+				[667, 375]
+			],
+			"pages": [
+				"/index.html",
+				"/about.html"
+			]
+		}
+	}
+}
