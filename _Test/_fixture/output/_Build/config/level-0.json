@@ -299,6 +299,11 @@
 						}
 					]
 				}
+			},
+			"devServer-https": {
+				"devServer": {
+					"https": true
+				}
 			}
 		},
 	    "template": {},
