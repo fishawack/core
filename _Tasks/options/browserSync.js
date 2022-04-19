@@ -14,6 +14,7 @@ module.exports = {
             reloadOnRestart: false,
             ghostMode: true,
             single: true,
+            https: contentJson.attributes.devServer && contentJson.attributes.devServer.https || false,
             server: {
                 baseDir: "<%= root %>"
             },
