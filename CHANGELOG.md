@@ -1,5 +1,9 @@
 ## Changelog
 
+### 7.17.0 (2022-04-19)
+* [Feature] Can now specifiy the boolean https in devServer options in fw configs
+* [Change] Content pulls are now done with internal lftp module - the only difference is it is now non destructive (missing -e flag)
+
 ### 7.16.0 (2022-04-01)
 * [Feature] Example configs can now be defined as level-0.example.config and work the same as examples in /example folder
 * [Bug] Veeva shared resources now generate a dummy index.html & thumb.png
