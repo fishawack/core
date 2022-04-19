@@ -7,7 +7,8 @@ module.exports = (grunt) => {
             return;
         }
 
-        var fs = require('fs-extra');
+        const fs = require('fs-extra');
+        const lftp = require('./helpers/lftp.js');
 
         function protocol(d, i){
             var saveTo = (d.saveTo) ? d.saveTo : `${config.src}/content/content-${i}`;
@@ -24,7 +25,15 @@ module.exports = (grunt) => {
 
                 return `scp -r <%= targets["${d.ssh}"].username %>@<%= targets["${d.ssh}"].host %>:${d.location} ${saveTo}`;
             } else if(d.lftp){
-                return `lftp -e 'set sftp:auto-confirm yes; mirror ${d.location} ${saveTo} -p -e --parallel=10; exit;' -u '<%= targets.ftp["${d.lftp}"].username %>','<%= targets.ftp["${d.lftp}"].password %>' sftp://${d.lftp}`;
+                lftp.pull(
+                    saveTo,
+                    d.location,
+                    config.targets.ftp[d.lftp].username,
+                    config.targets.ftp[d.lftp].password,
+                    d.lftp
+                );
+
+                return 'echo ""';
             }
         };
 
