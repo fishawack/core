@@ -9,12 +9,12 @@ const mirror = command => `set sftp:auto-confirm yes; mirror ${command} --exclud
 
 module.exports = {
     pull(local, server, username, password, host){
-        command(mirror(`${server} ${local}`), username, password, host);
+        command(mirror(`"${server}" "${local}"`), username, password, host);
     },
     push(local, server, username, password, host){
-        command(mirror(`-R ${local} ${server}`), username, password, host);
+        command(mirror(`-R "${local}" "${server}"`), username, password, host);
     },
     remove(server, username, password, host){
-        command(`rm ${server}`, username, password, host);
+        command(`rm "${server}"`, username, password, host);
     }
 };

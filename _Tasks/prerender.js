@@ -43,7 +43,15 @@ module.exports = (grunt) => {
 
         // Initialize is separate from the constructor for flexibility of integration with build systems.
         prerenderer.initialize()
-            .then(() => prerenderer.renderRoutes(routes))
+            .then(async () => {
+                let arr = [];
+                for(var i = 0; i < routes.length; i++){
+                    grunt.log.warn(`Rendering ${routes[i]}`);
+                    arr = arr.concat(await prerenderer.renderRoutes([routes[i]]));
+
+                }
+                return arr;
+            })
             .then(renderedRoutes => {
                 // renderedRoutes is an array of objects in the format:
                 // {
@@ -58,7 +66,7 @@ module.exports = (grunt) => {
                     mkdirp.sync(outputDir);
                     fs.writeFileSync(outputFile, html);
 
-                    grunt.log.ok(renderedRoute.route);
+                    grunt.log.ok(`Rendered ${renderedRoute.route}`);
                 });
 
                 // Shut down the file server and renderer.

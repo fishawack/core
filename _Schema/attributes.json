@@ -39,6 +39,15 @@
 				"cms": {
 					"type": "string"
 				},
+				"devServer": {
+					"description": "Configured the local development webserver settings",
+					"type": ["object", "null"],
+					"properties": {
+						"https": {
+							"type": "boolean"
+						}
+					}
+				},
 	            "electron": {
 	            	"type": ["object", "boolean"],
 					"properties": {
