@@ -1,12 +1,12 @@
 'use strict';
 
 var fs = require('fs-extra');
+const glob = require('glob');
 const path = require('path');
 
 fs.mkdirpSync(`.tmp/screenshots/`);
 
 var custom = {};
-var ignoreDirs = ['.hidden','css','js','media'];
 
 // Load custom capture code in level-0 folder if exists
 if(fs.existsSync(process.cwd() + '/_Node/level-0/capture.js')){
@@ -128,9 +128,12 @@ capture.size.array = browser.desiredCapabilities.sizes;
 capture.page.array = browser.desiredCapabilities.pages;
 
 if(capture.page.array.length === 0){
-    capture.page.array = findHTML('./_Output');
+    capture.page.array = glob.sync(`${browser.desiredCapabilities.output}/**/*.html`);
+    for(var x=0; x < capture.page.array.length; x++) 
+    {
+        capture.page.array[x] = capture.page.array[x].replace(browser.desiredCapabilities.output,'');
+    }
 }
-
 capture.size.call();
 
 function slugify(text) {
@@ -140,21 +143,4 @@ function slugify(text) {
         .replace(/\-\-+/g, '-')         // Replace multiple - with single -
         .replace(/^-+/, '')             // Trim - from start of text
         .replace(/-+$/, '');            // Trim - from end of text
-}
-
-function findHTML(dir, parent = '/') {
-    var html = [];
-    var pages = fs.readdirSync(dir, {withFileTypes: true});
-    pages.forEach(file => {
-        if(ignoreDirs.indexOf(file.name) === -1)
-        {
-            if(path.extname(file.name) === '.html' && !file.isSymbolicLink()){
-                html.push(parent + file.name);
-            } else if(path.extname(file.name) === '')
-            {
-                html = html.concat(findHTML(dir+parent+file.name,parent+file.name+'/'));
-            }
-        }
-    });
-    return html;
 }
