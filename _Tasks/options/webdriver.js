@@ -1,3 +1,5 @@
+const { config } = require("yargs");
+
 module.exports = {
     options: {
         configFile: '<%= configPath %>wdio.conf.js',
