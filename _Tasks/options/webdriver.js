@@ -1,3 +1,5 @@
+const { config } = require("yargs");
+
 module.exports = {
     options: {
         configFile: '<%= configPath %>wdio.conf.js',
@@ -10,7 +12,8 @@ module.exports = {
                     wait: captureEnv().wait,
                     url: captureEnv().url,
                     sizes: captureEnv().sizes,
-                    pages: captureEnv().pages
+                    pages: captureEnv().pages,
+                    output: contentJson.attributes.root
                 };
                 
                 if(size[0] === 375 && size[1] === 667){
