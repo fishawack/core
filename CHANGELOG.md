@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.19.0 (2022-05-27)
+* [Feature] Can now deploy to AWS s3
+
 ### 7.18.0 (2022-04-26)
 * [Change] Prerender now async awaits each render for better memory consumption and logging
 * [Misc] Test suite for prerender
