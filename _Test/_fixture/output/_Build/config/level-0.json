@@ -230,6 +230,34 @@
 					"ssh": "doesntexist"
 				}
 			},
+			"aws-s3": {
+                "deploy": {
+                    "url": "http://core-test-suite-deploy.s3-website-us-east-1.amazonaws.com",
+                    "location": "core-test-suite-deploy",
+                    "aws-s3": "fishawack"
+                }
+            },
+            "aws-s3-nested": {
+                "deploy": {
+                    "url": "http://core-test-suite-deploy.s3-website-us-east-1.amazonaws.com/nested",
+                    "location": "core-test-suite-deploy/nested/",
+                    "aws-s3": "fishawack"
+                }
+            },
+			"aws-s3-doesnt-exist": {
+                "deploy": {
+                    "url": "http://core-test-suite-deploy.s3-website-us-east-1.amazonaws.com",
+                    "location": "core-test-suite-deploy",
+                    "aws-s3": "doesntexist"
+                }
+            },
+			"aws-s3-bucket-doesnt-exist": {
+				"deploy": {
+                    "url": "http://core-test-suite-deploy.s3-website-us-east-1.amazonaws.com",
+                    "location": "core-test-suite-deploy-doesnt-exist",
+                    "aws-s3": "fishawack"
+                }
+			},
 			"aws-eb": {
 				"deploy": {
 					"url": "http://sanoficongress-env.eba-fmswpn59.us-east-1.elasticbeanstalk.com",

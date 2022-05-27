@@ -18,6 +18,13 @@ describe('deploy:files', () => {
     // it('Should deploy the master target to the server via aws-eb cli', () => {
     //     execSync(`grunt package compress:deploy deploy:files --branch=aws-eb --mocha=output`, opts);
     // });
+    describe('aws-s3', () => {
+        it('Should deploy the target to the server via aws-cli', () => deploy('aws-s3', 'http://core-test-suite-deploy.s3-website-us-east-1.amazonaws.com'));
+        it('Should deploy the nested target to the server via aws-cli', () => deploy('aws-s3-nested', 'http://core-test-suite-deploy.s3-website-us-east-1.amazonaws.com/nested/'));
+        it('Should not deploy to when profile doesnt exist', () => expect(() => execSync(`grunt deploy:files --branch=aws-s3-doesnt-exist --mocha=output`, opts)).to.throw());
+        it('Should not deploy to when bucket doesnt exist', () => expect(() => execSync(`grunt deploy:files --branch=aws-s3-bucket-doesnt-exist --mocha=output`, opts)).to.throw());
+    });
+
     it('Should deploy the master target to the server via scp', () => deploy('master'));
     it('Should deploy a watertight wrapped site to the server', () => deploy('watertight'));
     it('Should deploy the lftp target to the server via lftp', () => deploy('lftp'));

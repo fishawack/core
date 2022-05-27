@@ -1,3 +1,5 @@
+const { execSync } = require('child_process');
+
 module.exports = function(grunt, hasBase) {
 	this._ = require('lodash');
 	var fs = require('fs');
@@ -79,8 +81,14 @@ module.exports = function(grunt, hasBase) {
 		this.deployValid = () => {
 			if(!deployLocation){
 				grunt.log.warn('No deployment location configured for ' + deployBranch);
-			} else if(deployEnv['aws-eb']){
-				return true; // aws-eb creds are configured elsewhere from the core
+			} else if(deployEnv['aws-eb'] || deployEnv['aws-s3']){
+				let profile = deployEnv['aws-eb'] || deployEnv['aws-s3'];
+				
+				if(!execSync(`aws configure list-profiles`, {encoding: 'utf8'}).split('\n').includes(profile)){
+					grunt.fatal(new Error('No aws credentials found for ' + profile));
+				}
+
+				return true; // aws creds are configured elsewhere from the core
 			} else if(!deployCred.username || !deployCred.host){
 				grunt.fatal(new Error('No deployment credentials found for ' + deployBranch));
 			} else if(deployEnv.ftp && deployEnv.loginType){
