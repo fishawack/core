@@ -1,0 +1,22 @@
+{
+    "attributes": {
+	    "title": "<%= repo.name %>",
+		"targets": {
+			"aws-s3-with-cloudfront": {
+				"deploy": {
+                    "url": "https://d3sa39g5u2ao33.cloudfront.net",
+                    "location": "core-test-suite-deploy",
+                    "aws-s3": "fishawack",
+					"aws-cloudfront": "EAJX8J2A6JHLP"
+                }
+			},
+			"aws-s3-with-cloudfront-without-invalidation": {
+				"deploy": {
+                    "url": "https://d3sa39g5u2ao33.cloudfront.net",
+                    "location": "core-test-suite-deploy",
+                    "aws-s3": "fishawack"
+                }
+			}
+		}
+	}
+}

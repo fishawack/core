@@ -55,9 +55,42 @@ describe('deploy:server', () => {
         });
     });
 
-    describe('s3', () => {
+    describe('aws-s3', () => {
         it('deploy:server commands should not run for s3 deployments', async () => {
             expect(execSync(`grunt deploy:server:pre --branch=aws-s3 --mocha=output`, {encoding: 'utf8'})).to.contain('not supported');
         });
+    });
+
+    describe('aws-cloudfront', () => {
+        it('Should invalidate cloudfront distribution', async () => {
+            let branch = 'aws-s3-with-cloudfront';
+            let url ='https://d3sa39g5u2ao33.cloudfront.net';
+
+            execSync(`grunt package deploy:files --branch=${branch} --mocha=output`, opts);
+            execSync(`grunt deploy:server:post --branch=${branch} --mocha=output`, opts);
+
+            let page = await fetch(url);
+            let html = await page.text();
+
+            expect(html).to.contain('Hello');
+
+            execSync(`grunt package deploy:files --branch=${branch} --mocha=cache`, opts);
+
+            page = await fetch(url);
+            html = await page.text();
+
+            expect(html).to.contain('Hello');
+
+            execSync(`grunt deploy:server:post --branch=${branch} --mocha=cache`, opts);
+
+            page = await fetch(url);
+            html = await page.text();
+
+            expect(html).to.contain('Goodbye');
+
+            execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
+        });
+
+        it('Should not invalidate cloudfront when invalid id given', () => expect(() => execSync(`grunt deploy:server:post --branch=aws-s3-with-cloudfront-doesnt-exist --mocha=output`, opts)).to.throw());
     });
 });

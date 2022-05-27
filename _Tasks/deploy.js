@@ -76,6 +76,27 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('deploy:server:post', () => {
+        if(deployEnv['aws-cloudfront']){
+            const execSync = require('child_process').execSync;
+            
+            let timestamp = new Date().getTime();
+            let response;
+            
+            grunt.log.warn(`Invalidating cloudfront cache...`);
+
+            do{
+                response = JSON.parse(execSync(`aws cloudfront create-invalidation --distribution-id "${deployEnv['aws-cloudfront']}" --invalidation-batch "Paths={Quantity=1,Items='/*'},CallerReference='${timestamp}'" --profile "${deployEnv['aws-s3']}"`, {encoding: 'utf8'}));
+
+                grunt.log.warn(`Cloudfront cache invalidation: ${response.Invalidation.Status}`);
+
+                if(response.Invalidation.Status === "InProgress"){
+                    execSync('sleep 20');
+                }
+            } while(response.Invalidation.Status === "InProgress");
+
+            grunt.log.ok(`Cloudfront ${response.Invalidation.Id}: invalidated successfully`);
+        }
+        
         if(deployEnv['aws-s3'] || deployEnv['ftp']){
             grunt.log.warn(`Server commands not supported for the following protocols: s3/ftp`);
             return;

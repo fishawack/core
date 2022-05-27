@@ -33,6 +33,10 @@
 					"description": "The aws IAM profile that should be used when connected to s3. The profile should be found in the config file located in the .aws folder",
 					"type": ["string", "null"]
 				},
+				"aws-cloudfront": {
+					"description": "The aws cloudfront distribution id",
+					"type": ["string", "null"]
+				},
 				"aws-eb": {
 					"description": "The aws eb environment that should be deployed to. The profile will be deduced from the .elasticbeanstalk/config file and located in the .aws folder",
 					"type": ["string", "null"]

@@ -258,6 +258,22 @@
                     "aws-s3": "fishawack"
                 }
 			},
+			"aws-s3-with-cloudfront": {
+				"deploy": {
+                    "url": "https://d3sa39g5u2ao33.cloudfront.net",
+                    "location": "core-test-suite-deploy",
+                    "aws-s3": "fishawack",
+					"aws-cloudfront": "EAJX8J2A6JHLP"
+                }
+			},
+			"aws-s3-with-cloudfront-doesnt-exist": {
+				"deploy": {
+                    "url": "https://d3sa39g5u2ao33.cloudfront.net",
+                    "location": "core-test-suite-deploy",
+                    "aws-s3": "fishawack",
+					"aws-cloudfront": "doesntexist"
+                }
+			},
 			"aws-eb": {
 				"deploy": {
 					"url": "http://sanoficongress-env.eba-fmswpn59.us-east-1.elasticbeanstalk.com",
