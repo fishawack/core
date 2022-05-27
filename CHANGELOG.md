@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.20.0 (2022-05-27)
+* [Feature] Can now invalidate AWS cloudfront distributions
+
 ### 7.19.0 (2022-05-27)
 * [Feature] Can now deploy to AWS s3
 
