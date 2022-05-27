@@ -88,7 +88,7 @@ module.exports = function(grunt) {
         } else if(deployEnv['aws-eb']){
             execSync(`eb deploy ${deployEnv['aws-eb']}`, opts)
         } else if(deployEnv['aws-s3']){
-            execSync(`aws s3 sync "${dest}" "s3://${deployLocation}" --only-show-errors --profile "${deployEnv['aws-s3']}"`, opts)
+            execSync(`aws s3 sync "${dest}" "s3://${deployLocation}" --delete --only-show-errors --profile "${deployEnv['aws-s3']}"`, opts)
         }
 
         grunt.log.ok(`Deployed to: ${deployLocation}`);
