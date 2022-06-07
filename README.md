@@ -1486,6 +1486,25 @@ module.exports = () => ['/', '/about', '/contact'];
 module.exports = () => require('routes.json').map(route => route.path);
 ```
 
+Lastly you'll need to ensure the app id is on the root vue component as well as the root html component that vue uses to mount. This is because after the prerendering has happened the root html element no longer exists, but to successfully hydrate your prerendered views with the dynamic vue pages it still needs to latch onto the same id. In the boilerplate repositories this is done like so.
+
+```handlebars
+<!-- _Build/html/index.html -->
+{{#> base}}
+	<div
+        id="app"
+        data-version="{{version}}"
+        data-title="{{attributes.title}}"
+    ></div>
+{{/base}}
+
+<!-- _Build/vue/app/app.vue -->
+<template>
+	<main id="app">
+    </main>
+</template>
+```
+
 #### Client-side flag
 
 Often times when prerendering they'll be certain scenarios where you don't want something to run during the prerender step. An example of this is a GTM tag or a OneTrust code snippet that onload will do a bunch of changes to your page markup. If you run this code during the prerender step and then the code runs again when the page itself loads then you're going to hit a bunch of client side issues that may be difficult to debug.
