@@ -1660,6 +1660,14 @@ As of [core version 7.4.0](#core-changelog-740) you can now specify a list of no
 }
 ```
 
+Unfortunately if you can't easily pinpoint a dependency that was recently installed that could be causing this problem the fix is to `fw connect` into your docker container and manually run the following command.
+
+```bash
+$grunt concat:dist webpack:dist uglify:dist
+```
+
+This should then give you the same failure locally allowing you to start mass removing libraries in an attempt to track down which import/require is actually causing the problem. Make sure you're fully git committed before you start removing code!
+
 
 ### Postcss static img
 
