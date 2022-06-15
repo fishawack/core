@@ -229,7 +229,7 @@ module.exports = function(grunt, hasBase) {
 	this.captureEnv = function(){
 		return {
 	        browsers: contentJson.attributes.capture && contentJson.attributes.capture.browsers || ['chrome'],
-	        pages: contentJson.attributes.capture && contentJson.attributes.capture.pages || [],
+	        pages: contentJson.attributes.capture && contentJson.attributes.capture.pages || require('glob').sync(`**/*.html`, {cwd: config.root}).map(d => `/${d}`),
 			sizes: contentJson.attributes.capture && contentJson.attributes.capture.sizes || [[1080, 608]],
 			url: contentJson.attributes.capture && contentJson.attributes.capture.url || 'http://localhost:9001',
 			wait: contentJson.attributes.capture && contentJson.attributes.capture.wait || '.loaded'

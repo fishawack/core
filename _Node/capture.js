@@ -1,7 +1,6 @@
 'use strict';
 
 var fs = require('fs-extra');
-const glob = require('glob');
 const path = require('path');
 
 fs.mkdirpSync(`.tmp/screenshots/`);
@@ -127,13 +126,6 @@ var capture = {
 capture.size.array = browser.desiredCapabilities.sizes;
 capture.page.array = browser.desiredCapabilities.pages;
 
-if(capture.page.array.length === 0){
-    capture.page.array = glob.sync(`${browser.desiredCapabilities.output}/**/*.html`);
-    for(var x=0; x < capture.page.array.length; x++) 
-    {
-        capture.page.array[x] = capture.page.array[x].replace(browser.desiredCapabilities.output,'');
-    }
-}
 capture.size.call();
 
 function slugify(text) {
