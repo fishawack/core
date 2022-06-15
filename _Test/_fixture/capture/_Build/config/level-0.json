@@ -1,19 +1,20 @@
 {
     "attributes": {
 	    "title": "<%= repo.name %>",
-		"capture": {
-			"browsers": [
-				"chrome",
-				"firefox"
-			],
-			"sizes": [
-				[1080, 608],
-				[1024, 768],
-				[375, 667],
-				[667, 375]
-			],
-			"pages": [
-			]
+		"targets": {
+			"options": {
+				"capture": {
+					"browsers": [
+						"firefox"
+					],
+					"sizes": [
+						[1024, 768]
+					],
+					"pages": [
+						"/about.html"
+					]
+				}
+			}
 		}
 	}
 }
