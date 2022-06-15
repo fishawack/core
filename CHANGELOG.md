@@ -1,5 +1,11 @@
 ## Changelog
 
+### 7.21.0 (2022-05-27)
+* [Feature] Twig/Blade files are now processed during the purgecss task
+* [Feature] Capturing will now glob all html files found in the root folder if no explicit pages property is passed
+* [Docs] Uglify troubleshooting
+* [Docs] Prerendering issues with app id
+
 ### 7.20.0 (2022-05-27)
 * [Feature] Can now invalidate AWS cloudfront distributions
 
