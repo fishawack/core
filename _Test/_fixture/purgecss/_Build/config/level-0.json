@@ -10,12 +10,9 @@
 	    "template": {},
 	    "toggle": {},
 		"targets": {
-			"testing": {
+			"postcss": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions",
-					"location": "/home/fishawack/demo.fishawack.solutions/",
-					"lftp": "vidaHost-fishawack",
-					"subDir": "core-test-suite-deploy"
+					"location": "test"
 				}
 			}
 		}

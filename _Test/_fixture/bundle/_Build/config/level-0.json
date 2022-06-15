@@ -8,18 +8,6 @@
 	        "csscalc"
 		],
 	    "template": {},
-	    "toggle": {},
-		"targets": {
-			"postcss": {
-				"deploy": {
-					"location": "test"
-				}
-			}
-		},
-		"deploy": {
-			"commands": {
-				
-			}
-		}
+	    "toggle": {}
 	}
 }

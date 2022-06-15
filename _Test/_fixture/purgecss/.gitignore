@@ -8,7 +8,7 @@ _Pdfs/
 coverage/
 **/generated/**/*
 _Build/**/pulled/**/*
-_Output
+_Output/css
 _Login
 _Packages
 _Build/content
