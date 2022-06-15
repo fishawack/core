@@ -11,7 +11,7 @@ module.exports = {
                     url: captureEnv().url,
                     sizes: captureEnv().sizes,
                     pages: captureEnv().pages,
-                    output: contentJson.attributes.root
+                    output: config.root
                 };
                 
                 if(size[0] === 375 && size[1] === 667){
