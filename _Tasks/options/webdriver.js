@@ -10,7 +10,8 @@ module.exports = {
                     wait: captureEnv().wait,
                     url: captureEnv().url,
                     sizes: captureEnv().sizes,
-                    pages: captureEnv().pages
+                    pages: captureEnv().pages,
+                    output: config.root
                 };
                 
                 if(size[0] === 375 && size[1] === 667){

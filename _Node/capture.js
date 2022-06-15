@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs-extra');
+const path = require('path');
 
 fs.mkdirpSync(`.tmp/screenshots/`);
 
@@ -38,7 +39,6 @@ var capture = {
                 if(custom.size){
                     custom.size(capture);
                 }
-
                 for(var i = 0; i < capture.page.array.length; i++){
                     capture.page.call(i);
                 }
@@ -65,7 +65,6 @@ var capture = {
             capture.page.index = index;
             capture.page.name = capture.page.array[index];
             capture.page.slug = slugify(capture.page.name);
-
             var full = capture.page.array[index].split('#')[0] || '';
             capture.page.hash = capture.page.array[index].split('#')[1] || '/';
 
