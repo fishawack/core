@@ -3,10 +3,6 @@
   color: red;
 }
 
-.class-2 {
-  color: red;
-}
-
 .class-3 {
   color: red;
 }
@@ -20,5 +16,13 @@
 }
 
 .class-6 {
+  color: red;
+}
+
+.blade-class {
+  color: red;
+}
+
+.twig-class {
   color: red;
 }
