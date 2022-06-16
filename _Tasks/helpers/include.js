@@ -1,11 +1,11 @@
-module.exports = function(grunt, hasBase) {
+module.exports = function(grunt, hasBase, fixture) {
 	this._ = require('lodash');
 	var fs = require('fs');
 	this.path = require('path');
 	this.grunt = grunt;
 	this.config = null;
 	this.reset = null; // Used to reset config back to defaults after a task has overrideen them locally
-	var mocha = require('yargs').argv.mocha || false; // True when core mocha tests running
+	var mocha = fixture || require('yargs').argv.mocha || false; // True when core mocha tests running
 
 	// Used in grunt JIT call to load plugins, can be overridden/added to in build folder include.js
 	this.jit = {
