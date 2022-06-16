@@ -2,7 +2,10 @@
 
 ### 7.21.1 (2022-06-16)
 * [Bug] Fix to config.root so that it can be called as a standalone from ui tests
+* [Bug] Reset cwd after exports tests
 * [Misc] Can pass mocha fixture to node api
+* [Misc] Removed tests that require VPN
+* [Misc] Scoped content / pdf tests
 
 ### 7.21.0 (2022-05-27)
 * [Feature] Twig/Blade files are now processed during the purgecss task
