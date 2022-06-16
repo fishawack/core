@@ -1,5 +1,3 @@
-const { execSync } = require('child_process');
-
 module.exports = function(grunt, hasBase) {
 	this._ = require('lodash');
 	var fs = require('fs');
@@ -82,6 +80,7 @@ module.exports = function(grunt, hasBase) {
 			if(!deployLocation){
 				grunt.log.warn('No deployment location configured for ' + deployBranch);
 			} else if(deployEnv['aws-eb'] || deployEnv['aws-s3']){
+				const execSync = require('child_process').execSync;
 				let profile = deployEnv['aws-eb'] || deployEnv['aws-s3'];
 				
 				if(!execSync(`aws configure list-profiles`, {encoding: 'utf8'}).split('\n').includes(profile)){
