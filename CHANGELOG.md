@@ -1,5 +1,9 @@
 ## Changelog
 
+### 7.21.1 (2022-06-16)
+* [Bug] Fix to config.root so that it can be called as a standalone from ui tests
+* [Misc] Can pass mocha fixture to node api
+
 ### 7.21.0 (2022-05-27)
 * [Feature] Twig/Blade files are now processed during the purgecss task
 * [Feature] Capturing will now glob all html files found in the root folder if no explicit pages property is passed
