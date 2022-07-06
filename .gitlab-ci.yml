@@ -1,0 +1,37 @@
+stages:
+  - test
+
+test:
+  stage: test
+  coverage: '/Code coverage: \d+\.\d+/'
+  before_script:
+    # Remove all projects currently on runner
+    - find "/home/gitlab-runner/builds/" ! \( -type d \) -not -path "/*/0/${CI_PROJECT_PATH}/*" -not -path "/*/0/${CI_PROJECT_PATH}.tmp/*" -exec rm -rf {} + 
+    # Remove all empty files now the folders are cleaned out
+    - find "/home/gitlab-runner/builds/" -type d -empty -delete
+    # Custom beforeAll code
+    - if [ -f ./_Scripts/beforeAll.sh ]; then /bin/bash ./_Scripts/beforeAll.sh; fi
+    # Dump all environment variables to a file to be read in
+    - declare -x > env.sh
+    # Remove all env vars except for Gitlab CI predefined vars
+    - sed -r -i '/^declare -x (CI|GITLAB).*="/,/"$/!d' env.sh
+    # Up containers
+    - fw up -d
+  script: 
+    # Install
+    - fw setup
+    # Test
+    - fw run mocha
+  after_script:
+    # Down containers
+    - fw down
+    # Custom afterAll code
+    - if [ -f ./_Scripts/afterAll.sh ]; then /bin/bash ./_Scripts/afterAll.sh; fi
+    # Clean docker
+    - docker volume prune -f
+    # Fully own the project directory
+    - echo $(cat ~/targets/sudo.txt) | sudo -S chown -R gitlab-runner "${CI_PROJECT_DIR}"
+  artifacts:
+    expire_in: 2 hrs
+    paths:
+      - coverage/
