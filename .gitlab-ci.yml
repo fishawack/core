@@ -21,7 +21,7 @@ test:
     # Install
     - fw setup
     # Test
-    - fw run mocha
+    - fw run -d mocha
   after_script:
     # Down containers
     - fw down
