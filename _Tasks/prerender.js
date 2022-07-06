@@ -37,7 +37,11 @@ module.exports = (grunt) => {
                     engine: 'puppeteer'
                 },
 
-                injectProperty: 'prerender'
+                injectProperty: 'prerender',
+
+                args: [
+                    '--single-process'
+                ]
             })
         });
 
