@@ -32,7 +32,7 @@ describe('prerender', () => {
     describe('subdirectory', () => {
         before(() => {
             fs.removeSync(`${__dirname}/_fixture/prerender/_Output`); 
-            fs.copySync(`${__dirname}/_fixture/prerender/_Output-fixture`, `${__dirname}/_fixture/prerender/_Output/subdirectory`);
+            fs.copySync(`${__dirname}/_fixture/prerender/_Output-fixture-subdir`, `${__dirname}/_fixture/prerender/_Output/subdirectory`);
             execSync('grunt prerender --mocha=prerender --branch=subdirectory', opts);
         });
     
