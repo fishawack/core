@@ -21,7 +21,9 @@ module.exports = (grunt) => {
 
         const prerenderer = new Prerenderer({
             // Required - The path to the app to prerender. Should have an index.html and any other needed assets.
-            staticDir: path.join(process.cwd(), dest),
+            staticDir: path.join(process.cwd(), path.dirname(dest).split(path.sep)[0]),
+
+            indexPath: path.join(process.cwd(), dest, 'index.html'),
 
             // The plugin that actually renders the page.
             renderer: new Renderer({
@@ -68,6 +70,7 @@ module.exports = (grunt) => {
                     let html = renderedRoute.html.trim().replace('loaded', 'loading');
                     
                     mkdirp.sync(outputDir);
+
                     fs.writeFileSync(outputFile, html);
 
                     grunt.log.ok(`Rendered ${renderedRoute.route}`);
