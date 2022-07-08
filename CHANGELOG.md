@@ -1,5 +1,10 @@
 ## Changelog
 
+### 7.22.0 (2022-07-08)
+* [Feature] Added new property webRoot that has the path to the base web directory
+* [Bug] Cache bust now correctly resovles links on subdirectories
+* [Bug] Prerender now correctly resolves routes on subdirectories
+
 ### 7.21.1 (2022-06-16)
 * [Bug] Fix to config.root so that it can be called as a standalone from ui tests
 * [Bug] Reset cwd after exports tests
