@@ -1,17 +1,16 @@
 module.exports = {
     options: {
         assets: [
-            'css/*', 
-            'js/*'
+            '**/css/**/*.css', 
+            '**/js/**/*.js'
         ],
-        baseDir: '<%= root %>',
+        baseDir: '<%= webRoot %>',
         deleteOriginals: true,
         separator: '.cache.'
     },
     default: {
         src: [
-            '<%= root %>/**/*.html', 
-            '<%= root %>/html/**/*.html'
+            '<%= root %>/**/*.html'
         ]
     }
 }
