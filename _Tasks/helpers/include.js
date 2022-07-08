@@ -50,8 +50,10 @@ module.exports = function(grunt, hasBase, fixture) {
 			//CONTENT IN CONIFG SO IT CAN BE PASSED TO GRUNT TASKS
 			contentJson: {},
 			configPath: configPath,
-			//ROOT OF SITE WHERE FILES
+			//ROOT OF SITE WHERE FILES - e.g _Output/ or _Output/subdirectory/
 			root: contentJson.attributes.root || '_Output',
+			//THE WEB ROOT - e.g _Output/
+			webRoot: (contentJson.attributes.root || '_Output').split(path.sep)[0],
 			//SRC FILES
 			src: contentJson.attributes.src || '_Build',
 			targets: {},
