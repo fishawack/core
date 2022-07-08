@@ -1,0 +1,10 @@
+{
+    "attributes": {
+	    "title": "<%= repo.name %>",
+		"targets": {
+			"subdirectory": {
+				"root": "_Output/subdirectory/"
+			}
+		}
+	}
+}
