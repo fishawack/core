@@ -81,12 +81,21 @@ module.exports = function(grunt, hasBase, fixture) {
 		this.deployValid = () => {
 			if(!deployLocation){
 				grunt.log.warn('No deployment location configured for ' + deployBranch);
-			} else if(deployEnv['aws-eb'] || deployEnv['aws-s3']){
+			} else if(deployEnv['aws-s3']){
 				const execSync = require('child_process').execSync;
-				let profile = deployEnv['aws-eb'] || deployEnv['aws-s3'];
+				let profile = deployEnv['aws-s3'];
 				
 				if(!execSync(`aws configure list-profiles`, {encoding: 'utf8'}).split('\n').includes(profile)){
 					grunt.fatal(new Error('No aws credentials found for ' + profile));
+				}
+
+				return true; // aws creds are configured elsewhere from the core
+			} else if(deployEnv['aws-eb']){
+				const execSync = require('child_process').execSync;
+				let profile = deployEnv['aws-eb'];
+				
+				if(!execSync(`eb list`, {encoding: 'utf8'}).split('\n').find(d => d.includes(profile))){
+					grunt.fatal(new Error('No eb configuration found for ' + profile));
 				}
 
 				return true; // aws creds are configured elsewhere from the core
