@@ -1,5 +1,10 @@
 ## Changelog
 
+### 7.23.0 (2022-07-08)
+* [Feature] Added new property webRoot that has the path to the base web directory
+* [Bug] Cache bust now correctly resovles links on subdirectories
+* [Bug] Prerender now correctly resolves routes on subdirectories
+
 ### 7.22.0 (2022-07-08)
 * [Feature] Added new property webRoot that has the path to the base web directory
 * [Bug] Cache bust now correctly resovles links on subdirectories
