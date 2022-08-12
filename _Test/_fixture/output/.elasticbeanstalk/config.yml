@@ -1,0 +1,21 @@
+branch-defaults:
+  default:
+    environment: null
+deploy:
+  artifact: _Zips/Deploy.zip
+environment-defaults:
+  Coretestsuitedeployelb-env:
+    branch: null
+    repository: null
+global:
+  application_name: core-test-suite-deploy-elb
+  default_ec2_keyname: null
+  default_platform: PHP 8.1 running on 64bit Amazon Linux 2
+  default_region: us-east-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: fishawack
+  sc: null
+  workspace_type: Application
