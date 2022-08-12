@@ -183,16 +183,9 @@
 			},
 			"aws-eb": {
 				"deploy": {
-					"url": "http://sanoficongress-env.eba-fmswpn59.us-east-1.elasticbeanstalk.com",
+					"url": "http://coretestsuitedeployelb-env.eba-dpscqytf.us-east-1.elasticbeanstalk.com",
 					"location": "/var/www/html",
-                    "aws-eb": "Sanoficongress-env",
-					"commands": {
-						"server": {
-							"pre": [
-								"ls -la"
-							]
-						}
-					}
+                    "aws-eb": "Coretestsuitedeployelb-env"
 				}
 			},
 			"deploy-custom-copy": {
