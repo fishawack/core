@@ -67,12 +67,12 @@ module.exports = function(grunt) {
     grunt.registerTask('deploy:local:post', () => deployEnv.commands && deployEnv.commands.local && deployEnv.commands.local.post && command(deployEnv.commands.local.post.join(' && ')));
 
     grunt.registerTask('deploy:server:pre', () => {
-        if(deployEnv['aws-s3'] || deployEnv['ftp']){
-            grunt.log.warn(`Server commands not supported for the following protocols: s3/ftp`);
+        if(deployEnv['aws-eb'] || deployEnv['aws-s3'] || deployEnv['ftp']){
+            grunt.log.warn(`Server commands not supported for the following protocols: {eb,s3,ftp}`);
             return;
         }
 
-        deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.pre && command(`${deployEnv['aws-eb'] ? `eb ssh -c` : `ssh -tt '${deployCred.username}'@'${deployCred.host}'`} '${[`mkdir -p ${deployLocation}`, `cd ${deployLocation}`].concat(deployEnv.commands.server.pre).join(' && ')}'`);
+        deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.pre && command(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`mkdir -p ${deployLocation}`, `cd ${deployLocation}`].concat(deployEnv.commands.server.pre).join(' && ')}'`);
     });
 
     grunt.registerTask('deploy:server:post', () => {
@@ -97,12 +97,12 @@ module.exports = function(grunt) {
             grunt.log.ok(`Cloudfront ${response.Invalidation.Id}: invalidated successfully`);
         }
         
-        if(deployEnv['aws-s3'] || deployEnv['ftp']){
-            grunt.log.warn(`Server commands not supported for the following protocols: s3/ftp`);
+        if(deployEnv['aws-eb'] || deployEnv['aws-s3'] || deployEnv['ftp']){
+            grunt.log.warn(`Server commands not supported for the following protocols: {eb,s3,ftp}`);
             return;
         }
 
-        deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.post && command(`${deployEnv['aws-eb'] ? `eb ssh -c` : `ssh -tt '${deployCred.username}'@'${deployCred.host}'`} '${[`cd ${deployLocation}`].concat(deployEnv.commands.server.post).join(' && ')}'`);
+        deployEnv.commands && deployEnv.commands.server && deployEnv.commands.server.post && command(`ssh -tt '${deployCred.username}'@'${deployCred.host}' '${[`cd ${deployLocation}`].concat(deployEnv.commands.server.post).join(' && ')}'`);
     });
     
     grunt.registerTask('deploy:files', function() {
