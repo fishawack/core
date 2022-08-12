@@ -1,9 +1,9 @@
 ## Changelog
 
-### 7.23.0 (2022-07-08)
-* [Feature] Added new property webRoot that has the path to the base web directory
-* [Bug] Cache bust now correctly resovles links on subdirectories
-* [Bug] Prerender now correctly resolves routes on subdirectories
+### 7.23.0 (2022-08-12)
+* [Change] No longer support aws-eb pre/post server commands as these are available via aws-eb syntax itself
+* [Bug] aws-eb now correctly looks for environments in `.elasticbeanstlak/config.yml` rather than aws profiles
+* [Misc] aws-eb test now always active
 
 ### 7.22.0 (2022-07-08)
 * [Feature] Added new property webRoot that has the path to the base web directory
