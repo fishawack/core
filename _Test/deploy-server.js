@@ -25,11 +25,6 @@ describe('deploy:server', () => {
             execSync(`grunt deploy:server:pre --branch=master --mocha=output`, opts);
         });
 
-        // Disabled for now as theres no good way to consistently check an aws eb environment
-        // it('deploy:server:pre command should run eb ssh specific command', async () => {
-        //     execSync(`grunt deploy:server:pre --branch=aws-eb --mocha=output`, opts);
-        // });
-
         after(() => {
             execSync(`grunt takedown --branch=commands --mocha=output`, opts);
         });
