@@ -14,10 +14,13 @@ async function deploy(branch, url = 'https://demo.fishawack.solutions/core-test-
 }
 
 describe('deploy:files', () => {
-    // Disabled as theres no good target to use for consistent aws-eb tests
-    // it('Should deploy the master target to the server via aws-eb cli', () => {
-    //     execSync(`grunt package compress:deploy deploy:files --branch=aws-eb --mocha=output`, opts);
-    // });
+    it('Should deploy the master target to the server via aws-eb cli', async () => {
+        execSync(`rm -rf ${__dirname}/_fixture/output/_Zips/Deploy.zip && zip ${__dirname}/_fixture/output/_Zips/Deploy.zip ${__dirname}/_fixture/output/package.json && grunt deploy:files --branch=aws-eb --mocha=output`, opts);
+        expect((await fetch('http://coretestsuitedeployelb-env.eba-dpscqytf.us-east-1.elasticbeanstalk.com')).status).to.not.equal(200);
+        execSync(`grunt package compress:deploy deploy:files --branch=aws-eb --mocha=output`, opts);
+        expect((await fetch('http://coretestsuitedeployelb-env.eba-dpscqytf.us-east-1.elasticbeanstalk.com')).status).to.be.equal(200);
+    });
+    
     describe('aws-s3', () => {
         it('Should deploy the target to the server via aws-cli', () => deploy('aws-s3', 'http://core-test-suite-deploy.s3-website-us-east-1.amazonaws.com'));
         it('Should deploy the nested target to the server via aws-cli', () => deploy('aws-s3-nested', 'http://core-test-suite-deploy.s3-website-us-east-1.amazonaws.com/nested/'));
