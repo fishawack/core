@@ -36,12 +36,18 @@ module.exports = (grunt) => {
             ls.stderr.pipe(process.stderr);
             ls.stdout.pipe(process.stdout);
 
-            function readFileSyncSafe(path){
-                try{
-                    return readFileSync(path);
-                } catch (e) {
-                    return '';
-                }
+            async function readFileSyncSafe(path){
+                return new Promise(async (resolve) => {
+                    let contents;
+                    while(!contents){
+                        try{
+                            contents = readFileSync(path);
+                        } catch (e) {console.log(e.message);}
+
+                        await new Promise(resolve => setTimeout(() => resolve(), 1000));
+                    }
+                    resolve(contents);
+                })
             }
 
             function checkFinished(){
@@ -58,12 +64,12 @@ module.exports = (grunt) => {
 
                 postcss(options.postcss(file, dir))
                     .process(readFileSync(`${src}/${dir}/${file}.css`), {from: undefined})
-                    .then(res => {
+                    .then(async (res) => {
                         if(file === "vendor" || file === "general"){
                             outputFileSync(`${dest}/${dir}/${file}.css`, res.css);
 
-                            var vendor = file === "vendor" ? res.css : readFileSyncSafe(`${dest}/${dir}/vendor.css`);
-                            var general = file === "general" ? res.css : readFileSyncSafe(`${dest}/${dir}/general.css`);
+                            var vendor = file === "vendor" ? res.css : await readFileSyncSafe(`${dest}/${dir}/vendor.css`);
+                            var general = file === "general" ? res.css : await readFileSyncSafe(`${dest}/${dir}/general.css`);
                             outputFileSync(`${dir}/general.css`, `${vendor}\n${general}`);
                         } else {
                             outputFileSync(`${dir}/${file}.css`, res.css);
