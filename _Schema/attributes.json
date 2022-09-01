@@ -205,6 +205,10 @@
 							        	},
 										"description": "Api endpoints to pull down and save locally. (default: [])"
 							        },
+									"type": {
+										"type": ["string", "null"],
+										"description": "If CMS the type of cms the data is pulling from. (default: wp)"
+									},
 							        "saveTo": {
 										"type": ["string", "null"],
 										"description": "Where to save the pulled files. (default: <%= src %>/content/content-${i}/"
