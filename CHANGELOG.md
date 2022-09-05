@@ -1,5 +1,9 @@
 ## Changelog
 
+### 7.24.0 (2022-09-05)
+* [Change] Sass no longer writes and reads vendor/general but instead keeps it in memory for speed
+* [Bug] Because sass now keeps vendor in memory fixes the issue of large scss files being too slow to read/write causing issues on build
+
 ### 7.23.0 (2022-08-12)
 * [Change] No longer support aws-eb pre/post server commands as these are available via aws-eb syntax itself
 * [Bug] aws-eb now correctly looks for environments in `.elasticbeanstlak/config.yml` rather than aws profiles
