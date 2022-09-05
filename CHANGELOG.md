@@ -1,6 +1,7 @@
 ## Changelog
 
 ### 7.24.0 (2022-09-05)
+* [Feature] Can now set CMS type {wp,contentful} to adjust the content-request from the CMS
 * [Change] Sass no longer writes and reads vendor/general but instead keeps it in memory for speed
 * [Bug] Because sass now keeps vendor in memory fixes the issue of large scss files being too slow to read/write causing issues on build
 
