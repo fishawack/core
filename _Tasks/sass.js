@@ -36,19 +36,8 @@ module.exports = (grunt) => {
             ls.stderr.pipe(process.stderr);
             ls.stdout.pipe(process.stdout);
 
-            async function readFileSyncSafe(path){
-                return new Promise(async (resolve) => {
-                    let contents;
-                    while(!contents){
-                        try{
-                            contents = readFileSync(path);
-                        } catch (e) {console.log(e.message);}
-
-                        await new Promise(resolve => setTimeout(() => resolve(), 1000));
-                    }
-                    resolve(contents);
-                })
-            }
+            let vendor = '';
+            let general = '';
 
             function checkFinished(){
                 if(sassFinished && !processing){
@@ -58,18 +47,16 @@ module.exports = (grunt) => {
 
             function processPostcss(file, dir){
                 let src = '.cache/css';
-                let dest = '.cache/postcss';
 
                 processing += 1;
 
                 postcss(options.postcss(file, dir))
                     .process(readFileSync(`${src}/${dir}/${file}.css`), {from: undefined})
-                    .then(async (res) => {
+                    .then((res) => {
                         if(file === "vendor" || file === "general"){
-                            outputFileSync(`${dest}/${dir}/${file}.css`, res.css);
-
-                            var vendor = file === "vendor" ? res.css : await readFileSyncSafe(`${dest}/${dir}/vendor.css`);
-                            var general = file === "general" ? res.css : await readFileSyncSafe(`${dest}/${dir}/general.css`);
+                            vendor = file === "vendor" ? res.css : vendor;
+                            general = file === "general" ? res.css : general;
+                            
                             outputFileSync(`${dir}/general.css`, `${vendor}\n${general}`);
                         } else {
                             outputFileSync(`${dir}/${file}.css`, res.css);
