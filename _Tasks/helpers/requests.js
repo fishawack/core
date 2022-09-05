@@ -80,6 +80,10 @@ async function rewrite(options){
 
             return d;
         });
+        
+        if(options.type =='contentful') {
+            data = JSON.stringify(JSON.parse(data)[0]);
+        }
 
         fs.writeFileSync(endpoint, data, {encoding: 'utf8'});
     });
@@ -106,14 +110,26 @@ async function load(options){
 
     do{
         index++;
+        let uri = '';
+
+        if(options.type === 'contentful') {
+            uri = url_join(options.path, `${options.api}${options.endpoint}&skip=${(index - 1) * 100}`);
+        } else {
+            uri = url_join(options.path, options.api, `${options.endpoint}?per_page=1&page=${index}`);
+        }
 
         let res = await request({
-                uri: url_join(options.path, options.api, `${options.endpoint}?per_page=1&page=${index}`),
-                resolveWithFullResponse: true
-            });
+            uri: uri,
+            resolveWithFullResponse: true
+        });
 
         data = data.concat(JSON.parse(res.body));
-        current = +res.headers['x-wp-totalpages'];
+
+        if(options.type === 'contentful') {
+            current = Math.ceil(res.total / 100);
+        } else {
+            current = +res.headers['x-wp-totalpages'];
+        }
     } while(current && current !== index)
 
     grunt.log.ok(`Downloaded: ${options.endpoint}`);

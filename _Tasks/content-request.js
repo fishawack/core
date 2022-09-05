@@ -18,6 +18,7 @@ module.exports = (grunt) => {
                         path: d.url,
                         api: d.api || '/wp-json/wp/v2/',
                         endpoint,
+                        type: d.type || 'wp',
                         ext: d.ext || 'json',
                         saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`),
                         bundle: d.bundle ? 'media/' : '',
@@ -45,6 +46,7 @@ module.exports = (grunt) => {
             if(d.url && d.find !== null){
                 return limit(() => rewrite({
                         ext: d.ext || 'json',
+                        type: d.type || 'wp',
                         saveTo: d.saveTo || path.join(config.src, `/content/content-${i}/`),
                         bundle: d.bundle ? 'media/' : '',
                         find: d.find || `^https.*/wp-content/uploads`

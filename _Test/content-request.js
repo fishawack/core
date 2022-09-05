@@ -9,6 +9,7 @@ const { opts } = require('./_helpers/globals.js');
 const { download, rewrite } = require('../_Tasks/helpers/requests.js');
 
 describe('content-request', () => {
+
     // it('Should pull media assets from json files', async () => {
     //     await download({
     //         path: `https://stream-api.fishawack.solutions`,
@@ -136,5 +137,17 @@ describe('content-request', () => {
         //         expect((fs.existsSync('_Test/_fixture/content/_Build/content/content-0/media'))).to.be.false;
         //     });
         // });
+    });
+
+
+    describe('contentful', () => {
+        before(() => {
+            execSync('grunt clean:content content:request --mocha=content --branch=contentful', opts);
+        });
+
+        it('Should save to json files', () => {
+            expect((fs.lstatSync('_Test/_fixture/content/_Build/content/content-0/layout.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/content/_Build/content/content-0/layoutCopy.json')).isFile()).to.be.true;
+        });
     });
 });
