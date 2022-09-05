@@ -80,6 +80,7 @@ async function rewrite(options){
 
             return d;
         });
+        
         if(options.type =='contentful') {
             data = JSON.stringify(JSON.parse(data)[0]);
         }
@@ -110,12 +111,13 @@ async function load(options){
     do{
         index++;
         let uri = '';
+
         if(options.type === 'contentful') {
-            uri = url_join(options.path, `${options.api}${options.endpoint}&skip=${(index-1)*100}`);
-        }
-        else {
+            uri = url_join(options.path, `${options.api}${options.endpoint}&skip=${(index - 1) * 100}`);
+        } else {
             uri = url_join(options.path, options.api, `${options.endpoint}?per_page=1&page=${index}`);
         }
+
         let res = await request({
             uri: uri,
             resolveWithFullResponse: true
@@ -123,8 +125,8 @@ async function load(options){
 
         data = data.concat(JSON.parse(res.body));
 
-        if(options.type=='contentful') {
-            current = Math.ceil(res.total/100);
+        if(options.type === 'contentful') {
+            current = Math.ceil(res.total / 100);
         } else {
             current = +res.headers['x-wp-totalpages'];
         }
