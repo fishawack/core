@@ -207,7 +207,8 @@
 							        },
 									"type": {
 										"type": ["string", "null"],
-										"description": "If CMS the type of cms the data is pulling from. (default: wp)"
+										"description": "If CMS the type of cms the data is pulling from. (default: wp)",
+										"enum": ["wp", "contentful"]
 									},
 							        "saveTo": {
 										"type": ["string", "null"],
