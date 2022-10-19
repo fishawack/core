@@ -10,6 +10,8 @@ As a company we do a lot of smaller short term builds rather than longer term co
 
 ## Dependancies
 
+> With the release of lab-env all of these dependencies can now be handled through containerization so no longer need to be manually installed. Check the [install guide](#lab-env) on how to get started.
+
 As this code base is shared amongst most of our repos, these dependancies are likely the only ones you'll ever need to install to get project code up and running. They've been split into three groups, content, build and deploy dependancies.
 
 ### Content
@@ -61,10 +63,9 @@ brew install imagemagick
 brew install jq
 brew install lftp
 brew install tnftp tnftpd telnet telnetd
-brew install cask
-brew cask install adoptopenjdk
-brew cask install xquartz
-brew cask install wine-stable
+brew install --cask adoptopenjdk
+brew install --cask xquartz
+brew install --cask wine-stable
 ```
 
 > Wine [isn't currently supported](https://wiki.winehq.org/MacOS) on macOS Catalina 10.15 so any electron builds will need to be run on the CI/CD runners instead of locally
@@ -133,52 +134,6 @@ After cloning a repo you have to run the `origin` command on the terminal which 
 
 > The reason `origin` isn't part of the `npm run setup` command is because this would throw an error on any freelancers machine trying to connect to gitlab
 
-```bash
-git clone git@bitbucket.org:fishawackdigital/stream.git
-cd stream
-origin
-git remote -v
-# origin  git@bitbucket.org:fishawackdigital/stream (fetch)
-# origin  git@bitbucket.org:fishawackdigital/stream (push)
-# origin  git@diggit01.fw.local:stream/stream (push)
-```
-
-### Origin
-
-This command need's to be added to your `.bash_profile` so that it's available globally on the command line.
-
-```bash
-origin(){
-    if [ -f ~/targets/misc.json ]; then
-        name=$(basename `git rev-parse --show-toplevel`);
-        url=https://api.bitbucket.org/2.0/repositories/fishawackdigital/$name;
-        username=$(jq .bitbucket.username ~/targets/misc.json -r);
-        password=$(jq .bitbucket.password ~/targets/misc.json -r);
-
-        if [ $username = "null" ] || [ $password = "null" ] || [ -z $password ] || [ -z $password ] ; then
-            echo -e "\033[0;31m>>\033[0m Can't find bitbucket credentials in ~/targets/misc.json";
-        else
-            repo=$(echo $(curl -s -u $username:$password $url | jq .project.name -r)/$name | tr '[:upper:]' '[:lower:]');
-
-            bitbucket=git@bitbucket.org:fishawackdigital/$(echo $repo | cut -d '/' -f2);
-            gitlab=git@diggit01.fw.local:$repo;
-
-            git remote remove origin;
-            git remote add origin $bitbucket;
-            git remote set-url --add --push origin $bitbucket;
-            git remote set-url --add --push origin $gitlab;
-            git fetch origin;
-            git checkout master && git branch -u origin/master;
-            git checkout development && git branch -u origin/development;
-            git remote -v;
-            echo -e "\033[0;32mSuccess\033[0m"
-        fi
-    else 
-        echo -e "\033[0;31m>>\033[0m Can't find ~/targets/misc.json";
-    fi
-}
-```
-
 ### Githooks
 
 We need to update the githooks property in our global config to point to the hooks folder found in `core`. To do this run the following command.
@@ -188,6 +143,8 @@ git config --global core.hooksPath node_modules/@fishawack/core/.githooks
 ```
 
 ## Commands
+
+> When using [lab-env](#lab-env) these commands should be switched out for their [lab-env](#lab-env-commands) equivalent. Run `fw --help` to get a full list of commands.
 
 Regardless of what the repo uses under the hood the following commands should be the only commands needed when interacting with a repo.
 
@@ -238,17 +195,11 @@ Transfers the build to a server based on which branch you're currently on.
 npm run deploy
 ```
 
-This command is branch dependant. The following branches correspond to the following deploy targets.
-
-```bash
-development     >>   staging
-qc              >>   qc
-master          >>   production
-```
-
-If on any other branch this command **won't** deploy anywhere but will still prepare the bundle in production mode.
+This command is branch dependant. Check the config in the repo to see if any deployment targets have been setup for the branch your currently on. If none have then this command **won't** deploy anywhere but will still prepare the bundle in production mode and create a local zip package.
 
 ## Credentials
+
+> [lab-env](#lab-env) has a command to help populate these credential files by running `fw diagnose`.
 
 Credentials are needed in the root of each project so that the automated scripts can properly deploy and fetch content from the server. To mitigate the need to manually copy credentials each time we create a folder on the root of each individuals machine that contains their unique creds. The automated script will automatically grab the `id_rsa` found in the default location in `~/.ssh/`. It will then grab any `secret.json` files it needs for which ever server the current project needs to be deployed onto. If it can't find the correct `secret.json` for a server it will silently fail.
 
@@ -684,54 +635,12 @@ Keeping all custom sass imports mixed with large vendor imports can result in ve
 
 This file should be used to import any large 3rd party libraries or code that doesn't often change, that way your compile speed on the code you modify frequently will remain fast.
 
-#### vendor.scss
-```scss
-@import "breakpoint";
 
-@import "@fishawack/lab-ui/_mixins.scss";
-@import "_mixins.scss";
+Check [lab-ui documentation](#lab-ui-getting-started) for an example of the folder structure needed to make this work.
 
-@import "@fishawack/lab-ui/_variables.scss";
-@import "_variables.scss";
+### Unused
 
-@import "@fishawack/lab-ui/_defaults.scss";
-@import "_defaults.scss";
-
-@import "normalize";
-@include normalize();
-
-#svgSprite{
-	position: absolute;
-	width: 0;
-	height: 0;
-	z-index: -1;
-}
-
-// Vendor imports / Lab-ui imports
-@import "@fishawack/lab-ui/_grid.scss;
-@import "@fishawack/lab-ui/_utilities.scss;
-```
-
-#### general.scss
-```scss
-@import "breakpoint";
-
-@import "@fishawack/lab-ui/_mixins.scss";
-@import "_mixins.scss";
-
-@import "@fishawack/lab-ui/_variables.scss";
-@import "_variables.scss";
-
-@import "@fishawack/lab-ui/_defaults.scss";
-@import "_defaults.scss";
-
-// Custom imports
-@import "./components/_button.scss;
-```
-
-### Uncss
-
-Classes that aren't present in any html files **before** javascript runs are considered redundant and are removed from the final bundled css file.
+Classes that aren't present in any html,vue or php files **before** javascript runs are considered redundant and are removed from the final bundled css file.
 
 #### Html
 ```html
@@ -750,10 +659,6 @@ Classes that aren't present in any html files **before** javascript runs are con
     ...
 }
 ```
-
-#### Vue
-
-All `.vue` files found in `_Build/vue/` will be converted to html and then ran through the same process as above to check for unused css. This won't execute javascript and will ignore any tags that aren't native html tags so its fairly common to have to use more uncss ignore tags in a vue/SPA project.
 
 #### Whitelist
 
@@ -1007,7 +912,7 @@ If a custom icon set has been created it can be used by dropping it into the `_B
 
 Whether the icons are custom or have come from fontello they should end up in the global [spritesheet](#core-svg-optimization) and can be imported in one of the following ways.
 
-> Make sure the Lab Ui ["icon.scss"](https://demo.fishawack.solutions/Lab/Ui/#Icons) component has been imported
+> Make sure the Lab Ui ["icon.scss"](https://lab-ui.fishawack.solutions/#Icons) component has been imported
 
 #### Html
 ```html
@@ -1295,6 +1200,10 @@ For Tsohost we have two primary servers, Gandalf and Galadriel. Gandalf is fairl
 #### US - Liquidweb
 
 For liquid web we currently have just a single server that is used for shared deployments and that is the Balrog server.
+
+#### Global - AWS
+
+All static builds as of 2022/09/10 should now be pushed to AWS via `fw provision` commands.
 
 ### Configs
 
