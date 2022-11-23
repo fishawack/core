@@ -1485,6 +1485,72 @@ You'll need to make sure you have a copy of the latest signed certificate! You'l
 
 << TODO: packaging options >>
 
+## Extending
+
+The core is essentially a wrapper around [gruntjs](https://gruntjs.com/) task runner that abstracts a lot of the code that would be simply repeated throughout project codebases. These grunt tasks vary from webpack javascript transpiling to prerendering scripts and generating pdfs.
+
+Extending/Overridding can be done at two levels: 
+    * Options: This is where configuration options are specificed for a task
+    * Task registration: These files actually register the [tasks](https://gruntjs.com/api/grunt.task) which then consume the options found above
+
+### Options
+
+To override the options you simply create a file of the [same name](https://github.com/fishawack/core/tree/master/_Tasks/options) as the options you'd like to override and place it in the location `_Tasks/options/` at the root of the project.
+
+```js
+// _Tasks/options/sass.js
+module.exports = {
+	options: {
+		outputStyle: 'expanded',
+		sourceMap: true
+	},
+    default: {
+        files: {
+            src: 'myCustomSass.sass',
+            dest: 'myCustomSass.css'
+        }
+    }
+}
+```
+
+If you simply want to extend the existing options you can pull in the existing options using the globally available variable `configPath` which points to the inner node_module options and then simply merge your new options.
+
+```js
+var obj = require(`${process.cwd()}/${configPath}_Tasks/options/sass`);
+
+obj.default.files.src = 'myCustomSass.sass';
+
+module.exports = obj;
+```
+
+### Task registration
+
+The tasks found in the core are custom tasks that provide or extend some base task functionality. Most tasks that run during the bundle process are completely out of the box npm modules and don't require a task file inside the @fishawack/core itself and simply consume the options that are passed in.
+
+If you do still need to override a task then you will generally requires gruntjs knowledge of how [multitasks and regular tasks](https://gruntjs.com/api/grunt.task) work.
+
+To override the tasks you simply create a file of the [same name](https://github.com/fishawack/core/tree/master/_Tasks) as the task you'd like to override and place it in the location `_Tasks/` at the root of the project.
+
+```js
+// _Tasks/compress.js
+module.exports = grunt => {
+    grunt.registerMultiTask('compress', function() {
+        // Code written here will run when compress task is called
+    });
+};
+```
+
+The most common need to adjust a task is to change the `default`, and the `dist` tasks which are themselves simply wrappers that run a set of pre-defined tasks. 
+
+If for example you wanted the [default](https://github.com/fishawack/core/blob/master/_Tasks/default.js) `grunt` command to also run a custom task called `foo` you could add that into the default flow like so:
+
+```js
+// _Tasks/default.js
+module.exports = grunt => {
+    grunt.registerTask('default', ['foo', 'browserSync', 'watch']);
+};
+```
+
 ## Troubleshooting
 
 ### Docker compose v2
