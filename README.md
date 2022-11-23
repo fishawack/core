@@ -1490,8 +1490,9 @@ You'll need to make sure you have a copy of the latest signed certificate! You'l
 The core is essentially a wrapper around [gruntjs](https://gruntjs.com/) task runner that abstracts a lot of the code that would be simply repeated throughout project codebases. These grunt tasks vary from webpack javascript transpiling to prerendering scripts and generating pdfs.
 
 Extending/Overridding can be done at two levels: 
-    * Options: This is where configuration options are specificed for a task
-    * Task registration: These files actually register the [tasks](https://gruntjs.com/api/grunt.task) which then consume the options found above
+
+* Options: This is where configuration options are specificed for a task
+* Task registration: These files actually register the [tasks](https://gruntjs.com/api/grunt.task) which then consume the options found above
 
 ### Options
 
