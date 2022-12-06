@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+var VueLoaderPlugin; try{ VueLoaderPlugin = { VueLoaderPlugin } = require('vue-loader');} catch(e){}
 const grunt = require('grunt');
 
 // var config;
@@ -83,7 +83,7 @@ module.exports = {
 			]
 		},
 		plugins: [
-	    	new VueLoaderPlugin(),
+	    	VueLoaderPlugin && new VueLoaderPlugin(),
 			new webpack.DefinePlugin(Object.keys(process.env).reduce((a, b) => {
 				a[`process.env.${b}`] = webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[b]), [`./${config.src}/config/**/*.json`]);
 				return a;

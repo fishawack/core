@@ -13,7 +13,8 @@
 					"hideToolBar": true,
 					"disableStatusBar": true,
 					"useTransparentBar": true
-				}
+				},
+				"electron": true
 			},
 			"veeva-shared-resource": {
 				"veeva": {

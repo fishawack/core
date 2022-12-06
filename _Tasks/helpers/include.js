@@ -5,7 +5,7 @@ module.exports = function(grunt, hasBase, fixture) {
 	this.grunt = grunt;
 	this.config = null;
 	this.reset = null; // Used to reset config back to defaults after a task has overrideen them locally
-	var mocha = fixture || require('yargs').argv.mocha || false; // True when core mocha tests running
+	var mocha = fixture || grunt.option('mocha') || false; // True when core mocha tests running
 
 	// Used in grunt JIT call to load plugins, can be overridden/added to in build folder include.js
 	this.jit = {
@@ -29,7 +29,7 @@ module.exports = function(grunt, hasBase, fixture) {
 	}
 	
 	try{
-		this.deployBranch = require('yargs').argv.branch || process.env.BRANCH || process.env.CI_COMMIT_REF_NAME || require('git-branch').sync();
+		this.deployBranch = grunt.option('branch') || process.env.BRANCH || process.env.CI_COMMIT_REF_NAME || require('git-branch').sync();
 	} catch(e){
 		this.deployBranch = 'unknown';
 	}
