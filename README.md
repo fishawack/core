@@ -1793,6 +1793,12 @@ fw content && fw prod && fw run -d package && fw deploy && fw run mail
 
 ## Migrating
 
+### 8.0.0
+
+* Capture scripts needs to use new v8 method calls - https://webdriver.io/docs/api/browser - effects waitForExists
+* Firefox no longer installed within container but can still be specified and used if firefox manually installed
+* Chrome browser now using chromium headless under the hood - could be slight differences
+
 ### 7.5.0
 
 Although not a breaking change when running things through CI/CD, `core@7.5.0` did introduce a breaking change when running certain commands locally due to some npm scripts being split into smaller more focused tasks. This means the package.json scripts will need updating to the following.
