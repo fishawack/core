@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html class="loading">
+<body>
+    Long
+    <ul class="list">
+        <li>Hello</li>
+    </ul>
+
+    <script>
+        const list = document.querySelector('.list');
+
+        for(let i = 0; i < 1000; i++){
+            list.insertAdjacentHTML('beforeend', '<li>Hello</li>');
+        }
+
+        document.documentElement.classList.remove('loading');
+        document.documentElement.classList.add('loaded');
+    </script>
+</body>
+</html>

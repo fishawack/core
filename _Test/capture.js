@@ -17,7 +17,7 @@ describe('capture', () => {
         });
 
         it('Should capture all html routes found in root folder', () => {
-            expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/**/*.png')).map(d => path.basename(d))).to.have.members(['0_abouthtml_.png', '1_faqindexhtml_.png', '2_indexhtml_.png']);
+            expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/**/*.png')).map(d => path.basename(d))).to.have.members(['0_abouthtml_.png', '1_faqindexhtml_.png', '2_indexhtml_.png', '3_longhtml_.png']);
         });
     
         it('Should capture chrome if no browser property defined', () => {
@@ -35,17 +35,25 @@ describe('capture', () => {
         });
 
         it('Should capture only pages defined in config', () => {
-            expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/**/*.png'))).to.be.an('array').and.have.lengthOf(1);
+            expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/chrome/1024x768/*.png')).map(d => path.basename(d))).to.have.members(['0_abouthtml_.png', '1_longhtml_.png']);
+            expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/chrome/375x667/*.png')).map(d => path.basename(d))).to.have.members(['0_abouthtml_.png', '1_longhtml_.png']);
         });
     
         it('Should capture only browsers defined in config', () => {
-            expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/chrome/**/*.png'))).to.be.an('array').that.is.empty;
-            expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/firefox/**/*.png'))).to.be.an('array').that.is.not.empty;
+            expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/firefox/**/*.png'))).to.be.an('array').that.is.empty;
+            expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/chrome/**/*.png'))).to.be.an('array').that.is.not.empty;
         });
     
         it('Should capture only sizes defined in config', () => {
             expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/**/1080x608/*.png'))).to.be.an('array').that.is.empty;
             expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/**/1024x768/*.png'))).to.be.an('array').that.is.not.empty;
+            expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/**/375x667/*.png'))).to.be.an('array').that.is.not.empty;
+        });
+
+        it('Should capture entire height of page', () => {
+            let height = +execSync('file _Test/_fixture/capture/.tmp/screenshots/chrome/375x667/1_longhtml_.png', {encoding: 'utf8'}).split(',')[1].split('x')[1];
+            
+            expect(height).to.be.greaterThan(667);
         });
     });
 });

@@ -5,13 +5,15 @@
 			"options": {
 				"capture": {
 					"browsers": [
-						"firefox"
+						"chrome"
 					],
 					"sizes": [
-						[1024, 768]
+						[1024, 768],
+						[375, 667]
 					],
 					"pages": [
-						"/about.html"
+						"/about.html",
+						"/long.html"
 					]
 				}
 			}
