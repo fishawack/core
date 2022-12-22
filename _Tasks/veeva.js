@@ -172,7 +172,7 @@ module.exports = function(grunt) {
                 grunt.fatal(`No screenshots detected in .tmp/, do you need to run the capture task?`);
             }
             
-            screenshot = screenshot.alphanumSort()[0];
+            screenshot = alphanumSort(screenshot[0]);
 
         	copy.default.files.push(
                 {

@@ -64,8 +64,7 @@ module.exports = function(grunt) {
                     async function asyncCall () {
                         var values = [];
 
-                        await grunt.file.expand({cwd: `.tmp/screenshots/${browser}/${size}/`}, '*')
-                            .alphanumSort()
+                        await alphanumSort(grunt.file.expand({cwd: `.tmp/screenshots/${browser}/${size}/`}, '*'))
                             .reduce(async (promise, d, i) => {
                                 await promise;
                                 

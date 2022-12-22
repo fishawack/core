@@ -536,22 +536,22 @@ module.exports = function(grunt, hasBase, fixture) {
       };
     }
 
-	Array.prototype.alphanumSort = function(caseInsensitive) {
-	  for (var z = 0, t; t = this[z]; z++) {
-	    this[z] = new Array();
+	this.alphanumSort = function(arr, caseInsensitive) {
+	  for (var z = 0, t; t = arr[z]; z++) {
+	    arr[z] = new Array();
 	    var x = 0, y = -1, n = 0, i, j;
 
 	    while (i = (j = t.charAt(x++)).charCodeAt(0)) {
 	      var m = (i == 46 || (i >=48 && i <= 57));
 	      if (m !== n) {
-	        this[z][++y] = "";
+	        arr[z][++y] = "";
 	        n = m;
 	      }
-	      this[z][y] += j;
+	      arr[z][y] += j;
 	    }
 	  }
 
-	  this.sort(function(a, b) {
+	  arr.sort(function(a, b) {
 	    for (var x = 0, aa, bb; (aa = a[x]) && (bb = b[x]); x++) {
 	      if (caseInsensitive) {
 	        aa = aa.toLowerCase();
@@ -567,10 +567,10 @@ module.exports = function(grunt, hasBase, fixture) {
 	    return a.length - b.length;
 	  });
 
-	  for (var z = 0; z < this.length; z++)
-		this[z] = this[z].join("");
+	  for (var z = 0; z < arr.length; z++)
+		arr[z] = arr[z].join("");
 		
-	  return this;
+	  return arr;
 	}
 
 	this.stripTrailingSlash = (str) => {
