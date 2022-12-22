@@ -16,8 +16,8 @@ if(fs.existsSync(process.cwd() + '/_Node/level-0/capture.js')){
 }
 
 var capture = {
-    url: browser.desiredCapabilities.url,
-    wait: browser.desiredCapabilities.wait,
+    url: browser.requestedCapabilities.url,
+    wait: browser.requestedCapabilities.wait,
     size: {
         array: null,
         index: 0,
@@ -25,35 +25,32 @@ var capture = {
         width: 0,
         height: 0,
         init(){
-            capture.size.index = browser.desiredCapabilities.index;
-            capture.size.width = browser.desiredCapabilities.size[0];
-            capture.size.height = browser.desiredCapabilities.size[1];
-            capture.size.browser = browser.desiredCapabilities.browserName;
+            capture.size.index = browser.requestedCapabilities.index;
+            capture.size.width = browser.requestedCapabilities.size[0];
+            capture.size.height = browser.requestedCapabilities.size[1];
+            capture.size.browser = browser.requestedCapabilities.browserName;
         },
         call(){
             capture.size.init();
 
-            describe(`Size ${capture.size.width}x${capture.size.height}`, function () {
-                before(() => capture.size.before());
+            describe(`Size ${capture.size.width}x${capture.size.height}`, async function () {
+                before(async () => await capture.size.before());
 
                 if(custom.size){
-                    custom.size(capture);
+                    await custom.size(capture);
                 }
                 for(var i = 0; i < capture.page.array.length; i++){
                     capture.page.call(i);
                 }
             });
         },
-        before(){
+        async before(){
             capture.size.init(capture.size.index);
             capture.screenshot.init();
 
             fs.mkdirpSync(`.tmp/screenshots/${capture.screenshot.path}/`);
 
-            browser.setViewportSize({
-                width: capture.size.width,
-                height: capture.size.height
-            });
+            await browser.setWindowSize(capture.size.width, capture.size.height);
         }
     },
     page: {
@@ -74,33 +71,33 @@ var capture = {
         call(index){
             capture.page.init(index);
 
-            describe(`Page ${capture.page.array[index]}`, function () {
+            describe(`Page ${capture.page.array[index]}`, async function () {
                 before(() => capture.page.before(index));
 
-                capture.page.initial();
+                await  capture.page.initial();
 
                 if(custom.page){
-                    custom.page(capture);
+                    await custom.page(capture);
                 }
             });
         },
-        wait() {
+        async wait() {
             if(isNaN(capture.wait)){
-                browser.waitForExist(capture.wait, 50000);
+                await $(capture.wait).waitForExist(50000)
             } else {
-                browser.pause(capture.wait);
+                await browser.pause(capture.wait);
             }
         },
-        before(index){
+        async before(index){
             capture.page.init(index);
 
-            browser.url(`${capture.url}${capture.page.route}?capture=true&${capture.page.query}#${capture.page.hash}`);
+            await browser.url(`${capture.url}${capture.page.route}?capture=true&${capture.page.query}#${capture.page.hash}`);
 
-            capture.page.wait()
+            await capture.page.wait();
         },
         initial(){
-            it('Loaded', function() {
-                capture.screenshot.call();
+            it('Loaded', async function() {
+                await capture.screenshot.call();
             });
         }
     },
@@ -111,20 +108,22 @@ var capture = {
             capture.screenshot.path = `${capture.size.browser}/${capture.size.width}x${capture.size.height}`;
             capture.screenshot.index = 0;
         },
-        call(viewportOnly){
+        async call(viewportOnly){
             let filename = `.tmp/screenshots/${capture.screenshot.path}/${capture.screenshot.index++}_${capture.page.slug}_`;
             
             if(viewportOnly){
-                browser.saveScreenshot(`${filename}.png`);
+                await browser.saveScreenshot(`${filename}.png`);
             } else {
-                browser.saveDocumentScreenshot(`${filename}.png`);
+                const puppeteer = await browser.getPuppeteer()
+                const pages = await puppeteer.pages()
+                return pages[0].screenshot({ path: `${filename}.png`, fullPage: true })
             }
         }
     }
 };
 
-capture.size.array = browser.desiredCapabilities.sizes;
-capture.page.array = browser.desiredCapabilities.pages;
+capture.size.array = browser.requestedCapabilities.sizes;
+capture.page.array = browser.requestedCapabilities.pages;
 
 capture.size.call();
 
