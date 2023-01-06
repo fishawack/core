@@ -254,8 +254,7 @@
 	    "toggle": {},
 		"capture": {
 			"browsers": [
-				"chrome",
-				"firefox"
+				"chrome"
 			],
 			"sizes": [
 				[1080, 608],
