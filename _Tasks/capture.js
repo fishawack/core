@@ -54,9 +54,13 @@ module.exports = grunt => {
                 { spec: ['/app/_Node/capture.js'] }
             );
 
-            await wdio.run();
+            let exitCode = await wdio.run();
 
             bs.exit();
+
+            if(exitCode){
+                grunt.fail.warn('Tests suites failing', exitCode);
+            };
 
             done(); 
         });
