@@ -14,5 +14,8 @@ module.exports = {
         options: {
             failOnError: false
         }
+    },
+    test: {
+        command: "echo hello"
     }
 }
