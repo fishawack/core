@@ -65,6 +65,7 @@
     "mocha": "^10.1.0",
     "p-limit": "^4.0.0",
     "pdf-image-pack": "^0.0.1",
+    "postcss": "^8.4.21",
     "vue-loader": "^17.0.1",
     "webpack": "^5.75.0"
   }
