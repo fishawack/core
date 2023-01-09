@@ -63,6 +63,7 @@
     "jit-grunt": "^0.10.0",
     "lodash": "^4.17.21",
     "mocha": "^10.1.0",
+    "pdf-image-pack": "^0.0.1",
     "vue-loader": "^17.0.1",
     "webpack": "^5.75.0"
   }
