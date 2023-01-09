@@ -1,5 +1,4 @@
 function image(src, options){
-    const request = require('request-promise');
     const path = require('path');
     const fs = require('fs-extra');
     const grunt = require('grunt');
@@ -16,11 +15,11 @@ function image(src, options){
 
     fs.mkdirpSync(path.dirname(file));
 
-    return request({uri: src, encoding: 'binary'})
-        .then(body => {
+    return fetch(src)
+        .then(async res => {
             grunt.log.ok(`Downloaded: ${path.basename(file)}`);
 
-            fs.writeFileSync(file, body, 'binary');
+            fs.writeFileSync(file, Buffer.from(await res.arrayBuffer()));
         })
         .catch(err => {
             grunt.log.warn(err);
@@ -102,7 +101,6 @@ if (!String.prototype.replaceAll) {
 }
 
 async function load(options){
-    var request = require('request-promise');
     var fs = require('fs-extra');
 
     let data = [];
@@ -118,17 +116,15 @@ async function load(options){
             uri = url_join(options.path, options.api, `${options.endpoint}?per_page=1&page=${index}`);
         }
 
-        let res = await request({
-            uri: uri,
-            resolveWithFullResponse: true
-        });
+        let res = await fetch(uri);
+        let json = await res.json();
 
-        data = data.concat(JSON.parse(res.body));
+        data = data.concat(json);
 
         if(options.type === 'contentful') {
-            current = Math.ceil(res.total / 100);
+            current = Math.ceil(json.total / 100);
         } else {
-            current = +res.headers['x-wp-totalpages'];
+            current = +res.headers.get('x-wp-totalpages');
         }
     } while(current && current !== index)
 
