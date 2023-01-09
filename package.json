@@ -60,6 +60,7 @@
     "grunt": "^1.5.3",
     "grunt-browser-sync": "^2.2.0",
     "grunt-cache-bust": "^1.7.0",
+    "grunt-compile-handlebars": "github:mikemellor11/grunt-compile-handlebars#v2.0.3",
     "grunt-contrib-clean": "^2.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "jit-grunt": "^0.10.0",
