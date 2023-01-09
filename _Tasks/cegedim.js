@@ -81,24 +81,35 @@ module.exports = function(grunt) {
         grunt.task.run('copy', 'packImagesFlat', 'shell', 'compress', 'clean', 'reset');
 	});
 	
-	grunt.registerTask('packImagesFlat', function() {
-
-		var pdf_imagepack = {};
+	grunt.registerTask('packImagesFlat', async function() {
+        var done = this.async();
+        var PDFImagePack = require("pdf-image-pack");
+        var fs = require('fs-extra');
 		var glob = require('glob');
         var browsers = captureEnv().browsers;
 		var sizes = captureEnv().sizes;
+        
+        fs.mkdirpSync('.tmp/pdfs/cegedim/');
 
-		keyMessages.forEach(d => {
+		for(var i = 0; i < keyMessages.length; i++){
+            let d = keyMessages[i];
 			var zipName = d.zipName;
-            var seqName = d.seqName;
 			var screenshotName = d.screenshotName;
 
-			pdf_imagepack[zipName] = {files: {}};
-			pdf_imagepack[zipName].files[`.tmp/pdfs/cegedim/${zipName}.pdf`] = alphanumSort(glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`));
-		});
+            await new Promise((resolve, reject) => {
+                new PDFImagePack().output(
+                    alphanumSort(glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`)), 
+                    `.tmp/pdfs/cegedim/${zipName}.pdf`,
+                    function(err){
+                        if(err){
+                            reject(err);
+                        }
 
-        grunt.config.set('pdf_imagepack', pdf_imagepack);
+                        resolve();
+                    });
+                });
+		}
 
-        grunt.task.run('pdf_imagepack');
+        done();
     });
 };
