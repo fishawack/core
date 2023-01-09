@@ -63,6 +63,7 @@
     "grunt-compile-handlebars": "github:mikemellor11/grunt-compile-handlebars#v2.0.3",
     "grunt-contrib-clean": "^2.0.1",
     "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-htmlmin": "^3.1.0",
     "jit-grunt": "^0.10.0",
     "lodash": "^4.17.21",
     "mocha": "^10.1.0",
