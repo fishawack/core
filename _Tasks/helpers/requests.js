@@ -30,7 +30,7 @@ async function download(options){
     try{
         const path = require('path');
         const fs = require('fs-extra');
-        const pLimit = require('p-limit');
+        const pLimit = (await import('p-limit')).default;
         const limit = pLimit(5);
         const glob = require('glob');
 

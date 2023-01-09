@@ -5,11 +5,11 @@ module.exports = (grunt) => {
             return;
         }
 
-        var done = this.async();
+        const done = this.async();
         
-        var path = require('path');
-        var pLimit = require('p-limit');
-        var limit = pLimit(5);
+        const path = require('path');
+        const pLimit = (await import('p-limit')).default;
+        const limit = pLimit(5);
         const { download, rewrite, load } = require('./helpers/requests.js');
 
         await Promise.all(contentJson.attributes.content.reduce((arr, d, i) => {
