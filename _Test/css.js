@@ -9,7 +9,7 @@ const { opts } = require('./_helpers/globals.js');
 describe('css', () => {
     describe('sass', () => {
         before(() => {
-            execSync('grunt sass:default --branch=master --mocha=bundle', opts);
+            execSync('grunt clean:cache sass:default --branch=master --mocha=bundle', opts);
         });
 
         it('Should generate a css bundle', () => {
