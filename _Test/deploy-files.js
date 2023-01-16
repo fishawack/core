@@ -9,7 +9,7 @@ async function deploy(branch, url = 'https://core-test-suite-deploy.fishawack.so
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
     expect((await fetch(url)).status).to.not.equal(200);
     execSync(`grunt deploy:server:pre --branch=master --mocha=output`, opts); // Run single pre server command to create the webroot directory on the server
-    execSync(`grunt package deploy:files --branch=${branch} --mocha=output`, opts); // Package command needed for deploys that need watertight files copying
+    execSync(`grunt package compress:deploy deploy:files --branch=${branch} --mocha=output`, opts); // Package command needed for deploys that need watertight files copying
     expect((await fetch(url)).status).to.be.equal(200);
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
 }
