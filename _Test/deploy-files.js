@@ -8,7 +8,7 @@ const { opts } = require('./_helpers/globals.js');
 async function deploy(branch, url = 'https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy'){
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
     expect((await fetch(url)).status).to.not.equal(200);
-    execSync(`grunt deploy:server:pre --branch=master --mocha=output`, opts); // Run single pre server command to create the webroot directory on the server
+    execSync(`grunt deploy:server:pre --branch=${branch} --mocha=output`, opts); // Run single pre server command to create the public_html directory on the server
     execSync(`grunt package compress:deploy deploy:files --branch=${branch} --mocha=output`, opts); // Package command needed for deploys that need watertight files copying
     expect((await fetch(url)).status).to.be.equal(200);
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
