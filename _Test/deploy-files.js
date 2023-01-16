@@ -5,9 +5,10 @@ const execSync = require('child_process').execSync;
 const fetch = require('node-fetch');
 const { opts } = require('./_helpers/globals.js');
 
-async function deploy(branch, url = 'https://demo.fishawack.solutions/core-test-suite-deploy'){
+async function deploy(branch, url = 'https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy'){
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
     expect((await fetch(url)).status).to.not.equal(200);
+    execSync(`grunt deploy:server:pre --branch=master --mocha=output`, opts); // Run single pre server command to create the webroot directory on the server
     execSync(`grunt package deploy:files --branch=${branch} --mocha=output`, opts); // Package command needed for deploys that need watertight files copying
     expect((await fetch(url)).status).to.be.equal(200);
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
@@ -15,7 +16,7 @@ async function deploy(branch, url = 'https://demo.fishawack.solutions/core-test-
 
 describe('deploy:files', () => {
     it('Should deploy the master target to the server via aws-eb cli', async () => {
-        execSync(`rm -rf ${__dirname}/_fixture/output/_Zips/Deploy.zip && zip ${__dirname}/_fixture/output/_Zips/Deploy.zip ${__dirname}/_fixture/output/package.json && grunt deploy:files --branch=aws-eb --mocha=output`, opts);
+        execSync(`rm -rf ${__dirname}/_fixture/output/_Zips/Deploy.zip && mkdir -p ${__dirname}/_fixture/output/_Zips && zip ${__dirname}/_fixture/output/_Zips/Deploy.zip ${__dirname}/_fixture/output/package.json && grunt deploy:files --branch=aws-eb --mocha=output`, opts);
         expect((await fetch('http://coretestsuitedeployelb-env.eba-dpscqytf.us-east-1.elasticbeanstalk.com')).status).to.not.equal(200);
         execSync(`grunt package compress:deploy deploy:files --branch=aws-eb --mocha=output`, opts);
         expect((await fetch('http://coretestsuitedeployelb-env.eba-dpscqytf.us-east-1.elasticbeanstalk.com')).status).to.be.equal(200);
