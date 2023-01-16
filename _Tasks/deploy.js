@@ -117,7 +117,7 @@ module.exports = function(grunt) {
         if(deployEnv.ftp){
             grunt.task.run('ftpscript:deploy');
         } else if(deployEnv.ssh){
-            execSync(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, opts);
+            execSync(`scp -rpl 10000 _Zips/Deploy.zip '${deployCred.username}'@'${deployCred.host}':'${deployLocation}' && ssh -tt '${deployCred.username}'@'${deployCred.host}' 'unzip -o \'${deployLocation}/Deploy.zip\' -d \'${deployLocation}/\' && rm -rf \'${deployLocation}/Deploy.zip\''`, opts);
         } else if(deployEnv.lftp){
             execSync(`lftp -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, opts);
         } else if(deployEnv['aws-eb']){
