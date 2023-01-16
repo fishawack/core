@@ -26,13 +26,13 @@
 			"master": {
 				"deploy": {
 					"url": "https://core-test-suite-deploy.fishawack.solutions",
-					"location": "~/webroot/",
+					"location": "~/documentRoot/public_html/",
 					"ssh": "aws-fw-coretestsuiteprotocols",
 					"subDir": "core-test-suite-deploy",
 					"commands": {
 						"server": {
 							"pre": [
-								"mkdir -p ~/webroot"
+								"mkdir -p ~/documentRoot/public_html"
 							]
 						}
 					}
@@ -41,13 +41,13 @@
 			"lftp": {
 				"deploy": {
 					"url": "https://core-test-suite-deploy.fishawack.solutions",
-					"location": "~/webroot/",
+					"location": "~/documentRoot/public_html/",
 					"lftp": "aws-fw-coretestsuiteprotocols",
 					"subDir": "core-test-suite-deploy",
 					"commands": {
 						"server": {
 							"pre": [
-								"mkdir -p ~/webroot"
+								"mkdir -p ~/documentRoot/public_html"
 							]
 						}
 					}
@@ -56,7 +56,7 @@
 			"watertight": {
 				"deploy": {
 					"url": "https://core-test-suite-deploy.fishawack.solutions",
-					"location": "~/webroot/",
+					"location": "~/documentRoot/public_html/",
 					"lftp": "aws-fw-coretestsuiteprotocols",
 					"subDir": "core-test-suite-deploy",
 					"loginType": "bootstrap",
@@ -71,7 +71,7 @@
 					"commands": {
 						"server": {
 							"pre": [
-								"mkdir -p ~/webroot"
+								"mkdir -p ~/documentRoot/public_html"
 							]
 						}
 					}
@@ -80,7 +80,7 @@
 			"root": {
 				"deploy": {
 					"url": "https://core-test-suite-deploy.fishawack.solutions",
-					"location": "~/webroot/",
+					"location": "~/documentRoot/",
 					"lftp": "aws-fw-coretestsuiteprotocols",
 					"loginType": "bootstrap",
 					"users": [
@@ -96,14 +96,14 @@
 			"trailing": {
 				"deploy": {
 					"url": "https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy/",
-					"location": "~/webroot/core-test-suite-deploy/",
+					"location": "~/documentRoot/public_html/core-test-suite-deploy/",
 					"lftp": "aws-fw-coretestsuiteprotocols"
 				}
 			},
 			"commands": {
 				"deploy": {
 					"url": "https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy",
-					"location": "~/webroot/core-test-suite-deploy/",
+					"location": "~/documentRoot/public_html/core-test-suite-deploy/",
 					"ssh": "aws-fw-coretestsuiteprotocols",
 					"commands": {
 						"local": {
@@ -128,7 +128,7 @@
 			"commands-subdir": {
 				"deploy": {
 					"url": "https://core-test-suite-deploy.fishawack.solutions",
-					"location": "~/webroot/",
+					"location": "~/documentRoot/public_html/",
 					"ssh": "aws-fw-coretestsuiteprotocols",
 					"subDir": "core-test-suite-deploy",
 					"commands": {
@@ -154,7 +154,7 @@
 			"server-doesnt-exist": {
 				"deploy": {
 					"url": "https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy",
-					"location": "~/webroot/core-test-suite-deploy/",
+					"location": "~/documentRoot/public_html/core-test-suite-deploy/",
 					"ssh": "doesntexist"
 				}
 			},
