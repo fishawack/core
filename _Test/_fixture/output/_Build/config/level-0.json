@@ -25,25 +25,39 @@
 			},
 			"master": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions",
-					"location": "/home/fishawack/demo.fishawack.solutions/",
-					"ssh": "vidaHost-fishawack",
-					"subDir": "core-test-suite-deploy"
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "~/webroot/",
+					"ssh": "aws-fw-coretestsuiteprotocols",
+					"subDir": "core-test-suite-deploy",
+					"commands": {
+						"server": {
+							"pre": [
+								"mkdir -p ~/webroot"
+							]
+						}
+					}
 				}
 			},
 			"lftp": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions",
-					"location": "/home/fishawack/demo.fishawack.solutions/",
-					"lftp": "vidaHost-fishawack",
-					"subDir": "core-test-suite-deploy"
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "~/webroot/",
+					"lftp": "aws-fw-coretestsuiteprotocols",
+					"subDir": "core-test-suite-deploy",
+					"commands": {
+						"server": {
+							"pre": [
+								"mkdir -p ~/webroot"
+							]
+						}
+					}
 				}
 			},
 			"watertight": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions",
-					"location": "/home/fishawack/demo.fishawack.solutions/",
-					"lftp": "vidaHost-fishawack",
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "~/webroot/",
+					"lftp": "aws-fw-coretestsuiteprotocols",
 					"subDir": "core-test-suite-deploy",
 					"loginType": "bootstrap",
 					"users": [
@@ -53,14 +67,21 @@
 							"validTo": "",
 							"password": "23Blue01"
 						}
-					]
+					],
+					"commands": {
+						"server": {
+							"pre": [
+								"mkdir -p ~/webroot"
+							]
+						}
+					}
 				}
 			},
 			"root": {
 				"deploy": {
 					"url": "https://core-test-suite-deploy.fishawack.solutions",
-					"location": "/home/fishawack/core-test-suite-deploy.fishawack.solutions",
-					"lftp": "vidaHost-fishawack",
+					"location": "~/webroot/",
+					"lftp": "aws-fw-coretestsuiteprotocols",
 					"loginType": "bootstrap",
 					"users": [
 						{
@@ -74,16 +95,16 @@
 			},
 			"trailing": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions/core-test-suite-deploy/",
-					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
-					"lftp": "vidaHost-fishawack"
+					"url": "https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy/",
+					"location": "~/webroot/core-test-suite-deploy/",
+					"lftp": "aws-fw-coretestsuiteprotocols"
 				}
 			},
 			"commands": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions/core-test-suite-deploy",
-					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
-					"ssh": "vidaHost-fishawack",
+					"url": "https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy",
+					"location": "~/webroot/core-test-suite-deploy/",
+					"ssh": "aws-fw-coretestsuiteprotocols",
 					"commands": {
 						"local": {
 							"pre": [
@@ -106,9 +127,9 @@
 			},
 			"commands-subdir": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions",
-					"location": "/home/fishawack/demo.fishawack.solutions/",
-					"ssh": "vidaHost-fishawack",
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "~/webroot/",
+					"ssh": "aws-fw-coretestsuiteprotocols",
 					"subDir": "core-test-suite-deploy",
 					"commands": {
 						"local": {
@@ -132,8 +153,8 @@
 			},
 			"server-doesnt-exist": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions/core-test-suite-deploy",
-					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
+					"url": "https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy",
+					"location": "~/webroot/core-test-suite-deploy/",
 					"ssh": "doesntexist"
 				}
 			},
