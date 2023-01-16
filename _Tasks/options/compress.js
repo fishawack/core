@@ -73,7 +73,8 @@ module.exports = {
     },
     watertight: {
         "options": {
-            'archive': '_Zips/<%= filename %>_Watertight.zip'
+            'archive': '_Zips/<%= filename %>_Watertight.zip',
+            "symlinks": true
         },
         'cwd': '_Packages/Watertight', 
         'src': ['**'],
