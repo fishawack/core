@@ -29,6 +29,39 @@ describe('deploy:files', () => {
         it('Should not deploy to when bucket doesnt exist', () => expect(() => execSync(`grunt deploy:files --branch=aws-s3-bucket-doesnt-exist --mocha=output`, opts)).to.throw());
     });
 
+    describe('aws-cloudfront', () => {
+        it('Should invalidate cloudfront distribution', async () => {
+            let branch = 'aws-s3-with-cloudfront';
+            let url ='https://d3sa39g5u2ao33.cloudfront.net';
+
+            execSync(`grunt package deploy:files --branch=${branch} --mocha=output`, opts);
+            execSync(`grunt deploy:server:post --branch=${branch} --mocha=output`, opts);
+
+            let page = await fetch(url);
+            let html = await page.text();
+
+            expect(html).to.contain('Hello');
+
+            execSync(`grunt package deploy:files --branch=${branch} --mocha=cache`, opts);
+
+            page = await fetch(url);
+            html = await page.text();
+
+            expect(html).to.contain('Hello');
+
+            execSync(`grunt deploy:server:post --branch=${branch} --mocha=cache`, opts);
+
+            page = await fetch(url);
+            html = await page.text();
+
+            expect(html).to.contain('Goodbye');
+
+            execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
+        });
+
+        it('Should not invalidate cloudfront when invalid id given', () => expect(() => execSync(`grunt deploy:server:post --branch=aws-s3-with-cloudfront-doesnt-exist --mocha=output`, opts)).to.throw());
+    });
+
     it('Should deploy the master target to the server via scp', () => deploy('master'));
     it('Should deploy a watertight wrapped site to the server', () => deploy('watertight'));
     it('Should deploy the lftp target to the server via lftp', () => deploy('lftp'));
