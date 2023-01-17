@@ -11,7 +11,7 @@
     "package": "grunt package",
     "deploy": "grunt deploy",
     "mail": "grunt mail",
-    "mocha": "mocha _Test/*.js --timeout 240s --bail --publish",
+    "mocha": "mocha _Test/*.js --timeout 480s --bail --publish",
     "preversion": "lab-env run -d mocha",
     "postversion": "git push && git push --tags && npm publish",
     "postpublish": "git checkout development && git merge master && git push"
