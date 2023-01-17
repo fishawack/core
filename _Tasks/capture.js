@@ -13,7 +13,7 @@ module.exports = grunt => {
             https: false,
             logLevel: 'silent'
         }), async () => {
-            const Launcher = (await import('@wdio/cli')).default;
+            const { Launcher } = await import('@wdio/cli');
             
             // Laumching wdio/cli directly doesn't allow you to set multiple capabilities so instead write all to tmp wdio conf and read that in
             let obj = require('../wdio.conf.js').config;
