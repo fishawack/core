@@ -13,12 +13,12 @@ describe('deploy:server', () => {
 
         it('pre command should create a file on the server', async () => {
             execSync(`grunt deploy:server:pre --branch=commands --mocha=output`, opts);
-            expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy/core-test-suite-file.txt')).status).to.equal(200);
+            expect((await fetch('https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy/core-test-suite-file.txt')).status).to.equal(200);
         });
 
         it('post command should remove a file on the server', async () => {
             execSync(`grunt deploy:server:post --branch=commands --mocha=output`, opts);
-            expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy/core-test-suite-file.txt')).status).to.equal(404);
+            expect((await fetch('https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy/core-test-suite-file.txt')).status).to.equal(404);
         });
 
         it('command if missing should skip over task', async () => {
@@ -37,12 +37,12 @@ describe('deploy:server', () => {
 
         it('pre command should create a file on the server when run with subdir option', async () => {
             execSync(`grunt deploy:server:pre --branch=commands-subdir --mocha=output`, opts);
-            expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy/core-test-suite-file.txt')).status).to.equal(200);
+            expect((await fetch('https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy/core-test-suite-file.txt')).status).to.equal(200);
         });
 
         it('post command should remove a file on the server when run with subdir option', async () => {
             execSync(`grunt deploy:server:post --branch=commands-subdir --mocha=output`, opts);
-            expect((await fetch('https://demo.fishawack.solutions/core-test-suite-deploy/core-test-suite-file.txt')).status).to.equal(404);
+            expect((await fetch('https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy/core-test-suite-file.txt')).status).to.equal(404);
         });
 
         after(() => {
