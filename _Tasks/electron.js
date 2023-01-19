@@ -1,6 +1,12 @@
 var exec = require('child_process').exec;
 
 module.exports = function(grunt) {
+    grunt.registerMultiTask('electron', function(){
+        const options = this.options();
+
+        require('child_process').execSync(`electron-packager ${options.dir} ${options.name} --platform=${options.platform} --arch=${options.arch} --electronVersion=${options.electronVersion} --out=${options.out}`, {encoding: 'utf8', stdio: 'inherit'});
+    });
+
     grunt.registerTask('package:electron', ['clean:electron', 'copy:electron', 'write:electron', 'install:electron', 'electron']);
 
     grunt.registerTask('write:electron', function(){
