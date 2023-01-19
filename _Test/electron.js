@@ -8,7 +8,7 @@ const { opts } = require("./_helpers/globals.js");
 
 describe("electron", () => {
   before(() => {
-    execSync("grunt package:electron --branch=package --mocha=package", opts);
+    execSync("grunt clean:electron package:electron --branch=package --mocha=package", opts);
   });
 
   it("Should build a macOS electron package", () => {
