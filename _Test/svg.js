@@ -22,6 +22,16 @@ describe('svg', () => {
         });
     });
 
+    describe('svgfit', () => {
+        before(() => {
+            execSync('grunt clean:build fontello_svg svgfit --branch=master --mocha=bundle', opts);
+        });
+        
+        it('Should download icons from fontello.com as svgs', () => {
+            expect(glob.sync(path.join(__dirname, '_fixture/bundle/.tmp/icons-fit/*.svg'))).to.be.an('array').that.is.not.empty;
+        });
+    });
+
     describe('svgsprite', () => {
         before(() => {
             execSync('grunt fontello_svg svgfit svgmin svg_sprite --branch=master --mocha=bundle', opts);
