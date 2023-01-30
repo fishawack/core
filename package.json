@@ -73,6 +73,7 @@
     "pdf-image-pack": "^0.0.1",
     "postcss": "^8.4.21",
     "postcss-assets": "^6.0.0",
+    "svgfit": "^2.1.1",
     "vue-loader": "^17.0.1",
     "webpack": "^5.75.0"
   }
