@@ -69,6 +69,7 @@
     "grunt-modernizr": "^3.0.3",
     "grunt-svg-sprite": "^2.0.1",
     "grunt-svgmin": "^7.0.0",
+    "grunt-webpack": "^5.0.0",
     "jit-grunt": "^0.10.0",
     "lodash": "^4.17.21",
     "mocha": "^10.1.0",
