@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-var VueLoaderPlugin; try{ VueLoaderPlugin = { VueLoaderPlugin } = require('vue-loader');} catch(e){}
+var VueLoaderPlugin; try{ VueLoaderPlugin = { VueLoaderPlugin } = require('vue-loader');} catch(e){} // Conditional install as vue & vue/compiler-sfc won't be available in projects that don't have vue as a dependency
 const grunt = require('grunt');
 
 // var config;
@@ -88,7 +88,7 @@ module.exports = {
 				a[`process.env.${b}`] = webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[b]), [`./${config.src}/config/**/*.json`]);
 				return a;
 			}, {}))
-	    ],
+	    ].filter(Boolean), // filter removes undefined/null plugins before passing to webpack
 	    optimization: {
 			splitChunks: ((!contentJson.attributes.splitChunks) ? {} : {
 				cacheGroups: {
