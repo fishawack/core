@@ -66,6 +66,7 @@
     "grunt-contrib-clean": "^2.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-htmlmin": "^3.1.0",
+    "grunt-svg-sprite": "^2.0.1",
     "grunt-svgmin": "^7.0.0",
     "jit-grunt": "^0.10.0",
     "lodash": "^4.17.21",
