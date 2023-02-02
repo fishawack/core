@@ -118,11 +118,35 @@ describe('svg', () => {
         });
         
         it('Should generate svgSprite.svg', () => {
-            try{
-                fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Build/handlebars/generated/svgSprite.svg'), opts);
-            } catch(e){
-                expect(e.message).to.not.contain('ENOENT');
-            }
+            expect(glob.sync(path.join(__dirname, '_fixture/bundle/_Build/handlebars/generated/svgSprite.svg'))).to.be.an('array').that.is.not.empty;
+        });
+
+        describe('included files', () => {
+            let svg;
+
+            before(() => {
+                svg = fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Build/handlebars/generated/svgSprite.svg'), {encoding: 'utf8'});
+            });
+
+            it('Should not include files that have a __ prefix', () => {
+                expect(svg).not.contain('id="__fishawack"');
+            });
+
+            it('Should include files that have a -- prefix', () => {
+                expect(svg).contain('id="--svg"');
+            });
+
+            it('Should include files that have a -- prefix', () => {
+                expect(svg).contain('id="svg"');
+            });
+
+            it('Should have root id svgSprite', () => {
+                expect(svg).contain('id="svgSprite"');
+            });
+
+            it('Should prefix inner ids with svgo-', () => {
+                expect(svg).contain('id="svgo-');
+            });
         });
     });
 });
