@@ -55,6 +55,7 @@
     "@wdio/mocha-framework": "^8.0.13",
     "@wdio/spec-reporter": "^8.0.13",
     "autoprefixer": "^10.4.13",
+    "babel-loader": "^9.1.2",
     "chai": "^4.3.7",
     "cssnano": "^5.1.14",
     "fontello-svg": "github:mikemellor11/fontello-svg#v0.6.1",
