@@ -76,7 +76,7 @@ module.exports = function(grunt, hasBase, fixture) {
 		this.deployEnv = contentJson.attributes.deploy || {};
 	    this.deployLocation = truePath(deployEnv.location || '');
 		this.deployUrl = truePath(deployEnv.url || '');
-		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp] || {};
+		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp || deployEnv.ftp] || {};
 
 		this.deployValid = () => {
 			if(!deployLocation){
