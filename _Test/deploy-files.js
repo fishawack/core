@@ -88,4 +88,8 @@ describe('deploy:files', () => {
             expect(e.message).to.contain(`Command failed: ${command}`);
         }
     });
+
+    it('Should run all deploy steps when deploy called directly', () => {
+        expect(() => execSync(`grunt deploy --branch=doesnt-exist --mocha=output`, {encoding: 'utf8', stdio: 'inherit'})).to.not.throw();
+    });
 });
