@@ -90,6 +90,10 @@ describe('deploy:files', () => {
     });
 
     it('Should run all deploy steps when deploy called directly', () => {
-        expect(() => execSync(`grunt deploy --branch=doesnt-exist --mocha=output`, {encoding: 'utf8', stdio: 'inherit'})).to.not.throw();
+        expect(() => execSync(`grunt deploy --branch=doesnt-exist --mocha=output`, opts)).to.not.throw();
+    });
+
+    it('Should throw error when attempting to deploy via ftp', () => {
+        expect(() => execSync(`grunt deploy --branch=ftp --mocha=output`, opts)).to.throw();
     });
 });

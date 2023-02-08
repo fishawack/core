@@ -53,6 +53,13 @@
 					}
 				}
 			},
+			"ftp": {
+				"deploy": {
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "~/",
+					"ftp": "aws-fw-coretestsuiteprotocols"
+				}
+			},
 			"watertight": {
 				"deploy": {
 					"url": "https://core-test-suite-deploy.fishawack.solutions",
