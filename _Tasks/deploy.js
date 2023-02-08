@@ -115,7 +115,7 @@ module.exports = function(grunt) {
         grunt.log.warn(`Deploying to: ${deployLocation}`);
 
         if(deployEnv.ftp){
-            grunt.task.run('ftpscript:deploy');
+            grunt.fatal('Deploying via ftp is no longer supported');
         } else if(deployEnv.ssh){
             execSync(`scp -rpl 10000 _Zips/Deploy.zip '${deployCred.username}'@'${deployCred.host}':'${deployLocation}' && ssh -tt '${deployCred.username}'@'${deployCred.host}' 'unzip -o \'${deployLocation}/Deploy.zip\' -d \'${deployLocation}/\' && rm -rf \'${deployLocation}/Deploy.zip\''`, opts);
         } else if(deployEnv.lftp){
