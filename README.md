@@ -1799,6 +1799,7 @@ fw content && fw prod && fw run -d package && fw deploy && fw run mail
 * Firefox no longer installed within container but can still be specified and used if firefox manually installed
 * Chrome browser now using chromium headless under the hood - could be slight differences
 * svgo syntax changed incase svgmin task overwritten - https://github.com/svg/svgo/releases/tag/v2.0.0 - https://github.com/svg/svgo/releases/tag/v3.0.0
+* ftp deployments no longer supported
 
 ### 7.5.0
 
