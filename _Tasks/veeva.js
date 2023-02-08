@@ -5,6 +5,7 @@ module.exports = function(grunt) {
         var done = this.async();
 
         const jsdom = require("jsdom");
+        const { JSDOM } = jsdom;
         const fs = require("fs-extra");
 
         const createCsvWriter = require('csv-writer').createArrayCsvWriter;
@@ -48,7 +49,8 @@ module.exports = function(grunt) {
                 ]]
                 .concat(
                     keyMessages.map((d, i) => {
-                        var safeName = jsdom.jsdom(d.seqName).querySelector('body').textContent;
+                        const { document } = (new JSDOM(d.seqName)).window;
+                        var safeName = document.querySelector('body').textContent;
 
                         return [
                             "",
@@ -120,6 +122,7 @@ module.exports = function(grunt) {
         const fs = require("fs-extra");
         const glob = require('glob');
         const jsdom = require("jsdom");
+        const { JSDOM } = jsdom;
         var browsers = captureEnv().browsers;
 		var sizes = captureEnv().sizes;
 
@@ -166,13 +169,13 @@ module.exports = function(grunt) {
             var seqName = d.seqName;
             var screenshotName = d.screenshotName;
 
-            var screenshot = glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`);
+            var screenshots = glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`);
 
-            if(!screenshot.length){
+            if(!screenshots.length){
                 grunt.fatal(`No screenshots detected in .tmp/, do you need to run the capture task?`);
             }
             
-            screenshot = alphanumSort(screenshot[0]);
+            let screenshot = alphanumSort(screenshots)[0];
 
         	copy.default.files.push(
                 {
@@ -215,7 +218,7 @@ module.exports = function(grunt) {
 
             clean.veeva.src.push('_Packages/Veeva/' + zipName + '/');
 
-            var document = jsdom.jsdom(seqName);
+            const { document } = (new JSDOM(seqName)).window;
 
             var multiStr =  "USER=" + ftp.username + "\n" + 
                             "PASSWORD=" + ftp.password + "\n" + 
