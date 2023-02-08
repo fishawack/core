@@ -83,11 +83,11 @@ module.exports = function(grunt) {
 	
 	grunt.registerTask('packImagesFlat', async function() {
         var done = this.async();
-        var PDFImagePack = require("pdf-image-pack");
         var fs = require('fs-extra');
 		var glob = require('glob');
         var browsers = captureEnv().browsers;
 		var sizes = captureEnv().sizes;
+        const pdfPack = require('../_Node/pdfPack.js');
         
         fs.mkdirpSync('.tmp/pdfs/cegedim/');
 
@@ -96,18 +96,10 @@ module.exports = function(grunt) {
 			var zipName = d.zipName;
 			var screenshotName = d.screenshotName;
 
-            await new Promise((resolve, reject) => {
-                new PDFImagePack().output(
-                    alphanumSort(glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`)), 
-                    `.tmp/pdfs/cegedim/${zipName}.pdf`,
-                    function(err){
-                        if(err){
-                            reject(err);
-                        }
-
-                        resolve();
-                    });
-                });
+            await pdfPack(
+                alphanumSort(glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`)), 
+                `.tmp/pdfs/cegedim/${zipName}.pdf`
+            );
 		}
 
         done();
