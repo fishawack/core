@@ -40,7 +40,7 @@ module.exports = function(grunt) {
         var colors = ['red', 'blue', 'green', 'purple', '#FF5516'];
         var done = this.async();
 
-        require('gitlog')({ 
+        require('gitlog').default({ 
                 repo: __dirname,
                 number: 5,
                 fields: [ 'hash', 'subject', 'abbrevHash', 'committerName', 'committerDateRel']
