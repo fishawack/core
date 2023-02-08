@@ -267,10 +267,6 @@ module.exports = function(grunt, hasBase, fixture) {
 	    		json: false
 	    	},
 	    	{
-	    		file: '.ftppass',
-	    		key: 'ftp'
-	    	},
-	    	{
 	    		file: 'misc.json',
 	    		key: 'misc'
 	    	}

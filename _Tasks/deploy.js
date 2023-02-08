@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         grunt.log.ok(`${count.files} files, ${count.directories} directories, ${count.symlinks} symlinks copied. ${count.resolved} symlinks resolved`);
     });
 
-    grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'compress:deploy', 'deploy:files', 'deploy:local:post', 'deploy:server:post', 'ftpscript:badges']);
+    grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'compress:deploy', 'deploy:files', 'deploy:local:post', 'deploy:server:post']);
 
     function command(command){
         if(!deployValid()){return;}
