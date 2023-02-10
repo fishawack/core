@@ -48,16 +48,16 @@ describe('compare', () => {
             );
         });
 
-        it('Should return change of >99 when two completely different files used', () => {
-            expect(images(files[0], files[1]).result).to.be.greaterThan(99);
+        it('Should return change of >99 when two completely different files used', async () => {
+            expect((await images(files[0], files[1])).result).to.be.greaterThan(99);
         });
 
-        it('Should return change of 0 when the same file compared', () => {
-            expect(images(files[0], files[0]).result).to.be.equal(0);
+        it('Should return change of 0 when the same file compared', async () => {
+            expect((await images(files[0], files[0])).result).to.be.equal(0);
         });
 
-        it('Should return change of non zero when different size images used', () => {
-            expect(images(files[0], files[2]).result).to.be.equal(0);
+        it('Should return change of non zero when different size images used', async () => {
+            expect((await images(files[0], files[2])).result).to.be.greaterThan(0);
         });
     });
 });
