@@ -95,7 +95,7 @@ async function size(browser, size, write, baseBrowser){
             console.log(e.message);
         }
 
-        var data = images(image1, image2);
+        var data = await images(image1, image2);
 
         if(data){
             values.push(data.result);
@@ -122,17 +122,41 @@ async function size(browser, size, write, baseBrowser){
     }, 0);
 };
 
-function images(image1, image2){
+async function images(image1, image2){
+    const sharp = require('sharp');
     const pixelmatch = require('pixelmatch');
     const PNG = require('pngjs').PNG;
 
-    const img1 = PNG.sync.read(image1);
-    const img2 = PNG.sync.read(image2);
-    const {width, height} = img1;
+    const sharp1 = sharp(image1);
+    const meta1 = await sharp1.metadata();
+
+    const sharp2 = sharp(image2);
+    const meta2 = await sharp2.metadata();
+
+    const width = Math.max(meta1.width, meta2.width);
+    const height = Math.max(meta1.height, meta2.height);
+
+    const opts = {
+        width: width,
+        height: height,
+        fit: 'contain',
+        position: 'left top'
+    };
+
+    const boxedBuffer1 = await sharp1
+        .resize(opts)
+        .raw()
+        .toBuffer();
+
+    const boxedBuffer2 = await sharp2
+        .resize(opts)
+        .raw()
+        .toBuffer();
+
     const total = width * height;
     const diff = new PNG({width, height});
 
-    let result = pixelmatch(img1.data, img2.data, diff.data, width, height, {threshold: 0.1});
+    let result = pixelmatch(boxedBuffer1, boxedBuffer2, diff.data, width, height, {threshold: 0.05});
 
     return {result: +((result / total) * 100).toFixed(2), diff: PNG.sync.write(diff)};
 };
