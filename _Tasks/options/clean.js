@@ -17,5 +17,6 @@ module.exports = {
         src: ['_Packages/Watertight/**/*'],
         filter: (fp) => grunt.file.isDir(fp) && require('fs').readdirSync(fp).length === 0
     },
-    content: ['<%= src %>/content']
+    content: ['<%= src %>/content'],
+    coverage: ['coverage']
 }
