@@ -269,6 +269,11 @@ module.exports = function(grunt, hasBase, fixture) {
 	    	{
 	    		file: 'misc.json',
 	    		key: 'misc'
+	    	},
+	    	{
+	    		file: 'ftp-fishawack.egnyte.com',
+	    		key: 'egnyte',
+				json: true
 	    	}
 		];
 		
