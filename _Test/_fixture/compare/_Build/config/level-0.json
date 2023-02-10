@@ -1,0 +1,25 @@
+{
+    "attributes": {
+	    "title": "<%= repo.name %>",
+		"targets": {
+			"master": {
+				"capture": {
+					"sizes": [
+						[1080, 608]
+					]
+				}
+			},
+			"browsers": {
+				"capture": {
+					"browsers": [
+						"chrome",
+						"firefox"
+					],
+					"sizes": [
+						[1080, 608]
+					]
+				}
+			}
+		}
+	}
+}
