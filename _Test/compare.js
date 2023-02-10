@@ -6,7 +6,7 @@ const path = require('path');
 const glob = require('glob');
 const fs = require('fs-extra');
 const { opts } = require('./_helpers/globals.js');
-const { images } = require('../_Tasks/compare.js');
+const { images, compare } = require('../_Tasks/compare.js');
 
 describe('compare', () => {
     describe('previous', () => {
@@ -24,6 +24,28 @@ describe('compare', () => {
 
         it('Should create a pdf file containing the differences from the previous build', () => {
             expect(glob.sync(path.join(__dirname, '_fixture/compare/_Pdfs/*_chrome_compare.pdf'))).to.be.an('array').that.is.not.empty;
+        });
+    });
+
+    describe('missing', () => {
+        let output;
+        before(() => {
+            output = execSync('grunt clean:coverage compare:previous --mocha=compare --branch=missing', {encoding: 'utf8'});
+        });
+
+        it('Should flag missing files from previous run without erroring out', () => {
+            expect(output).to.contain(`didn't exist in previous run`);
+        });
+    });
+
+    describe('unknown', () => {
+        let output;
+        before(() => {
+            output = execSync('grunt clean:coverage compare:previous --mocha=compare --branch=unknown', {encoding: 'utf8'});
+        });
+
+        it('Should flag unknown browsers as having no images to compare', () => {
+            expect(output).to.contain(`No images to compare`);
         });
     });
     
