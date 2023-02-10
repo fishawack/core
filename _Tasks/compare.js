@@ -16,6 +16,7 @@ module.exports = function(grunt) {
 
 async function compare(browsers, sizes, crossBrowser){
     var fs = require('fs-extra');
+    const { log } = require('../_Tasks/helpers/include.js');
 
     fs.mkdirpSync(`./coverage`);
 
@@ -31,20 +32,21 @@ async function compare(browsers, sizes, crossBrowser){
             diff = value.reduce((a, b) => (a > b) ? a : b);
         }
 
-        grunt.log.ok(`${crossBrowser ? `${browsers[0]}-` : ''}${browsers[i]}`, `${diff}% different`);
+        log.ok(`${crossBrowser ? `${browsers[0]}-` : ''}${browsers[i]}`, `${diff}% different`);
 
         fs.writeFileSync(`./coverage/${crossBrowser ? `comparison-${browsers[0]}-${browsers[i]}` : 'regression'}.json`, JSON.stringify({diff}, null, 4));
     }
 }
 
 async function browser(browser, write, sizes, baseBrowser){
+    const { log } = require('../_Tasks/helpers/include.js');
     var values = [];
 
     for(let i = 0; i < sizes.length; i++){
         let width = sizes[i][0];
         let height = sizes[i][1];
 
-        var data = await size(browser, `${width}x${height}`, write, baseBrowser).catch(() => {});
+        var data = await size(browser, `${width}x${height}`, write, baseBrowser);
 
         if(data != null){
             values.push(data);
@@ -61,13 +63,15 @@ async function browser(browser, write, sizes, baseBrowser){
         }
     }
 
-    grunt.log.ok(browser);
+    log.ok(browser);
     
     return values;
 };
 
 async function size(browser, size, write, baseBrowser){
-    var fs = require('fs-extra');
+    const fs = require('fs-extra');
+    const glob = require('glob');
+    const { alphanumSort, log } = require('../_Tasks/helpers/include.js');
     
     if(write){
         fs.mkdirpSync(`.tmp/difference/`);
@@ -76,7 +80,7 @@ async function size(browser, size, write, baseBrowser){
 
     var values = [];
 
-    let files = await alphanumSort(grunt.file.expand({cwd: `.tmp/screenshots/${browser}/${size}/`}, '*'));
+    let files = await alphanumSort(glob.sync('*', {cwd: `.tmp/screenshots/${browser}/${size}/`}));
     
     for(let i = 0; i < files.length; i++){
         let file = files[i];
@@ -91,8 +95,8 @@ async function size(browser, size, write, baseBrowser){
                 image1 = fs.readFileSync(`.tmp/screenshots/${baseBrowser}/${size}/${file}`);
             }
         } catch(e){
-            // Maybe should continue?
-            console.log(e.message);
+            log.warn(`${file} didn't exist in previous run`);
+            continue;
         }
 
         var data = await images(image1, image2);
@@ -104,17 +108,17 @@ async function size(browser, size, write, baseBrowser){
                 fs.writeFileSync(`.tmp/difference/${browser}/${size}/${file}`, data.diff);
             }
         
-            grunt.log.ok(file);
+            log.ok(file);
         }
     }
 
     if(!values.length){
-        grunt.log.error("No images to compare");
+        log.error("No images to compare");
         
         return null;
     }
 
-    grunt.log.ok(size);
+    log.ok(size);
 
     // Reduce to the largest change out of all pages
     return values.reduce((a, b) => {
