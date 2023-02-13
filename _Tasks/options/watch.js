@@ -23,7 +23,7 @@ module.exports = {
                 '<%= src %>/handlebars/**/*',
                 '!<%= src %>/handlebars/generated/**/*'
             ],
-        tasks: ['reload', 'jsonlint', 'tv4', 'compile-handlebars', 'htmlmin', 'webpack:dev', 'concat:dev', 'clean:build']
+        tasks: ['reload', 'jsonlint', 'json-schema', 'compile-handlebars', 'htmlmin', 'webpack:dev', 'concat:dev', 'clean:build']
     },
     assets: {
         files: ['<%= src %>/media/**/*'],
