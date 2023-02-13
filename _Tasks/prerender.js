@@ -2,10 +2,8 @@ module.exports = (grunt) => {
     grunt.registerTask('prerender', async function(){
         var done = this.async();
 
-        const fs = require('fs');
+        const fs = require('fs-extra');
         const path = require('path');
-        const mkdirp = require('mkdirp');
-        const jsdom = require("jsdom");
 
         const Prerenderer = require('@prerenderer/prerenderer');
         const Renderer = require('@prerenderer/renderer-puppeteer');
@@ -69,7 +67,7 @@ module.exports = (grunt) => {
                     const outputFile = `${outputDir}/index.html`;
                     let html = renderedRoute.html.trim().replace('loaded', 'loading');
                     
-                    mkdirp.sync(outputDir);
+                    fs.mkdirpSync(outputDir);
 
                     fs.writeFileSync(outputFile, html);
 
