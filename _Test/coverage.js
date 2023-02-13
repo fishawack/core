@@ -7,7 +7,7 @@ const glob = require('glob');
 const { opts } = require('./_helpers/globals.js');
 
 describe('coverage', () => {    
-    it('Should pull down assets via lftp', () => {
+    it('Should output the code coverage to terminal', () => {
         let output = execSync('grunt coverage --mocha=bundle --branch=master', {encoding: 'utf8'});
 
         expect(output).to.contain('Code coverage: 0.0%');
