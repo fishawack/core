@@ -39,13 +39,16 @@ describe('compare', () => {
     });
 
     describe('unknown', () => {
-        let output;
-        before(() => {
-            output = execSync('grunt clean:coverage compare:previous --mocha=compare --branch=unknown', {encoding: 'utf8'});
+        before(async () => {
+            const base = process.cwd();
+            process.chdir(path.join(__dirname, '_fixture/compare'));
+            fs.removeSync('.tmp/difference/');
+            await compare(['unknown'], [[0, 0]]);
+            process.chdir(base);
         });
 
         it('Should flag unknown browsers as having no images to compare', () => {
-            expect(output).to.contain(`No images to compare`);
+            expect(glob.sync(path.join(__dirname, '_fixture/compare/.tmp/difference/**/*.png'))).to.be.an('array').that.is.empty;
         });
     });
     
