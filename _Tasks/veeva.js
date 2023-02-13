@@ -136,8 +136,6 @@ module.exports = function(grunt) {
             copy: grunt.config.get('copy')
         };
 
-        var ftp = grunt.config.get('targets').ftp['crm-13-ftp-us.veevacrm.com'];
-
         var copy = {
         	default: {
         		files: []
@@ -220,8 +218,8 @@ module.exports = function(grunt) {
 
             const { document } = (new JSDOM(seqName)).window;
 
-            var multiStr =  "USER=" + ftp.username + "\n" + 
-                            "PASSWORD=" + ftp.password + "\n" + 
+            var multiStr =  "USER=" + 'ftp.username' + "\n" + 
+                            "PASSWORD=" + 'ftp.password' + "\n" + 
                             "FILENAME=" + zipName + ".zip\n" + 
                             "NAME=" + document.querySelector('body').textContent + "\n" +  
                             "VExternal_Id_vod__c=" + zipName;
