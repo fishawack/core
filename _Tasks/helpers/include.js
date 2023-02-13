@@ -202,7 +202,7 @@ module.exports = function(grunt, hasBase, fixture) {
 		var name;
 
 		try{
-			name = execSync('git rev-parse --show-toplevel', {encoding: 'utf8'});
+			name = process.env.REPO || execSync('basename -s .git `git config --get remote.origin.url`', {encoding: 'utf8'}) || 'unknown';
 			commit = execSync('git rev-parse --short HEAD', {encoding: 'utf8'});
 		} catch(e){
 			name = process.cwd();
