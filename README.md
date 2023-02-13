@@ -1802,6 +1802,7 @@ fw content && fw prod && fw run -d package && fw deploy && fw run mail
 * ftp deployments no longer supported
 * .ftppass no longer copied into repository
 * egnyte credentials should now be stored in ~/targets/
+* Switched from tv4 to ajv json schema - effects any repos that may have overridden settings
 
 ### 7.5.0
 
