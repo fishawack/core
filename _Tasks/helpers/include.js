@@ -590,16 +590,16 @@ module.exports.alphanumSort = function(arr, caseInsensitive) {
 }
 
 module.exports.log = {
-	message(color, message){
-		console.log(`\x1b[${color}m%s\x1b[0m`, `>>`, message);
+	message(color){
+		console.log(`\x1b[${color}m%s\x1b[0m`, `>>`, ...[...arguments].slice(1));
 	},
-	ok(message){
-		this.message(32, message);
+	ok(){
+		this.message(32, ...arguments);
 	},
-	warn(message){
-		this.message(33, message);
+	warn(){
+		this.message(33, ...arguments);
 	},
-	error(message){
-		this.message(31, message);
+	error(){
+		this.message(31, ...arguments);
 	}
 }
