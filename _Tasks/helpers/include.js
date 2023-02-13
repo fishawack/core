@@ -302,20 +302,12 @@ module.exports = function(grunt, hasBase, fixture) {
 
 	    	var path = os.homedir() + (d.path || '/targets/');
 	    	var file =  d.file + ((d.json) ? '.json' : '');
-	    	var save = ((d.key) ? '' : 'ssh-') + file;
 
-			if(!fileExists(save, './', grunt)){
-				grunt.log.warn(save + ' not found in root, attempting to copy ' + file + ' from ' + path);
-
-				try{
-					fs.copyFileSync(path + file, save);
-					grunt.log.ok(file + ' copied');
-				} catch(e){
-					grunt.log.warn(file + ' not found at ' + path);
-				}
-		    }
-
-		    targets[d.key || d.file] = safeLoad(grunt, save, (d.json === false) ? false : true);
+			try{
+				targets[d.key || d.file] = grunt.file[d.json ? 'readJSON' : 'read'](`${path}/${file}`);
+			} catch(e){
+				grunt.log.warn(file + ' not found at ' + path);
+			}
 	    });
 		
 		return targets;
