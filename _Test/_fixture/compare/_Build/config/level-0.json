@@ -20,13 +20,6 @@
 						[1080, 608]
 					]
 				}
-			},
-			"unknown": {
-				"capture": {
-					"browsers": [
-						"unknown"
-					]
-				}
 			}
 		}
 	}
