@@ -56,6 +56,7 @@
     "@wdio/local-runner": "^8.0.13",
     "@wdio/mocha-framework": "^8.0.13",
     "@wdio/spec-reporter": "^8.0.13",
+    "ajv": "^8.12.0",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^9.1.2",
     "chai": "^4.3.7",
