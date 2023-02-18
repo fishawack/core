@@ -2,7 +2,7 @@
 
 const expect = require('chai').expect;
 
-describe('html', () => {
+describe('puppeteer', () => {
     let browser;
 
     before(async () => {
@@ -13,7 +13,7 @@ describe('html', () => {
         });
     });
 
-    it('Should generate a index.html file', async () => {
+    it('Should boot up puppeteer and grab title', async () => {
         const page = await browser.newPage();
 
         await page.goto("https://lab-doc.fishawack.solutions/");
