@@ -6,14 +6,14 @@ module.exports = {
     },
     macos: {
         options: {
-            electronVersion: '4.1.0',
+            electronVersion: '23.1.0',
             platform: 'darwin',
             arch: 'x64'
         }
     },
     win32: {
         options: {
-            electronVersion: '4.1.0',
+            electronVersion: '23.1.0',
             platform: 'win32',
             arch: 'x64'
         }
