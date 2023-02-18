@@ -46,12 +46,12 @@ module.exports = grunt => {
             // Disable usual test spec location
             obj.specs = [];
 
-            fs.mkdirpSync('/app/.tmp')
-            fs.writeFileSync('/app/.tmp/wdio.conf.js', `exports.config = ${JSON.stringify(obj, null, 4)};`);
+            fs.mkdirpSync('.tmp')
+            fs.writeFileSync('.tmp/wdio.conf.js', `exports.config = ${JSON.stringify(obj, null, 4)};`);
 
             const wdio = new Launcher(
-                "/app/.tmp/wdio.conf.js",
-                { spec: ['/app/_Node/capture.js'] }
+                ".tmp/wdio.conf.js",
+                { spec: [require.resolve('../_Node/capture.js')] }
             );
 
             let exitCode = await wdio.run();
