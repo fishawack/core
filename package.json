@@ -75,6 +75,7 @@
     "grunt-contrib-concat": "^2.1.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-htmlmin": "^3.1.0",
+    "grunt-contrib-uglify": "^5.2.2",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-modernizr": "^3.0.3",
     "grunt-svg-sprite": "^2.0.1",
