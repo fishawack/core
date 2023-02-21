@@ -91,6 +91,9 @@ module.exports = (grunt) => {
             }
 
             ls.stdout.on('data', rendered);
+            ls.stderr.on('data', (data) => {
+                grunt.fail.warn('Syntax error');
+            });
 
             if(watch){
                 ls.stdout.on('data', isReady);
