@@ -86,7 +86,7 @@ module.exports = {
 	    	VueLoaderPlugin && new VueLoaderPlugin(),
 			new webpack.DefinePlugin(Object.keys(process.env).reduce((a, b) => {
 				if(b === "NODE_ENV") return a;
-				a[`process.env.${b}`] = webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[b]), [`./${config.src}/config/**/*.json`]);
+				a[`process.env.${b}`] = webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[b]), [path.resolve(process.cwd(), `${config.src}/config/**/*.json`)]);
 				return a;
 			}, {}))
 	    ].filter(Boolean), // filter removes undefined/null plugins before passing to webpack
