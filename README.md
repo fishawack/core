@@ -1803,6 +1803,9 @@ fw content && fw prod && fw run -d package && fw deploy && fw run mail
 * .ftppass no longer copied into repository
 * egnyte credentials should now be stored in ~/targets/
 * Switched from tv4 to ajv json schema & json schema 7 - effects any repos that may have overridden settings
+* jshint no longer runs (will soon be replaced by eslint)
+* jsonlint no longer runs (json-schema handles syntax errors)
+* imagemin no longer runs (this is now the responsiblity of design just like video compression is part of motions job)
 
 ### 7.5.0
 
