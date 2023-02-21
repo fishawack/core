@@ -11,7 +11,7 @@ function createWindow () {
 	var screen = electron.screen.getPrimaryDisplay().bounds;
 
 	// Create the browser window.
-	win = new BrowserWindow({width: screen.width, height: screen.height, resizable: false, fullscreen: true})
+	win = new BrowserWindow({width: screen.width, height: screen.height, resizable: false, fullscreen: true, autoHideMenuBar: true})
 
 	// and load the index.html of the app.
 	win.loadURL(url.format({
