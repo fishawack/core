@@ -40,7 +40,8 @@
   ],
   "devDependencies": {
     "node-fetch": "^2.6.7",
-    "time-grunt": "^2.0.0"
+    "time-grunt": "^2.0.0",
+    "tree-kill": "^1.2.2"
   },
   "optionalDependencies": {
     "@fishawack/watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v6.0.0"
@@ -74,6 +75,7 @@
     "grunt-contrib-concat": "^2.1.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-htmlmin": "^3.1.0",
+    "grunt-contrib-watch": "^1.1.0",
     "grunt-modernizr": "^3.0.3",
     "grunt-svg-sprite": "^2.0.1",
     "grunt-svgmin": "^7.0.0",
