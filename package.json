@@ -60,6 +60,7 @@
     "autoprefixer": "^10.4.13",
     "babel-loader": "^9.1.2",
     "chai": "^4.3.7",
+    "core-js": "^3.28.0",
     "cssnano": "^5.1.14",
     "csv-writer": "^1.6.0",
     "fontello-svg": "github:mikemellor11/fontello-svg#v0.6.1",
