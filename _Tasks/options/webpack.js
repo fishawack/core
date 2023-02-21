@@ -64,7 +64,7 @@ module.exports = {
 								presets: [
 									[require.resolve('@babel/preset-env'), {
 										"useBuiltIns": "usage",
-										"corejs": { "version": 3, "proposals": true }
+										"corejs": { "version": "3.28.0", "proposals": true }
 									}]
 								],
 								sourceType: "unambiguous",
