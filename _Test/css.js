@@ -54,4 +54,8 @@ describe('css', () => {
             expect(css).to.equal(fs.readFileSync(path.join(__dirname, '_expected/general-no-dist-with-target.css'), opts));
         });
     });
+
+    it('Should throw error when syntax error found in sass', () => {
+        expect(() => execSync('grunt clean:cache sass:default --branch=syntax-error --mocha=bundle', opts)).to.throw();
+    })
 });
