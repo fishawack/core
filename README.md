@@ -14,40 +14,30 @@ As a company we do a lot of smaller short term builds rather than longer term co
 
 As this code base is shared amongst most of our repos, these dependancies are likely the only ones you'll ever need to install to get project code up and running. They've been split into three groups, content, build and deploy dependancies.
 
-### Content
-
-The following dependancies are needed to pull media assets from external file storage.
-
-> Repositories packaged for handover to external agencies won't need these dependencies as all media assets will be bundled into the handover package.
-
-* git
-* wget
-* jq
-* ftp (mac high sierra and above)
 
 ### Build
 
 The following dependancies are needed to build the source code.
 
-* node (10.0.0 recommended)
-* npm (5.7.1 or above)
-* node-gyp
-* grunt-cli
-* Dart Sass VM
-* imagemagick
-* xCode
-* xCode command line tools
+* git (>=2.38.0 recommended)
+* node (>=16 recommended)
+* npm (>=9 recommended)
+* dart sass (>=1.57.1 recommended)
 
 ### Deploy
 
-These dependancies are only needed if you're planning to build a pdf locally or manually deploy to the server.
+These dependancies are only needed if you're planning to run Fishawack specific deployments or generate packages.
+
+> Repositories packaged for handover to external agencies won't need these dependencies
 
 * ghostscript
 * wine
-* xquartz
-* adoptopenjdk
-* python (windows only)
 * composer
+* lftp
+* chromium
+* eb cli
+* aws cli
+* electron-packager
 
 ## Getting started
 
@@ -59,64 +49,24 @@ These dependancies are only needed if you're planning to build a pdf locally or 
 brew install git
 brew install sass/sass/sass
 brew install wget
-brew install imagemagick
-brew install jq
 brew install lftp
-brew install tnftp tnftpd telnet telnetd
-brew install --cask adoptopenjdk
-brew install --cask xquartz
-brew install --cask wine-stable
+brew install ghostscript
+brew install wine-stable
+brew install aws-elasticbeanstalk
+brew install awscli
+brew install chromium
 ```
-
-> Wine [isn't currently supported](https://wiki.winehq.org/MacOS) on macOS Catalina 10.15 so any electron builds will need to be run on the CI/CD runners instead of locally
 
 * Install Nvm - [https://github.com/creationix/nvm](https://github.com/creationix/nvm) - then run the following commands
 
 ```bash
-nvm install 10.0.0
+nvm install 18.0.0
 
 npm install npm@latest -g
-npm install grunt-cli -g
-npm install node-gyp -g
+npm install electron-packager -g
 ```
-
-* Install *xCode* via mac app store - then run the following command
-
-```bash
-xcode-select --install
-```
-
-> Some users have issues with the `node-gyp` dependancy on macOS Catalina 10.15, if this is you the best advice is to [check here for solutions](https://github.com/nodejs/node-gyp/blob/master/macOS_Catalina.md)
 
 * Install composer [https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
-
-### Windows
-
-* Install choco - [https://chocolatey.org/](https://chocolatey.org/) then use to install the following
-
-```bash
-choco install git
-choco install sass/sass/sass
-choco install wget
-choco install imagemagick
-choco install ghostscript
-choco install wine
-choco install jq
-choco install lftp
-choco install adoptopenjdk
-choco install xquartz
-```
-
-* Install Nvm - [https://github.com/coreybutler/nvm-windows](https://github.com/coreybutler/nvm-windows)
-
-```bash
-nvm install 10.0.0
-
-npm install npm@latest -g
-npm install grunt-cli -g
-```
-
-* Install composer [https://getcomposer.org/doc/00-intro.md#installation-windows](https://getcomposer.org/doc/00-intro.md#installation-windows)
 
 ## Remotes
 
@@ -1806,6 +1756,7 @@ fw content && fw prod && fw run -d package && fw deploy && fw run mail
 * jshint no longer runs (will soon be replaced by eslint)
 * jsonlint no longer runs (json-schema handles syntax errors)
 * imagemin no longer runs (this is now the responsiblity of design just like video compression is part of motions job)
+* karma ui test needs full path for requires (utility.js)
 
 ### 7.5.0
 
