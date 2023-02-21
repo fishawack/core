@@ -4,11 +4,11 @@ module.exports = {
     },
     vue: {
         files: ['<%= src %>/vue/**/*.{vue,js}'],
-        tasks: ['jshint', 'webpack:dev', 'concat:dev', 'clean:build']
+        tasks: ['webpack:dev', 'concat:dev', 'clean:build']
     },
     scripts: {
         files: ['<%= src %>/js/**/*.js', '!<%= src %>/js/generated/**/*'],
-        tasks: ['jshint', 'webpack:dev', 'concat:dev']
+        tasks: ['webpack:dev', 'concat:dev']
     },
     html: {
         files: [
