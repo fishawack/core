@@ -23,7 +23,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './test/specs/**/*.js'
+        `${process.cwd()}/_Test/ui/**/*.js`
     ],
     // Patterns to exclude.
     exclude: [
