@@ -43,9 +43,6 @@
     "time-grunt": "^2.0.0",
     "tree-kill": "^1.2.2"
   },
-  "optionalDependencies": {
-    "@fishawack/watertight": "git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v6.0.0"
-  },
   "dependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-object-assign": "^7.18.6",
