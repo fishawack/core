@@ -14,10 +14,17 @@ As a company we do a lot of smaller short term builds rather than longer term co
 
 As this code base is shared amongst most of our repos, these dependancies are likely the only ones you'll ever need to install to get project code up and running. They've been split into three groups, content, build and deploy dependancies.
 
+### Content
+
+The following dependancies are needed to pull binary assets from external sources.
+
+> Repositories packaged for handover to external agencies won't need these dependencies as binary files (png's,mp4's etc) will be baked into the final repository
+
+* lftp
 
 ### Build
 
-The following dependancies are needed to build the source code.
+The following dependancies are needed to build the source code in both development mode and production.
 
 * git (>=2.38.0 recommended)
 * node (>=16 recommended)
@@ -32,8 +39,6 @@ These dependancies are only needed if you're planning to run Fishawack specific 
 
 * ghostscript
 * wine
-* composer
-* lftp
 * chromium
 * eb cli
 * aws cli
@@ -64,9 +69,8 @@ nvm install 18.0.0
 
 npm install npm@latest -g
 npm install electron-packager -g
+npm install install -g git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v6.0.0
 ```
-
-* Install composer [https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
 
 ## Remotes
 
