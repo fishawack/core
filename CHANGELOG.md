@@ -1,5 +1,94 @@
 ## Changelog
 
+### 8.0.0 (2023-02-22)
+* [Feature] updated webdriverio to v8 syntax
+* [Feature] switched to ajv from tv4
+* [Feature] migrated grunt-svgmin to new svgo v3 syntax
+* [Feature] new svgfit multitask
+* [Feature] implemented fontello_svg as custom task
+* [Feature] electron multitask now handlerolled task using electron-packager
+* [Feature] implemented pdfkit
+* [Feature] bumped electron versions to latest
+* [Feature] implemented simple karma config that now uses headless chrome and webpack config
+* [Feature] integration task
+* [Feature] switch to json schema 7
+* [Feature] shell task now custom
+* [Feature] export alphaNum as standalone export and new log that doesnt require grunt
+* [Feature] compare can now handle different sized images
+* [Feature] clean option for coverage
+* [Feature] egnyte creds are now looked for in ~/targets and added to egnyte dedicated key
+* [Change] removed watertight as dep
+* [Change] bumped wdio/mocha-framework
+* [Change] removed unneeded webdriver.js
+* [Change] regened lockfile
+* [Change] removed unneeded jsonlint options
+* [Change] remove jsonlint from watch command
+* [Change] removed unneeded imagemin options
+* [Change] imagemin no longer runs as part of dist
+* [Change] removed jshint as it'll soon be replaced by eslint
+* [Change] removed unused requires and switch to fs-extra for mkdirp
+* [Change] regen lock file
+* [Change] credentials are no longer copied into repo root
+* [Change] bumped @wdio/cli
+* [Change] compare no longer requires grunt or globally defined functions
+* [Change] reworked comparison script to use new dependencies
+* [Change] pdf gens now use pdfkit directly for cegedim and createPdfsAndZips
+* [Change] switched out pdf-image-pack for pdfkit
+* [Change] coverage now standalone task file as badges now removed also
+* [Change] removed unused ftpscript references
+* [Change] ftp deployments no longer supported
+* [Change] remove unneeded webpack ++ concat as the logic is in Gruntfile.js
+* [Change] moved cloudfront invalidation tests from deploy-server to deploy-files
+* [Change] bumped watertight to 6.0.0
+* [Change] install compile-handlebars
+* [Change] content-request now uses native fetch
+* [Bug] committed test fixtures output into repo
+* [Bug] dont look for creds for content that pulls as endpoints
+* [Bug] switch to new integration task name and remove connect
+* [Bug] fixed path to ui tests in wdio.conf
+* [Bug] absolute paths in webpack env variable paths
+* [Bug] lock corejs version in webpack config
+* [Bug] dart-sass throws error on errors
+* [Bug] switch to using new creds instead of .ftppass in tests
+* [Bug] add versions to all _fixture package.jsons
+* [Bug] electron now requires hidenavbar to be set explicitly
+* [Bug] set chdir correctly on exports test
+* [Bug] fixed capture paths
+* [Bug] dont pull in veeva crm details
+* [Bug] use new json-schema inplace of tv4
+* [Bug] spread all messages to logs
+* [Bug] get REPO from env var or fallback to origin.url
+* [Bug] misc read as json
+* [Bug] content targets now all push to config.targets object
+* [Bug] content now uses cred files same as deploys and scp pulls to flat folder structure
+* [Bug] artifacts now uses egnyte key and checks for existence before exiting out if not present
+* [Bug] added volume prune fix due to linux
+* [Bug] shell pull & push previous scripts now use new egnyte key
+* [Bug] remove badges call in validate
+* [Bug] pull ftp creds from same targets folder
+* [Bug] switched to latest jsdom and alpha sort syntax
+* [Bug] correct gitlog require import
+* [Bug] dont set NODE_ENV as runtime var as it breaks webpack internals
+* [Bug] webpack plugins now filter out null plugins
+* [Bug] wdio/cli now exports launcher
+* [Bug] upped mocha timeout to better handle long cloudfront deploy times
+* [Bug] point deploy-server to new dns location
+* [Bug] use path with documentRoot in deploy-files tests
+* [Bug] pass branch to deploy-files server:pre command:
+* [Bug] scp deploy now sends zip as dot syntax has been patched
+* [Bug] watertight now compresses symlinks
+* [Bug] switch to new browsers property for autoprefixer
+* [Bug] clean cache before css tests
+* [Bug] tests for throw should be functions
+* [Bug] switch to dynamic es6 import of p-limit
+* [Bug] cegedim now uses pdf-images-pack
+* [Bug] browser-sync test no longer checks port but does check longer string
+* [Bug] correctly fail if tests fail during capture
+* [Bug] alphaSort no longer added to array prototype as it caused issues with process.execArgs
+* [Bug] cache-bust
+* [Bug] removed content and setup from handover strip commands
+* [Bug] modernizr property not present no longer throws error
+
 ### 7.24.0 (2022-09-05)
 * [Feature] Can now set CMS type {wp,contentful} to adjust the content-request from the CMS
 * [Change] Sass no longer writes and reads vendor/general but instead keeps it in memory for speed
