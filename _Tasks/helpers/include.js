@@ -291,7 +291,7 @@ module.exports = function(grunt, hasBase, fixture) {
 		}
 
 	    contentJson.attributes.content && contentJson.attributes.content.forEach(function(d){
-			files.push({file: d.lftp || d.ssh || d.ftps || d.ftp, json: true});
+			d.url || files.push({file: d.lftp || d.ssh || d.ftps || d.ftp, json: true});
 	    });
 
 	    files.forEach(function(d){
