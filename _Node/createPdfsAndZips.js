@@ -1,7 +1,5 @@
 module.exports = (path, folder, pdf) => {
-	var PDFImagePack = require("pdf-image-pack");
-	var async = require('async');
-	var merge = require('easy-pdf-merge');
+	const pdfPack = require('../_Node/pdfPack.js');
 	var fs = require('fs-extra');
 	var exec = require('child_process').exec;
 	const glob = require('glob');
@@ -9,7 +7,7 @@ module.exports = (path, folder, pdf) => {
 	fs.mkdirpSync('.tmp/pdfs/');
 	fs.mkdirpSync('_Pdfs');
 
-	return new Promise(async (resolve, reject) => {
+	return new Promise(async (resolve) => {
 		fs.mkdirpSync(`.tmp/pdfs/${path}/`);
 
 		var arrayOfScreens = [];
@@ -23,47 +21,12 @@ module.exports = (path, folder, pdf) => {
 			return resolve();
 		}
 
-		arrayOfScreens.alphanumSort(false);
+		arrayOfScreens = alphanumSort(arrayOfScreens, false);
 
-		var pdfTasks = [];
-
-		for(var i = 0; i < arrayOfScreens.length; i++){
-			pdfTasks.push((function(i){
-				return function(callback){
-					new PDFImagePack().output(
-						[`${folder}/${path}/` + arrayOfScreens[i]], 
-						((arrayOfScreens.length > 1) ? `.tmp/pdfs/${path}/${i}.pdf` : `.tmp/pdfs/${path}/raw.pdf`),
-						function(err){
-							if(err){
-								console.log(err);
-							}
-
-							callback();
-						});
-				};
-			}(i)));
-		}
-
-		await new Promise(function(resolve, reject) {
-			async.series(pdfTasks, () => {
-				if(arrayOfScreens.length > 1){
-					merge(
-						arrayOfScreens.map((d, i) => `.tmp/pdfs/${path}/${i}.pdf`),
-						`.tmp/pdfs/${path}/raw.pdf`,
-						err => {
-							if(err)
-								return reject(err);
-
-							resolve();
-						});
-				} else {
-					resolve();
-				}
-			});
-		})
-		.catch(err => {
-			reject(err);
-		});
+		await pdfPack(
+			arrayOfScreens.map(d => `${folder}/${path}/${d}`), 
+			`.tmp/pdfs/${path}/raw.pdf`
+		);
 		
 		await new Promise(function(resolve, reject) {
 			var command = `gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile='_Pdfs/${pdf}' '.tmp/pdfs/${path}/raw.pdf'`;
@@ -75,9 +38,6 @@ module.exports = (path, folder, pdf) => {
 
 				resolve();
 			});
-		})
-		.catch(err => {
-			reject(err);
 		});
 
 		resolve(path);

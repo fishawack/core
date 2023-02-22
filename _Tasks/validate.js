@@ -1,3 +1,3 @@
 module.exports = grunt => { 
-    grunt.registerTask('validate', ['jshint', 'tv4', 'karma:continuous', 'connect', 'webdriver:ui', 'badges', 'coverage']);
+    grunt.registerTask('validate', ['json-schema', 'karma:continuous', 'integration', 'coverage']);
 };

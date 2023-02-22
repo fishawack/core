@@ -7,6 +7,11 @@
 	        "flexbox",
 	        "csscalc"
 		],
+		"targets": {
+			"syntax-error": {
+				"src": "_Build-syntax-error"
+			}
+		},
 	    "template": {},
 	    "toggle": {}
 	}

@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         grunt.log.ok(`${count.files} files, ${count.directories} directories, ${count.symlinks} symlinks copied. ${count.resolved} symlinks resolved`);
     });
 
-    grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'compress:deploy', 'deploy:files', 'deploy:local:post', 'deploy:server:post', 'ftpscript:badges']);
+    grunt.registerTask('deploy', ['deploy:local:pre', 'deploy:server:pre', 'compress:deploy', 'deploy:files', 'deploy:local:post', 'deploy:server:post']);
 
     function command(command){
         if(!deployValid()){return;}
@@ -115,9 +115,9 @@ module.exports = function(grunt) {
         grunt.log.warn(`Deploying to: ${deployLocation}`);
 
         if(deployEnv.ftp){
-            grunt.task.run('ftpscript:deploy');
+            grunt.fatal('Deploying via ftp is no longer supported');
         } else if(deployEnv.ssh){
-            execSync(`scp -rpl 10000 ${dest}/. '${deployCred.username}'@'${deployCred.host}':${deployLocation}`, opts);
+            execSync(`scp -rpl 10000 _Zips/Deploy.zip '${deployCred.username}'@'${deployCred.host}':'${deployLocation}' && ssh -tt '${deployCred.username}'@'${deployCred.host}' 'unzip -o \'${deployLocation}/Deploy.zip\' -d \'${deployLocation}/\' && rm -rf \'${deployLocation}/Deploy.zip\''`, opts);
         } else if(deployEnv.lftp){
             execSync(`lftp -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, opts);
         } else if(deployEnv['aws-eb']){

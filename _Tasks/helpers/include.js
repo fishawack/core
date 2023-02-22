@@ -5,7 +5,7 @@ module.exports = function(grunt, hasBase, fixture) {
 	this.grunt = grunt;
 	this.config = null;
 	this.reset = null; // Used to reset config back to defaults after a task has overrideen them locally
-	var mocha = fixture || require('yargs').argv.mocha || false; // True when core mocha tests running
+	var mocha = fixture || grunt.option('mocha') || false; // True when core mocha tests running
 
 	// Used in grunt JIT call to load plugins, can be overridden/added to in build folder include.js
 	this.jit = {
@@ -29,7 +29,7 @@ module.exports = function(grunt, hasBase, fixture) {
 	}
 	
 	try{
-		this.deployBranch = require('yargs').argv.branch || process.env.BRANCH || process.env.CI_COMMIT_REF_NAME || require('git-branch').sync();
+		this.deployBranch = grunt.option('branch') || process.env.BRANCH || process.env.CI_COMMIT_REF_NAME || require('git-branch').sync();
 	} catch(e){
 		this.deployBranch = 'unknown';
 	}
@@ -76,7 +76,7 @@ module.exports = function(grunt, hasBase, fixture) {
 		this.deployEnv = contentJson.attributes.deploy || {};
 	    this.deployLocation = truePath(deployEnv.location || '');
 		this.deployUrl = truePath(deployEnv.url || '');
-		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp] || {};
+		this.deployCred = config.targets[deployEnv.ssh || deployEnv.lftp || deployEnv.ftp] || {};
 
 		this.deployValid = () => {
 			if(!deployLocation){
@@ -202,7 +202,7 @@ module.exports = function(grunt, hasBase, fixture) {
 		var name;
 
 		try{
-			name = execSync('git rev-parse --show-toplevel', {encoding: 'utf8'});
+			name = process.env.REPO || execSync('basename -s .git `git config --get remote.origin.url`', {encoding: 'utf8'}) || 'unknown';
 			commit = execSync('git rev-parse --short HEAD', {encoding: 'utf8'});
 		} catch(e){
 			name = process.cwd();
@@ -267,12 +267,14 @@ module.exports = function(grunt, hasBase, fixture) {
 	    		json: false
 	    	},
 	    	{
-	    		file: '.ftppass',
-	    		key: 'ftp'
+	    		file: 'misc',
+	    		key: 'misc',
+				json: true
 	    	},
 	    	{
-	    		file: 'misc.json',
-	    		key: 'misc'
+	    		file: 'ftp-fishawack.egnyte.com',
+	    		key: 'egnyte',
+				json: true
 	    	}
 		];
 		
@@ -289,9 +291,7 @@ module.exports = function(grunt, hasBase, fixture) {
 		}
 
 	    contentJson.attributes.content && contentJson.attributes.content.forEach(function(d){
-			if(d.ssh){
-		    	files.push({file: d.ssh, json: true});
-		    }	    	
+			d.url || files.push({file: d.lftp || d.ssh || d.ftps || d.ftp, json: true});
 	    });
 
 	    files.forEach(function(d){
@@ -301,20 +301,12 @@ module.exports = function(grunt, hasBase, fixture) {
 
 	    	var path = os.homedir() + (d.path || '/targets/');
 	    	var file =  d.file + ((d.json) ? '.json' : '');
-	    	var save = ((d.key) ? '' : 'ssh-') + file;
 
-			if(!fileExists(save, './', grunt)){
-				grunt.log.warn(save + ' not found in root, attempting to copy ' + file + ' from ' + path);
-
-				try{
-					fs.copyFileSync(path + file, save);
-					grunt.log.ok(file + ' copied');
-				} catch(e){
-					grunt.log.warn(file + ' not found at ' + path);
-				}
-		    }
-
-		    targets[d.key || d.file] = safeLoad(grunt, save, (d.json === false) ? false : true);
+			try{
+				targets[d.key || d.file] = grunt.file[d.json ? 'readJSON' : 'read'](`${path}/${file}`);
+			} catch(e){
+				grunt.log.warn(file + ' not found at ' + path);
+			}
 	    });
 		
 		return targets;
@@ -536,42 +528,7 @@ module.exports = function(grunt, hasBase, fixture) {
       };
     }
 
-	Array.prototype.alphanumSort = function(caseInsensitive) {
-	  for (var z = 0, t; t = this[z]; z++) {
-	    this[z] = new Array();
-	    var x = 0, y = -1, n = 0, i, j;
-
-	    while (i = (j = t.charAt(x++)).charCodeAt(0)) {
-	      var m = (i == 46 || (i >=48 && i <= 57));
-	      if (m !== n) {
-	        this[z][++y] = "";
-	        n = m;
-	      }
-	      this[z][y] += j;
-	    }
-	  }
-
-	  this.sort(function(a, b) {
-	    for (var x = 0, aa, bb; (aa = a[x]) && (bb = b[x]); x++) {
-	      if (caseInsensitive) {
-	        aa = aa.toLowerCase();
-	        bb = bb.toLowerCase();
-	      }
-	      if (aa !== bb) {
-	        var c = Number(aa), d = Number(bb);
-	        if (c == aa && d == bb) {
-	          return c - d;
-	        } else return (aa > bb) ? 1 : -1;
-	      }
-	    }
-	    return a.length - b.length;
-	  });
-
-	  for (var z = 0; z < this.length; z++)
-		this[z] = this[z].join("");
-		
-	  return this;
-	}
+	this.alphanumSort = module.exports.alphanumSort;
 
 	this.stripTrailingSlash = (str) => {
 		return str.endsWith('/') ?
@@ -592,5 +549,57 @@ module.exports = function(grunt, hasBase, fixture) {
 
 		// Used in veeva task to define what exactly is a keymessage and what should be zipped as such
 		this.keyMessages = null;
+	}
+}
+
+module.exports.alphanumSort = function(arr, caseInsensitive) {
+	for (var z = 0, t; t = arr[z]; z++) {
+		arr[z] = new Array();
+		var x = 0, y = -1, n = 0, i, j;
+
+		while (i = (j = t.charAt(x++)).charCodeAt(0)) {
+		var m = (i == 46 || (i >=48 && i <= 57));
+		if (m !== n) {
+			arr[z][++y] = "";
+			n = m;
+		}
+		arr[z][y] += j;
+		}
+	}
+
+	arr.sort(function(a, b) {
+		for (var x = 0, aa, bb; (aa = a[x]) && (bb = b[x]); x++) {
+		if (caseInsensitive) {
+			aa = aa.toLowerCase();
+			bb = bb.toLowerCase();
+		}
+		if (aa !== bb) {
+			var c = Number(aa), d = Number(bb);
+			if (c == aa && d == bb) {
+			return c - d;
+			} else return (aa > bb) ? 1 : -1;
+		}
+		}
+		return a.length - b.length;
+	});
+
+	for (var z = 0; z < arr.length; z++)
+		arr[z] = arr[z].join("");
+		
+	return arr;
+}
+
+module.exports.log = {
+	message(color){
+		console.log(`\x1b[${color}m%s\x1b[0m`, `>>`, ...[...arguments].slice(1));
+	},
+	ok(){
+		this.message(32, ...arguments);
+	},
+	warn(){
+		this.message(33, ...arguments);
+	},
+	error(){
+		this.message(31, ...arguments);
 	}
 }

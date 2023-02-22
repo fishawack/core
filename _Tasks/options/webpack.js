@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+var VueLoaderPlugin; try{ VueLoaderPlugin = { VueLoaderPlugin } = require('vue-loader');} catch(e){} // Conditional install as vue & vue/compiler-sfc won't be available in projects that don't have vue as a dependency
 const grunt = require('grunt');
 
 // var config;
@@ -64,7 +64,7 @@ module.exports = {
 								presets: [
 									[require.resolve('@babel/preset-env'), {
 										"useBuiltIns": "usage",
-										"corejs": { "version": 3, "proposals": true }
+										"corejs": { "version": "3.28.0", "proposals": true }
 									}]
 								],
 								sourceType: "unambiguous",
@@ -83,12 +83,13 @@ module.exports = {
 			]
 		},
 		plugins: [
-	    	new VueLoaderPlugin(),
+	    	VueLoaderPlugin && new VueLoaderPlugin(),
 			new webpack.DefinePlugin(Object.keys(process.env).reduce((a, b) => {
-				a[`process.env.${b}`] = webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[b]), [`./${config.src}/config/**/*.json`]);
+				if(b === "NODE_ENV") return a;
+				a[`process.env.${b}`] = webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[b]), [path.resolve(process.cwd(), `${config.src}/config/**/*.json`)]);
 				return a;
 			}, {}))
-	    ],
+	    ].filter(Boolean), // filter removes undefined/null plugins before passing to webpack
 	    optimization: {
 			splitChunks: ((!contentJson.attributes.splitChunks) ? {} : {
 				cacheGroups: {

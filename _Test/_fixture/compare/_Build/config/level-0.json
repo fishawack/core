@@ -1,0 +1,26 @@
+{
+    "attributes": {
+	    "title": "<%= repo.name %>",
+		"targets": {
+			"missing": {
+				"capture": {
+					"sizes": [
+						[1080, 608],
+						[375, 667]
+					]
+				}
+			},
+			"browsers": {
+				"capture": {
+					"browsers": [
+						"chrome",
+						"firefox"
+					],
+					"sizes": [
+						[1080, 608]
+					]
+				}
+			}
+		}
+	}
+}

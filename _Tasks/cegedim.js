@@ -38,8 +38,7 @@ module.exports = function(grunt) {
             var seqName = d.seqName;
             var screenshotName = d.screenshotName;
 
-            var screenshot = glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`)
-                .alphanumSort()[0];
+            var screenshot = alphanumSort(glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`))[0];
 
         	copy.default.files.push(
                 {
@@ -82,24 +81,27 @@ module.exports = function(grunt) {
         grunt.task.run('copy', 'packImagesFlat', 'shell', 'compress', 'clean', 'reset');
 	});
 	
-	grunt.registerTask('packImagesFlat', function() {
-
-		var pdf_imagepack = {};
+	grunt.registerTask('packImagesFlat', async function() {
+        var done = this.async();
+        var fs = require('fs-extra');
 		var glob = require('glob');
         var browsers = captureEnv().browsers;
 		var sizes = captureEnv().sizes;
+        const pdfPack = require('../_Node/pdfPack.js');
+        
+        fs.mkdirpSync('.tmp/pdfs/cegedim/');
 
-		keyMessages.forEach(d => {
+		for(var i = 0; i < keyMessages.length; i++){
+            let d = keyMessages[i];
 			var zipName = d.zipName;
-            var seqName = d.seqName;
 			var screenshotName = d.screenshotName;
 
-			pdf_imagepack[zipName] = {files: {}};
-			pdf_imagepack[zipName].files[`.tmp/pdfs/cegedim/${zipName}.pdf`] = glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`).alphanumSort();
-		});
+            await pdfPack(
+                alphanumSort(glob.sync(`.tmp/screenshots/${browsers[0]}/${sizes[0][0]}x${sizes[0][1]}/*_${screenshotName}_*.png`)), 
+                `.tmp/pdfs/cegedim/${zipName}.pdf`
+            );
+		}
 
-        grunt.config.set('pdf_imagepack', pdf_imagepack);
-
-        grunt.task.run('pdf_imagepack');
+        done();
     });
 };

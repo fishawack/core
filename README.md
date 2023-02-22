@@ -16,38 +16,33 @@ As this code base is shared amongst most of our repos, these dependancies are li
 
 ### Content
 
-The following dependancies are needed to pull media assets from external file storage.
+The following dependancies are needed to pull binary assets from external sources.
 
-> Repositories packaged for handover to external agencies won't need these dependencies as all media assets will be bundled into the handover package.
+> Repositories packaged for handover to external agencies won't need these dependencies as binary files (png's,mp4's etc) will be baked into the final repository
 
-* git
-* wget
-* jq
-* ftp (mac high sierra and above)
+* lftp
 
 ### Build
 
-The following dependancies are needed to build the source code.
+The following dependancies are needed to build the source code in both development mode and production.
 
-* node (10.0.0 recommended)
-* npm (5.7.1 or above)
-* node-gyp
-* grunt-cli
-* Dart Sass VM
-* imagemagick
-* xCode
-* xCode command line tools
+* git (>=2.38.0 recommended)
+* node (>=16 recommended)
+* npm (>=9 recommended)
+* dart sass (>=1.57.1 recommended)
 
 ### Deploy
 
-These dependancies are only needed if you're planning to build a pdf locally or manually deploy to the server.
+These dependancies are only needed if you're planning to run Fishawack specific deployments or generate packages.
+
+> Repositories packaged for handover to external agencies won't need these dependencies
 
 * ghostscript
 * wine
-* xquartz
-* adoptopenjdk
-* python (windows only)
-* composer
+* chromium
+* eb cli
+* aws cli
+* electron-packager
 
 ## Getting started
 
@@ -59,64 +54,23 @@ These dependancies are only needed if you're planning to build a pdf locally or 
 brew install git
 brew install sass/sass/sass
 brew install wget
-brew install imagemagick
-brew install jq
 brew install lftp
-brew install tnftp tnftpd telnet telnetd
-brew install --cask adoptopenjdk
-brew install --cask xquartz
-brew install --cask wine-stable
+brew install ghostscript
+brew install wine-stable
+brew install aws-elasticbeanstalk
+brew install awscli
+brew install chromium
 ```
-
-> Wine [isn't currently supported](https://wiki.winehq.org/MacOS) on macOS Catalina 10.15 so any electron builds will need to be run on the CI/CD runners instead of locally
 
 * Install Nvm - [https://github.com/creationix/nvm](https://github.com/creationix/nvm) - then run the following commands
 
 ```bash
-nvm install 10.0.0
+nvm install 18.0.0
 
 npm install npm@latest -g
-npm install grunt-cli -g
-npm install node-gyp -g
+npm install electron-packager -g
+npm install install -g git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v6.0.0
 ```
-
-* Install *xCode* via mac app store - then run the following command
-
-```bash
-xcode-select --install
-```
-
-> Some users have issues with the `node-gyp` dependancy on macOS Catalina 10.15, if this is you the best advice is to [check here for solutions](https://github.com/nodejs/node-gyp/blob/master/macOS_Catalina.md)
-
-* Install composer [https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
-
-### Windows
-
-* Install choco - [https://chocolatey.org/](https://chocolatey.org/) then use to install the following
-
-```bash
-choco install git
-choco install sass/sass/sass
-choco install wget
-choco install imagemagick
-choco install ghostscript
-choco install wine
-choco install jq
-choco install lftp
-choco install adoptopenjdk
-choco install xquartz
-```
-
-* Install Nvm - [https://github.com/coreybutler/nvm-windows](https://github.com/coreybutler/nvm-windows)
-
-```bash
-nvm install 10.0.0
-
-npm install npm@latest -g
-npm install grunt-cli -g
-```
-
-* Install composer [https://getcomposer.org/doc/00-intro.md#installation-windows](https://getcomposer.org/doc/00-intro.md#installation-windows)
 
 ## Remotes
 
@@ -1792,6 +1746,152 @@ fw content && fw prod && fw run -d package && fw deploy && fw run mail
 ```
 
 ## Migrating
+
+### 8.0.0
+
+#### Capture scripts
+* Capture scripts needs to use webdriverio v8 [api methods](https://webdriver.io/docs/api/browser) which will likely break any custom capture code. 
+
+The main difference here is the switch from synchronous code to asynchronous which requires refactoring code to use async awaits as webdriverio will no longer stop execution on internal calls i.e.
+
+```javascript
+// Old way
+it('Capture contact page', () => {
+    browser.url(`${capture.url}/contact`);
+
+    capture.page.wait();
+
+    capture.screenshot.call();
+});
+
+// New way
+it('Capture contact page', async () => {
+    await browser.url(`${capture.url}/contact`);
+
+    await capture.page.wait();
+
+    await capture.screenshot.call();
+});
+```
+
+Chrome browser has also been swapped out for chromium which should have relative little impact but there do exist some slight [differences](https://www.lambdatest.com/blog/difference-between-chrome-and-chromium/).
+
+#### Testing updates
+
+Unit test now need their full path specifying when importing into test suites.
+
+```javascript
+// _Test/unit/utility.js
+// Old way
+var Utility = require('utility');
+
+// New way
+var Utility = require('../../_Build/js/libs/utility.js');
+```
+
+Ui tests are also driven by webdriverio and will need to update syntax to match the v8 [api methods](https://webdriver.io/docs/api/browser) and refactored to be asynchronous.
+
+Another change is that the base url and any capabilities are now defined in the `browser.requestedCapabilities` property meaning the fishawack specific imports can and should be removed.
+
+```javascript
+// Old way
+require('@fishawack/core/_Tasks/helpers/include.js')(require('grunt'), true);
+const expect = require('chai').expect;
+
+var http = require('http');
+
+describe('index', () => {
+    it('200 status code', () => {
+        let status;
+
+        browser.call(() => {
+            return new Promise((resolve) => {
+                http.get(`${captureEnv().url}/index.html`, res => {
+                    status = res.statusCode;
+                    resolve();
+                });
+            });
+        });
+
+        expect(status).to.be.equal(200);
+    });
+});
+
+// New way
+const expect = require('chai').expect;
+const http = require('http');
+
+describe('index', () => {
+    it('200 status code', async () => {
+        let res = await new Promise(resolve => http.get(`${browser.requestedCapabilities.url}/index.html`, resolve));
+        
+        expect(res.statusCode).to.be.equal(200);
+    });
+});
+```
+
+#### Shipped browsers
+
+Firefox is no longer installed within the base lab-env core image but can still be specified and used if firefox manually installed.
+
+```json
+// Old way
+{
+    "capture": {
+        "browsers": [
+            "chrome",
+            "firefox",
+            "safari"
+        ]
+    }
+}
+// New way
+{
+    "capture": {
+        "browsers": [
+            "chrome"
+        ]
+    }
+}
+```
+
+#### Credential updates
+
+> The following migration steps only apply to projects that are actively reading credential files found in the root of the project which should be fairly uncommon.
+
+.ftppass is no longer used in anyway in the @fishawack/core repository
+
+Credential files are also no longer copied into the root of the project and instead are read into memory and stored in the active process.
+
+If any project is actively reading these credential files it'll need updating to read them from the users home directory i.e.
+
+```javascript
+const fs = require('fs');
+const os = require('os');
+const creds = JSON.parse(fs.readFileSync(`${os.homedir()}/targets/ftp-fishawack.egnyte.com.json`));
+```
+
+#### Task updates
+
+> The following migration steps only need applying to repositories that override/overwrite the base @fishawack/core tasks via a _Tasks folder and corresponding task file i.e stream.
+
+* [Svgo](https://github.com/svg/svgo) has been updated two major versions thus the syntax has changed and the migration steps will need following
+    * https://github.com/svg/svgo/releases/tag/v2.0.0
+    * https://github.com/svg/svgo/releases/tag/v3.0.0
+
+* We've also switched from [tv4](https://github.com/geraintluff/tv4) to [ajv](https://github.com/ajv-validator/ajv) json schema as tv4 is no longer maintained. During the switch we've also switched to json schema 7.
+
+#### Task sunsets
+
+> The following migration steps only need applying to repositories that override/overwrite the base @fishawack/core tasks via a _Tasks folder and corresponding task file i.e stream.
+
+* jshint no longer runs (will soon be replaced by eslint)
+* jsonlint no longer runs (json-schema handles syntax errors)
+* imagemin no longer runs (this is now the responsiblity of design just like video compression is part of motions job)
+
+#### Feature sunsets
+
+* ftp deployments no longer supported so if any project is still using ftp for content pulls or deployments then they'll need switching to a newer protocol.
 
 ### 7.5.0
 

@@ -5,7 +5,7 @@ const glob = require('glob');
 const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
 const path = require('path');
-const { opts, host, creds } = require('./_helpers/globals.js');
+const { opts, creds } = require('./_helpers/globals.js');
 const lftp = require('../_Tasks/helpers/lftp.js');
 
 describe('package', () => {    
@@ -29,7 +29,7 @@ describe('package', () => {
             'Shared/FW/Knutsford/Digital/Auto-Package/core-test-suite-package',
             creds.username,
             creds.password,
-            host
+            creds.host
         );
     });
 });

@@ -5,17 +5,18 @@ const execSync = require('child_process').execSync;
 const fetch = require('node-fetch');
 const { opts } = require('./_helpers/globals.js');
 
-async function deploy(branch, url = 'https://demo.fishawack.solutions/core-test-suite-deploy'){
+async function deploy(branch, url = 'https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy'){
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
     expect((await fetch(url)).status).to.not.equal(200);
-    execSync(`grunt package deploy:files --branch=${branch} --mocha=output`, opts); // Package command needed for deploys that need watertight files copying
+    execSync(`grunt deploy:server:pre --branch=${branch} --mocha=output`, opts); // Run single pre server command to create the public_html directory on the server
+    execSync(`grunt package compress:deploy deploy:files --branch=${branch} --mocha=output`, opts); // Package command needed for deploys that need watertight files copying
     expect((await fetch(url)).status).to.be.equal(200);
     execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
 }
 
 describe('deploy:files', () => {
     it('Should deploy the master target to the server via aws-eb cli', async () => {
-        execSync(`rm -rf ${__dirname}/_fixture/output/_Zips/Deploy.zip && zip ${__dirname}/_fixture/output/_Zips/Deploy.zip ${__dirname}/_fixture/output/package.json && grunt deploy:files --branch=aws-eb --mocha=output`, opts);
+        execSync(`rm -rf ${__dirname}/_fixture/output/_Zips/Deploy.zip && mkdir -p ${__dirname}/_fixture/output/_Zips && zip ${__dirname}/_fixture/output/_Zips/Deploy.zip ${__dirname}/_fixture/output/package.json && grunt deploy:files --branch=aws-eb --mocha=output`, opts);
         expect((await fetch('http://coretestsuitedeployelb-env.eba-dpscqytf.us-east-1.elasticbeanstalk.com')).status).to.not.equal(200);
         execSync(`grunt package compress:deploy deploy:files --branch=aws-eb --mocha=output`, opts);
         expect((await fetch('http://coretestsuitedeployelb-env.eba-dpscqytf.us-east-1.elasticbeanstalk.com')).status).to.be.equal(200);
@@ -26,6 +27,39 @@ describe('deploy:files', () => {
         it('Should deploy the nested target to the server via aws-cli', () => deploy('aws-s3-nested', 'http://core-test-suite-deploy.s3-website-us-east-1.amazonaws.com/nested/'));
         it('Should not deploy to when profile doesnt exist', () => expect(() => execSync(`grunt deploy:files --branch=aws-s3-doesnt-exist --mocha=output`, opts)).to.throw());
         it('Should not deploy to when bucket doesnt exist', () => expect(() => execSync(`grunt deploy:files --branch=aws-s3-bucket-doesnt-exist --mocha=output`, opts)).to.throw());
+    });
+
+    describe('aws-cloudfront', () => {
+        it('Should invalidate cloudfront distribution', async () => {
+            let branch = 'aws-s3-with-cloudfront';
+            let url ='https://d3sa39g5u2ao33.cloudfront.net';
+
+            execSync(`grunt package deploy:files --branch=${branch} --mocha=output`, opts);
+            execSync(`grunt deploy:server:post --branch=${branch} --mocha=output`, opts);
+
+            let page = await fetch(url);
+            let html = await page.text();
+
+            expect(html).to.contain('Hello');
+
+            execSync(`grunt package deploy:files --branch=${branch} --mocha=cache`, opts);
+
+            page = await fetch(url);
+            html = await page.text();
+
+            expect(html).to.contain('Hello');
+
+            execSync(`grunt deploy:server:post --branch=${branch} --mocha=cache`, opts);
+
+            page = await fetch(url);
+            html = await page.text();
+
+            expect(html).to.contain('Goodbye');
+
+            execSync(`grunt takedown --branch=${branch} --mocha=output`, opts);
+        });
+
+        it('Should not invalidate cloudfront when invalid id given', () => expect(() => execSync(`grunt deploy:server:post --branch=aws-s3-with-cloudfront-doesnt-exist --mocha=output`, opts)).to.throw());
     });
 
     it('Should deploy the master target to the server via scp', () => deploy('master'));
@@ -53,5 +87,13 @@ describe('deploy:files', () => {
         } catch(e){
             expect(e.message).to.contain(`Command failed: ${command}`);
         }
+    });
+
+    it('Should run all deploy steps when deploy called directly', () => {
+        expect(() => execSync(`grunt deploy --branch=doesnt-exist --mocha=output`, opts)).to.not.throw();
+    });
+
+    it('Should throw error when attempting to deploy via ftp', () => {
+        expect(() => execSync(`grunt deploy --branch=ftp --mocha=output`, opts)).to.throw();
     });
 });

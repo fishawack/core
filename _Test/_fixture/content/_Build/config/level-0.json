@@ -18,6 +18,14 @@
 					}
 				]
 			},
+			"ssh": {
+				"content": [
+					{
+						"ssh": "aws-fw-coretestsuiteprotocols",
+						"location": "~/testcontent/"
+					}
+				]
+			},
 			"wordpress": {
 				"content": [
 					{

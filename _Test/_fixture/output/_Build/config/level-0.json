@@ -25,25 +25,46 @@
 			},
 			"master": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions",
-					"location": "/home/fishawack/demo.fishawack.solutions/",
-					"ssh": "vidaHost-fishawack",
-					"subDir": "core-test-suite-deploy"
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "~/documentRoot/public_html/",
+					"ssh": "aws-fw-coretestsuiteprotocols",
+					"subDir": "core-test-suite-deploy",
+					"commands": {
+						"server": {
+							"pre": [
+								"mkdir -p ~/documentRoot/public_html"
+							]
+						}
+					}
 				}
 			},
 			"lftp": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions",
-					"location": "/home/fishawack/demo.fishawack.solutions/",
-					"lftp": "vidaHost-fishawack",
-					"subDir": "core-test-suite-deploy"
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "~/documentRoot/public_html/",
+					"lftp": "aws-fw-coretestsuiteprotocols",
+					"subDir": "core-test-suite-deploy",
+					"commands": {
+						"server": {
+							"pre": [
+								"mkdir -p ~/documentRoot/public_html"
+							]
+						}
+					}
+				}
+			},
+			"ftp": {
+				"deploy": {
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "~/",
+					"ftp": "aws-fw-coretestsuiteprotocols"
 				}
 			},
 			"watertight": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions",
-					"location": "/home/fishawack/demo.fishawack.solutions/",
-					"lftp": "vidaHost-fishawack",
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "~/documentRoot/public_html/",
+					"lftp": "aws-fw-coretestsuiteprotocols",
 					"subDir": "core-test-suite-deploy",
 					"loginType": "bootstrap",
 					"users": [
@@ -53,14 +74,21 @@
 							"validTo": "",
 							"password": "23Blue01"
 						}
-					]
+					],
+					"commands": {
+						"server": {
+							"pre": [
+								"mkdir -p ~/documentRoot/public_html"
+							]
+						}
+					}
 				}
 			},
 			"root": {
 				"deploy": {
 					"url": "https://core-test-suite-deploy.fishawack.solutions",
-					"location": "/home/fishawack/core-test-suite-deploy.fishawack.solutions",
-					"lftp": "vidaHost-fishawack",
+					"location": "~/documentRoot/",
+					"lftp": "aws-fw-coretestsuiteprotocols",
 					"loginType": "bootstrap",
 					"users": [
 						{
@@ -74,16 +102,16 @@
 			},
 			"trailing": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions/core-test-suite-deploy/",
-					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
-					"lftp": "vidaHost-fishawack"
+					"url": "https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy/",
+					"location": "~/documentRoot/public_html/core-test-suite-deploy/",
+					"lftp": "aws-fw-coretestsuiteprotocols"
 				}
 			},
 			"commands": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions/core-test-suite-deploy",
-					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
-					"ssh": "vidaHost-fishawack",
+					"url": "https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy",
+					"location": "~/documentRoot/public_html/core-test-suite-deploy/",
+					"ssh": "aws-fw-coretestsuiteprotocols",
 					"commands": {
 						"local": {
 							"pre": [
@@ -106,9 +134,9 @@
 			},
 			"commands-subdir": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions",
-					"location": "/home/fishawack/demo.fishawack.solutions/",
-					"ssh": "vidaHost-fishawack",
+					"url": "https://core-test-suite-deploy.fishawack.solutions",
+					"location": "~/documentRoot/public_html/",
+					"ssh": "aws-fw-coretestsuiteprotocols",
 					"subDir": "core-test-suite-deploy",
 					"commands": {
 						"local": {
@@ -132,8 +160,8 @@
 			},
 			"server-doesnt-exist": {
 				"deploy": {
-					"url": "https://demo.fishawack.solutions/core-test-suite-deploy",
-					"location": "/home/fishawack/demo.fishawack.solutions/core-test-suite-deploy/",
+					"url": "https://core-test-suite-deploy.fishawack.solutions/core-test-suite-deploy",
+					"location": "~/documentRoot/public_html/core-test-suite-deploy/",
 					"ssh": "doesntexist"
 				}
 			},
@@ -254,8 +282,7 @@
 	    "toggle": {},
 		"capture": {
 			"browsers": [
-				"chrome",
-				"firefox"
+				"chrome"
 			],
 			"sizes": [
 				[1080, 608],

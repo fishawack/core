@@ -10,27 +10,28 @@ module.exports = (grunt) => {
         const fs = require('fs-extra');
         const lftp = require('./helpers/lftp.js');
 
-        function protocol(d, i){
-            var saveTo = (d.saveTo) ? d.saveTo : `${config.src}/content/content-${i}`;
+        function protocol(d, saveTo){
+            const { host, username, password } = config.targets[d.lftp || d.ssh || d.ftps || d.ftp];
 
             if(d.ftp || d.ftps){
-                var protocol = (d.ftps) ? 'ftps' : 'ftp';
-                var ip = (d.ftps) ? d.ftps : d.ftp;
+                const protocol = (d.ftps) ? 'ftps' : 'ftp';
 
                 fs.removeSync(saveTo);
 
-                return `wget -q --show-progress -r --user='<%= targets.ftp["${ip}"].username %>' --password='<%= targets.ftp["${ip}"].password %>' -P ${saveTo} -nH --cut=${d.location.split('/').length - 1} '${protocol}://${ip}/${d.location}'`;
+                return `wget -q --show-progress -r --user='${username}' --password='${password}' -P ${saveTo} -nH --cut=${d.location.split('/').length - 1} '${protocol}://${host}/${d.location}'`;
             } else if(d.ssh) {
-                fs.removeSync(saveTo);
+                fs.removeSync(`.tmp/scp`);
+                fs.mkdirpSync(`.tmp/scp`);
 
-                return `scp -r <%= targets["${d.ssh}"].username %>@<%= targets["${d.ssh}"].host %>:${d.location} ${saveTo}`;
+                fs.removeSync(saveTo);
+                return `scp -r ${username}@${host}:${d.location} .tmp/scp`;
             } else if(d.lftp){
                 lftp.pull(
                     saveTo,
                     d.location,
-                    config.targets.ftp[d.lftp].username,
-                    config.targets.ftp[d.lftp].password,
-                    d.lftp
+                    username,
+                    password,
+                    host
                 );
 
                 return 'echo ""';
@@ -42,8 +43,14 @@ module.exports = (grunt) => {
         contentJson.attributes.content.map((d, i) => {
             if(d.location){
                 grunt.log.warn(`Pulling content from: ${d.location}`);
+                
+                const saveTo = (d.saveTo) ? d.saveTo : `${config.src}/content/content-${i}`;
             
-                execSync(grunt.template.process(protocol(d, i), {data:config}), {encoding: 'utf8', stdio: 'inherit'});
+                execSync(grunt.template.process(protocol(d, saveTo), {data:config}), {encoding: 'utf8', stdio: 'inherit'});
+
+                if(d.ssh){
+                    fs.moveSync(path.join(`.tmp/scp`, d.location.replace('~/', '')), saveTo);
+                }
 
                 grunt.log.ok(`Content pulled from: ${d.location}`);
             }

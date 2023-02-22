@@ -6,10 +6,10 @@ const { opts } = require('./_helpers/globals.js');
 
 describe('browserSync', () => {
     it('Should run devServer on localhost', () => {
-        expect(execSync('grunt browserSync --mocha=output', {encoding: 'utf8'})).to.include('http://localhost:3000');
+        expect(execSync('grunt browserSync --mocha=output', {encoding: 'utf8'})).to.include('Local: http://localhost:');
     });
 
     it('Should run devServer over https', () => {
-        expect(execSync('grunt browserSync --mocha=output --branch=devServer-https', {encoding: 'utf8'})).to.include('https://localhost:3000');
+        expect(execSync('grunt browserSync --mocha=output --branch=devServer-https', {encoding: 'utf8'})).to.include('Local: https://localhost:');
     });
 });

@@ -18,4 +18,10 @@ describe('content', () => {
 
         expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/content-0/**/*'))).to.be.an('array').that.is.not.empty;
     });
+
+    it('Should pull down assets via ssh/scp', () => {
+        execSync('grunt clean:content content:pull --mocha=content --branch=ssh', opts);
+
+        expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/content-0/**/*'))).to.be.an('array').that.is.not.empty;
+    });
 });

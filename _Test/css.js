@@ -9,19 +9,19 @@ const { opts } = require('./_helpers/globals.js');
 describe('css', () => {
     describe('sass', () => {
         before(() => {
-            execSync('grunt sass:default --branch=master --mocha=bundle', opts);
+            execSync('grunt clean:cache sass:default --branch=master --mocha=bundle', opts);
         });
 
         it('Should generate a css bundle', () => {
-            expect(() => fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Output/css/general.css'), opts)).to.not.throw;
+            expect(() => fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Output/css/general.css'), opts)).to.not.throw();
         });
 
         it('Should render scss files at the root as new entry points', () => {
-            expect(() => fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Output/css/entry.css'), opts)).to.not.throw;
+            expect(() => fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Output/css/entry.css'), opts)).to.not.throw();
         });
 
         it('Should not render a scss file for the vendor file', () => {
-            expect(() => fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Output/css/vendor.css'), opts)).to.throw;
+            expect(() => fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Output/css/vendor.css'), opts)).to.throw();
         });
     
         it('Should merge contents of vendor and general into single css file', () => {
@@ -54,4 +54,8 @@ describe('css', () => {
             expect(css).to.equal(fs.readFileSync(path.join(__dirname, '_expected/general-no-dist-with-target.css'), opts));
         });
     });
+
+    it('Should throw error when syntax error found in sass', () => {
+        expect(() => execSync('grunt clean:cache sass:default --branch=syntax-error --mocha=bundle', opts)).to.throw();
+    })
 });

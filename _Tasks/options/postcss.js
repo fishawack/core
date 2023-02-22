@@ -2,7 +2,7 @@ module.exports = (file, dir) => {
 	let webRoot = dir.split('/css')[0];
 
 	let arr = [
-		require('autoprefixer')({browsers: 'last 6 versions'}),
+		require('autoprefixer')({overrideBrowserslist: 'last 6 versions'}),
 		require('postcss-assets')({
 			basePath: webRoot,
 			relativeTo: 'css/',

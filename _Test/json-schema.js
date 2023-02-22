@@ -6,11 +6,11 @@ const { opts } = require('./_helpers/globals.js');
 const glob = require('glob');
 const path = require('path');
 
-describe('tv4', () => {
-    it('Should pass tv4 linting', async () => {
+describe('json-schema', () => {
+    it('Should pass json schema validation', async () => {
         try{
             glob.sync('*', {cwd: path.join(__dirname, `/_fixture`)}).forEach(fixture => {
-                execSync(`grunt tv4 --branch=master --mocha=${fixture}`, opts); 
+                execSync(`grunt json-schema --branch=master --mocha=${fixture}`, opts); 
             });
         } catch(e){
             expect(e.message).to.not.contain('Command failed');

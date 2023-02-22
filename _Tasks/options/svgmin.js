@@ -1,14 +1,25 @@
 var plugins = [
-    { removeViewBox: false, },
-    { removeDimensions: true, },
     {
-        cleanupIDs: {
-            prefix: {
-                toString() {
-                    this.counter = this.counter || 0;
+        name: 'preset-default',
+        params: {
+            overrides: {
+                "removeViewBox": false,
+                "cleanupIds": false,
+                "inlineStyles": false,
+                "removeUselessStrokeAndFill": false
+            }
+        }
+    },
+    { 
+        name: "removeDimensions"
+    },
+    {
+        name: "prefixIds",
+        params: {
+            prefix: () => {
+                this.counter = this.counter || 0;
 
-                    return `id-${this.counter++}`;
-                }
+                return `id-${this.counter++}`;
             }
         }
     }
@@ -18,9 +29,18 @@ module.exports = {
     full: {
         options: {
             plugins: plugins.concat(
-                { removeStyleElement: true },
-                { removeUselessStrokeAndFill: true },
-                { removeAttrs: {attrs: '(stroke|fill)'} }
+                { 
+                    name: "removeStyleElement" 
+                },
+                { 
+                    name: "removeUselessStrokeAndFill" 
+                },
+                { 
+                    name: "removeAttrs",
+                    params : {
+                        attrs: '(stroke|fill)'
+                    }
+                }
             )
         },
         expand: true,

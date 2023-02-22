@@ -3,7 +3,7 @@
 const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
 const path = require('path');
-const { opts, host, creds } = require('./_helpers/globals.js');
+const { opts, creds } = require('./_helpers/globals.js');
 const lftp = require('../_Tasks/helpers/lftp.js');
 const fs = require('fs');
 
@@ -18,7 +18,7 @@ describe('artifacts', () => {
             'Shared/FW/Knutsford/Digital/Auto-Package/core-test-suite-artifacts',
             creds.username,
             creds.password,
-            host
+            creds.host
         );
     });
 
@@ -47,7 +47,7 @@ describe('artifacts', () => {
             'Shared/FW/Knutsford/Digital/Auto-Package/core-test-suite-artifacts',
             creds.username,
             creds.password,
-            host
+            creds.host
         );
     });
 });

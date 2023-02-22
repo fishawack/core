@@ -1,19 +1,16 @@
 // Karma configuration
-// Generated on Tue Nov 03 2015 14:32:58 GMT+0000 (GMT)
-
-var devProject = require('./_Tasks/helpers/dev.js');
-var path = require('path');
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '../' + (devProject || '../..') + '/',
+    basePath: process.cwd(),
 
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai', 'sinon', 'fixture'],
+    frameworks: ['mocha', 'chai', 'sinon', 'fixture', 'webpack'],
 
 
     // list of files / patterns to load in the browser
@@ -35,79 +32,13 @@ module.exports = function(config) {
     preprocessors: {
         '_Test/karma/fixtures/**/*.html'   : ['html2js'],
         '_Test/karma/fixtures/**/*.json'   : ['json_fixtures'],
-        '_Test/karma/**/*.js': ['webpack'],
+        '_Test/karma/**/*.js': ['webpack', 'coverage'],
         '_Test/unit/fixtures/**/*.html'   : ['html2js'],
         '_Test/unit/fixtures/**/*.json'   : ['json_fixtures'],
-        '_Test/unit/**/*.js': ['webpack']
+        '_Test/unit/**/*.js': ['webpack', 'coverage'],
     },
 
-    // SHOULD BE PULLED FROM _Tasks/options/webpack.js, NEED TO FIGURE OUT INCLUDE ISSUE OF GRUNT VARS NOT AVAILABLE ON KARMA:UNIT:START
-    webpack: {
-        mode: "production",
-        cache: true,
-        resolve: {
-            modules: [
-                `./${config.src}/js/`,
-                `./${config.src}/js/libs/`,
-                `./${config.src}/js/charts/`,
-                `./${config.src}/js/data/`,
-                './node_modules/@fishawack/lab-d3/_Build/js/',
-                './node_modules/@fishawack/lab-d3/_Build/js/libs',
-                './node_modules/@fishawack/lab-d3/_Build/js/charts/',
-                './node_modules/@fishawack/lab-d3/_Build/js/data/',
-                'node_modules',
-                path.resolve(__dirname, "node_modules") // Used for core dev
-            ]
-        },
-        resolveLoader: {
-            modules: [
-                "node_modules",
-                path.resolve(__dirname, "node_modules") // Used for core dev
-            ]
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.vue$/,
-                    use: [
-                        'vue-loader'
-                    ]
-                },
-                {
-                    parser: { amd: false }
-                },
-                {
-                    test: /\.m?js$/,
-                    exclude: /(node_modules|bower_components)/,
-                    use: [
-                        {
-                            loader: 'babel-loader',
-                            options: {
-                                presets: [
-                                    require.resolve('@babel/preset-env')
-                                ],
-                                plugins: [
-                                    require.resolve('@babel/plugin-transform-object-assign')
-                                ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    test: /\.m?js$/,
-                    include: path.resolve(`./${config.src}/js/`),
-                    use: [
-                        {
-                            loader: 'istanbul-instrumenter-loader',
-                            query: {
-                                esModules: true
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-    },
+    webpack: require('./_Tasks/options/webpack.js').options,
 
     webpackMiddleware: {
         noInfo: true,
@@ -155,18 +86,16 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
 
-
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
-
-    phantomjsLauncher: {
-        options: {
-            settings: {
-                webSecurityEnabled: false
-            }
+    browsers: ['ChromeHeadlessNoSandbox'],
+    customLaunchers: {
+        ChromeHeadlessNoSandbox: {
+            base: 'ChromeHeadless',
+            flags: ['--headless', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
         }
     },
+
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
