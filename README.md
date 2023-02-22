@@ -1756,7 +1756,8 @@ fw content && fw prod && fw run -d package && fw deploy && fw run mail
 * jshint no longer runs (will soon be replaced by eslint)
 * jsonlint no longer runs (json-schema handles syntax errors)
 * imagemin no longer runs (this is now the responsiblity of design just like video compression is part of motions job)
-* karma ui test needs full path for requires (utility.js)
+* karma unit test needs full path for requires (utility.js)
+* webdriverio integration tests
 
 ### 7.5.0
 
