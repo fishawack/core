@@ -5,7 +5,7 @@ module.exports = function(grunt, hasBase, fixture) {
 	this.grunt = grunt;
 	this.config = null;
 	this.reset = null; // Used to reset config back to defaults after a task has overrideen them locally
-	var mocha = fixture || grunt.option('mocha') || false; // True when core mocha tests running
+	this.mocha = fixture || grunt.option('mocha') || false; // True when core mocha tests running
 
 	// Used in grunt JIT call to load plugins, can be overridden/added to in build folder include.js
 	this.jit = {
