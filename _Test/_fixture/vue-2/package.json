@@ -1,0 +1,24 @@
+
+{
+  "name": "core-test-suite-vue-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "vue-loader": "^15.10.1",
+    "vue-template-compiler": "2.5.17"
+  },
+  "dependencies": {
+    "vue": "2.5.17",
+    "vue-lorem-ipsum": "0.0.1",
+    "vue-router": "3.0.1",
+    "vue2-filters": "0.3.0",
+    "vuex": "3.0.1",
+    "vuex-persistedstate": "2.5.4"
+  },
+  "author": "",
+  "license": "ISC"
+}
