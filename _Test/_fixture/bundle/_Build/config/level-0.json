@@ -10,6 +10,9 @@
 		"targets": {
 			"syntax-error": {
 				"src": "_Build-syntax-error"
+			},
+			"deprecation": {
+				"src": "_Build-deprecation"
 			}
 		},
 	    "template": {},

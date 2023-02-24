@@ -1,0 +1,6 @@
+$var1: 100;
+$var2: 200;
+
+html{
+    padding: #{$var1 / $var2};
+}
