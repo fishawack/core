@@ -16,6 +16,12 @@
 			}
 		},
 	    "template": {},
-	    "toggle": {}
+	    "toggle": {},
+		"env": {
+			"ENV_1": "skippy dippy doo"
+		}
+	},
+	"content": {
+		"string1": "yabba dabba doo"
 	}
 }

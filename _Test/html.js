@@ -20,4 +20,20 @@ describe('html', () => {
             expect(e.message).to.not.contain('ENOENT');
         }
     });
+
+    describe('handlebars', () => {
+        let output;
+
+        before(() => {
+            output = fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Output/index.html'), opts);
+        });
+
+        it('Should expand mustache brackets', () => {
+            expect(output).to.contain('yabba dabba doo');
+        });
+        
+        it('Should expand mustache brackets with environment variables', () => {
+            expect(output).to.contain('skippy dippy doo');
+        });
+    });
 });
