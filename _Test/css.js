@@ -58,4 +58,8 @@ describe('css', () => {
     it('Should throw error when syntax error found in sass', () => {
         expect(() => execSync('grunt clean:cache sass:default --branch=syntax-error --mocha=bundle', opts)).to.throw();
     })
+
+    it('Should not error on deprecation warning', () => {
+        expect(() => execSync('grunt clean:cache sass:default --branch=deprecation --mocha=bundle', opts)).to.not.throw();
+    });
 });
