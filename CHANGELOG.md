@@ -1,5 +1,11 @@
 ## Changelog
 
+### 8.0.1 (2023-02-23)
+* [Bug] no longer error out on deprecation warnings
+* [Bug] installed missing svg-inline-loader
+* [Bug] in mocha mode prepend process.cwd() onto vue-loader path to grab from active project
+* [Bug] vue-loader require vue2 plugin location if vue3 fails
+
 ### 8.0.0 (2023-02-22)
 * [Feature] updated webdriverio to v8 syntax
 * [Feature] switched to ajv from tv4
