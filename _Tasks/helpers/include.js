@@ -28,11 +28,7 @@ module.exports = function(grunt, hasBase, fixture) {
 		this.configPath = (devProject) ? '../core/' : 'node_modules/@fishawack/core/';
 	}
 	
-	try{
-		this.deployBranch = grunt.option('branch') || process.env.BRANCH || process.env.CI_COMMIT_REF_NAME || require('git-branch').sync();
-	} catch(e){
-		this.deployBranch = 'unknown';
-	}
+	this.deployBranch = grunt.option('branch') || module.exports.deployBranch;
 	
 	this.deployCred = {};
 
@@ -602,4 +598,10 @@ module.exports.log = {
 	error(){
 		this.message(31, ...arguments);
 	}
+}
+
+try{
+	module.exports.deployBranch = process.env.BRANCH || process.env.CI_COMMIT_REF_NAME || require('git-branch').sync();
+} catch(e){
+	module.exports.deployBranch = 'unknown';
 }
