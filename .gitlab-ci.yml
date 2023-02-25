@@ -4,6 +4,8 @@ stages:
 test:
   stage: test
   coverage: '/Code coverage: \d+\.\d+/'
+  variables:
+    FW_FULL: 1
   before_script:
     # Remove all projects currently on runner
     - find "/home/gitlab-runner/builds/" ! \( -type d \) -not -path "/*/0/${CI_PROJECT_PATH}/*" -not -path "/*/0/${CI_PROJECT_PATH}.tmp/*" -exec rm -rf {} + 
