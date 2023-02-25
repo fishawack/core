@@ -31,8 +31,6 @@ test:
     - if [ -f ./_Scripts/afterAll.sh ]; then /bin/bash ./_Scripts/afterAll.sh; fi
     # Clean docker
     - docker volume rm $(docker volume ls -q) || true
-    # Fully own the project directory
-    - echo $(cat ~/targets/sudo.txt) | sudo -S chown -R gitlab-runner "${CI_PROJECT_DIR}"
   artifacts:
     expire_in: 2 hrs
     paths:
