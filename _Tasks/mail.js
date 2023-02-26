@@ -72,7 +72,7 @@ module.exports = function(grunt) {
                     fs.mkdirpSync(path.dirname(logPath));
                     fs.writeFileSync(logPath, html);
                 } else {
-                    await sendMail(username, password, 'smtp.office365.com', recipients, "digitalautomation@fishawack.com", 'Auto-package: - <%= repo.name %>', html);
+                    await module.exports.sendMail(username, password, 'smtp.office365.com', recipients, "digitalautomation@fishawack.com", `Auto-package: - ${config.repo.name}`, html);
                 }
 
                 done();
