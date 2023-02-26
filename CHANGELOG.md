@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.1.1 (2023-02-26)
+* [Bug] correctly call sendMail on exports object and string literal the repo name now that it doesn't pass through grunt
+
 ### 8.1.0 (2023-02-26)
 * [Feature] add FW_FULL env variable to gitlab-ci.yml
 * [Feature] export deployBranch as variable
