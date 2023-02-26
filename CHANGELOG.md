@@ -1,5 +1,12 @@
 ## Changelog
 
+### 8.1.0 (2023-02-26)
+* [Feature] add FW_FULL env variable to gitlab-ci.yml
+* [Feature] export deployBranch as variable
+* [Change] export jit object
+* [Change] no longer chown repo after complete as its not needed
+* [Bug] nodemailer now an exported function that doesnt require grunt task
+
 ### 8.0.1 (2023-02-23)
 * [Bug] no longer error out on deprecation warnings
 * [Bug] installed missing svg-inline-loader
