@@ -7,15 +7,21 @@ const path = require('path');
 const { opts } = require('./_helpers/globals.js');
 
 describe('clean', () => {
-    before(() => {
-        execSync('grunt clean --branch=master --mocha=bundle', opts);
+    it('Should find task declaration', async () => {
+        expect(execSync(`node -e "const grunt = require('grunt'); const { jit } = require('./_Tasks/helpers/include.js'); require('jit-grunt')(grunt, jit)(); grunt.task.run('clean').start();"`, {encoding: 'utf8'})).to.not.contain('jit-grunt');
     });
-    
-    it('Should remove _Pdfs folder', () => {
-        try{
-            fs.readdirSync(path.join(__dirname, '_fixture/bundle/_Pdfs'));
-        } catch(e){
-            expect(e.message).to.contain('ENOENT');
-        }
-    });
+
+    describe('process', () => {
+        before(() => {
+            execSync('grunt clean --branch=master --mocha=bundle', opts);
+        });
+        
+        it('Should remove _Pdfs folder', () => {
+            try{
+                fs.readdirSync(path.join(__dirname, '_fixture/bundle/_Pdfs'));
+            } catch(e){
+                expect(e.message).to.contain('ENOENT');
+            }
+        });
+    })
 });
