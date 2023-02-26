@@ -16,23 +16,6 @@ module.exports = function(grunt) {
             return;
         }
 
-        var nodemailer = {
-            options: {
-                transport: require('nodemailer').createTransport({
-                    host: 'smtp.office365.com',
-                    port: 587,
-                    requireTLS: true,
-                    auth: {
-                        user: username,
-                        pass: password
-                    },
-                    tls: {
-                        ciphers: 'SSLv3'
-                    }
-                }).transporter
-            }
-        };
-
         var recipients = contentJson.attributes.email || [];
         recipients = recipients.concat(deployEnv.email || []);
         recipients.push(devProject ? 'mike.mellor@fishawack.com' : 'digital@f-grp.com');
@@ -45,7 +28,7 @@ module.exports = function(grunt) {
                 number: 5,
                 fields: [ 'hash', 'subject', 'abbrevHash', 'committerName', 'committerDateRel']
             }, 
-            function(error, commits) {
+            async function(error, commits) {
                 for(var i = 0, len = commits.length; i < len; i++){
                     gitLogString += '<li style="color: ' + colors[i % colors.length] + ';"><b>Commit: </b>' + commits[i].abbrevHash + '<ul style="color: black;">';
 
@@ -82,19 +65,6 @@ module.exports = function(grunt) {
                     ].join('')
                 );
 
-                nodemailer['deploy'] = {
-                    options: {
-                        recipients: recipients,
-                        message: {
-                            from: "digitalautomation@fishawack.com",
-                            subject: 'Auto-package: - <%= repo.name %>',
-                            html
-                        }
-                    }
-                };
-
-                grunt.config.set('nodemailer', nodemailer);
-
                 if(devProject){
                     const fs = require('fs-extra');
                     let logPath = path.join(process.cwd(), '.tmp/mail/', 'log.html');
@@ -102,11 +72,36 @@ module.exports = function(grunt) {
                     fs.mkdirpSync(path.dirname(logPath));
                     fs.writeFileSync(logPath, html);
                 } else {
-                    grunt.task.run('nodemailer');
+                    await sendMail(username, password, 'smtp.office365.com', recipients, "digitalautomation@fishawack.com", 'Auto-package: - <%= repo.name %>', html);
                 }
 
                 done();
             }
         );
+    });
+};
+
+module.exports.sendMail = async (username, password, host, recipients, from, subject, html) => {
+    const nodemailer = require('nodemailer');
+
+    const transporter = nodemailer.createTransport({
+        host,
+        port: 587,
+        requireTLS: true,
+        auth: {
+            user: username,
+            pass: password
+        },
+        tls: {
+            ciphers: 'SSLv3'
+        }
+    });
+
+    // send mail with defined transport object
+    await transporter.sendMail({
+        from,
+        to: recipients.join(', '),
+        subject,
+        html
     });
 };
