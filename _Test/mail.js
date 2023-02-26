@@ -2,10 +2,11 @@
 
 const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
-const { opts } = require('./_helpers/globals.js');
+const { opts, misc } = require('./_helpers/globals.js');
 const fs = require('fs');
 const path = require('path');
 const location = path.join(__dirname, "_fixture/mail/", ".tmp/mail/log.html");
+const { sendMail } = require('../_Tasks/mail.js');
 
 describe('mail', () => {
     var html = '';
@@ -111,13 +112,10 @@ describe('mail', () => {
         });
     });
 
-    describe('task', () => {
-        it('Should find task declaration', async () => {
-            let output = execSync(`node -e "const grunt = require('grunt'); const { jit } = require('./_Tasks/helpers/include.js'); require('jit-grunt')(grunt, jit)(); grunt.task.run('nodemailer').start();"`, {encoding: 'utf8'});
-
-            console.log(output);
-
-            expect(output).to.not.contain('jit-grunt');
+    describe('sending', () => {
+        it('Should send email to email client', async () => {
+            await sendMail(misc.nodemailer.office365.username, misc.nodemailer.office365.password, 'smtp.office365.com', ['mike.mellor@fishawack.com'], "digitalautomation@fishawack.com", 'core-test-suite-email', '<h1>core-test-suite-email</h1>')
+                .then(() => {}, (e) => expect(e).to.be.null);
         });
     });
 });
