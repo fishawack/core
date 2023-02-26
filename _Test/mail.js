@@ -117,5 +117,9 @@ describe('mail', () => {
             await sendMail(misc.nodemailer.office365.username, misc.nodemailer.office365.password, 'smtp.office365.com', ['mike.mellor@fishawack.com'], "digitalautomation@fishawack.com", 'core-test-suite-email', '<h1>core-test-suite-email</h1>')
                 .then(() => {}, (e) => expect(e).to.be.null);
         });
+
+        it('Should not throw error when sending email through grunt task', () => {
+            expect(() => execSync('grunt mail --mocha=output --branch=master', opts)).to.not.throw();
+        });
     });
 });
