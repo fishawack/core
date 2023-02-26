@@ -110,4 +110,14 @@ describe('mail', () => {
             expect(html).to.not.contain('_chrome.pdf"')
         });
     });
+
+    describe('task', () => {
+        it('Should find task declaration', async () => {
+            let output = execSync(`node -e "const grunt = require('grunt'); const { jit } = require('./_Tasks/helpers/include.js'); require('jit-grunt')(grunt, jit)(); grunt.task.run('nodemailer').start();"`, {encoding: 'utf8'});
+
+            console.log(output);
+
+            expect(output).to.not.contain('jit-grunt');
+        });
+    });
 });
