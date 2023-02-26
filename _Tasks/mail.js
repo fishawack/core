@@ -65,7 +65,7 @@ module.exports = function(grunt) {
                     ].join('')
                 );
 
-                if(devProject){
+                if(devProject === "mail"){
                     const fs = require('fs-extra');
                     let logPath = path.join(process.cwd(), '.tmp/mail/', 'log.html');
                     console.log(`Logging mail to ${logPath}`);
