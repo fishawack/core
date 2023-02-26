@@ -12,7 +12,7 @@
     "deploy": "grunt deploy",
     "mail": "grunt mail",
     "mocha": "mocha _Test/*.js --timeout 1000s --bail --publish",
-    "preversion": "fw run mocha",
+    "preversion": "FW_FULL=1 fw run mocha",
     "postversion": "git push && git push --tags && npm publish",
     "postpublish": "git checkout development && git merge master && git push"
   },
