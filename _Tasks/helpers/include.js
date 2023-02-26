@@ -8,9 +8,7 @@ module.exports = function(grunt, hasBase, fixture) {
 	this.mocha = fixture || grunt.option('mocha') || false; // True when core mocha tests running
 
 	// Used in grunt JIT call to load plugins, can be overridden/added to in build folder include.js
-	this.jit = {
-        postcss: '@lodder/grunt-postcss'
-	};
+	this.jit = module.exports.jit;
 
 	this.devProject = require('./dev.js') || mocha;
 
@@ -605,3 +603,7 @@ try{
 } catch(e){
 	module.exports.deployBranch = 'unknown';
 }
+
+module.exports.jit = {
+	postcss: '@lodder/grunt-postcss'
+};
