@@ -32,7 +32,7 @@ module.exports = (file, dir) => {
 			defaultExtractor: (content) => {
 				let modernizr = [];
 
-				if(!contentJson.attributes.modernizr || contentJson.attributes.modernizr.length){
+				if(!contentJson.attributes.modernizr || !contentJson.attributes.modernizr.length){
 					modernizr.push('modern');
 				} else {
 					modernizr.push('no-js', 'js', 'loading', 'development');
