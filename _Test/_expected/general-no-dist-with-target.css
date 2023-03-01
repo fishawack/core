@@ -26,3 +26,7 @@
 .twig-class {
   color: red;
 }
+
+.flexbox .thing {
+  color: red;
+}
