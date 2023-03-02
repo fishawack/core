@@ -1759,7 +1759,7 @@ To get around this you'll need to manually bump the version, remove the package-
 ```json
 {
     "devDependencies": {
-        "@fishawack/core": "^8.1.1"
+        "@fishawack/core": "^8.1.2"
     }
 }
 ```
