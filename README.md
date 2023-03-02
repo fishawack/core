@@ -20,16 +20,16 @@ The following dependancies are needed to pull binary assets from external source
 
 > Repositories packaged for handover to external agencies won't need these dependencies as binary files (png's,mp4's etc) will be baked into the final repository
 
-* lftp
+* [lftp](https://lftp.yar.ru/)
 
 ### Build
 
 The following dependancies are needed to build the source code in both development mode and production.
 
-* git (>=2.38.0 recommended)
-* node (>=16 recommended)
-* npm (>=9 recommended)
-* dart sass (>=1.57.1 recommended)
+* [git](https://git-scm.com/) (>=2.38.0 recommended)
+* [node](https://nodejs.org/en/) (>=16 recommended)
+* [npm](https://www.npmjs.com/) (>=9 recommended)
+* [dart sass](https://sass-lang.com/dart-sass) (>=1.57.1 recommended)
 
 ### Deploy
 
@@ -37,12 +37,13 @@ These dependancies are only needed if you're planning to run Fishawack specific 
 
 > Repositories packaged for handover to external agencies won't need these dependencies
 
-* ghostscript
-* wine
-* chromium
-* eb cli
-* aws cli
-* electron-packager
+* [ghostscript](https://www.ghostscript.com/)
+* [wine](https://www.winehq.org/)
+* [chromium](https://www.chromium.org/)
+* [eb cli](https://github.com/aws/aws-elastic-beanstalk-cli-setup/tree/v0.1.2)
+* [aws cli](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html)
+* [electron-packager](https://github.com/electron/electron-packager)
+* [git-branch](https://github.com/jonschlinkert/git-branch)
 
 ## Getting started
 
@@ -53,7 +54,6 @@ These dependancies are only needed if you're planning to run Fishawack specific 
 ```bash
 brew install git
 brew install sass/sass/sass
-brew install wget
 brew install lftp
 brew install ghostscript
 brew install wine-stable
@@ -69,6 +69,7 @@ nvm install 18.0.0
 
 npm install npm@latest -g
 npm install electron-packager -g
+npm install git-branch -g
 npm install install -g git+ssh://git@bitbucket.org/fishawackdigital/watertight-node-auto.git#v6.0.0
 ```
 
@@ -1749,6 +1750,58 @@ fw content && fw prod && fw run -d package && fw deploy && fw run mail
 
 ### 8.0.0
 
+#### Docker images
+
+Because core@8 now uses a different image to all the versions before it, you can't bump the version in the traditional way as it'll try to update its core version using the old node@10 which will throw errors.
+
+To get around this you'll need to manually bump the version, remove the package-lock.json file and run a regular npm install.
+
+```json
+{
+    "devDependencies": {
+        "@fishawack/core": "^8.1.1"
+    }
+}
+```
+
+Then run the following commands
+
+> The commands below are shown in their raw npm form. When using lab-env ensure to install with `fw install` to ensure npm & node versions match across developer machines
+
+```bash
+rm package-lock.json
+
+npm install
+```
+
+#### gitlab-ci.yml
+
+Ensure to bump the `gitlab-ci.yml` to a minimum of `4.0.0`.
+
+```yml
+include:
+  - project: 'configs/gitlab-ci'
+    ref: v4.0.0
+    file: '.gitlab-ci.yml'
+```
+
+#### Vue@2 compiler & loader
+
+Due to our switch to webpack 5 and preparing the core for the update to Vue@3 in the future we've had to bump our vue-loader resulting in a slightly different sytnax needed to continue supporting Vue@2. Along with this we no longer install vue-template compiler into the core dependencies as this dependency was always locked to the vue version anyway so often got overridden when the vue version was changed.
+
+To get vue loader and vue template compiler working with Vue@2 again install the following packages:
+
+> The commands below are shown in their raw npm form. When using lab-env ensure to install with `fw install vue-loader@15 --save-dev` to ensure npm & node versions match across developer machines
+
+```bash
+npm install vue-loader@15 --save-dev
+
+# check vue version in project and ensure it matches the package installed below
+npm install vue-template-compiler@2.5.17 --save-dev --save-exact
+```
+
+> After moving to Vue@3 the above dependencies will need removing or it'll cause build issues
+
 #### Capture scripts
 * Capture scripts needs to use webdriverio v8 [api methods](https://webdriver.io/docs/api/browser) which will likely break any custom capture code. 
 
@@ -1762,6 +1815,10 @@ it('Capture contact page', () => {
     capture.page.wait();
 
     capture.screenshot.call();
+
+    browser.isExisting(selector);
+
+    browser.waitForExist(selector, 10000);
 });
 
 // New way
@@ -1771,12 +1828,23 @@ it('Capture contact page', async () => {
     await capture.page.wait();
 
     await capture.screenshot.call();
+
+    await $(selector).isExisting();
+
+    $(selector).waitForExist(10000);
 });
 ```
 
 Chrome browser has also been swapped out for chromium which should have relative little impact but there do exist some slight [differences](https://www.lambdatest.com/blog/difference-between-chrome-and-chromium/).
 
 #### Testing updates
+
+Ensure the two testing folders within _Test are now named ui and unit or the test runners will no longer find the test suites.
+
+```bash
+_Test/karma -> _Test/unit
+_Test/casperjs -> _Test/ui
+```
 
 Unit test now need their full path specifying when importing into test suites.
 
@@ -1853,6 +1921,21 @@ Firefox is no longer installed within the base lab-env core image but can still 
         ]
     }
 }
+```
+
+#### Environment variables
+
+Previous versions of the core would recieve all environment variables sourced into the bash process automatically meaning CI variables were availabile within the docker containers. This is no longer the case which could impact some custom deploy scripts.
+
+To source the variables again you have to manually load the file in like so:
+
+```bash
+# If the env.sh exists then source it
+if [ -f ./env.sh ]; then
+    . ./env.sh;
+fi
+
+# Custom deploy scripts here
 ```
 
 #### Credential updates
