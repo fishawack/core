@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.1.2 (2023-03-02)
+* [Bug] purgecss no longer ignores modernizr properties in config
+
 ### 8.1.1 (2023-02-26)
 * [Bug] correctly call sendMail on exports object and string literal the repo name now that it doesn't pass through grunt
 
