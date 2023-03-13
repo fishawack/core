@@ -1,5 +1,10 @@
 ## Changelog
 
+### 8.1.3 (2023-03-13)
+* [Bug] moved amd parser flag to javascript scope so it doesnt break json imports
+* [Docs] updated core version in migration steps
+* [Docs] migration and dependency updates
+
 ### 8.1.2 (2023-03-02)
 * [Bug] purgecss no longer ignores modernizr properties in config
 
