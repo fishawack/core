@@ -34,6 +34,18 @@ describe('js', () => {
         it('Should ignore amd module', () => {
             expect(js).contain(`amd ignored`);
         });
+
+        it('Should process env variables found in config', () => {
+            expect(js).contain(`skippy dippy doo`);
+        });
+        
+        it('Should process env variables found in .env', () => {
+            expect(js).contain(`yabba dabba doo`);
+        });
+
+        it('Should override env variables in config with .env values', () => {
+            expect(js).contain(`overridey ridey roo`);
+        });
     });
 
     describe('dev', () => {

@@ -21,7 +21,8 @@
 	    "template": {},
 	    "toggle": {},
 		"env": {
-			"ENV_1": "skippy dippy doo"
+			"ENV_1": "skippy dippy doo",
+			"ENV_3": "skippy dippy doont"
 		}
 	},
 	"content": {
