@@ -54,10 +54,8 @@ module.exports = {
 					]
 				},
 				{
-					parser: { amd: false }
-				},
-				{
 					test: /\.m?js$/,
+					parser: { amd: false },
 					exclude: new RegExp(`/node_modules\/(?!(${(contentJson.attributes.transpile || []).join('|')})\/).*/`),
 					use: [
 						{
