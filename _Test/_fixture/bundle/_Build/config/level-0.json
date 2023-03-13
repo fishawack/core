@@ -13,6 +13,9 @@
 			},
 			"deprecation": {
 				"src": "_Build-deprecation"
+			},
+			"js-features": {
+				"src": "_Build-js-features"
 			}
 		},
 	    "template": {},

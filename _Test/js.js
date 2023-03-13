@@ -8,6 +8,34 @@ const glob = require('glob');
 const { opts } = require('./_helpers/globals.js');
 
 describe('js', () => {
+    describe('features', () => {
+        let js;
+        before(() => {
+            execSync('grunt webpack:dev --branch=js-features --mocha=bundle', opts);
+            js = fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Output/js/script.js'), {encoding: 'utf8'});
+        });
+
+        it('Should import es6 javascript file', () => {
+            expect(js).contain(`es6 import`);
+        });
+
+        it('Should import cjs javascript file', () => {
+            expect(js).contain(`common js import`);
+        });
+
+        it('Should import es6 json file', () => {
+            expect(js).contain(`{\\"json-import-es6\\":true}`);
+        });
+
+        it('Should import cjs json file', () => {
+            expect(js).contain(`{\\"json-import-cjs\\":true}`);
+        });
+
+        it('Should ignore amd module', () => {
+            expect(js).contain(`amd ignored`);
+        });
+    });
+
     describe('dev', () => {
         before(() => {
             execSync('grunt modernizr webpack:dev concat:dev --branch=master --mocha=bundle', opts);
