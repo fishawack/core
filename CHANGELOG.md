@@ -2,6 +2,8 @@
 
 ### 8.1.3 (2023-03-13)
 * [Bug] moved amd parser flag to javascript scope so it doesnt break json imports
+* [Bug] define process and process.env so they dont error out when referencing vars that dont exist
+* [Bug] load dotenv to simulate the old behaviour of sourcing env vars in docker container
 * [Docs] updated core version in migration steps
 * [Docs] migration and dependency updates
 
