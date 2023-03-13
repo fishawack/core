@@ -184,6 +184,9 @@ module.exports = function(grunt, hasBase, fixture) {
 				},
 				this.contentJson.attributes.env
 			);
+
+			// Load .env variables
+			require('dotenv').config({override: true});
 		}
     }
 
