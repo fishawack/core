@@ -33,12 +33,13 @@ var capture = {
         call(){
             capture.size.init();
 
-            describe(`Size ${capture.size.width}x${capture.size.height}`, async function () {
+            describe(`Size ${capture.size.width}x${capture.size.height}`, () => {
                 before(async () => await capture.size.before());
 
                 if(custom.size){
-                    await custom.size(capture);
+                    custom.size(capture);
                 }
+                
                 for(var i = 0; i < capture.page.array.length; i++){
                     capture.page.call(i);
                 }
@@ -71,13 +72,13 @@ var capture = {
         call(index){
             capture.page.init(index);
 
-            describe(`Page ${capture.page.array[index]}`, async function () {
-                before(() => capture.page.before(index));
+            describe(`Page ${capture.page.array[index]}`, () => {
+                before(async () => await capture.page.before(index));
 
-                await  capture.page.initial();
+                capture.page.initial();
 
                 if(custom.page){
-                    await custom.page(capture);
+                    custom.page(capture);
                 }
             });
         },
