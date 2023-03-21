@@ -1114,11 +1114,13 @@ This code can also be included from lab-ui directly
 
 You can inject your own custom capture code into the built in capture scripts. First create the file `_Node/capture.js` which should export one or both of the functions you'd like to inject into. This can be useful in Vue projects for injecting dynamic routes onto the pages array rather than hard coding them in the [config files](#core-config).
 
+> page and size below **cannot** be async scripts as those aren't supported by the mocha framework. You can however have async test cases within these functions with the `it('test', async () => {})` syntax
+
 #### Node
 ```javascript
 module.exports = {
     // This is called right after the viewport has been resized before the pages are iterated over
-    size: function(capture){
+    size: capture => {
         var dynamicPages = require(...);
         // Add dynamic demo pages to pages captured array
         dynamicPages.forEach((d) => {
@@ -1126,14 +1128,14 @@ module.exports = {
         });
     },
     // This is called after the standard page capture has happened on each page
-    page: function(capture){
+    page: capture => {
         // Capture nav on homepage only
         if(capture.page.index === 0){
-            it('Nav', function() {
-                browser.click('.js-menu');
+            it('Nav', async () => {
+                await browser.click('.js-menu');
 
                 // Passing true to the screenshot function captures just the visible viewport, ommitting true will cause the page to scroll and capture everything
-                capture.screenshot.call(true);
+                await capture.screenshot.call(true);
             });
         }
     }
