@@ -20,3 +20,4 @@ ssh-*
 id_rsa
 misc.json
 .cache/
+_Node
