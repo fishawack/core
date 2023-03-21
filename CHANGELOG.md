@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.1.4 (2023-03-21)
+* [Bug] removed async keywords in describe calls in mocha as they cause strange issues and aren't supported
+
 ### 8.1.3 (2023-03-13)
 * [Bug] moved amd parser flag to javascript scope so it doesnt break json imports
 * [Bug] define process and process.env so they dont error out when referencing vars that dont exist
