@@ -602,7 +602,7 @@ module.exports.log = {
 }
 
 try{
-	module.exports.deployBranch = process.env.BRANCH || process.env.CI_COMMIT_REF_NAME || require('git-branch').sync();
+	module.exports.deployBranch = process.env.BRANCH || process.env.CI_COMMIT_REF_NAME || require('child_process').execSync(`git branch --show-current`, {encoding: 'utf8'}).trim();
 } catch(e){
 	module.exports.deployBranch = 'unknown';
 }
