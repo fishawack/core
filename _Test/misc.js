@@ -11,9 +11,10 @@ describe('misc', () => {
     describe('include', () => {
         it('Should use git-branch to fetch current branch', () => {
             const { deployBranch } = require('../_Tasks/helpers/include.js');
-            console.log(deployBranch);
             expect(deployBranch).to.not.be.undefined;
             expect(deployBranch).to.not.equal('unknown');
+            expect(deployBranch).to.have.length.greaterThan(0);
+            expect(deployBranch).to.not.contain('\n');
         });
 
         it('Should use BRANCH env variable as current branch when set', () => {
