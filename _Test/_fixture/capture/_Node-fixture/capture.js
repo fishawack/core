@@ -4,14 +4,29 @@ module.exports = {
     },
     page: capture => {
         if(capture.page.name === "/faq/index.html"){
-            it('test', async () => {
+            it('screenshot', async () => {
                 await capture.screenshot.call();
             });
         }
 
         if(capture.page.index === 3){
-            it('test', async () => {
+            it('screenshot viewport only', async () => {
                 await capture.screenshot.call(true);
+            });
+        }
+
+        if(capture.page.index === capture.page.array.length - 2){
+            it('set state', async () => {
+                await browser.execute(() => window.localStorage.setItem('hasState', true));
+            });
+        }
+
+        if(capture.page.index === capture.page.array.length - 1){
+            it('get state', async () => {
+                if(await browser.execute(() => window.localStorage.getItem('hasState'))){
+                    capture.page.slug = 'state';
+                    await capture.screenshot.call(true);
+                }
             });
         }
     }

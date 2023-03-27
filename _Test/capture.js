@@ -83,6 +83,10 @@ describe('capture', () => {
             expect(height).to.be.lessThanOrEqual(608);
         });
 
+        it('Should allow state to be stored between pages', () => {
+            expect(glob.sync(path.join(__dirname, '_fixture/capture/.tmp/screenshots/**/*x*/*state_.png'))).to.be.an('array').that.is.not.empty;
+        });
+
         after(() => {
             fs.removeSync(`${__dirname}/_fixture/capture/_Node`); 
         });
