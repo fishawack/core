@@ -28,7 +28,7 @@
 				var html = '';
 				var ratio = contentJson.attributes.ratio;
 
-				if(deployEnv.loginType){
+				if(deployEnv.loginType && deployEnv.loginType !== "external"){
 					if(ratio){
 						if(deployEnv.url.split(':')[0] === 'https'){
 							url = 'https://demo.fishawack.solutions/Lab/Ar/index.html';
@@ -43,6 +43,11 @@
 					}
 
 					html += '<li><strong>Auto-login url</strong>: <a href="' + url + '">' + url + '</a></li>';
+				} else if(deployEnv.loginType !== "external") {
+					url = `${deployEnv.url}${subDir ? '/' + subDir : ''}`;
+					let parts = url.split('://');
+					url = `${parts[0]}://${encodeURIComponent(next.username)}:${encodeURIComponent(next.password)}@${parts[1]}`;
+					html += `<li><strong>Auto-login url</strong>: <a href="${url}">${url}</a></li>`;
 				}
 
 				return prev += `<li><strong>User</strong>:<ul>${username}${password}${valid}${group}${html}</ul></li>`;
