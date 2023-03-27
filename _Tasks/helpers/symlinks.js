@@ -4,7 +4,7 @@ module.exports = {
         const glob = require('glob');
         const fs = require('fs-extra');
 
-        glob.sync(`${search}/**/*`, {dot:true}).forEach(src => {
+        glob.sync(`${search}/**/*`, {dot:true}).sort().forEach(src => {
             let stats = fs.lstatSync(src);
 
             // If a symlink is found that links to an external path to the current root files then we need to copy it into the bundle
