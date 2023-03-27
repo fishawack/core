@@ -49,8 +49,12 @@ describe('copy', () => {
                     expect((fs.lstatSync('_Test/_fixture/output/_Packages/Deploy/ext-dir-symlink')).isSymbolicLink()).to.be.false;
                 });
 
-                it('Should maintain nested local symlink', () => {
+                it('Should maintain nested local symlink that comes after its linked directory alphabetically', () => {
                     expect((fs.lstatSync('_Test/_fixture/output/_Packages/Deploy/local-ext-dir-symlink')).isSymbolicLink()).to.be.true;
+                });
+
+                it('Should convert nested local symlink that comes before its linked directory alphabetically', () => {
+                    expect((fs.lstatSync('_Test/_fixture/output/_Packages/Deploy/a-local-ext-dir-symlink')).isSymbolicLink()).to.be.false;
                 });
 
                 it('Should convert nested external symlink', () => {
