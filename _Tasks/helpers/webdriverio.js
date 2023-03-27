@@ -13,17 +13,18 @@ async function run(wdioOptions = {}){
             
             // Laumching wdio/cli directly doesn't allow you to set multiple capabilities so instead write all to tmp wdio conf and read that in
             let obj = require('../../wdio.conf.js').config;
+            const capture = captureEnv();
 
-            obj.capabilities = captureEnv().browsers.reduce((arr, browser) => {
-                captureEnv().sizes.forEach((size, index) => {
+            obj.capabilities = capture.browsers.reduce((arr, browser) => {
+                capture.sizes.forEach((size, index) => {
                     let obj = { 
                         browserName: browser,
                         size,
                         index,
-                        wait: captureEnv().wait,
-                        url: captureEnv().url,
-                        sizes: captureEnv().sizes,
-                        pages: captureEnv().pages,
+                        wait: capture.wait,
+                        url: capture.url,
+                        sizes: capture.sizes,
+                        pages: capture.pages,
                         output: config.root
                     };
 
