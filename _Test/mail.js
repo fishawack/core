@@ -26,6 +26,82 @@ describe('mail', () => {
         });
     });
 
+    describe('deploy with creds', () => {
+        before(() => {
+            execSync('grunt clean:build mail --mocha=mail --branch=deploy-wCreds', opts);
+            html = fs.readFileSync(location, {encoding: 'utf8'});
+        });
+
+        it('Should contain username when users array defined in config', () => {
+            expect(html).to.contain('<strong>Username</strong>: hello')
+        });
+
+        it('Should contain password when users array defined in config', () => {
+            expect(html).to.contain('<strong>Password</strong>: goodbye')
+        });
+
+        it('Should contain auto-login url', () => {
+            expect(html).to.contain('<strong>Auto-login url</strong>:')
+        });
+
+        it('Should contain htpasswd specific auto-login syntax', () => {
+            expect(html).to.contain('https://hello:goodbye@google.com')
+        });
+    });
+
+    describe('deploy with creds and subdir', () => {
+        before(() => {
+            execSync('grunt clean:build mail --mocha=mail --branch=deploy-wCredsSubdir', opts);
+            html = fs.readFileSync(location, {encoding: 'utf8'});
+        });
+
+        it('Should contain http instead of https', () => {
+            expect(html).to.contain('http://')
+        });
+
+        it('Should contain subdir appended to url', () => {
+            expect(html).to.contain('http://google.com/yap')
+        });
+
+        it('Should encode special chars', () => {
+            expect(html).to.contain('http://hello:!%40%23%24%25%5E%26*()_%2B-%3D%5B%5D\'@google.com/yap')
+        });
+    });
+
+    describe('deploy with external creds', () => {
+        before(() => {
+            execSync('grunt clean:build mail --mocha=mail --branch=deploy-wCredsExternal', opts);
+            html = fs.readFileSync(location, {encoding: 'utf8'});
+        });
+
+        it('Should not contain auto-login url', () => {
+            expect(html).not.to.contain('<strong>Auto-login url</strong>:')
+        });
+    });
+
+    describe('deploy watertight', () => {
+        before(() => {
+            execSync('grunt clean:build mail --mocha=mail --branch=deploy-watertight', opts);
+            html = fs.readFileSync(location, {encoding: 'utf8'});
+        });
+
+        it('Should contain username when users array defined in config', () => {
+            expect(html).to.contain('<strong>Username</strong>: hello')
+        });
+
+        it('Should contain password when users array defined in config', () => {
+            expect(html).to.contain('<strong>Password</strong>: goodbye')
+        });
+
+        it('Should contain auto-login url', () => {
+            expect(html).to.contain('<strong>Auto-login url</strong>:')
+        });
+
+        it('Should contain watertight specific auto-login syntax', () => {
+            expect(html).to.contain('?uName=hello&pwd=goodbye')
+        });
+    });
+
     describe('empty', () => {
         before(() => {
             execSync('grunt clean:build mail --mocha=mail --branch=empty', opts);

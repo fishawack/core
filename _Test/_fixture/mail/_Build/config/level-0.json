@@ -22,6 +22,53 @@
 				"deploy": {
 					"url": "https://google.com"
 				}
+			},
+			"deploy-wCreds": {
+				"deploy": {
+					"url": "https://google.com",
+					"users": [
+						{
+							"username": "hello",
+							"password": "goodbye"
+						}
+					]
+				}
+			},
+			"deploy-wCredsExternal": {
+				"deploy": {
+					"url": "https://google.com",
+					"loginType": "external",
+					"users": [
+						{
+							"username": "hello",
+							"password": "goodbye"
+						}
+					]
+				}
+			},
+			"deploy-wCredsSubdir": {
+				"deploy": {
+					"url": "http://google.com",
+					"subDir": "yap",
+					"users": [
+						{
+							"username": "hello",
+							"password": "!@#$%^&*()_+-=[]'"
+						}
+					]
+				}
+			},
+			"deploy-watertight": {
+				"deploy": {
+					"url": "https://google.com",
+					"loginType": "bootstrap",
+					"users": [
+						{
+							"username": "hello",
+							"password": "goodbye"
+						}
+					]
+				}
 			}
 		}
 	}
