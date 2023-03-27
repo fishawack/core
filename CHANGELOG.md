@@ -7,6 +7,7 @@
 * [Bug] use git execSync command instead of git-branch to get fallback branch name
 * [Bug] switched image-size for sharp so we don't have dupe dependencies
 * [Bug] sort symlink globbed results
+* [Bug] added external to loginType options
 
 ### 8.1.4 (2023-03-21)
 * [Bug] removed async keywords in describe calls in mocha as they cause strange issues and aren't supported
