@@ -1,5 +1,11 @@
 ## Changelog
 
+### 8.2.0 (2023-03-27)
+* [Feature] auto-login url now generated for regular usernames and passwords but can be disabled with loginType: external
+* [Bug] realtime reporting of webdriverio spec reporting
+* [Bug] sort globbed html capture pages alphabetically
+* [Bug] use git execSync command instead of git-branch to get fallback branch name
+
 ### 8.1.4 (2023-03-21)
 * [Bug] removed async keywords in describe calls in mocha as they cause strange issues and aren't supported
 
