@@ -133,6 +133,28 @@
 						]
 					}
 				]
+			},
+			"empty": {
+			},
+			"single": {
+				"content": [
+					{
+						"lftp": "ftp-fishawack.egnyte.com",
+						"location": "Shared/FW/Knutsford/Digital/Auto-Content/test-shared/"
+					}
+				]
+			},
+			"double": {
+				"content": [
+					{
+						"lftp": "ftp-fishawack.egnyte.com",
+						"location": "Shared/FW/Knutsford/Digital/Auto-Content/test-shared/"
+					},
+					{
+						"lftp": "ftp-fishawack.egnyte.com",
+						"location": "Shared/FW/Knutsford/Digital/Auto-Content/test-shared/"
+					}
+				]
 			}
 		}
 	}

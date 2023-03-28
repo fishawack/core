@@ -2,12 +2,23 @@ module.exports = (grunt) => {
     grunt.registerTask('content', ['content:pull', 'content:request']);
 
     grunt.registerTask('content:pull', function(){
+        const fs = require('fs-extra');
         if(!contentJson.attributes.content || contentJson.attributes.content.length <= 0){
             grunt.log.warn('No content to pull');
+            fs.removeSync(`${config.src}/content/*`);
             return;
         }
 
-        const fs = require('fs-extra');
+        const path = require('path');
+        const glob = require('glob');
+        var existContent = glob.sync(`${config.src}/content/*`);
+        if(contentJson.attributes.content.length < existContent.length)
+        {
+            var index = existContent.length - contentJson.attributes.content.length;
+            for(index; index < existContent.length; index++ ) {
+                fs.removeSync(`${config.src}/content/content-${index}`);
+            }
+        }
         const lftp = require('./helpers/lftp.js');
 
         function protocol(d, saveTo){
