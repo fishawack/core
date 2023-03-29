@@ -1,5 +1,9 @@
 ## Changelog
 
+### 8.3.0 (2023-03-29)
+* [Feature] adding clean removed indexes in content folder: Task ID #26050649
+* [Bug] deployBranch is now an exported function instead of an object so setBase is called first
+
 ### 8.2.0 (2023-03-27)
 * [Feature] auto-login url now generated for regular usernames and passwords but can be disabled with loginType: external
 * [Bug] realtime reporting of webdriverio spec reporting
