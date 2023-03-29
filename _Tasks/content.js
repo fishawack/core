@@ -5,7 +5,7 @@ module.exports = (grunt) => {
         const fs = require('fs-extra');
         if(!contentJson.attributes.content || contentJson.attributes.content.length <= 0){
             grunt.log.warn('No content to pull');
-            fs.removeSync(`${config.src}/content/*`);
+            fs.removeSync(`${config.src}/content`);
             return;
         }
 
