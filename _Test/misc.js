@@ -11,10 +11,10 @@ describe('misc', () => {
     describe('include', () => {
         it('Should use git-branch to fetch current branch', () => {
             const { deployBranch } = require('../_Tasks/helpers/include.js');
-            expect(deployBranch).to.not.be.undefined;
-            expect(deployBranch).to.not.equal('unknown');
-            expect(deployBranch).to.have.length.greaterThan(0);
-            expect(deployBranch).to.not.contain('\n');
+            expect(deployBranch()).to.not.be.undefined;
+            expect(deployBranch()).to.not.equal('unknown');
+            expect(deployBranch()).to.have.length.greaterThan(0);
+            expect(deployBranch()).to.not.contain('\n');
         });
 
         it('Should use BRANCH env variable as current branch when set', () => {
@@ -22,7 +22,7 @@ describe('misc', () => {
 
             const { deployBranch } = require('../_Tasks/helpers/include.js');
 
-            expect(deployBranch).to.be.equal('hello');
+            expect(deployBranch()).to.be.equal('hello');
 
             delete process.env.BRANCH;
         });
@@ -32,7 +32,7 @@ describe('misc', () => {
 
             const { deployBranch } = require('../_Tasks/helpers/include.js');
 
-            expect(deployBranch).to.be.equal('goodbye');
+            expect(deployBranch()).to.be.equal('goodbye');
 
             delete process.env.CI_COMMIT_REF_NAME;
         });
