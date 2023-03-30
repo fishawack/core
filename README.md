@@ -1761,7 +1761,7 @@ To get around this you'll need to manually bump the version, remove the package-
 ```json
 {
     "devDependencies": {
-        "@fishawack/core": "^8.1.2"
+        "@fishawack/core": "^8.0.0"
     }
 }
 ```
@@ -1771,9 +1771,13 @@ Then run the following commands
 > The commands below are shown in their raw npm form. When using lab-env ensure to install with `fw install` to ensure npm & node versions match across developer machines
 
 ```bash
+rm -rf node_modules
+# or if using lab-env
+fw nuke
+
 rm package-lock.json
 
-npm install
+npm install @fishawack/core@latest
 ```
 
 #### gitlab-ci.yml
