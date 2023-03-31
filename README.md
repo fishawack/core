@@ -1808,6 +1808,24 @@ npm install vue-template-compiler@2.5.17 --save-dev --save-exact
 
 > After moving to Vue@3 the above dependencies will need removing or it'll cause build issues
 
+#### Permission changes
+
+Full stack projects often times modify user permissions during setup scripts so that backend languages have access to read and write to storage files when running as the web www-data user.
+
+In many projects we used to fully `chown` those storage folders but that will cause issues in core@8 projects as the host machine will no longer have correct permissions to remove those files.
+
+Instead rather than `chown` you should change to `chgrp` which along the `chmod` command will allow both the www-data and the host machine access to the files.
+
+```bash
+# Old way
+chmod -R 775 storage
+chown -R www-data:www-data ./storage
+
+# New way
+chmod -R 775 storage
+chgrp -R www-data ./storage
+```
+
 #### Capture scripts
 * Capture scripts needs to use webdriverio v8 [api methods](https://webdriver.io/docs/api/browser) which will likely break any custom capture code. 
 
