@@ -7,6 +7,10 @@ function image(src, options){
     let file = path.join(options.saveTo, 'media', src.replace(new RegExp(options.find), ''));
 
     // Check if valid string - if not then prepend the CMS path
+    // Fix for Contenful pathing not being a real URL
+    if(options.path.indexOf("contentful") > -1) {
+        src = `https:${src}`;
+    }
     try {
         new URL(src);
     } catch (e) {
