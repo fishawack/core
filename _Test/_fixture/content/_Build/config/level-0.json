@@ -127,9 +127,12 @@
 						"url":"https://cdn.contentful.com/",
 						"api":"spaces/wx7vh9ors50n/environments/master/entries?access_token=mwpr-LIW4jtnznOiL6fmKtKl3u4LicGT_XRS9LMPNgE&content_type=",
 						"type":"contentful",
+						"bundle": true,
+						"find": "\/\/images.ctfassets.net\/(.*?)\/(.*?)\/(.*?)\/",
 						"endpoints": [
 							"layout",
-							"layoutCopy"
+							"layoutCopy",
+							"lessonImage"
 						]
 					}
 				]
