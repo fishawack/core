@@ -1,5 +1,9 @@
 ## Changelog
 
+### 8.4.0 (2023-04-05)
+* [Feature] add contenful tests for image download and files check
+* [Bug] Adding image pull down to contentful builds
+
 ### 8.3.0 (2023-03-29)
 * [Feature] adding clean removed indexes in content folder: Task ID #26050649
 * [Bug] deployBranch is now an exported function instead of an object so setBase is called first
