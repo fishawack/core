@@ -151,7 +151,7 @@ describe('content-request', () => {
         });
 
         it('Should download images', () => {
-            expect((fs.lstatSync('_Test/_fixture/content/_Build/content/content-0/media/webapp.png')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/content/_Build/content/content-0/media/validations.png')).isFile()).to.be.true;
         });
     });
 });
