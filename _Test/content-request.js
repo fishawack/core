@@ -146,8 +146,12 @@ describe('content-request', () => {
         });
 
         it('Should save to json files', () => {
-            expect((fs.lstatSync('_Test/_fixture/content/_Build/content/content-0/layout.json')).isFile()).to.be.true;
-            expect((fs.lstatSync('_Test/_fixture/content/_Build/content/content-0/layoutCopy.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/content/_Build/content/content-0/media/layout.json')).isFile()).to.be.true;
+            expect((fs.lstatSync('_Test/_fixture/content/_Build/content/content-0/media/layoutCopy.json')).isFile()).to.be.true;
+        });
+
+        it('Should download images', () => {
+            expect((fs.lstatSync('_Test/_fixture/content/_Build/content/content-0/media/webapp.png')).isFile()).to.be.true;
         });
     });
 });
