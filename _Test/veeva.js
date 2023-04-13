@@ -8,7 +8,7 @@ const { opts } = require('./_helpers/globals.js');
 
 describe('veeva', () => {
     before(() => {
-        execSync('grunt clean:veeva veeva --branch=package --mocha=package', opts);
+        execSync('grunt clean:build capture clean:veeva veeva --branch=package --mocha=package', opts);
     });
     
     it('Should generate a veeva key message zip', () => {
