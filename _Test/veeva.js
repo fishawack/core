@@ -4,8 +4,8 @@ const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
 const path = require('path');
 const glob = require('glob');
-const { opts } = require('./_helpers/globals.js');
 const fs = require('fs-extra');
+const { opts } = require('./_helpers/globals.js');
 
 describe('veeva', () => {
     before(() => {
@@ -36,13 +36,19 @@ describe('veeva', () => {
         });
 
         describe('generated', () => {
+            let csvFileName;
+            let csvFileLines;
+            let ind;
+
             before(() => {
                 execSync('mkdir -p _Test/_fixture/package/_Output/shared');
                 execSync('touch _Test/_fixture/package/_Output/shared/shared.css');
                 execSync('grunt capture package:veeva --branch=veeva-shared-resource --mocha=package', opts);
 
+                csvFileName = fs.readdirSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/')).filter(fn => fn.endsWith('.csv'));
+                csvFileLines = fs.readFileSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/' + csvFileName), { encoding: 'utf8' }).split('\n');
+                ind = csvFileLines.findIndex(element => element.includes("veeva_shared_resource.zip"));
             });
-    
             it('Should generate a shared resource zip when flag enabled', () => {
                 expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/veeva_shared_resource.zip'))).to.be.an('array').to.not.be.empty;
             });
@@ -58,10 +64,7 @@ describe('veeva', () => {
                 expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/MCL*veeva-shared-resource*.csv'))).to.be.an('array').to.not.be.empty;
             });
             it('Should find language in csv', () => {
-                let csvFile;
-                csvFile = fs.readdirSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/')).filter(fn => fn.endsWith('.csv'));
-                console.log(csvFile);
-                expect(fs.readFileSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/' + csvFile), { encoding: 'utf8' })).to.contain(`English`);
+                expect(csvFileLines[ind]).to.contain('English');
             });
             after(() => {
                 execSync('rm -rf _Test/_fixture/package/_Output/shared');
