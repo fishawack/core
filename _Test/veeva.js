@@ -36,18 +36,10 @@ describe('veeva', () => {
         });
 
         describe('generated', () => {
-            let csvFileName;
-            let csvFileLines;
-            let ind;
-
             before(() => {
                 execSync('mkdir -p _Test/_fixture/package/_Output/shared');
                 execSync('touch _Test/_fixture/package/_Output/shared/shared.css');
-                execSync('grunt capture package:veeva --branch=veeva-shared-resource --mocha=package', opts);
-
-                csvFileName = fs.readdirSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/')).filter(fn => fn.endsWith('.csv'));
-                csvFileLines = fs.readFileSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/' + csvFileName), { encoding: 'utf8' }).split('\n');
-                ind = csvFileLines.findIndex(element => element.includes("veeva_shared_resource.zip"));
+                execSync('grunt clean:veeva veeva --branch=veeva-shared-resource --mocha=package', opts);
             });
             it('Should generate a shared resource zip when flag enabled', () => {
                 expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/veeva_shared_resource.zip'))).to.be.an('array').to.not.be.empty;
@@ -59,15 +51,24 @@ describe('veeva', () => {
                 expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/veeva_shared_resource/thumb.png'))).to.be.an('array').to.not.be.empty;
                 expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/veeva_shared_resource/index.html'))).to.be.an('array').to.not.be.empty;
             });
+            after(() => {
+                execSync('rm -rf _Test/_fixture/package/_Output/shared');
+            });
+        });
 
-            it('Should generate a csv', () => {
-                expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/MCL*veeva-shared-resource*.csv'))).to.be.an('array').to.not.be.empty;
+        describe('countryLanguageSet', () => {
+            let csvFileName;
+            let csvFileLines;
+            let ind;
+            before(() => {
+                execSync('grunt capture package:veeva --branch=veeva-shared-resource-country --mocha=package', opts);
+                csvFileName = fs.readdirSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/')).filter(fn => fn.endsWith('.csv'));
+                csvFileLines = fs.readFileSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/' + csvFileName), { encoding: 'utf8' }).split('\n');
+                ind = csvFileLines.findIndex(element => element.includes("veeva_shared_resource.zip"));
+                console.log(csvFileLines[ind]);
             });
             it('Should find language in csv', () => {
                 expect(csvFileLines[ind]).to.contain('English');
-            });
-            after(() => {
-                execSync('rm -rf _Test/_fixture/package/_Output/shared');
             });
         });
     });
