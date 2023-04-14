@@ -57,18 +57,20 @@ describe('veeva', () => {
         });
 
         describe('countryLanguageSet', () => {
-            let csvFileName;
-            let csvFileLines;
-            let ind;
+            let csvFileName, csvFileLines, ind, json, country;
             before(() => {
                 execSync('grunt capture package:veeva --branch=veeva-shared-resource-country --mocha=package', opts);
                 csvFileName = fs.readdirSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/')).filter(fn => fn.endsWith('.csv'));
                 csvFileLines = fs.readFileSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/' + csvFileName), { encoding: 'utf8' }).split('\n');
                 ind = csvFileLines.findIndex(element => element.includes("veeva_shared_resource.zip"));
-                console.log(csvFileLines[ind]);
             });
             it('Should find language in csv', () => {
                 expect(csvFileLines[ind]).to.contain('English');
+            });
+            it('Should find country in csv', () => {
+                json = JSON.parse(fs.readFileSync(path.join(__dirname, '_fixture/package/_Build/config/level-0.json'), opts));
+                country = json['attributes']['targets']["veeva-shared-resource-country"]['veeva']['country'];
+                expect(csvFileLines[ind]).to.contain(country);
             });
         });
     });
