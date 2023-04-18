@@ -2,7 +2,9 @@
 .sass-cache
 node_modules/
 **/npm-debug.log
-.tmp/
+!.tmp
+.tmp/*
+!.tmp/screenshots
 _Zips/
 _Pdfs/
 coverage/
