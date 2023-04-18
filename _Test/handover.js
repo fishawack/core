@@ -8,7 +8,7 @@ const { opts } = require('./_helpers/globals.js');
 
 describe('handover', () => {
     before(() => {
-        execSync('grunt package:handover --branch=package --mocha=output', opts);
+        execSync('grunt clean:handover copy:handover handover --branch=package --mocha=output', opts);
     });
     
     it('Should pull in the build files', () => {
