@@ -8,10 +8,10 @@ const { opts } = require('./_helpers/globals.js');
 
 describe('cegedim', () => {
     before(() => {
-        execSync('grunt capture cegedim --branch=package --mocha=output', opts);
+        execSync('grunt clean:cegedim cegedim --branch=package --mocha=package', opts);
     });
     
     it('Should generate a cegedim key message zip', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/output/_Packages/Cegedim/*.zip'))).to.be.an('array').that.is.not.empty;
+        expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Cegedim/*.zip'))).to.be.an('array').that.is.not.empty;
     });
 });
