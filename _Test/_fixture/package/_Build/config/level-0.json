@@ -20,6 +20,12 @@
 				"veeva": {
 					"sharedResource": true
 				}
+			},
+			"veeva-shared-resource-country": {
+				"veeva": {
+					"sharedResource": true, 
+              		"country": "United States"
+				}
 			}
 		}
 	}
