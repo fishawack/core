@@ -4,8 +4,6 @@ stages:
 test:
   stage: test
   resource_group: test
-  only:
-    - development
   coverage: '/Code coverage: \d+\.\d+/'
   variables:
     FW_FULL: 1
