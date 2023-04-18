@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.5.0 (2023-04-18)
+* [Feature] update veeva task to add country and languague fields for shared resource in csv
+
 ### 8.4.0 (2023-04-05)
 * [Feature] add contenful tests for image download and files check
 * [Bug] Adding image pull down to contentful builds
