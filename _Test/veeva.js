@@ -8,20 +8,22 @@ const fs = require('fs-extra');
 const { opts } = require('./_helpers/globals.js');
 
 describe('veeva', () => {
-    before(() => {
-        execSync('grunt clean:build capture clean:veeva veeva --branch=package --mocha=package', opts);
-    });
+    describe('base', () => {
+        before(() => {
+            execSync('grunt clean:veeva veeva --branch=package --mocha=package', opts);
+        });
+        
+        it('Should generate a veeva key message zip', () => {
+            expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/*.zip'))).to.be.an('array').to.not.be.empty;
+        });
     
-    it('Should generate a veeva key message zip', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/*.zip'))).to.be.an('array').to.not.be.empty;
-    });
-
-    it('Should generate a veeva key message ctl file', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/ctlfile/*.ctl'))).to.be.an('array').to.not.be.empty;
-    });
-
-    it('Should not generate a shared resource zip when flag is not enabled', () => {
-        expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/veeva_shared_resource.zip'))).to.be.an('array').to.be.empty;
+        it('Should generate a veeva key message ctl file', () => {
+            expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/ctlfile/*.ctl'))).to.be.an('array').to.not.be.empty;
+        });
+    
+        it('Should not generate a shared resource zip when flag is not enabled', () => {
+            expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Veeva/veeva_shared_resource.zip'))).to.be.an('array').to.be.empty;
+        });
     });
 
     describe('sharedResource', () => {
@@ -55,11 +57,13 @@ describe('veeva', () => {
                 execSync('rm -rf _Test/_fixture/package/_Output/shared');
             });
         });
+    });
 
+    describe('mcl', () => {
         describe('countryLanguageSet', () => {
             let csvFileName, csvFileLines, ind, json, country;
             before(() => {
-                execSync('grunt capture package:veeva --branch=veeva-shared-resource-country --mocha=package', opts);
+                execSync('grunt clean:veeva veeva:mcl --branch=veeva-shared-resource-country --mocha=package', opts);
                 csvFileName = fs.readdirSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/')).filter(fn => fn.endsWith('.csv'));
                 csvFileLines = fs.readFileSync(path.join(__dirname, '_fixture/package/_Packages/Veeva/' + csvFileName), { encoding: 'utf8' }).split('\n');
                 ind = csvFileLines.findIndex(element => element.includes("veeva_shared_resource.zip"));
