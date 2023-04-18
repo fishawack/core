@@ -8,12 +8,12 @@ const { opts } = require('./_helpers/globals.js');
 
 describe('vablet', () => {
     before(() => {
-        execSync('grunt vablet --branch=package --mocha=output', opts);
+        execSync('grunt clean:vablet vablet --branch=package --mocha=package', opts);
     });
     
     it('Should generate a vablet settings file', () => {
         try{
-            fs.readFileSync(path.join(__dirname, '_fixture/output/_Packages/Vablet/VabletLoadSettings.json'), opts);
+            fs.readFileSync(path.join(__dirname, '_fixture/package/_Packages/Vablet/VabletLoadSettings.json'), opts);
         } catch(e){
             expect(e.message).to.not.contain('ENOENT');
         }
