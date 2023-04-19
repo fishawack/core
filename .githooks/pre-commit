@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 WC='\033[0;33m' # Orange
 EN='\033[0m' # No Color
