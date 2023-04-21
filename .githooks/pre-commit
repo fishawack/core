@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 WC='\033[0;33m' # Orange
 EN='\033[0m' # No Color
@@ -7,12 +7,15 @@ dirty=false;
 count=0;
 arr=();
 
+# Create an array of 10 false values
 for i in {0..9}; do
 	arr+=(false);
 done
 
+# Loop through all files changed in the commit
 while read st file; do
 	for i in {0..9}; do
+		# Level specific check (level-0, level-1, etc)
 		if [[ $file == *"level-${i}"* ]]; then
 			arr[$i]=true;
 		fi
@@ -27,25 +30,31 @@ while read st file; do
 	if [[ $file != *"level-"* && $file != *"sequences"* ]]; then
 		arr[0]=true;
 	fi
+# Use git diff --cached to only check files staged for commit
 done <<< "$(git diff --cached --name-status)"
 
+# Loop through the array and check if more than one level has been changed
 for i in "${arr[@]}"; do
 	if [[ $i = true ]]; then
 		count=$((count + 1));
 	fi
 
+	# If more than one level has been changed then set dirty to true
 	if [[ $count > 1 ]]; then
 		dirty=true;
 	fi
 done
 
+# If dirty is true then print a warning and exit with a non-zero status
 if [[ $dirty = true ]]; then
 	echo "";
 	echo "${WC}Dirty commmit${EN} - detected changes to multiple levels";
 	echo "";
 	
+	# Loop through the array and print out which levels have been changed
 	for i in "${!arr[@]}"; do
 		if [[ ${arr[$i]} = true ]]; then
+			# Print the level in a different color
 			echo "Changes to \033[0;3$(($i + 1))mlevel-${i}${EN}";
 		fi
 	done
