@@ -1,5 +1,11 @@
 #!/bin/bash
 
+current_branch=$(git symbolic-ref --short HEAD)
+if [ "$current_branch" = "master" ]; then
+    echo "You are on the master branch. Aborting commit."
+    exit 1
+fi
+
 WC='\033[0;33m' # Orange
 EN='\033[0m' # No Color
 
