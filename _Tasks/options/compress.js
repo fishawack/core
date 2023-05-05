@@ -3,7 +3,7 @@ module.exports = {
         "options": {
             'archive': '_Zips/<%= filename %>_App.zip'
         },
-        'cwd': '_Output/', 
+        'cwd': '<%= root %>/', 
         'src': ['**'],
         'expand': true,
         'dot': true
