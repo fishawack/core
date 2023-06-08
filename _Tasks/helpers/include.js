@@ -203,7 +203,7 @@ module.exports = function(grunt, hasBase, fixture) {
 			commit = execSync('git rev-parse --short HEAD', {encoding: 'utf8'});
 		} catch(e){
 			name = process.cwd();
-			commit = `${Math.floor(Math.random()*90000) + 1000000}`;
+			commit = '00000000';
 		}
 		
 		var repo = {
