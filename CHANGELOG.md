@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.6.0 (2023-07-08)
+* [Feature] prerendering now batches and cleans up memory so huge sites dont crash
+
 ### 8.5.0 (2023-04-18)
 * [Feature] update veeva task to add country and languague fields for shared resource in csv
 
