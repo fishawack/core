@@ -2,6 +2,8 @@
 
 ### 8.6.0 (2023-07-08)
 * [Feature] prerendering now batches and cleans up memory so huge sites dont crash
+* [Bug] change git hash to fixed value when no repo is available, to avoid issues when running chained deploy commands that would otherwise generate different random git hashes
+* [Bug] updating pre-commit to use bash interpreter instead of sh
 
 ### 8.5.0 (2023-04-18)
 * [Feature] update veeva task to add country and languague fields for shared resource in csv
