@@ -51,4 +51,13 @@ describe('prerender', () => {
             expect((fs.readFileSync('_Test/_fixture/prerender/_Output/subdirectory/about/index.html', {encoding: 'utf8'}))).to.include('<h3>About</h3>');
         });
     });
+
+    describe('performance', () => {
+        it('Should render views in batches so node doesn\'t eat all the RAM', () => {
+            fs.removeSync(`${__dirname}/_fixture/prerender/_Output`); 
+            fs.copySync(`${__dirname}/_fixture/prerender/_Output-fixture`, `${__dirname}/_fixture/prerender/_Output`);
+            const output = execSync('grunt prerender --mocha=prerender', {encoding: 'utf8'});
+            expect(output).to.contain('New Batch of 2: 0 remaining');
+        });
+    });
 });
