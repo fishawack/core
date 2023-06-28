@@ -121,7 +121,7 @@ module.exports = function(grunt) {
         } else if(deployEnv.lftp){
             execSync(`lftp -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, opts);
         } else if(deployEnv['aws-eb']){
-            const timeout = (typeof deployEnv['eb-timeout'] !== 'undefined') ? deployEnv['eb-timeout'] : '30';
+            const timeout = Number((typeof deployEnv['eb-timeout'] !== 'undefined') ? deployEnv['eb-timeout'] : '30');
             execSync(`eb deploy ${deployEnv['aws-eb']} --timeout ${timeout}`, opts)
         } else if(deployEnv['aws-s3']){
             execSync(`aws s3 sync "${dest}" "s3://${deployLocation}" --delete --only-show-errors --profile "${deployEnv['aws-s3']}"`, opts)
