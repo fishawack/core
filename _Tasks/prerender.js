@@ -40,8 +40,15 @@ module.exports = (grunt) => {
                 injectProperty: 'prerender',
 
                 args: [
-                    '--single-process'
-                ]
+                    '--single-process',
+                    '--headless', 
+                    '--no-sandbox', 
+                    '--disable-gpu', 
+                    '--disable-dev-shm-usage',
+                    '--shm-size=3gb',
+                ],
+
+                timeout: 60000,
             })
         });
 
