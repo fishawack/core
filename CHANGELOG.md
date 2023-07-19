@@ -1,5 +1,10 @@
 ## Changelog
 
+### 8.8.0 (2023-07-19)
+* [Feature] force Number on timeout
+* [Feature] update elasticbeanstalk timeout so it can be configured (defaults to 30 minutes)
+* [Bug] add flags and timeout to hopefully fix prerendering issues
+
 ### 8.7.0 (2023-06-12)
 * [Feature] increase EB command timeout to 30 minutes
 
