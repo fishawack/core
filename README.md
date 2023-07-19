@@ -1429,6 +1429,23 @@ The simplest way of enabling the electron wrapper is to simply set the electron 
     "electron": true
 }
 ```
+Command (intel/amd64)
+```bash
+FW_FULL=1 fw exec -g clean:electron copy:electron write:electron install:electron electron:macos
+```
+**For M1 Macs:**
+Before you begin:
+* Open docker desktop
+* Go to Images
+* Search for lab-env-core-1 and delete (there could be two images one with suffix of -alpine delete both)
+
+Command (M1/arm64)
+```bash
+DOCKER_DEFAULT_PLATFORM=linux/amd64 FW_FULL=1 fw exec -g clean:electron copy:electron write:electron install:electron electron:macos
+```
+Cleanup (M1 only):
+* Repeat the steps "Before you begin" but this time you should notice that any images found have an "amd64" tag on them
+* Delete and go back to working as usual, the next time you run an `fw` command you'll pull the matching native image for your machine
 
 The build will produce both a Windows and a Mac Electron wrapper and attach them to the build emails for download.
 
