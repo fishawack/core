@@ -32,8 +32,8 @@ module.exports = function(grunt) {
                 let stats = fs.lstatSync(src);
 
                 if(copy.dest){
-                    // If src is a file and dest is a path to a directory i.e missing an extensions, then join the dest to the current src filename
-                    if(!stats.isDirectory() && !path.extname(copy.dest)){
+                    // If file flag not explicitly set, src is a file and dest is a path to a directory i.e missing an extensions, then join the dest to the current src filename
+                    if(!copy.file && !stats.isDirectory() && !path.extname(copy.dest)){
                         save = path.join(copy.dest, save);
                     } else {
                         save = copy.dest;
