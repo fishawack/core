@@ -3,8 +3,6 @@
 	<ul>
 		<%= 
 			deployEnv.users.reduce(function(prev, next){
-				const { isWatertight } = require('../include.js');
-
 				var username = '<li><strong>Username</strong>: ' + next.username + '</li>';
 				var password = '<li><strong>Password</strong>: ' + next.password + '</li>';
 				var group = '';
@@ -30,7 +28,7 @@
 				var html = '';
 				var ratio = contentJson.attributes.ratio;
 
-				if(isWatertight(deployEnv.loginType)){
+				if(deployEnv.loginType && deployEnv.loginType !== "external"){
 					if(ratio){
 						if(deployEnv.url.split(':')[0] === 'https'){
 							url = 'https://demo.fishawack.solutions/Lab/Ar/index.html';
