@@ -612,3 +612,7 @@ module.exports.deployBranch = () => {
 module.exports.jit = {
 	postcss: '@lodder/grunt-postcss'
 };
+
+module.exports.isWatertight = (loginType) => {
+	return ['bootstrap', 'style-1'].findIndex(d => d === loginType) > -1;
+}
