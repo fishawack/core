@@ -1,5 +1,11 @@
 ## Changelog
 
+### 8.9.0 (2023-07-25)
+* [Feature] added flag to explicitly flag a path as being a file in deployment paths
+* [Feature] added isWatertight helper
+* [Bug] remove import in mail template
+* [Bug] use isWatertight helper to determine if watertight features should be enabled
+
 ### 8.8.0 (2023-07-19)
 * [Feature] force Number on timeout
 * [Feature] update elasticbeanstalk timeout so it can be configured (defaults to 30 minutes)
