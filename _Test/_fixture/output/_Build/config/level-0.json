@@ -268,6 +268,11 @@
 							"src": "_Build",
 							"ignore": ["_Build"],
 							"dest": "test"
+						},
+						{
+							"src": ".gitignore",
+							"dest": ".gitignore-renamed",
+							"file": true
 						}
 					]
 				}

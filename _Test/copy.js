@@ -162,6 +162,11 @@ describe('copy', () => {
                     expect((fs.existsSync('_Test/_fixture/output/_Packages/Deploy/assumed/ignore.html'))).to.be.true;
                     expect((fs.lstatSync('_Test/_fixture/output/_Packages/Deploy/assumed/ignore.html')).isDirectory()).to.be.false;
                 });
+                
+                it('Should copy & rename .gitignore as a file when the file flag is passed', () => {
+                    expect((fs.existsSync('_Test/_fixture/output/_Packages/Deploy/.gitignore-renamed'))).to.be.true;
+                    expect((fs.lstatSync('_Test/_fixture/output/_Packages/Deploy/.gitignore-renamed')).isDirectory()).to.be.false;
+                });
             });
 
             describe('edge cases', () => {
