@@ -95,7 +95,7 @@ module.exports = function(grunt, hasBase, fixture) {
 				return true; // aws creds are configured elsewhere from the core
 			} else if(!deployCred.username || !deployCred.host){
 				grunt.fatal(new Error('No deployment credentials found for ' + deployBranch));
-			} else if(deployEnv.ftp && deployEnv.loginType){
+			} else if(deployEnv.ftp && module.exports.isWatertight(deployEnv.loginType)){
 				grunt.fatal('Cannot deploy watertight over ftp for ' + deployBranch);   
 			} else {
 				return true;

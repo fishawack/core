@@ -9,9 +9,10 @@ module.exports = function(grunt) {
         const fs = require('fs-extra');
         const glob = require('glob');
         const symlinks = require('./helpers/symlinks.js');
+        const { isWatertight } = require('./helpers/include.js');
 
         let dest = '_Packages/Deploy';
-        let paths = deployEnv.paths || [deployEnv.loginType ? '_Packages/Watertight/*' : `${config.root}/*`];
+        let paths = deployEnv.paths || [isWatertight(deployEnv.loginType) ? '_Packages/Watertight/*' : `${config.root}/*`];
 
         let count = {
             files: 0,

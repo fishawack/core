@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
     grunt.registerTask('package', function(){
+        const { isWatertight } = require('./helpers/include.js');
+
         var package = ['clean:zip'];
 
         /* CAPTURE */
@@ -39,7 +41,7 @@ module.exports = function(grunt) {
         package.push('artifacts');
 
         /* WATERTIGHT */
-        deployEnv.loginType ? package.push('package:watertight', 'compress:watertight') : grunt.log.warn('No watertight specified');
+        isWatertight(deployEnv.loginType) ? package.push('package:watertight', 'compress:watertight') : grunt.log.warn('No watertight specified');
 
         /* DEPLOY */
         deployEnv ? package.push('package:deploy') : grunt.log.warn('No deploy packaging specified');
