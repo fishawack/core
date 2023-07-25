@@ -614,5 +614,5 @@ module.exports.jit = {
 };
 
 module.exports.isWatertight = (loginType) => {
-	return ['bootstrap', 'style-1'].findIndex(d => d === loginType) > -1;
+	return ['bootstrap', 'style-1'].indexOf(loginType) > -1;
 }
