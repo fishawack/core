@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-var VueLoaderPlugin; try{ VueLoaderPlugin = { VueLoaderPlugin } = require('vue-loader');} catch(e){
+var VueLoaderPlugin; try{ ({ VueLoaderPlugin } = require(`${mocha ? `${process.cwd()}/node_modules/` : ''}vue-loader`));} catch(e){
 	try { VueLoaderPlugin = require(`${mocha ? `${process.cwd()}/node_modules/` : ''}vue-loader/lib/plugin`); } catch(e){}
 } // Conditional install as vue & vue/compiler-sfc won't be available in projects that don't have vue as a dependency
 const grunt = require('grunt');
