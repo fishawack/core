@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.9.1 (2023-07-26)
+[Bug] VueLoaderPlugin now correctly destructures into webpack var
+
 ### 8.9.0 (2023-07-25)
 * [Feature] added flag to explicitly flag a path as being a file in deployment paths
 * [Feature] added isWatertight helper
