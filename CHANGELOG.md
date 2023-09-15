@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.9.2 (2023-09-15)
+* [Bug] locked @wdio package to 8.13 as post this version they introduced major breaking changes - will evaluate in future
+
 ### 8.9.1 (2023-07-26)
 [Bug] VueLoaderPlugin now correctly destructures into webpack var
 
