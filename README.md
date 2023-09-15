@@ -1711,6 +1711,48 @@ Yargs had a minor version publish which contained a breaking change that meant p
 
 Bump to `core@7.14.2` or install `yargs@16.2.0` on the project itself. If you hit the issue of maximum call stack exceeded then manually add the dependency to the package.json and run `fw regen`
 
+### Capture dimensions incorrect
+
+#### Problem
+
+When screenshotting mobile screen's it's fairly common to find your screenshots are spilling outside of the width dimension set.
+
+##### Mobile screens 375x667
+
+<img src="media/content/issues/capture/375x667-spilled/0__.png"/>
+<img src="media/content/issues/capture/375x667-spilled/1_about_.png"/>
+
+In the example above the svg is moved off screen using `position: absolute` but in the rendered screenshots puppeteer is adjusting the captured image dimensions to ensure everything is captured.
+
+#### Solution
+
+To get around this we need to make sure we have `overflow: hidden` set on at least one of the outermost containing elements so that if we we're to see outside of the browser viewport itself the element would still be hidden.
+
+##### Mobile screens 375x667 (overflow hidden)
+
+<img src="media/content/issues/capture/375x667/0__.png"/>
+<img src="media/content/issues/capture/375x667/1_about_.png"/>
+
+One important thing to be aware of is that the overflow cannot be applied to the `<body>` tag itself as this tag has special properties and will ignore the overflow setting on mobile devices.
+
+A nested containing element should be used instead.
+
+> Most boilerplates ship with a containing element called `.forceRatio` which is the perfect place to apply this overflow
+
+```scss
+// Won't work
+body{
+    overflow-x: hidden;
+    position: relative;
+}
+
+// Will work
+.forceRatio{
+    overflow-x: hidden;
+    position: relative;
+}
+```
+
 ## Common commands
 
 The commands in this section are written out relative to the core library. In practice you will likely be running commands through lab-env in which case you need to prefix each command like so:
