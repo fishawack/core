@@ -1902,6 +1902,8 @@ it('Capture contact page', () => {
     browser.isExisting(selector);
 
     browser.waitForExist(selector, 10000);
+
+    var length = browser.execute(selector => document.querySelectorAll(selector).length, selector).value;
 });
 
 // New way
@@ -1915,6 +1917,8 @@ it('Capture contact page', async () => {
     await $(selector).isExisting();
 
     $(selector).waitForExist(10000);
+
+    var length = await browser.execute(selector => document.querySelectorAll(selector).length, selector);
 });
 ```
 
