@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.10.0 (2023-12-08)
+* [Feature] webpack now loads txt and html files are asset/source raw files
+
 ### 8.9.2 (2023-09-15)
 * [Bug] locked @wdio package to 8.13 as post this version they introduced major breaking changes - will evaluate in future
 
