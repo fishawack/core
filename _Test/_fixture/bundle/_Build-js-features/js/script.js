@@ -9,3 +9,7 @@ require("./import-amd.js");
 console.log(process.env.ENV_1);
 console.log(process.env.ENV_2);
 console.log(process.env.ENV_3);
+
+require('./txt-import.txt');
+
+require('./html-import.html');
