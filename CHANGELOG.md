@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.9.3 (2024-01-05)
+* [Bug] add vue compile time flags to webpack config
+
 ### 8.9.2 (2023-09-15)
 * [Bug] locked @wdio package to 8.13 as post this version they introduced major breaking changes - will evaluate in future
 
