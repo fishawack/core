@@ -88,11 +88,16 @@ module.exports = {
 		},
 		plugins: [
 	    	VueLoaderPlugin && new VueLoaderPlugin(),
-			new webpack.DefinePlugin({process: {env: {}}, ...Object.keys(process.env).reduce((a, b) => {
-				if(b === "NODE_ENV") return a;
-				a[`process.env.${b}`] = webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[b]), [path.resolve(process.cwd(), `${config.src}/config/**/*.json`)]);
-				return a;
-			}, {})})
+			new webpack.DefinePlugin({
+				__VUE_OPTIONS_API__: 'true',
+				__VUE_PROD_DEVTOOLS__: 'false',
+				__VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false',
+				process: {env: {}}, ...Object.keys(process.env).reduce((a, b) => {
+					if(b === "NODE_ENV") return a;
+					a[`process.env.${b}`] = webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[b]), [path.resolve(process.cwd(), `${config.src}/config/**/*.json`)]);
+					return a;
+				}, {})
+			})
 	    ].filter(Boolean), // filter removes undefined/null plugins before passing to webpack
 	    optimization: {
 			splitChunks: ((!contentJson.attributes.splitChunks) ? {} : {
