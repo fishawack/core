@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.10.1 (2024-01-05)
+* [Bug] add vue compile time flags to webpack config
+
 ### 8.10.0 (2023-12-08)
 * [Feature] webpack now loads txt and html files are asset/source raw files
 
