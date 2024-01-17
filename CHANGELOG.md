@@ -1,10 +1,13 @@
 ## Changelog
 
+### 8.11.0 (2024-01-17)
+* [Feature] mailer now looks for a driver property and a from property to define the mail config
+
 ### 8.10.2 (2024-01-05)
 * [Bug] add vue compile time flags to webpack config
 
 ### 8.10.1 (2024-01-05)
-* [Misc] no changes due to issue with deployment
+* [Misc] no changes due to issue with deployment13
 
 ### 8.10.0 (2023-12-08)
 * [Feature] webpack now loads txt and html files are asset/source raw files
