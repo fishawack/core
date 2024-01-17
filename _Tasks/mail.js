@@ -5,16 +5,16 @@ module.exports = function(grunt) {
             return;
         }
 
-        var username = '';
-        var password = '';
+        const { nodemailer } = config.targets.misc || {};
+        const { driver, from } = nodemailer;
+        const mailer = nodemailer[driver] || nodemailer;
 
-        if(config.targets.misc && config.targets.misc.nodemailer && config.targets.misc.nodemailer.office365){
-            username = config.targets.misc.nodemailer.office365.username;
-            password = config.targets.misc.nodemailer.office365.password; 
-        } else {
+        if(!mailer){
             grunt.log.warn('Cannot find nodemailer credentials in ~/targets/misc.json');
             return;
         }
+
+        const { username, password, host } = mailer;
 
         var recipients = contentJson.attributes.email || [];
         recipients = recipients.concat(deployEnv.email || []);
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
                     fs.mkdirpSync(path.dirname(logPath));
                     fs.writeFileSync(logPath, html);
                 } else {
-                    await module.exports.sendMail(username, password, 'smtp.office365.com', recipients, "digitalautomation@fishawack.com", `Auto-package: - ${config.repo.name}`, html);
+                    await module.exports.sendMail(username, password, host, recipients, from, `Auto-package: - ${config.repo.name}`, html);
                 }
 
                 done();
