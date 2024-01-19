@@ -1,74 +1,52 @@
-module.exports = function(grunt) {
-    grunt.registerTask('package', module.exports.tasks.package);
+module.exports = function (grunt) {
+    grunt.registerTask("package", module.exports.tasks.package);
 };
-
-module.exports.packages = [
-    {
-        property: "pdf",
-        capture: true,
-        zips: []
-    },
-    {
-        property: "app",
-    },
-    {
-        property: "handover",
-    },
-    {
-        property: "veeva",
-        capture: true
-    },
-    {
-        property: "cegedim",
-        capture: true
-    },
-    {
-        property: "vablet",
-    },
-    {
-        property: "electron",
-        zips: ["mac", "win"],
-    },
-    {
-        property: "phonegap",
-        zips: ["ios"],
-    }
-];
 
 module.exports.tasks = {
     package() {
-        const { isWatertight } = require('./helpers/include.js');
-    
-        const package = ['clean:zip'];
-    
-        const requested = module.exports.packages.filter(d => contentJson.attributes[d.property]);
-    
+        const { packages } = require("./helpers/misc.js");
+        const { isWatertight } = require("./helpers/include.js");
+
+        const package = ["clean:zip"];
+
+        const requested = packages.filter(
+            (d) => contentJson.attributes[d.name]
+        );
+
         /* CAPTURE */
-        if(requested.filter(d => d.capture).length){
-            package.push('capture');
+        if (requested.filter((d) => d.capture).length) {
+            package.push("capture");
         }
-    
+
         package.push(
             ...requested.reduce(
-                (arr, b) =>
+                (arr, { name: packageName, zips = [{ name: packageName }] }) =>
                     arr.concat(
-                        [`package:${b.property}`].concat(
-                            (b.zips || [b.property]).map((d) => `compress:${d}`)
+                        [`package:${packageName}`].concat(
+                            zips.map(
+                                ({ name = packageName }) => `compress:${name}`
+                            )
                         )
                     ),
                 []
             )
         );
-    
+
+        console.log(package);
+
         /* AUTO-PACKAGE */
-        package.push('artifacts');
-    
+        package.push("artifacts");
+
         /* WATERTIGHT */
-        isWatertight(deployEnv.loginType) ? package.push('package:watertight', 'compress:watertight') : grunt.log.warn('No watertight specified');
-    
+        isWatertight(deployEnv.loginType)
+            ? package.push("package:watertight", "compress:watertight")
+            : grunt.log.warn("No watertight specified");
+
         /* DEPLOY */
-        deployEnv ? package.push('package:deploy') : grunt.log.warn('No deploy packaging specified');
-    
+        deployEnv
+            ? package.push("package:deploy")
+            : grunt.log.warn("No deploy packaging specified");
+
         grunt.task.run(package);
-    }
+    },
 };
