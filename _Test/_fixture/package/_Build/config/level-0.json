@@ -14,7 +14,7 @@
 					"disableStatusBar": true,
 					"useTransparentBar": true
 				},
-				"electron": false,
+				"electron": true,
 				"pdf": true
 			},
 			"veeva-shared-resource": {
