@@ -9,7 +9,7 @@ packages
     ])
     .forEach(({ name, zips = [0], symlinks = false }) => {
         zips.forEach(
-            ({ cwd = `_Packages/_${capitalize(name)}`, src = ["**"] }) => {
+            ({ cwd = `_Packages/${capitalize(name)}`, src = ["**"] }) => {
                 compress[name] = {
                     options: {
                         archive: `_Zips/<%= filename %>_${capitalize(
