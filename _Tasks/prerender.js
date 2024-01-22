@@ -1,5 +1,10 @@
 module.exports = (grunt) => {
     grunt.registerTask('prerender', async function(){
+        if(!contentJson.attributes.prerender){
+            grunt.log.warn(`No prerender config for ${deployBranch} branch`);
+            return;
+        }
+
         var done = this.async();
 
         const fs = require('fs-extra');
