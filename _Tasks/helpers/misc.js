@@ -40,6 +40,10 @@ const packages = [
         capture: true,
     },
     {
+        name: "screenshots",
+        capture: true,
+    },
+    {
         name: "vablet",
     },
     {
