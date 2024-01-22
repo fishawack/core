@@ -39,6 +39,11 @@ module.exports = function(grunt) {
                     gitLogString += '</ul></li>';
                 }
 
+                const { packages, capitalize } = require("./helpers/misc.js");
+                const requested = packages.filter(
+                    (d) => contentJson.attributes[d.name] && (d.zips?.length || d.zips == null)
+                );
+
                 let html = String.format(buildHtmlEmail('base'), 
                     [
                         buildHtmlEmail('target'),
@@ -51,7 +56,17 @@ module.exports = function(grunt) {
                     ].join(''),
                     [
                         (contentJson.attributes.pdf) ? buildHtmlEmail('pdf') : '',
-                        buildHtmlEmail('zips')
+                        buildHtmlEmail('zips', {html: requested.reduce(function(html, b){
+                            var filename = `${config.filename}_${capitalize(b.name)}.zip`; 
+                            var ext = encodeURI(`https://fishawack.egnyte.com/app/index.do#storage/files/1/Shared/FW/Knutsford/Digital/Auto-Package/${config.pkg.name}`);
+                            var raw = getFilesizeInBytes("_Zips/" + filename);
+        
+                            var name = '<strong>' + capitalize(b.name) + '</strong>:';
+                            var url = '<li><a href="' + ext + '">' + filename + '</a></li>';
+                            var size = '<li><strong>Size</strong>: ' + raw + '</li>';
+        
+                            return html += '<li>' + name + '<ul>' + url + size + '</ul></li>';
+                        }, '')})
                     ].join(''),
                     [
                         buildHtmlEmail('version'),
