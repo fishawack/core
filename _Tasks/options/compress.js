@@ -3,10 +3,7 @@ const { packages, capitalize } = require("../helpers/misc.js");
 const compress = {};
 
 packages
-    .concat([
-        { name: "deploy", symlinks: true },
-        { name: "watertight", symlinks: true },
-    ])
+    .concat([{ name: "watertight", symlinks: true }])
     .forEach(({ name, zips = [0], symlinks = false }) => {
         zips.forEach(
             ({ cwd = `_Packages/${capitalize(name)}`, src = ["**"] }) => {
@@ -26,4 +23,16 @@ packages
         );
     });
 
-module.exports = compress;
+module.exports = {
+    ...compress,
+    deploy: {
+        options: {
+            archive: "_Zips/Deploy.zip",
+            symlinks: true,
+        },
+        cwd: "_Packages/Deploy",
+        src: ["**"],
+        expand: true,
+        dot: true,
+    },
+};
