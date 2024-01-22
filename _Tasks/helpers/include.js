@@ -485,8 +485,8 @@ module.exports = function(grunt, hasBase, fixture) {
         return false;
     }
 
-    this.buildHtmlEmail = function(type){
-        return grunt.config.process(grunt.file.read(this.configPath + '_Tasks/helpers/htmlEmail/' + type + '.html'));
+    this.buildHtmlEmail = function(type, obj){
+        return grunt.template.process(grunt.file.read(this.configPath + '_Tasks/helpers/htmlEmail/' + type + '.html'), {data: obj});
     }
 
 	if (!String.format) {
