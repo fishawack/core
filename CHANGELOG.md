@@ -11,6 +11,7 @@
 * [Feature] package now exports its task and an array of package types
 * [Bug] path in compress config
 * [Bug] package.js uses now packages syntax
+* [Bug] hardcode deploy compress config
 
 ### 8.11.0 (2024-01-17)
 * [Feature] mailer now looks for a driver property and a from property to define the mail config
