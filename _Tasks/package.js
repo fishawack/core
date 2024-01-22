@@ -32,8 +32,6 @@ module.exports.tasks = {
             )
         );
 
-        console.log(package);
-
         /* AUTO-PACKAGE */
         package.push("artifacts");
 
