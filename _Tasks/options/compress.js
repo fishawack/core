@@ -4,9 +4,9 @@ const compress = {};
 
 packages
     .concat([{ name: "watertight", symlinks: true }])
-    .forEach(({ name, zips = [0], symlinks = false }) => {
+    .forEach(({ name: packageName, zips = [0], symlinks = false }) => {
         zips.forEach(
-            ({ cwd = `_Packages/${capitalize(name)}`, src = ["**"] }) => {
+            ({ name = packageName, cwd = `_Packages/${capitalize(name)}`, src = ["**"] }) => {
                 compress[name] = {
                     options: {
                         archive: `_Zips/<%= filename %>_${capitalize(
