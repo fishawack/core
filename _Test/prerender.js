@@ -10,6 +10,10 @@ describe('prerender', () => {
         before(() => {
             fs.removeSync(`${__dirname}/_fixture/prerender/_Output`); 
             fs.copySync(`${__dirname}/_fixture/prerender/_Output-fixture`, `${__dirname}/_fixture/prerender/_Output`);
+
+            fs.removeSync(`${__dirname}/_fixture/prerender/_Node`); 
+            fs.copySync(`${__dirname}/_fixture/prerender/_Node-fixture`, `${__dirname}/_fixture/prerender/_Node`);
+
             execSync('grunt prerender --mocha=prerender', opts);
         });
     
@@ -33,6 +37,10 @@ describe('prerender', () => {
         before(() => {
             fs.removeSync(`${__dirname}/_fixture/prerender/_Output`); 
             fs.copySync(`${__dirname}/_fixture/prerender/_Output-fixture-subdir`, `${__dirname}/_fixture/prerender/_Output/subdirectory`);
+
+            fs.removeSync(`${__dirname}/_fixture/prerender/_Node`); 
+            fs.copySync(`${__dirname}/_fixture/prerender/_Node-fixture`, `${__dirname}/_fixture/prerender/_Node`);
+
             execSync('grunt prerender --mocha=prerender --branch=subdirectory', opts);
         });
     
@@ -56,8 +64,22 @@ describe('prerender', () => {
         it('Should render views in batches so node doesn\'t eat all the RAM', () => {
             fs.removeSync(`${__dirname}/_fixture/prerender/_Output`); 
             fs.copySync(`${__dirname}/_fixture/prerender/_Output-fixture`, `${__dirname}/_fixture/prerender/_Output`);
+
+            fs.removeSync(`${__dirname}/_fixture/prerender/_Node`); 
+            fs.copySync(`${__dirname}/_fixture/prerender/_Node-fixture`, `${__dirname}/_fixture/prerender/_Node`);
+
             const output = execSync('grunt prerender --mocha=prerender', {encoding: 'utf8'});
             expect(output).to.contain('New Batch of 2: 0 remaining');
+        });
+
+        it('Should render large amounts of views in batches', () => {
+            fs.removeSync(`${__dirname}/_fixture/prerender/_Output`); 
+            fs.copySync(`${__dirname}/_fixture/prerender/_Output-fixture`, `${__dirname}/_fixture/prerender/_Output`);
+
+            fs.removeSync(`${__dirname}/_fixture/prerender/_Node`); 
+            fs.copySync(`${__dirname}/_fixture/prerender/_Node-fixture-largedataset`, `${__dirname}/_fixture/prerender/_Node`);
+
+            expect(() => execSync('grunt prerender --mocha=prerender', opts)).to.not.throw();
         });
     });
 });
