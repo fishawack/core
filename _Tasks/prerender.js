@@ -44,6 +44,10 @@ module.exports = (grunt) => {
 
                 injectProperty: 'prerender',
 
+                launchOptions: {
+                    headless: 'new'
+                },
+
                 args: [
                     '--single-process',
                     '--headless', 
