@@ -1,5 +1,19 @@
 ## Changelog
 
+### 8.12.0 (2024-01-22)
+* [Feature] add the screenshots package type
+* [Feature] default now exports task array
+* [Feature] dist now exports its task array and always runs prerender
+* [Feature] prerender now doesnt run if no prerender configured for branch
+* [Feature] use template process in build html emails so the config object can be passed
+* [Feature] added capitalize and moved package types to misc
+* [Feature] added editorconfig to core
+* [Feature] package now exports its task and an array of package types
+* [Bug] path in compress config
+* [Bug] package.js uses now packages syntax
+* [Bug] hardcode deploy compress config
+* [Bug] use name instead of packageName if present
+
 ### 8.11.0 (2024-01-17)
 * [Feature] mailer now looks for a driver property and a from property to define the mail config
 
