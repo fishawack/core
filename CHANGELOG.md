@@ -1,5 +1,9 @@
 ## Changelog
 
+### 8.13.0 (2024-01-24)
+* [Feature] make use of new chrome headless mode in prerender
+* [Bug] rolled back prerenderer version as issues with promise collection in latest
+
 ### 8.12.0 (2024-01-22)
 * [Feature] add the screenshots package type
 * [Feature] default now exports task array
