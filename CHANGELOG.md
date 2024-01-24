@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.13.1 (2024-01-24)
+* [Bug] lock prerender versions in package.json to exact
+
 ### 8.13.0 (2024-01-24)
 * [Feature] make use of new chrome headless mode in prerender
 * [Bug] rolled back prerenderer version as issues with promise collection in latest
