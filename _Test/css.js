@@ -71,24 +71,40 @@ describe('css', () => {
                 expect(css).to.contain('.used');
             });
 
-            it('Should not strip classes containing active', () => {
+            it('Should not strip classes containing active within the selector', () => {
                 expect(css).to.contain('.active');
             });
             
-            it('Should not strip classes containing deactive', () => {
+            it('Should not strip classes containing deactive within the selector', () => {
                 expect(css).to.contain('.deactive');
             });
             
-            it('Should not strip classes containing disabled', () => {
+            it('Should not strip classes containing disabled within the selector', () => {
                 expect(css).to.contain('.disabled');
             });
             
-            it('Should not strip classes containing capture', () => {
+            it('Should not strip classes containing capture within the selector', () => {
                 expect(css).to.contain('.capture');
             });
             
-            it('Should not strip classes containing labD3', () => {
+            it('Should not strip classes containing lab within the selectorD3', () => {
                 expect(css).to.contain('.labD3');
+            });
+            
+            it('Should not strip classes containing color within the selector', () => {
+                expect(css).to.contain('.color-1');
+            });
+
+            it('Should strip classes containing color within their name', () => {
+                expect(css).not.to.contain('.color-2-stacked');
+            });
+            
+            it('Should strip classes containing color in their children', () => {
+                expect(css).not.to.contain('.color-3');
+            });
+
+            it('Should strip classes containing color in a chained class', () => {
+                expect(css).not.to.contain('.color-4');
             });
         });
     });
