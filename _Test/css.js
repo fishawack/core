@@ -53,6 +53,44 @@ describe('css', () => {
             
             expect(css).to.equal(fs.readFileSync(path.join(__dirname, '_expected/general-no-dist-with-target.css'), opts));
         });
+
+        describe('purgecss', () => {
+            let css;
+
+            before(() => {
+                execSync('grunt clean:cache sass:default --mocha=sass --dist', opts);
+        
+                css = fs.readFileSync(path.join(__dirname, '_fixture/sass/_Output/css/purgecss.css'), opts);
+            });
+
+            it('Should strip unused class', () => {
+                expect(css).to.not.contain('.unused');
+            });
+            
+            it('Should not strip used class', () => {
+                expect(css).to.contain('.used');
+            });
+
+            it('Should not strip classes containing active', () => {
+                expect(css).to.contain('.active');
+            });
+            
+            it('Should not strip classes containing deactive', () => {
+                expect(css).to.contain('.deactive');
+            });
+            
+            it('Should not strip classes containing disabled', () => {
+                expect(css).to.contain('.disabled');
+            });
+            
+            it('Should not strip classes containing capture', () => {
+                expect(css).to.contain('.capture');
+            });
+            
+            it('Should not strip classes containing labD3', () => {
+                expect(css).to.contain('.labD3');
+            });
+        });
     });
 
     it('Should throw error when syntax error found in sass', () => {
