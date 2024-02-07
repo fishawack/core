@@ -1,11 +1,35 @@
 #!/bin/bash
 
+current_branch=$(git symbolic-ref --short HEAD)
+if [ "$current_branch" = "master" ]; then
+    echo "You are on the master branch. Aborting commit."
+    exit 1
+fi
+
 WC='\033[0;33m' # Orange
 EN='\033[0m' # No Color
 
 dirty=false;
 count=0;
 arr=();
+
+repo=$(git ls-files);
+
+currentLevel=0;
+
+# Loop through repo variable and check for the highest level .json file in the _Build/config directory
+while read file; do
+	# Level specific check (level-0, level-1, etc)
+	if [[ $file == *"level-"* ]]; then
+		# Get the level number from the file name
+		level=$(echo $file | grep -o -E "level-[0-9]" | grep -o -E "[0-9]");
+		# If the level number is greater than the current level then set the current level to the new level
+		if [[ $level > $currentLevel ]]; then
+			currentLevel=$level;
+		fi
+	fi
+# Use git ls-files to get a list of all files in the repo
+done <<< "${repo}"
 
 # Create an array of 10 false values
 for i in {0..9}; do
@@ -14,6 +38,7 @@ done
 
 # Loop through all files changed in the commit
 while read st file; do
+
 	for i in {0..9}; do
 		# Level specific check (level-0, level-1, etc)
 		if [[ $file == *"level-${i}"* ]]; then
@@ -21,14 +46,8 @@ while read st file; do
 		fi
 	done
 
-	# Stream specific check, sequences changes should be considered level-1
-	if [[ $file == *"sequences"* ]]; then
-		arr[1]=true;
-	fi
-
-	# Any other file changed should be considered level-0
-	if [[ $file != *"level-"* && $file != *"sequences"* ]]; then
-		arr[0]=true;
+	if [[ $file != *"level-"* ]]; then
+		arr[currentLevel]=true;
 	fi
 # Use git diff --cached to only check files staged for commit
 done <<< "$(git diff --cached --name-status)"
