@@ -1,5 +1,63 @@
 ## Changelog
 
+### 8.13.1 (2024-01-24)
+* [Bug] lock prerender versions in package.json to exact
+
+### 8.13.0 (2024-01-24)
+* [Feature] make use of new chrome headless mode in prerender
+* [Bug] rolled back prerenderer version as issues with promise collection in latest
+
+### 8.12.0 (2024-01-22)
+* [Feature] add the screenshots package type
+* [Feature] default now exports task array
+* [Feature] dist now exports its task array and always runs prerender
+* [Feature] prerender now doesnt run if no prerender configured for branch
+* [Feature] use template process in build html emails so the config object can be passed
+* [Feature] added capitalize and moved package types to misc
+* [Feature] added editorconfig to core
+* [Feature] package now exports its task and an array of package types
+* [Bug] path in compress config
+* [Bug] package.js uses now packages syntax
+* [Bug] hardcode deploy compress config
+* [Bug] use name instead of packageName if present
+
+### 8.11.0 (2024-01-17)
+* [Feature] mailer now looks for a driver property and a from property to define the mail config
+
+### 8.10.2 (2024-01-05)
+* [Bug] add vue compile time flags to webpack config
+
+### 8.10.1 (2024-01-05)
+* [Misc] no changes due to issue with deployment13
+
+### 8.10.0 (2023-12-08)
+* [Feature] webpack now loads txt and html files are asset/source raw files
+
+### 8.9.2 (2023-09-15)
+* [Bug] locked @wdio package to 8.13 as post this version they introduced major breaking changes - will evaluate in future
+
+### 8.9.1 (2023-07-26)
+* [Bug] VueLoaderPlugin now correctly destructures into webpack var
+
+### 8.9.0 (2023-07-25)
+* [Feature] added flag to explicitly flag a path as being a file in deployment paths
+* [Feature] added isWatertight helper
+* [Bug] remove import in mail template
+* [Bug] use isWatertight helper to determine if watertight features should be enabled
+
+### 8.8.0 (2023-07-19)
+* [Feature] force Number on timeout
+* [Feature] update elasticbeanstalk timeout so it can be configured (defaults to 30 minutes)
+* [Bug] add flags and timeout to hopefully fix prerendering issues
+
+### 8.7.0 (2023-06-12)
+* [Feature] increase EB command timeout to 30 minutes
+
+### 8.6.0 (2023-06-08)
+* [Feature] prerendering now batches and cleans up memory so huge sites dont crash
+* [Bug] change git hash to fixed value when no repo is available, to avoid issues when running chained deploy commands that would otherwise generate different random git hashes
+* [Bug] updating pre-commit to use bash interpreter instead of sh
+
 ### 8.5.0 (2023-04-18)
 * [Feature] update veeva task to add country and languague fields for shared resource in csv
 

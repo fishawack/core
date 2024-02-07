@@ -75,6 +75,9 @@
 				"cegedim": {
 					"type": "boolean"
 				},
+				"screenshots": {
+					"type": "boolean"
+				},
 				"veeva": {
 					"description": "Veeva specific config",
 					"type": ["object", "boolean"],

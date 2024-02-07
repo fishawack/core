@@ -1429,6 +1429,23 @@ The simplest way of enabling the electron wrapper is to simply set the electron 
     "electron": true
 }
 ```
+Command (intel/amd64)
+```bash
+FW_FULL=1 fw exec -g clean:electron copy:electron write:electron install:electron electron:macos
+```
+**For M1 Macs:**
+Before you begin:
+* Open docker desktop
+* Go to Images
+* Search for lab-env-core-1 and delete (there could be two images one with suffix of -alpine delete both)
+
+Command (M1/arm64)
+```bash
+DOCKER_DEFAULT_PLATFORM=linux/amd64 FW_FULL=1 fw exec -g clean:electron copy:electron write:electron install:electron electron:macos
+```
+Cleanup (M1 only):
+* Repeat the steps "Before you begin" but this time you should notice that any images found have an "amd64" tag on them
+* Delete and go back to working as usual, the next time you run an `fw` command you'll pull the matching native image for your machine
 
 The build will produce both a Windows and a Mac Electron wrapper and attach them to the build emails for download.
 
@@ -1694,6 +1711,48 @@ Yargs had a minor version publish which contained a breaking change that meant p
 
 Bump to `core@7.14.2` or install `yargs@16.2.0` on the project itself. If you hit the issue of maximum call stack exceeded then manually add the dependency to the package.json and run `fw regen`
 
+### Capture dimensions incorrect
+
+#### Problem
+
+When screenshotting mobile screen's it's fairly common to find your screenshots are spilling outside of the width dimension set.
+
+##### Mobile screens 375x667
+
+<img src="media/content/issues/capture/375x667-spilled/0__.png"/>
+<img src="media/content/issues/capture/375x667-spilled/1_about_.png"/>
+
+In the example above the svg is moved off screen using `position: absolute` but in the rendered screenshots puppeteer is adjusting the captured image dimensions to ensure everything is captured.
+
+#### Solution
+
+To get around this we need to make sure we have `overflow: hidden` set on at least one of the outermost containing elements so that if we we're to see outside of the browser viewport itself the element would still be hidden.
+
+##### Mobile screens 375x667 (overflow hidden)
+
+<img src="media/content/issues/capture/375x667/0__.png"/>
+<img src="media/content/issues/capture/375x667/1_about_.png"/>
+
+One important thing to be aware of is that the overflow cannot be applied to the `<body>` tag itself as this tag has special properties and will ignore the overflow setting on mobile devices.
+
+A nested containing element should be used instead.
+
+> Most boilerplates ship with a containing element called `.forceRatio` which is the perfect place to apply this overflow
+
+```scss
+// Won't work
+body{
+    overflow-x: hidden;
+    position: relative;
+}
+
+// Will work
+.forceRatio{
+    overflow-x: hidden;
+    position: relative;
+}
+```
+
 ## Common commands
 
 The commands in this section are written out relative to the core library. In practice you will likely be running commands through lab-env in which case you need to prefix each command like so:
@@ -1843,6 +1902,8 @@ it('Capture contact page', () => {
     browser.isExisting(selector);
 
     browser.waitForExist(selector, 10000);
+
+    var length = browser.execute(selector => document.querySelectorAll(selector).length, selector).value;
 });
 
 // New way
@@ -1856,6 +1917,8 @@ it('Capture contact page', async () => {
     await $(selector).isExisting();
 
     $(selector).waitForExist(10000);
+
+    var length = await browser.execute(selector => document.querySelectorAll(selector).length, selector);
 });
 ```
 

@@ -95,7 +95,7 @@ module.exports = function(grunt, hasBase, fixture) {
 				return true; // aws creds are configured elsewhere from the core
 			} else if(!deployCred.username || !deployCred.host){
 				grunt.fatal(new Error('No deployment credentials found for ' + deployBranch));
-			} else if(deployEnv.ftp && deployEnv.loginType){
+			} else if(deployEnv.ftp && module.exports.isWatertight(deployEnv.loginType)){
 				grunt.fatal('Cannot deploy watertight over ftp for ' + deployBranch);   
 			} else {
 				return true;
@@ -190,7 +190,7 @@ module.exports = function(grunt, hasBase, fixture) {
 		}
     }
 
-	this.filename = () => `${config.repo.name}_${config.pkg.version || 'unversioned'}_${grunt.template.today("UTC:yyyy-mm-dd")}_${deployBranch}_${config.repo.commit}`;
+	this.filename = () => `${config.repo.name}_${config.pkg.version || 'unversioned'}_${grunt.template.today("UTC:yyyy-mm-dd")}_${_.kebabCase(deployBranch)}_${config.repo.commit}`;
 
 	this.repoInfo = () => {
 		const execSync = require('child_process').execSync;
@@ -203,7 +203,7 @@ module.exports = function(grunt, hasBase, fixture) {
 			commit = execSync('git rev-parse --short HEAD', {encoding: 'utf8'});
 		} catch(e){
 			name = process.cwd();
-			commit = `${Math.floor(Math.random()*90000) + 1000000}`;
+			commit = '00000000';
 		}
 		
 		var repo = {
@@ -485,8 +485,8 @@ module.exports = function(grunt, hasBase, fixture) {
         return false;
     }
 
-    this.buildHtmlEmail = function(type){
-        return grunt.config.process(grunt.file.read(this.configPath + '_Tasks/helpers/htmlEmail/' + type + '.html'));
+    this.buildHtmlEmail = function(type, obj){
+        return grunt.template.process(grunt.file.read(this.configPath + '_Tasks/helpers/htmlEmail/' + type + '.html'), {data: obj});
     }
 
 	if (!String.format) {
@@ -612,3 +612,7 @@ module.exports.deployBranch = () => {
 module.exports.jit = {
 	postcss: '@lodder/grunt-postcss'
 };
+
+module.exports.isWatertight = (loginType) => {
+	return ['bootstrap', 'style-1'].indexOf(loginType) > -1;
+}

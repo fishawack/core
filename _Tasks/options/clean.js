@@ -1,16 +1,19 @@
+const { packages, capitalize } = require("../helpers/misc.js");
+
+const clean = {};
+
+packages.forEach(({ name }) => {
+    clean[name] = [`_Packages/${capitalize(name)}/**/*`];
+});
+
 module.exports = {
-	cache: ["_Output/css/*.cache.*.css", "_Output/js/*.cache.*.js", '.cache'],
+    ...clean,
+	cache: ["<%= root %>/css/*.cache.*.css", "<%= root %>/js/*.cache.*.js", '.cache'],
 	build: [".tmp"],
     dist: ["<%= root %>", "<%= src %>/**/generated/**/*"],
     zip: ['_Zips'],
     pdf: ["_Pdfs"],
     app: ['_App/**/*'],
-    electron: ['_Packages/Electron/**/*'],
-    phonegap: ['_Packages/Phonegap/**/*'],
-    veeva: ['_Packages/Veeva/**/*'],
-    vablet: ['_Packages/Vablet/**/*'],
-    cegedim: ['_Packages/Cegedim/**/*'],
-    handover: ['_Packages/Handover/**/*'],
     deploy: ['_Packages/Deploy/**/*'],
     watertight: ['_Packages/Watertight/**/*'],
     watertightEmptyDirs: {

@@ -20,4 +20,18 @@ describe('vue', () => {
             expect(js).to.not.contain('Module parse failed');
         });
     });
+
+    describe('vue@3', () => {
+        let js;
+
+        before(() => {
+            execSync(`cd ${path.join(__dirname, '_fixture/vue-3')} && npm ci `, opts);
+            execSync(`grunt webpack:dev --mocha=vue-3`, opts);
+            js = fs.readFileSync(path.join(__dirname, '_fixture/vue-3/_Output/js/script.js'), {encoding: 'utf8'});
+        });
+        
+        it('Should compile single file components', () => {
+            expect(js).to.not.contain('Module parse failed');
+        });
+    });
 });

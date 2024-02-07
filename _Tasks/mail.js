@@ -5,16 +5,16 @@ module.exports = function(grunt) {
             return;
         }
 
-        var username = '';
-        var password = '';
+        const { nodemailer } = config.targets.misc || {};
+        const { driver, from } = nodemailer;
+        const mailer = nodemailer[driver] || nodemailer;
 
-        if(config.targets.misc && config.targets.misc.nodemailer && config.targets.misc.nodemailer.office365){
-            username = config.targets.misc.nodemailer.office365.username;
-            password = config.targets.misc.nodemailer.office365.password; 
-        } else {
+        if(!mailer){
             grunt.log.warn('Cannot find nodemailer credentials in ~/targets/misc.json');
             return;
         }
+
+        const { username, password, host } = mailer;
 
         var recipients = contentJson.attributes.email || [];
         recipients = recipients.concat(deployEnv.email || []);
@@ -39,6 +39,11 @@ module.exports = function(grunt) {
                     gitLogString += '</ul></li>';
                 }
 
+                const { packages, capitalize } = require("./helpers/misc.js");
+                const requested = packages.filter(
+                    (d) => contentJson.attributes[d.name] && (d.zips?.length || d.zips == null)
+                );
+
                 let html = String.format(buildHtmlEmail('base'), 
                     [
                         buildHtmlEmail('target'),
@@ -51,7 +56,17 @@ module.exports = function(grunt) {
                     ].join(''),
                     [
                         (contentJson.attributes.pdf) ? buildHtmlEmail('pdf') : '',
-                        buildHtmlEmail('zips')
+                        buildHtmlEmail('zips', {html: requested.reduce(function(html, b){
+                            var filename = `${config.filename}_${capitalize(b.name)}.zip`; 
+                            var ext = encodeURI(`https://fishawack.egnyte.com/app/index.do#storage/files/1/Shared/FW/Knutsford/Digital/Auto-Package/${config.pkg.name}`);
+                            var raw = getFilesizeInBytes("_Zips/" + filename);
+        
+                            var name = '<strong>' + capitalize(b.name) + '</strong>:';
+                            var url = '<li><a href="' + ext + '">' + filename + '</a></li>';
+                            var size = '<li><strong>Size</strong>: ' + raw + '</li>';
+        
+                            return html += '<li>' + name + '<ul>' + url + size + '</ul></li>';
+                        }, '')})
                     ].join(''),
                     [
                         buildHtmlEmail('version'),
@@ -72,7 +87,7 @@ module.exports = function(grunt) {
                     fs.mkdirpSync(path.dirname(logPath));
                     fs.writeFileSync(logPath, html);
                 } else {
-                    await module.exports.sendMail(username, password, 'smtp.office365.com', recipients, "digitalautomation@fishawack.com", `Auto-package: - ${config.repo.name}`, html);
+                    await module.exports.sendMail(username, password, host, recipients, from, `Auto-package: - ${config.repo.name}`, html);
                 }
 
                 done();

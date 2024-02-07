@@ -1,49 +1,50 @@
-module.exports = function(grunt) {
-    grunt.registerTask('package', function(){
-        var package = ['clean:zip'];
+module.exports = function (grunt) {
+    grunt.registerTask("package", module.exports.tasks.package);
+};
+
+module.exports.tasks = {
+    package() {
+        const { packages } = require("./helpers/misc.js");
+        const { isWatertight } = require("./helpers/include.js");
+
+        const package = ["clean:zip"];
+
+        const requested = packages.filter(
+            (d) => contentJson.attributes[d.name]
+        );
 
         /* CAPTURE */
-        if( 
-            contentJson.attributes.pdf ||
-            contentJson.attributes.veeva ||
-            contentJson.attributes.cegedim
-        ){
-            package.push('capture');
+        if (requested.filter((d) => d.capture).length) {
+            package.push("capture");
         }
-        
-        /* PDF */
-        (contentJson.attributes.pdf) ? package.push('package:pdf') : grunt.log.warn('No pdf packaging detected');
 
-        /* VABLET */
-        (contentJson.attributes.vablet) ? package.push('package:vablet', 'compress:vablet') : grunt.log.warn('No vablet packaging detected');
-
-        /* VEEVA */
-        (contentJson.attributes.veeva) ? package.push('package:veeva', 'compress:veeva') : grunt.log.warn('No veeva packaging detected');
-
-        /* CEGEDIM */
-        (contentJson.attributes.cegedim) ? package.push('package:cegedim', 'compress:cegedim') : grunt.log.warn('No cegedim packaging detected');
-
-        /* APP */
-        (contentJson.attributes.app) ? package.push('compress:app') : grunt.log.warn('No app packaging detected');
-
-        /* HANDOVER */
-        (contentJson.attributes.handover) ? package.push('package:handover', 'compress:handover') : grunt.log.warn('No handover packaging detected');
-
-        /* ELECTRON */
-        (contentJson.attributes.electron) ? package.push('package:electron', 'compress:mac', 'compress:win') : grunt.log.warn('No electron packaging specified');
-
-        /* PHONEGAP */
-        (contentJson.attributes.phonegap) ? package.push('package:phonegap', 'compress:ios') : grunt.log.warn('No phonegap packaging specified');
+        package.push(
+            ...requested.reduce(
+                (arr, { name: packageName, zips = [{ name: packageName }] }) =>
+                    arr.concat(
+                        [`package:${packageName}`].concat(
+                            zips.map(
+                                ({ name = packageName }) => `compress:${name}`
+                            )
+                        )
+                    ),
+                []
+            )
+        );
 
         /* AUTO-PACKAGE */
-        package.push('artifacts');
+        package.push("artifacts");
 
         /* WATERTIGHT */
-        deployEnv.loginType ? package.push('package:watertight', 'compress:watertight') : grunt.log.warn('No watertight specified');
+        isWatertight(deployEnv.loginType)
+            ? package.push("package:watertight", "compress:watertight")
+            : grunt.log.warn("No watertight specified");
 
         /* DEPLOY */
-        deployEnv ? package.push('package:deploy') : grunt.log.warn('No deploy packaging specified');
+        deployEnv
+            ? package.push("package:deploy")
+            : grunt.log.warn("No deploy packaging specified");
 
         grunt.task.run(package);
-    });
+    },
 };

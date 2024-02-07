@@ -190,8 +190,13 @@ describe('mail', () => {
 
     describe('sending', () => {
         it('Should send email to email client', async () => {
-            await sendMail(misc.nodemailer.office365.username, misc.nodemailer.office365.password, 'smtp.office365.com', ['mike.mellor@fishawack.com'], "digitalautomation@fishawack.com", 'core-test-suite-email', '<h1>core-test-suite-email</h1>')
-                .then(() => {}, (e) => expect(e).to.be.null);
+            const { nodemailer } = misc;
+            const { driver, from } = nodemailer;
+            const mailer = nodemailer[driver];
+            const { username, password, host } = mailer;
+            
+            await sendMail(username, password, host, ['mike.mellor@fishawack.com'], from, 'core-test-suite-email', '<h1>core-test-suite-email</h1>')
+                .then(() => {}, (e) => {console.log(e); expect(e).to.be.null});
         });
 
         it('Should not throw error when sending email through grunt task', () => {

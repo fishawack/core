@@ -5,6 +5,7 @@
 			"subdirectory": {
 				"root": "_Output/subdirectory/"
 			}
-		}
+		},
+		"prerender": true
 	}
 }

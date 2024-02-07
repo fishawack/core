@@ -41,6 +41,22 @@ describe('misc', () => {
             expect(execSync('grunt mail --mocha=mail --branch=yabbadabba', {encoding: 'utf8'})).to.contain('yabbadabba branch');
         });
 
+        it('Should return true for bootstrap and style-1 loginTypes', () => {
+            const { isWatertight } = require('../_Tasks/helpers/include.js');
+
+            expect(isWatertight('bootstrap')).to.be.true;
+            expect(isWatertight('style-1')).to.be.true;
+        });
+
+        it('Should return false for null, undefined or other loginTypes', () => {
+            const { isWatertight } = require('../_Tasks/helpers/include.js');
+
+            expect(isWatertight()).to.be.false;
+            expect(isWatertight(null)).to.be.false;
+            expect(isWatertight(undefined)).to.be.false;
+            expect(isWatertight('external')).to.be.false;
+        });
+
         afterEach(() => {
             delete require.cache[require.resolve('../_Tasks/helpers/include.js')];
         });

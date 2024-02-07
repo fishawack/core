@@ -16,4 +16,16 @@ describe('pdf', () => {
 
         expect(glob.sync(path.join(__dirname, '_fixture/capture/_Pdfs/*_chrome.pdf'))).to.be.an('array').that.is.not.empty;
     });
+
+    describe('pdf-namespaced', () => {
+        before(() => {
+            execSync('grunt clean:build clean:pdf capture --branch=test/master --mocha=capture', opts);
+        });
+        
+        it('Should generate a pdf file for namespaced branches', () => {
+            execSync('grunt pdf --branch=test/master --mocha=capture', opts);
+    
+            expect(glob.sync(path.join(__dirname, '_fixture/capture/_Pdfs/*_chrome.pdf'))).to.be.an('array').that.is.not.empty;
+        });
+    })
 });
