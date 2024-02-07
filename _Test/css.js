@@ -31,7 +31,7 @@ describe('css', () => {
 
     describe('postcss', () => {
         it('Should not run postcss', () => {
-            execSync('grunt clean:cache compile-handlebars:default htmlmin:default sass:default --mocha=sass', opts);
+            execSync('grunt clean:cache sass:default --mocha=sass', opts);
     
             let css = fs.readFileSync(path.join(__dirname, '_fixture/sass/_Output/css/general.css'), opts);
             
@@ -39,7 +39,7 @@ describe('css', () => {
         });
     
         it('Should run postcss on builds with dist flag', () => {
-            execSync('grunt clean:cache compile-handlebars:default htmlmin:default sass:default --dist --mocha=sass', opts);
+            execSync('grunt clean:cache sass:default --dist --mocha=sass', opts);
     
             let css = fs.readFileSync(path.join(__dirname, '_fixture/sass/_Output/css/general.css'), opts);
     
@@ -47,7 +47,7 @@ describe('css', () => {
         });
     
         it('Should run postcss but not minify on branches that have a deploy target without a dist flag', () => {
-            execSync('grunt clean:cache compile-handlebars:default htmlmin:default sass:default --mocha=sass --branch=postcss', opts);
+            execSync('grunt clean:cache sass:default --mocha=sass --branch=postcss', opts);
     
             let css = fs.readFileSync(path.join(__dirname, '_fixture/sass/_Output/css/general.css'), opts);
             
