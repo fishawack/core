@@ -10,7 +10,7 @@ module.exports = function(grunt) {
             grunt.file.write('_Packages/Watertight/app/users.php', watertightBridge.buildUserPhp(deployEnv.users));
         }
 
-        var customLogin = fileExists('login.html', '_Output/', grunt);
+        var customLogin = fileExists('login.html', `${config.root}/`, grunt);
         
         var indexPath = '_Packages/Watertight/index.php';
         var appPath = '';
@@ -55,14 +55,14 @@ module.exports = function(grunt) {
         if(customLogin){
             grunt.file.write(
                 '_Packages/Watertight/app/views/login.php',
-                grunt.file.read('_Output/login.html')
+                grunt.file.read(`${config.root}/login.html`)
             );
         }
 
-        if(fileExists('login-form.html', '_Output/', grunt)){
+        if(fileExists('login-form.html', `${config.root}/`, grunt)){
             grunt.file.write(
                 '_Packages/Watertight/app/views/forms/login.html',
-                grunt.file.read('_Output/login-form.html')
+                grunt.file.read(`${config.root}/login-form.html`)
             );
         }
     });

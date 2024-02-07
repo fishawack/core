@@ -19,7 +19,7 @@ const packages = [
         name: "app",
         zips: [
             {
-                cwd: "_Output/",
+                cwd: "<%= root %>/",
             },
         ],
     },

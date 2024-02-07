@@ -8,7 +8,7 @@ packages.forEach(({ name }) => {
 
 module.exports = {
     ...clean,
-	cache: ["_Output/css/*.cache.*.css", "_Output/js/*.cache.*.js", '.cache'],
+	cache: ["<%= root %>/css/*.cache.*.css", "<%= root %>/js/*.cache.*.js", '.cache'],
 	build: [".tmp"],
     dist: ["<%= root %>", "<%= src %>/**/generated/**/*"],
     zip: ['_Zips'],
