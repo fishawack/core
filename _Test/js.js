@@ -46,6 +46,20 @@ describe('js', () => {
         it('Should override env variables in config with .env values', () => {
             expect(js).contain(`overridey ridey roo`);
         });
+
+        it('Should read in txt files using asset/source', () => {
+            expect(js).contain(`this text comes from a txt file`);
+        });
+
+        it('Should read in html files using asset/source', () => {
+            expect(js).contain(`<h1>this text comes from a html file</h1>`);
+        });
+
+        it('Should have compile time flags set', () => {
+            expect(js).contain(`__VUE_OPTIONS_API__:\\", true`);
+            expect(js).contain(`__VUE_PROD_DEVTOOLS__:\\", false`);
+            expect(js).contain(`__VUE_PROD_HYDRATION_MISMATCH_DETAILS__:\\", false`);
+        });
     });
 
     describe('dev', () => {

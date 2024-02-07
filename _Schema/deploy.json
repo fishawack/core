@@ -142,6 +142,10 @@
 									"description": "The file/folder to ignore e.g. 'public/storage'",
 									"type": "string"
 								}
+							},
+							"file": {
+								"description": "Explicitly flag a path as being a file (sometimes needed when copying files that have no file extensions which may incorrectly flag as directories)",
+								"type": "boolean"
 							}
 						},
 						"required": ["src"]

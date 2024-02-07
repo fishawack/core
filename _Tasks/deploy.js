@@ -9,9 +9,10 @@ module.exports = function(grunt) {
         const fs = require('fs-extra');
         const glob = require('glob');
         const symlinks = require('./helpers/symlinks.js');
+        const { isWatertight } = require('./helpers/include.js');
 
         let dest = '_Packages/Deploy';
-        let paths = deployEnv.paths || [deployEnv.loginType ? '_Packages/Watertight/*' : `${config.root}/*`];
+        let paths = deployEnv.paths || [isWatertight(deployEnv.loginType) ? '_Packages/Watertight/*' : `${config.root}/*`];
 
         let count = {
             files: 0,
@@ -31,8 +32,8 @@ module.exports = function(grunt) {
                 let stats = fs.lstatSync(src);
 
                 if(copy.dest){
-                    // If src is a file and dest is a path to a directory i.e missing an extensions, then join the dest to the current src filename
-                    if(!stats.isDirectory() && !path.extname(copy.dest)){
+                    // If file flag not explicitly set, src is a file and dest is a path to a directory i.e missing an extensions, then join the dest to the current src filename
+                    if(!copy.file && !stats.isDirectory() && !path.extname(copy.dest)){
                         save = path.join(copy.dest, save);
                     } else {
                         save = copy.dest;
@@ -121,7 +122,8 @@ module.exports = function(grunt) {
         } else if(deployEnv.lftp){
             execSync(`lftp -e 'set sftp:auto-confirm yes; mirror -R "${dest}" "${deployLocation}" -p --parallel=10; exit;' -u '${deployCred.username}','${deployCred.password}' sftp://${deployCred.host}`, opts);
         } else if(deployEnv['aws-eb']){
-            execSync(`eb deploy ${deployEnv['aws-eb']}`, opts)
+            const timeout = Number((typeof deployEnv['eb-timeout'] !== 'undefined') ? deployEnv['eb-timeout'] : '30');
+            execSync(`eb deploy ${deployEnv['aws-eb']} --timeout ${timeout}`, opts)
         } else if(deployEnv['aws-s3']){
             execSync(`aws s3 sync "${dest}" "s3://${deployLocation}" --delete --only-show-errors --profile "${deployEnv['aws-s3']}"`, opts)
         }

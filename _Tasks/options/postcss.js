@@ -26,7 +26,10 @@ module.exports = (file, dir) => {
 					/deactive/i,
 					/disabled/i,
 					/capture/i,
-					/labD3/i
+					/labD3/i,
+				],
+				standard: [
+					/color-(\d+)$/i,
 				]
 			},
 			defaultExtractor: (content) => {

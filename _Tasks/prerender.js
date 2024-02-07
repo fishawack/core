@@ -1,5 +1,10 @@
 module.exports = (grunt) => {
     grunt.registerTask('prerender', async function(){
+        if(!contentJson.attributes.prerender){
+            grunt.log.warn(`No prerender config for ${deployBranch} branch`);
+            return;
+        }
+
         var done = this.async();
 
         const fs = require('fs-extra');
@@ -39,50 +44,70 @@ module.exports = (grunt) => {
 
                 injectProperty: 'prerender',
 
+                launchOptions: {
+                    headless: 'new'
+                },
+
                 args: [
-                    '--single-process'
-                ]
+                    '--single-process',
+                    '--headless', 
+                    '--no-sandbox', 
+                    '--disable-gpu', 
+                    '--disable-dev-shm-usage',
+                    '--shm-size=3gb',
+                ],
+
+                timeout: 60000,
             })
         });
 
-        // Initialize is separate from the constructor for flexibility of integration with build systems.
-        prerenderer.initialize()
-            .then(async () => {
-                let arr = [];
-                for(var i = 0; i < routes.length; i++){
-                    grunt.log.warn(`Rendering ${routes[i]}`);
-                    arr = arr.concat(await prerenderer.renderRoutes([routes[i]]));
+        const total = routes.length;
+        const pLimit = (await import('p-limit')).default;
+        const limit = pLimit(5);
+        let retries = 0;
 
+        try {
+            while(routes.length){
+                const batch = routes.splice(0, 25);
+                grunt.log.warn(`New Batch of ${batch.length}: ${routes.length} remaining`);
+
+                await prerenderer.initialize();
+
+                try { 
+                    await Promise.all(batch.map((d, i) => limit(async () => {
+                        const renderedRoute = (await prerenderer.renderRoutes([d]))[0];
+
+                        const outputDir = path.join(process.cwd(), dest, renderedRoute.route);
+                        const outputFile = `${outputDir}/index.html`;
+                        const html = renderedRoute.html.trim().replace('loaded', 'loading');
+                        
+                        fs.mkdirpSync(outputDir);
+
+                        fs.writeFileSync(outputFile, html);
+
+                        grunt.log.ok(`Rendered (${(total - (routes.length + batch.length)) + i}/${total}) ${renderedRoute.route}`);
+                    })));
+                } catch (err){
+                    console.log(err);
+                    retries++;
+
+                    if(retries > 5){
+                        await prerenderer.destroy();
+                        grunt.log.warn(`No more retries`);
+                        grunt.fatal(err);
+                    }
+
+                    grunt.log.warn(`Retrying batch: retry ${retries}`);
+                    routes.unshift(...batch);
                 }
-                return arr;
-            })
-            .then(renderedRoutes => {
-                // renderedRoutes is an array of objects in the format:
-                // {
-                //   route: String (The route rendered)
-                //   html: String (The resulting HTML)
-                // }
-                renderedRoutes.forEach(renderedRoute => {
-                    const outputDir = path.join(process.cwd(), dest, renderedRoute.route);
-                    const outputFile = `${outputDir}/index.html`;
-                    let html = renderedRoute.html.trim().replace('loaded', 'loading');
-                    
-                    fs.mkdirpSync(outputDir);
+                
+                console.log("destroy");
+                await prerenderer.destroy();
+            }
+        } catch (err){
+            grunt.fatal(err);
+        }
 
-                    fs.writeFileSync(outputFile, html);
-
-                    grunt.log.ok(`Rendered ${renderedRoute.route}`);
-                });
-
-                // Shut down the file server and renderer.
-                prerenderer.destroy();
-            })
-            .catch(err => {
-                grunt.fatal(err);
-                // Shut down the server and renderer.
-                prerenderer.destroy();
-                // Handle errors.
-            })
-            .finally(() => done());
+        done();
     });
 };
