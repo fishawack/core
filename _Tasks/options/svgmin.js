@@ -1,17 +1,17 @@
 var plugins = [
     {
-        name: 'preset-default',
+        name: "preset-default",
         params: {
             overrides: {
-                "removeViewBox": false,
-                "cleanupIds": false,
-                "inlineStyles": false,
-                "removeUselessStrokeAndFill": false
-            }
-        }
+                removeViewBox: false,
+                cleanupIds: false,
+                inlineStyles: false,
+                removeUselessStrokeAndFill: false,
+            },
+        },
     },
-    { 
-        name: "removeDimensions"
+    {
+        name: "removeDimensions",
     },
     {
         name: "prefixIds",
@@ -20,41 +20,69 @@ var plugins = [
                 this.counter = this.counter || 0;
 
                 return `id-${this.counter++}`;
-            }
-        }
-    }
+            },
+        },
+    },
 ];
+
+const full = {
+    options: {
+        plugins: plugins.concat(
+            {
+                name: "removeStyleElement",
+            },
+            {
+                name: "removeUselessStrokeAndFill",
+            },
+            {
+                name: "removeAttrs",
+                params: {
+                    attrs: "(stroke|fill)",
+                },
+            }
+        ),
+    },
+    expand: true,
+};
+
+const minimal = {
+    options: {
+        plugins,
+    },
+    expand: true,
+};
 
 module.exports = {
     full: {
-        options: {
-            plugins: plugins.concat(
-                { 
-                    name: "removeStyleElement" 
-                },
-                { 
-                    name: "removeUselessStrokeAndFill" 
-                },
-                { 
-                    name: "removeAttrs",
-                    params : {
-                        attrs: '(stroke|fill)'
-                    }
-                }
-            )
-        },
-        expand: true,
-        cwd: '.tmp/icons-fit/', // __ svg files will be left alone, all other svg files will be completely stripped
-        src: ['**/*.svg', '!**/__*.svg'],
-        dest: '.tmp/icons-min/'
+        ...full,
+        cwd: ".tmp/icons-fit/",
+        src: ["**/*.svg", "!**/{__,--}*.svg"],
+        dest: ".tmp/icons-min/",
     },
     minimal: {
-        options: {
-            plugins
-        },
-        expand: true,
-        cwd: '.tmp/icons-fit/',
-        src: ['**/{__,--}*.svg'],
-        dest: '.tmp/icons-min/'
-    }
-}
+        ...minimal,
+        cwd: ".tmp/icons-fit/",
+        src: ["**/{__,--}*.svg"],
+        dest: ".tmp/icons-min/",
+    },
+    artboard_full: {
+        ...full,
+        cwd: "<%= src %>",
+        src: ["svg/**/*.svg", "!**/{__,--}*.svg"],
+        dest: ".tmp/icons-min/",
+        rename: (dest, src) =>
+            `${dest}${
+                require("path").parse(src).name
+            }--artboard${require("path").extname(src)}`,
+    },
+    artboard_minimal: {
+        ...minimal,
+        cwd: "<%= src %>",
+        src: ["svg/**/{__,--}*.svg"],
+        dest: ".tmp/icons-min/",
+        rename: (dest, src) =>
+            `${dest}${
+                require("path").parse(src).name
+            }--artboard${require("path").extname(src)}`,
+    },
+};
