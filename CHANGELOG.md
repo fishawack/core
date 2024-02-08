@@ -1,5 +1,12 @@
 ## Changelog
 
+### 8.14.0 (2024-02-08)
+* [Feature] svgs are now also exported with --artboard suffix to allow use with artboard still maintained
+* [Feature] githooks now handle levels more elegantly
+* [Feature] color class now whitelisted in purgecss as a standard selector
+* [Bug] updating hardcoded references to _Output to dynamic root refs from the grunt config
+* [Bug] pdf generation for namespaced branches
+
 ### 8.13.1 (2024-01-24)
 * [Bug] lock prerender versions in package.json to exact
 
