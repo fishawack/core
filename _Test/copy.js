@@ -20,6 +20,22 @@ describe('copy', () => {
         }
     });
 
+    it('Should copy all svgs with svg-- prefix', () => {
+        try{
+            fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Build/handlebars/generated/embed/svg--svg.svg'), opts);
+        } catch(e){
+            expect(e.message).to.not.contain('ENOENT');
+        }
+    });
+
+    it('Should copy all svgs with svg--asis-- prefix', () => {
+        try{
+            fs.readFileSync(path.join(__dirname, '_fixture/bundle/_Build/handlebars/generated/embed/svg--asis--svg.svg'), opts);
+        } catch(e){
+            expect(e.message).to.not.contain('ENOENT');
+        }
+    });
+
     describe('deploy', () => {
         describe('symlinks', () => {
             describe('local', () => {
