@@ -2,6 +2,7 @@
 
 const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
+const path = require('path');
 
 describe('misc', () => {
     it('Dev project variable should be null', () => {
@@ -55,6 +56,34 @@ describe('misc', () => {
             expect(isWatertight(null)).to.be.false;
             expect(isWatertight(undefined)).to.be.false;
             expect(isWatertight('external')).to.be.false;
+        });
+
+        it('Should return true when running core from the core itself', () => {
+            const { isCore } = require('../_Tasks/helpers/include.js');
+
+            expect(isCore()).to.be.true;
+        });
+
+        it('Should return false when cwd is running from anywhere other than the core', () => {
+            const base = process.cwd();
+            process.chdir(path.join(__dirname, '_fixture/bundle'));
+            
+            const { isCore } = require('../_Tasks/helpers/include.js');
+
+            expect(isCore()).to.be.false;
+
+            process.chdir(base);
+        });
+
+        it('Should return false when cwd is running from folder without a package.json file', () => {
+            const base = process.cwd();
+            process.chdir(path.join(__dirname, '_helpers'));
+            
+            const { isCore } = require('../_Tasks/helpers/include.js');
+
+            expect(isCore()).to.be.false;
+
+            process.chdir(base);
         });
 
         afterEach(() => {
