@@ -1,6 +1,6 @@
 module.exports = grunt => {
     // Pull in include
-    require('./_Tasks/helpers/include.js')(grunt);
+    const { isCore } = include = require('./_Tasks/helpers/include.js'); include(grunt);
 
     if(devProject) {
         require('time-grunt')(grunt);
@@ -9,13 +9,13 @@ module.exports = grunt => {
     initConfig();
 
     // Pull in include from build folder
-    try { require(`${taskDir}/_Tasks/helpers/include.js`)(grunt); } catch(e) { }
+    if(!isCore) { try { require(`${taskDir}/_Tasks/helpers/include.js`)(grunt); } catch(e) { } }
 
     // Load options
     grunt.util._.extend(config, loadConfig(`${coreDir}_Tasks/options/`));
 
     // Load otions from build folder
-    grunt.util._.extend(config, loadConfig(`${taskDir}/_Tasks/options/`));
+    if(!isCore) { grunt.util._.extend(config, loadConfig(`${taskDir}/_Tasks/options/`)) };
 
     grunt.initConfig(config);
 
@@ -37,7 +37,7 @@ module.exports = grunt => {
     grunt.loadTasks(coreDir + '_Tasks');
 
     // Load any custom tasks found in the build folder
-    grunt.loadTasks(taskDir + '/_Tasks');
+    if(!isCore) { grunt.loadTasks(taskDir + '/_Tasks'); }
 
     // Setup custom template handlebar code
     templateCustom();
