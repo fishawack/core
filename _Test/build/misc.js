@@ -87,7 +87,7 @@ describe('misc', () => {
         });
 
         afterEach(() => {
-            delete require.cache[require.resolve('../_Tasks/helpers/include.js')];
+            delete require.cache[require.resolve('../../_Tasks/helpers/include.js')];
         });
     });
 });
