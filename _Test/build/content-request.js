@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const { opts } = require('./_helpers/globals.js');
 
-const { download, rewrite } = require('../_Tasks/helpers/requests.js');
+const { download, rewrite } = require('../../_Tasks/helpers/requests.js');
 
 describe('content-request', () => {
 

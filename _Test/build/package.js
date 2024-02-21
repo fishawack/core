@@ -6,8 +6,8 @@ const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
 const path = require('path');
 const { opts, creds } = require('./_helpers/globals.js');
-const lftp = require('../_Tasks/helpers/lftp.js');
-const { packages, capitalize } = require('../_Tasks/helpers/misc.js');
+const lftp = require('../../_Tasks/helpers/lftp.js');
+const { packages, capitalize } = require('../../_Tasks/helpers/misc.js');
 
 describe('package', () => {    
     it('Should not generate an app zip if app flag not preset on branch', () => {

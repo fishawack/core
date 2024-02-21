@@ -6,7 +6,7 @@ const path = require('path');
 const glob = require('glob');
 const fs = require('fs-extra');
 const { opts } = require('./_helpers/globals.js');
-const { images, compare } = require('../_Tasks/compare.js');
+const { images, compare } = require('../../_Tasks/compare.js');
 
 describe('compare', () => {
     describe('previous', () => {

@@ -2,7 +2,7 @@
 
 const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
-const shell = require('../_Tasks/shell.js').shell;
+const shell = require('../../_Tasks/shell.js').shell;
 
 describe('shell', () => {
     it('Should echo to terminal when called directly', () => {

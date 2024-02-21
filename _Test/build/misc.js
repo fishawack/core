@@ -6,12 +6,12 @@ const path = require('path');
 
 describe('misc', () => {
     it('Dev project variable should be null', () => {
-        expect(require('../_Tasks/helpers/dev.js')).to.be.null;
+        expect(require('../../_Tasks/helpers/dev.js')).to.be.null;
     });
 
     describe('include', () => {
         it('Should use git-branch to fetch current branch', () => {
-            const { deployBranch } = require('../_Tasks/helpers/include.js');
+            const { deployBranch } = require('../../_Tasks/helpers/include.js');
             expect(deployBranch()).to.not.be.undefined;
             expect(deployBranch()).to.not.equal('unknown');
             expect(deployBranch()).to.have.length.greaterThan(0);
@@ -21,7 +21,7 @@ describe('misc', () => {
         it('Should use BRANCH env variable as current branch when set', () => {
             process.env.BRANCH = 'hello';
 
-            const { deployBranch } = require('../_Tasks/helpers/include.js');
+            const { deployBranch } = require('../../_Tasks/helpers/include.js');
 
             expect(deployBranch()).to.be.equal('hello');
 
@@ -31,7 +31,7 @@ describe('misc', () => {
         it('Should use BRANCH env variable as current branch when set', () => {
             process.env.CI_COMMIT_REF_NAME = 'goodbye';
 
-            const { deployBranch } = require('../_Tasks/helpers/include.js');
+            const { deployBranch } = require('../../_Tasks/helpers/include.js');
 
             expect(deployBranch()).to.be.equal('goodbye');
 
@@ -43,14 +43,14 @@ describe('misc', () => {
         });
 
         it('Should return true for bootstrap and style-1 loginTypes', () => {
-            const { isWatertight } = require('../_Tasks/helpers/include.js');
+            const { isWatertight } = require('../../_Tasks/helpers/include.js');
 
             expect(isWatertight('bootstrap')).to.be.true;
             expect(isWatertight('style-1')).to.be.true;
         });
 
         it('Should return false for null, undefined or other loginTypes', () => {
-            const { isWatertight } = require('../_Tasks/helpers/include.js');
+            const { isWatertight } = require('../../_Tasks/helpers/include.js');
 
             expect(isWatertight()).to.be.false;
             expect(isWatertight(null)).to.be.false;
@@ -59,7 +59,7 @@ describe('misc', () => {
         });
 
         it('Should return true when running core from the core itself', () => {
-            const { isCore } = require('../_Tasks/helpers/include.js');
+            const { isCore } = require('../../_Tasks/helpers/include.js');
 
             expect(isCore()).to.be.true;
         });
@@ -68,7 +68,7 @@ describe('misc', () => {
             const base = process.cwd();
             process.chdir(path.join(__dirname, '_fixture/bundle'));
             
-            const { isCore } = require('../_Tasks/helpers/include.js');
+            const { isCore } = require('../../_Tasks/helpers/include.js');
 
             expect(isCore()).to.be.false;
 
@@ -79,7 +79,7 @@ describe('misc', () => {
             const base = process.cwd();
             process.chdir(path.join(__dirname, '_helpers'));
             
-            const { isCore } = require('../_Tasks/helpers/include.js');
+            const { isCore } = require('../../_Tasks/helpers/include.js');
 
             expect(isCore()).to.be.false;
 

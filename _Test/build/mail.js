@@ -6,7 +6,7 @@ const { opts, misc } = require('./_helpers/globals.js');
 const fs = require('fs');
 const path = require('path');
 const location = path.join(__dirname, "_fixture/mail/", ".tmp/mail/log.html");
-const { sendMail } = require('../_Tasks/mail.js');
+const { sendMail } = require('../../_Tasks/mail.js');
 
 describe('mail', () => {
     var html = '';
