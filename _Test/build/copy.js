@@ -8,7 +8,7 @@ const { opts } = require('./_helpers/globals.js');
 
 describe('copy', () => {
     before(() => {
-        execSync('grunt copy:content copy:assets copy:svg copy:svgasis --branch=master --mocha=bundle', opts);
+        execSync('grunt clean:build svgfit svgmin copy:content copy:assets copy:svg copy:svgasis --branch=master --mocha=bundle', opts);
         execSync('grunt clean:deploy copy:deploy --mocha=output', opts);
     });
     
