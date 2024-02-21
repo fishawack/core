@@ -1,4 +1,6 @@
 module.exports = function(grunt, hasBase, fixture) {
+	const isCore = module.exports.isCore();
+
 	this._ = require('lodash');
 	var fs = require('fs');
 	this.path = require('path');
@@ -14,14 +16,14 @@ module.exports = function(grunt, hasBase, fixture) {
 
 	if(grunt && !hasBase){
 		if(mocha){
-			grunt.file.setBase(`_Test/_fixture/${mocha}/`);
+			grunt.file.setBase(`${isCore ? '' : '../../../'}_Test/_fixture/${mocha}/`);
 		} else {
 			grunt.file.setBase('../' + (devProject || '../..') + '/');
 		}
 	}
 
 	if(mocha){
-		this.configPath = '../../../';	
+		this.configPath = `../../../${isCore ? '' : 'node_modules/@fishawack/core/'}`;
 	} else{
 		this.configPath = (devProject) ? '../core/' : 'node_modules/@fishawack/core/';
 	}
