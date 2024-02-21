@@ -9,13 +9,13 @@ module.exports = grunt => {
     initConfig();
 
     // Pull in include from build folder
-    try{ require(process.cwd() + '/_Tasks/helpers/include.js')(grunt); } catch(e){}
+    try{ require(`${taskDir}/_Tasks/helpers/include.js`)(grunt); } catch(e){}
 
     // Load options
-    grunt.util._.extend(config, loadConfig(process.cwd() + '/' + configPath + '_Tasks/options/'));
+    grunt.util._.extend(config, loadConfig(`${coreDir}_Tasks/options/`));
 
     // Load otions from build folder
-    grunt.util._.extend(config, loadConfig(process.cwd() + '/_Tasks/options/'));
+    grunt.util._.extend(config, loadConfig(`${taskDir}/_Tasks/options/`));
 
     grunt.initConfig(config);
 
@@ -30,14 +30,14 @@ module.exports = grunt => {
     
     // Load all grunt npm tasks with the prefix 'grunt-'
     require('jit-grunt')(grunt, jit)({
-        cwd: configPath
+        cwd: coreDir
     });
 
     // Load all custom tasks found in _Tasks
-    grunt.loadTasks(configPath + '_Tasks');
+    grunt.loadTasks(coreDir + '_Tasks');
 
     // Load any custom tasks found in the build folder
-    grunt.loadTasks(process.cwd() + '/_Tasks');
+    grunt.loadTasks(taskDir + '/_Tasks');
 
     // Setup custom template handlebar code
     templateCustom();
@@ -50,7 +50,7 @@ function loadConfig(path) {
 
     glob.sync('*', {cwd: path}).forEach(function(option) {
         key = option.replace(/\.js$/,'');
-        object[key] = require(path + option);
+        object[key] = require(require('path').resolve(path, option));
     });
 
     return object;
