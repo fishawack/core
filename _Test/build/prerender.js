@@ -18,18 +18,18 @@ describe('prerender', () => {
         });
     
         it('Should render views to stand alone html files', () => {
-            expect((fs.existsSync('_Test/_fixture/prerender/_Output/index.html'))).to.be.true;
-            expect((fs.existsSync('_Test/_fixture/prerender/_Output/about/index.html'))).to.be.true;
+            expect((fs.existsSync('_Test/build/_fixture/prerender/_Output/index.html'))).to.be.true;
+            expect((fs.existsSync('_Test/build/_fixture/prerender/_Output/about/index.html'))).to.be.true;
         });
     
         it('Should set loaded back to loading after prerender', () => {    
-            expect((fs.readFileSync('_Test/_fixture/prerender/_Output/index.html', {encoding: 'utf8'}))).to.include('class="loading"').and.not.include('class="loaded"');
+            expect((fs.readFileSync('_Test/build/_fixture/prerender/_Output/index.html', {encoding: 'utf8'}))).to.include('class="loading"').and.not.include('class="loaded"');
         });
     
         it('Should render out dynamic content', () => {
-            expect((fs.readFileSync('_Test/_fixture/prerender/_Output/index.html', {encoding: 'utf8'}))).to.include('<h2>This title is rendered</h2>');
-            expect((fs.readFileSync('_Test/_fixture/prerender/_Output/index.html', {encoding: 'utf8'}))).to.include('<h3>Home</h3>');
-            expect((fs.readFileSync('_Test/_fixture/prerender/_Output/about/index.html', {encoding: 'utf8'}))).to.include('<h3>About</h3>');
+            expect((fs.readFileSync('_Test/build/_fixture/prerender/_Output/index.html', {encoding: 'utf8'}))).to.include('<h2>This title is rendered</h2>');
+            expect((fs.readFileSync('_Test/build/_fixture/prerender/_Output/index.html', {encoding: 'utf8'}))).to.include('<h3>Home</h3>');
+            expect((fs.readFileSync('_Test/build/_fixture/prerender/_Output/about/index.html', {encoding: 'utf8'}))).to.include('<h3>About</h3>');
         });
     });
 
@@ -45,18 +45,18 @@ describe('prerender', () => {
         });
     
         it('Should render views to stand alone html files', () => {
-            expect((fs.existsSync('_Test/_fixture/prerender/_Output/subdirectory/index.html'))).to.be.true;
-            expect((fs.existsSync('_Test/_fixture/prerender/_Output/subdirectory/about/index.html'))).to.be.true;
+            expect((fs.existsSync('_Test/build/_fixture/prerender/_Output/subdirectory/index.html'))).to.be.true;
+            expect((fs.existsSync('_Test/build/_fixture/prerender/_Output/subdirectory/about/index.html'))).to.be.true;
         });
     
         it('Should set loaded back to loading after prerender', () => {    
-            expect((fs.readFileSync('_Test/_fixture/prerender/_Output/subdirectory/index.html', {encoding: 'utf8'}))).to.include('class="loading"').and.not.include('class="loaded"');
+            expect((fs.readFileSync('_Test/build/_fixture/prerender/_Output/subdirectory/index.html', {encoding: 'utf8'}))).to.include('class="loading"').and.not.include('class="loaded"');
         });
     
         it('Should render out dynamic content', () => {
-            expect((fs.readFileSync('_Test/_fixture/prerender/_Output/subdirectory/index.html', {encoding: 'utf8'}))).to.include('<h2>This title is rendered</h2>');
-            expect((fs.readFileSync('_Test/_fixture/prerender/_Output/subdirectory/index.html', {encoding: 'utf8'}))).to.include('<h3>Home</h3>');
-            expect((fs.readFileSync('_Test/_fixture/prerender/_Output/subdirectory/about/index.html', {encoding: 'utf8'}))).to.include('<h3>About</h3>');
+            expect((fs.readFileSync('_Test/build/_fixture/prerender/_Output/subdirectory/index.html', {encoding: 'utf8'}))).to.include('<h2>This title is rendered</h2>');
+            expect((fs.readFileSync('_Test/build/_fixture/prerender/_Output/subdirectory/index.html', {encoding: 'utf8'}))).to.include('<h3>Home</h3>');
+            expect((fs.readFileSync('_Test/build/_fixture/prerender/_Output/subdirectory/about/index.html', {encoding: 'utf8'}))).to.include('<h3>About</h3>');
         });
     });
 

@@ -10,7 +10,7 @@ describe('compress', () => {
     before(() => {
         execSync('grunt clean:zip clean:deploy package:deploy compress:deploy --mocha=output', opts);
 
-        execSync('unzip _Test/_fixture/output/_Zips/Deploy.zip -d _Test/_fixture/output/_Zips/Deploy');
+        execSync('unzip _Test/build/_fixture/output/_Zips/Deploy.zip -d _Test/build/_fixture/output/_Zips/Deploy');
     });
 
     it('Should compress deploy folder to a file called Deploy.zip in the zips directory', () => {
@@ -28,20 +28,20 @@ describe('compress', () => {
     });
 
     it('Any compressed symlinks should remain links and not resolved files when symlinks flag set to true', () => {
-        expect((fs.lstatSync('_Test/_fixture/output/_Zips/Deploy/symlink.js')).isSymbolicLink()).to.be.true;
+        expect((fs.lstatSync('_Test/build/_fixture/output/_Zips/Deploy/symlink.js')).isSymbolicLink()).to.be.true;
     });
 
     it('Any compressed symlinks should resolve when symlinks flag set to false', () => {
         execSync('grunt compress:app --mocha=output', opts);
 
-        execSync('unzip _Test/_fixture/output/_Zips/*_App.zip -d _Test/_fixture/output/_Zips/App');
+        execSync('unzip _Test/build/_fixture/output/_Zips/*_App.zip -d _Test/build/_fixture/output/_Zips/App');
 
-        expect((fs.lstatSync('_Test/_fixture/output/_Zips/App/symlink.js')).isSymbolicLink()).to.be.false;
+        expect((fs.lstatSync('_Test/build/_fixture/output/_Zips/App/symlink.js')).isSymbolicLink()).to.be.false;
     });
 
     it('Symlinks to files outside of the current package should always resolve regardless of symlinks setting', () => {
-        expect((fs.lstatSync('_Test/_fixture/output/_Zips/App/ext-symlink.js')).isSymbolicLink()).to.be.false;
-        expect((fs.lstatSync('_Test/_fixture/output/_Zips/Deploy/ext-symlink.js')).isSymbolicLink()).to.be.false;
+        expect((fs.lstatSync('_Test/build/_fixture/output/_Zips/App/ext-symlink.js')).isSymbolicLink()).to.be.false;
+        expect((fs.lstatSync('_Test/build/_fixture/output/_Zips/Deploy/ext-symlink.js')).isSymbolicLink()).to.be.false;
     });
 
     it('Should compress hidden folders', () => {
@@ -63,6 +63,6 @@ describe('compress', () => {
     });
 
     after(() => {
-        execSync('rm -rf _Test/_fixture/output/_Zips/Deploy _Test/_fixture/output/_Zips/App');
+        execSync('rm -rf _Test/build/_fixture/output/_Zips/Deploy _Test/build/_fixture/output/_Zips/App');
     });
 });

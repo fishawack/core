@@ -19,8 +19,8 @@ describe('cache-bust', () => {
         expect(glob.sync(path.join(__dirname, '_fixture/cache-bust/_Output/css/style.cache.*.css'))).to.be.not.be.empty;
         expect(glob.sync(path.join(__dirname, '_fixture/cache-bust/_Output/js/script.cache.*.js'))).to.be.not.be.empty;
         
-        expect((fs.readFileSync('_Test/_fixture/cache-bust/_Output/index.html', {encoding: 'utf8'}))).to.include('css/style.cache.');
-        expect((fs.readFileSync('_Test/_fixture/cache-bust/_Output/index.html', {encoding: 'utf8'}))).to.include('js/script.cache.');
+        expect((fs.readFileSync('_Test/build/_fixture/cache-bust/_Output/index.html', {encoding: 'utf8'}))).to.include('css/style.cache.');
+        expect((fs.readFileSync('_Test/build/_fixture/cache-bust/_Output/index.html', {encoding: 'utf8'}))).to.include('js/script.cache.');
     });
 
     it('root', () => {
@@ -30,8 +30,8 @@ describe('cache-bust', () => {
         expect(glob.sync(path.join(__dirname, '_fixture/cache-bust/_Output/css/style.cache.*.css'))).to.be.not.be.empty;
         expect(glob.sync(path.join(__dirname, '_fixture/cache-bust/_Output/js/script.cache.*.js'))).to.be.not.be.empty;
 
-        expect((fs.readFileSync('_Test/_fixture/cache-bust/_Output/index.html', {encoding: 'utf8'}))).to.include('css/style.cache.');
-        expect((fs.readFileSync('_Test/_fixture/cache-bust/_Output/index.html', {encoding: 'utf8'}))).to.include('js/script.cache.');
+        expect((fs.readFileSync('_Test/build/_fixture/cache-bust/_Output/index.html', {encoding: 'utf8'}))).to.include('css/style.cache.');
+        expect((fs.readFileSync('_Test/build/_fixture/cache-bust/_Output/index.html', {encoding: 'utf8'}))).to.include('js/script.cache.');
     });
 
     it('subdirectory', () => {
@@ -41,7 +41,7 @@ describe('cache-bust', () => {
         expect(glob.sync(path.join(__dirname, '_fixture/cache-bust/_Output/subdirectory/css/style.cache.*.css'))).to.be.not.be.empty;
         expect(glob.sync(path.join(__dirname, '_fixture/cache-bust/_Output/subdirectory/js/script.cache.*.js'))).to.be.not.be.empty;
 
-        expect((fs.readFileSync('_Test/_fixture/cache-bust/_Output/subdirectory/index.html', {encoding: 'utf8'}))).to.include('/subdirectory/css/style.cache.');
-        expect((fs.readFileSync('_Test/_fixture/cache-bust/_Output/subdirectory/index.html', {encoding: 'utf8'}))).to.include('/subdirectory/js/script.cache.');
+        expect((fs.readFileSync('_Test/build/_fixture/cache-bust/_Output/subdirectory/index.html', {encoding: 'utf8'}))).to.include('/subdirectory/css/style.cache.');
+        expect((fs.readFileSync('_Test/build/_fixture/cache-bust/_Output/subdirectory/index.html', {encoding: 'utf8'}))).to.include('/subdirectory/js/script.cache.');
     });
 });

@@ -52,7 +52,7 @@ describe('capture', () => {
         });
 
         it('Should capture entire height of page', () => {
-            let height = +execSync('file _Test/_fixture/capture/.tmp/screenshots/chrome/375x667/1_longhtml_.png', {encoding: 'utf8'}).split(',')[1].split('x')[1];
+            let height = +execSync('file _Test/build/_fixture/capture/.tmp/screenshots/chrome/375x667/1_longhtml_.png', {encoding: 'utf8'}).split(',')[1].split('x')[1];
             
             expect(height).to.be.greaterThan(667);
         });
@@ -78,7 +78,7 @@ describe('capture', () => {
         });
 
         it('Should capture the viewable viewport when true passed to screenshot call', () => {
-            let height = +execSync('file _Test/_fixture/capture/.tmp/screenshots/chrome/1080x608/5_longhtml_.png', {encoding: 'utf8'}).split(',')[1].split('x')[1];
+            let height = +execSync('file _Test/build/_fixture/capture/.tmp/screenshots/chrome/1080x608/5_longhtml_.png', {encoding: 'utf8'}).split(',')[1].split('x')[1];
             
             expect(height).to.be.lessThanOrEqual(608);
         });
