@@ -1,5 +1,14 @@
 ## Changelog
 
+### 8.15.0 (2024-02-21)
+* [Feature] added new method called isCore to main core config
+* [Bug] path to cleanup location for misc tests
+* [Bug] fixed githooks test suite path
+* [Bug] update tests to point to new fixture location
+* [Bug] updated mocha test script to look in new location
+* [Bug] updated mocha tests location to new build folder
+* [Bug] when running mocha tests outside of the core that path now sets correctly
+
 ### 8.14.0 (2024-02-08)
 * [Feature] svgs are now also exported with --artboard suffix to allow use with artboard still maintained
 * [Feature] githooks now handle levels more elegantly
