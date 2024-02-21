@@ -1,5 +1,5 @@
 module.exports = function(grunt, hasBase, fixture) {
-	const isCore = module.exports.isCore();
+	const isCore = module.exports.isCore;
 
 	this._ = require('lodash');
 	var fs = require('fs');
@@ -619,6 +619,4 @@ module.exports.isWatertight = (loginType) => {
 	return ['bootstrap', 'style-1'].indexOf(loginType) > -1;
 }
 
-module.exports.isCore = () => {
-	try{ return JSON.parse(require('fs').readFileSync("package.json", {encoding: 'utf8'})).name === "@fishawack/core"; } catch(e){} return false;
-}
+module.exports.isCore = process.env.npm_package_name === "@fishawack/core";
