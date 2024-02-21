@@ -24,7 +24,7 @@ describe('githooks', () => {
     beforeEach(() => {
         cmd(`git init`);
         cmd(`git config user.email "you@example.com" && git config user.name "Your Name"`);
-        cmd(`git config core.hooksPath ${path.join(__dirname, '../.githooks')}`, true);
+        cmd(`git config core.hooksPath ${path.join(__dirname, '../../.githooks')}`, true);
         cmd(`git config safe.directory '*'`);
         cmd(`git checkout -b 'development'`);
         deleteFiles(['_Build']);
