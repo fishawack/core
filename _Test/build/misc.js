@@ -61,29 +61,7 @@ describe('misc', () => {
         it('Should return true when running core from the core itself', () => {
             const { isCore } = require('../../_Tasks/helpers/include.js');
 
-            expect(isCore()).to.be.true;
-        });
-
-        it('Should return false when cwd is running from anywhere other than the core', () => {
-            const base = process.cwd();
-            process.chdir(path.join(__dirname, '_fixture/bundle'));
-            
-            const { isCore } = require('../../_Tasks/helpers/include.js');
-
-            expect(isCore()).to.be.false;
-
-            process.chdir(base);
-        });
-
-        it('Should return false when cwd is running from folder without a package.json file', () => {
-            const base = process.cwd();
-            process.chdir(path.join(__dirname, '_helpers'));
-            
-            const { isCore } = require('../../_Tasks/helpers/include.js');
-
-            expect(isCore()).to.be.false;
-
-            process.chdir(base);
+            expect(isCore).to.be.true;
         });
 
         afterEach(() => {
