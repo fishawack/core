@@ -14,19 +14,15 @@ module.exports = function(grunt, hasBase, fixture) {
 
 	this.devProject = require('./dev.js') || mocha;
 
+	this.buildDir = (grunt && !hasBase) ? (mocha ? `${isCore ? '' : '../../../'}_Test/build/_fixture/${mocha}/` : `../${(devProject || '../..')}/`) : process.cwd();
+	this.coreDir = mocha ? `../../../../${isCore ? '' : 'node_modules/@fishawack/core/'}` : (devProject) ? '../core/' : 'node_modules/@fishawack/core/';
+	this.taskDir = isCore ? process.cwd() : this.path.resolve(process.cwd(),'../../../');
+
 	if(grunt && !hasBase){
-		if(mocha){
-			grunt.file.setBase(`${isCore ? '' : '../../../'}_Test/build/_fixture/${mocha}/`);
-		} else {
-			grunt.file.setBase('../' + (devProject || '../..') + '/');
-		}
+		grunt.file.setBase(buildDir);
 	}
 
-	if(mocha){
-		this.configPath = `../../../../${isCore ? '' : 'node_modules/@fishawack/core/'}`;
-	} else{
-		this.configPath = (devProject) ? '../core/' : 'node_modules/@fishawack/core/';
-	}
+	this.configPath = coreDir;
 	
 	this.deployBranch = grunt.option('branch') || module.exports.deployBranch();
 	
