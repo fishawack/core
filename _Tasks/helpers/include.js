@@ -16,14 +16,14 @@ module.exports = function(grunt, hasBase, fixture) {
 
 	if(grunt && !hasBase){
 		if(mocha){
-			grunt.file.setBase(`${isCore ? '' : '../../../'}_Test/_fixture/${mocha}/`);
+			grunt.file.setBase(`${isCore ? '' : '../../../'}_Test/build/_fixture/${mocha}/`);
 		} else {
 			grunt.file.setBase('../' + (devProject || '../..') + '/');
 		}
 	}
 
 	if(mocha){
-		this.configPath = `../../../${isCore ? '' : 'node_modules/@fishawack/core/'}`;
+		this.configPath = `../../../../${isCore ? '' : 'node_modules/@fishawack/core/'}`;
 	} else{
 		this.configPath = (devProject) ? '../core/' : 'node_modules/@fishawack/core/';
 	}
