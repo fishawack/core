@@ -1,5 +1,11 @@
 ## Changelog
 
+### 8.15.1 (2024-02-21)
+* [Bug] only load options from taskDir if not running in core
+* [Bug] make Gruntfile.js more robust when using custom paths and utilize new path variables
+* [Bug] create core, task and build dir variables
+* [Bug] core check now simply looks at global env for package name
+
 ### 8.15.0 (2024-02-21)
 * [Feature] added new method called isCore to main core config
 * [Bug] path to cleanup location for misc tests
