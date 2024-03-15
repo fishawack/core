@@ -614,4 +614,4 @@ module.exports.isWatertight = (loginType) => {
 	return ['bootstrap', 'style-1'].indexOf(loginType) > -1;
 }
 
-module.exports.isCore = process.env.npm_package_name === "@fishawack/core";
+module.exports.isCore = !process.cwd().includes("node_modules/@fishawack/core");
