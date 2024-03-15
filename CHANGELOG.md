@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.15.2 (2024-03-15)
+* [Bug] isCore check now uses pwd to look if nested in node_modules
+
 ### 8.15.1 (2024-02-21)
 * [Bug] only load options from taskDir if not running in core
 * [Bug] make Gruntfile.js more robust when using custom paths and utilize new path variables
