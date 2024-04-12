@@ -27,7 +27,7 @@ The following dependancies are needed to pull binary assets from external source
 The following dependancies are needed to build the source code in both development mode and production.
 
 * [git](https://git-scm.com/) (>=2.38.0 recommended)
-* [node](https://nodejs.org/en/) (>=16 recommended)
+* [node](https://nodejs.org/en/) (>=18 recommended)
 * [npm](https://www.npmjs.com/) (>=9 recommended)
 * [dart sass](https://sass-lang.com/dart-sass) (>=1.57.1 recommended)
 
