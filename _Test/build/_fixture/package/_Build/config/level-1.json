@@ -1,0 +1,9 @@
+{
+    "attributes": {
+	    "title": "<%= repo.name %>",
+		"targets": {
+			"level2": {
+            }
+        }
+    }
+}

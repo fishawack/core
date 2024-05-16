@@ -19,7 +19,7 @@ describe('content', () => {
         expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/content-0/**/*'))).to.be.an('array').that.is.not.empty;
     });
 
-    it('Should clean content folders no content', () => {
+    it('Should clean content folders with no content', () => {
         execSync('grunt clean:content content:pull --mocha=content --branch=lftp', opts);
 
         expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/content-0/**/*'))).to.be.an('array').that.is.not.empty;
@@ -27,6 +27,16 @@ describe('content', () => {
         execSync('grunt content:pull --mocha=content --branch=empty', opts);
         
         expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/**/*'))).to.be.an('array').that.is.empty;
+    });
+
+    it('Should skip cleaning folders without content', () => {
+        execSync('grunt clean:content content:pull --mocha=content --branch=lftp', opts);
+
+        expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/content-0/**/*'))).to.be.an('array').that.is.not.empty;
+
+        execSync('grunt content:pull --mocha=content --branch=handover', opts);
+        
+        expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/**/*'))).to.be.an('array').that.is.not.empty;
     });
 
     it('Should clean content folders removed 1', () => {

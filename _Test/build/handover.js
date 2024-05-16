@@ -7,11 +7,15 @@ const glob = require('glob');
 const { opts } = require('./_helpers/globals.js');
 
 describe('handover', () => {
-    before(() => {
-        execSync('grunt clean:handover copy:handover handover --branch=package --mocha=package', opts);
-    });
     
     it('Should pull in the build files', () => {
+        execSync('grunt clean:handover copy:handover handover --branch=package --mocha=package', opts);
         expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Handover/_Build/**/*'))).to.be.an('array').that.is.not.empty;
+    });
+
+    it('Should remove config files and combine into single', () => {
+        execSync('grunt clean:handover copy:handover handover --branch=package --mocha=package', opts);
+        expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Handover/_Build/config'))).that.is.empty;
+        expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Handover/fw.json'))).to.exist;
     });
 });
