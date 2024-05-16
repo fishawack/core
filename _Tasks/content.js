@@ -3,8 +3,13 @@ module.exports = (grunt) => {
 
     grunt.registerTask('content:pull', function(){
         const fs = require('fs-extra');
-        if(!contentJson.attributes.content || contentJson.attributes.content.length <= 0){
+        if(!contentJson.attributes.content) {
             grunt.log.warn('No content to pull');
+            return;
+        }
+        if(contentJson.attributes.content.length <= 0){
+            grunt.log.warn('No content to pull');
+            grunt.log.warn('Removing existing content');
             fs.removeSync(`${config.src}/content`);
             return;
         }
