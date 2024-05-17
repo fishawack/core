@@ -25,8 +25,20 @@ describe('handover', () => {
         expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Handover/_Build/content.json'))).that.is.empty;
     });
 
-    describe('json', () => {
+    describe('config', () => {
         let json;
+
+        const sensitive = [
+            'deploy',
+            'content',
+            'phonegap',
+            'veeva',
+            'cegedim',
+            'vablet',
+            'email',
+            'targets',
+            'env'
+        ];
 
         before(() => {    
             json = JSON.parse(fs.readFileSync(path.join(__dirname, '_fixture/package/_Packages/Handover/fw.json'), opts));
@@ -46,5 +58,30 @@ describe('handover', () => {
             expect(json.attributes['old-val-3']).to.be.undefined;
             expect(json.attributes['root-val-3']).to.be.undefined;
         });
+
+        for(let i = 0; i < sensitive.length; i++){
+            it(`Should not contain sensitive ${sensitive[i]} property`, () => {
+                expect(json.attributes[sensitive[i]]).to.be.undefined;
+            });
+        }
+    });
+
+    describe('package.json', () => {
+        let json;
+
+        const sensitive = [
+            'deploy',
+            'deploy-s'
+        ];
+
+        before(() => {    
+            json = JSON.parse(fs.readFileSync(path.join(__dirname, '_fixture/package/_Packages/Handover/package.json'), opts));
+        });
+
+        for(let i = 0; i < sensitive.length; i++){
+            it(`Should not contain sensitive ${sensitive[i]} script`, () => {
+                expect(json.scripts[sensitive[i]]).to.be.undefined;
+            });
+        }
     });
 });

@@ -1,4 +1,15 @@
 {
     "name": "core-test-suite-package",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "scripts": {
+        "setup": "echo 'test'",
+        "content": "echo 'test'",
+        "start": "echo 'test'",
+        "production": "echo 'test'",
+        "test": "echo 'test'",
+        "package": "echo 'test'",
+        "deploy": "echo 'test'",
+        "deploy-s": "echo 'test'",
+        "mail": "echo 'test'"
+      }
 }
