@@ -19,7 +19,7 @@ describe('content', () => {
         expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/content-0/**/*'))).to.be.an('array').that.is.not.empty;
     });
 
-    it('Should clean content folders with no content', () => {
+    it('Should clean content folders when content property is an empty array', () => {
         execSync('grunt clean:content content:pull --mocha=content --branch=lftp', opts);
 
         expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/content-0/**/*'))).to.be.an('array').that.is.not.empty;
@@ -29,7 +29,7 @@ describe('content', () => {
         expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/**/*'))).to.be.an('array').that.is.empty;
     });
 
-    it('Should skip cleaning folders without content', () => {
+    it('Should skip cleaning folders when content property is undefined', () => {
         execSync('grunt clean:content content:pull --mocha=content --branch=lftp', opts);
 
         expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/content-0/**/*'))).to.be.an('array').that.is.not.empty;
