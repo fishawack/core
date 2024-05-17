@@ -7,11 +7,11 @@ module.exports = (grunt) => {
         const fs = require('fs-extra');
         const glob = require('glob');
 
-        var location = './_Packages/Handover';
+        let location = './_Packages/Handover';
 
         fs.writeFileSync(`${location}/.gitignore`, fs.readFileSync(`${location}/.gitignore`, 'utf8').replace('\n_Build/content', ''));
 
-        var baseConfig = fs.readJSONSync(contentPath);
+        let baseConfig = fs.readJSONSync(contentPath);
         
         [
             'deploy',
