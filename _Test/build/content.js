@@ -3,6 +3,7 @@
 const expect = require('chai').expect;
 const execSync = require('child_process').execSync;
 const path = require('path');
+const fs = require('fs-extra');
 const glob = require('glob');
 const { opts } = require('./_helpers/globals.js');
 
@@ -20,9 +21,7 @@ describe('content', () => {
     });
 
     it('Should clean content folders when content property is an empty array', () => {
-        execSync('grunt clean:content content:pull --mocha=content --branch=lftp', opts);
-
-        expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/content-0/**/*'))).to.be.an('array').that.is.not.empty;
+        fs.copySync(`${__dirname}/_fixture/content/content-0`, `${__dirname}/_fixture/content/_Build/content/content-0`);
 
         execSync('grunt content:pull --mocha=content --branch=empty', opts);
         
@@ -30,9 +29,7 @@ describe('content', () => {
     });
 
     it('Should skip cleaning folders when content property is undefined', () => {
-        execSync('grunt clean:content content:pull --mocha=content --branch=lftp', opts);
-
-        expect(glob.sync(path.join(__dirname, '_fixture/content/_Build/content/content-0/**/*'))).to.be.an('array').that.is.not.empty;
+        fs.copySync(`${__dirname}/_fixture/content/content-0`, `${__dirname}/_fixture/content/_Build/content/content-0`);
 
         execSync('grunt content:pull --mocha=content --branch=handover', opts);
         
