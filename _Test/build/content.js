@@ -8,6 +8,10 @@ const glob = require('glob');
 const { opts } = require('./_helpers/globals.js');
 
 describe('content', () => {    
+    beforeEach(() => {
+        fs.removeSync(`${__dirname}/_fixture/content/_Build/content`); 
+    });
+    
     it('Should pull down assets via lftp', () => {
         execSync('grunt clean:content content:pull --mocha=content --branch=lftp', opts);
 
