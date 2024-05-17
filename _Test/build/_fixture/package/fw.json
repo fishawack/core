@@ -1,0 +1,11 @@
+{
+    "attributes": {
+        "title": "root config",
+        "targets": {
+            "package": {
+                "root-val-1": "foo"
+            }
+        },
+        "root-val-2": "foo"
+    }
+}

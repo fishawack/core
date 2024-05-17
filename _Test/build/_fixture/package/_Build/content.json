@@ -1,0 +1,11 @@
+{
+    "attributes": {
+        "title": "old location config",
+        "targets": {
+            "package": {
+                "old-val-1": "foo"
+            }
+        },
+        "old-val-2": "foo"
+    }
+}
