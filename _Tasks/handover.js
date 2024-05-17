@@ -11,12 +11,8 @@ module.exports = (grunt) => {
 
         fs.writeFileSync(`${location}/.gitignore`, fs.readFileSync(`${location}/.gitignore`, 'utf8').replace('\n_Build/content', ''));
 
-        var baseConfig = {};
+        var baseConfig = fs.readJSONSync(contentPath);
         
-        glob.sync(`${location}/${config.src}/config/**/*.json`)
-            .forEach(d => {
-                _.mergeWith(baseConfig,fs.readJSONSync(d));
-            });
         [
             'deploy',
             'content',
@@ -29,8 +25,11 @@ module.exports = (grunt) => {
             'env'
         ].forEach(d => delete baseConfig.attributes[d]);
 
-        fs.writeFileSync(`${location}/fw.json`,JSON.stringify(baseConfig,null,4));
+        fs.rmSync(`${location}/fw.json`, { recursive: true, force: true });
         fs.rmSync(`${location}/${config.src}/config/`, { recursive: true, force: true });
+        fs.rmSync(`${location}/${config.src}/content.json`, { recursive: true, force: true });
+
+        fs.writeFileSync(`${location}/fw.json`,JSON.stringify(baseConfig,null,4));
 
         let pkg = fs.readJSONSync(`${location}/package.json`);
         [
