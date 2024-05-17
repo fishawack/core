@@ -4,6 +4,7 @@
 * [Feature] handover task now combines json config files into single fw.json file at project root
 * [Feature] if content property is undefined then skip task, if content is an empty array then remove existing content
 * [Bug] handover task now removes all legacy config locations and uses already compiled content.json file
+* [Bug] handover uses contentJson var instead as .tmp/content.json file may have beeb removed by the time the task runs
 * [Docs] update recommended node version
 
 ### 8.15.2 (2024-03-15)
