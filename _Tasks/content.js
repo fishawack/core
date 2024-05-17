@@ -4,7 +4,7 @@ module.exports = (grunt) => {
     grunt.registerTask('content:pull', function(){
         const fs = require('fs-extra');
         if(!contentJson.attributes.content) {
-            grunt.log.warn('No content to pull');
+            grunt.log.ok(`No content config found. Skipping...`);
             return;
         }
         if(contentJson.attributes.content.length <= 0){
