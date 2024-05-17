@@ -4,6 +4,9 @@
         "targets": {
             "package": {
                 "root-val-1": "foo"
+            },
+            "strip": {
+                "old-val-3": "foo"
             }
         },
         "root-val-2": "foo"

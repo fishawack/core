@@ -4,6 +4,9 @@
         "targets": {
             "package": {
                 "old-val-1": "foo"
+            },
+            "strip": {
+                "old-val-3": "foo"
             }
         },
         "old-val-2": "foo"

@@ -28,4 +28,19 @@ describe('handover', () => {
         expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Handover/_Build/config'))).that.is.empty;
         expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Handover/_Build/content.json'))).that.is.empty;
     });
+
+    it('Should combine all root properties from merged configs', () => {
+        expect(json.attributes['old-val-2']).to.equal('foo');
+        expect(json.attributes['root-val-2']).to.equal('foo');
+    });
+
+    it('Should combine all current branch properties from merged configs at the root', () => {
+        expect(json.attributes['old-val-1']).to.equal('foo');
+        expect(json.attributes['root-val-1']).to.equal('foo');
+    });
+
+    it('Should not contain branch properties from other branches to the current at the root', () => {
+        expect(json.attributes['old-val-3']).to.be.undefined;
+        expect(json.attributes['root-val-3']).to.be.undefined;
+    });
 });
