@@ -1,5 +1,11 @@
 ## Changelog
 
+### 8.16.0 (2024-05-17)
+* [Feature] handover task now combines json config files into single fw.json file at project root
+* [Feature] if content property is undefined then skip task, if content is an empty array then remove existing content
+* [Bug] handover task now removes all legacy config locations and uses already compiled content.json file
+* [Docs] update recommended node version
+
 ### 8.15.2 (2024-03-15)
 * [Bug] isCore check now uses pwd to look if nested in node_modules
 
