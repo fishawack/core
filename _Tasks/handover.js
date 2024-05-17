@@ -11,7 +11,7 @@ module.exports = (grunt) => {
 
         fs.writeFileSync(`${location}/.gitignore`, fs.readFileSync(`${location}/.gitignore`, 'utf8').replace('\n_Build/content', ''));
 
-        let baseConfig = fs.readJSONSync(contentPath);
+        let baseConfig = JSON.parse(JSON.stringify(contentJson));
         
         [
             'deploy',
