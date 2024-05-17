@@ -8,12 +8,8 @@ const glob = require('glob');
 const { opts } = require('./_helpers/globals.js');
 
 describe('handover', () => {
-    let json;
-
     before(() => {
         execSync('grunt clean:handover copy:handover handover --branch=package --mocha=package', opts);
-
-        json = JSON.parse(fs.readFileSync(path.join(__dirname, '_fixture/package/_Packages/Handover/fw.json'), opts));
     });
 
     it('Should pull in the build files', () => {
@@ -29,18 +25,26 @@ describe('handover', () => {
         expect(glob.sync(path.join(__dirname, '_fixture/package/_Packages/Handover/_Build/content.json'))).that.is.empty;
     });
 
-    it('Should combine all root properties from merged configs', () => {
-        expect(json.attributes['old-val-2']).to.equal('foo');
-        expect(json.attributes['root-val-2']).to.equal('foo');
-    });
+    describe('json', () => {
+        let json;
 
-    it('Should combine all current branch properties from merged configs at the root', () => {
-        expect(json.attributes['old-val-1']).to.equal('foo');
-        expect(json.attributes['root-val-1']).to.equal('foo');
-    });
+        before(() => {    
+            json = JSON.parse(fs.readFileSync(path.join(__dirname, '_fixture/package/_Packages/Handover/fw.json'), opts));
+        });
 
-    it('Should not contain branch properties from other branches to the current at the root', () => {
-        expect(json.attributes['old-val-3']).to.be.undefined;
-        expect(json.attributes['root-val-3']).to.be.undefined;
+        it('Should combine all root properties from merged configs', () => {
+            expect(json.attributes['old-val-2']).to.equal('foo');
+            expect(json.attributes['root-val-2']).to.equal('foo');
+        });
+    
+        it('Should combine all current branch properties from merged configs at the root', () => {
+            expect(json.attributes['old-val-1']).to.equal('foo');
+            expect(json.attributes['root-val-1']).to.equal('foo');
+        });
+    
+        it('Should not contain branch properties from other branches to the current at the root', () => {
+            expect(json.attributes['old-val-3']).to.be.undefined;
+            expect(json.attributes['root-val-3']).to.be.undefined;
+        });
     });
 });
