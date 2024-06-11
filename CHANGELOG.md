@@ -1,5 +1,8 @@
 ## Changelog
 
+### 8.16.1 (2024-06-11)
+* [Bug] ensure alpha channel for all pngs being compared
+
 ### 8.16.0 (2024-05-17)
 * [Feature] handover task now combines json config files into single fw.json file at project root
 * [Feature] if content property is undefined then skip task, if content is an empty array then remove existing content
