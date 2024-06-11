@@ -9,6 +9,12 @@ const { opts } = require('./_helpers/globals.js');
 const { images, compare } = require('../../_Tasks/compare.js');
 
 describe('compare', () => {
+    describe('alpha', () => {
+        it('Should ensure alpha channel even on pngs that dont contain one', () => {
+            expect(() => execSync('grunt compare:browsers --mocha=compare --branch=browsers', opts)).to.not.throw();
+        });
+    });
+
     describe('previous', () => {
         before(() => {
             execSync('grunt clean:coverage compare:previous --mocha=compare --branch=master', opts);
