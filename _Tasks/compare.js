@@ -149,11 +149,13 @@ async function images(image1, image2){
 
     const boxedBuffer1 = await sharp1
         .resize(opts)
+        .ensureAlpha(0)
         .raw()
         .toBuffer();
 
     const boxedBuffer2 = await sharp2
         .resize(opts)
+        .ensureAlpha(0)
         .raw()
         .toBuffer();
 
